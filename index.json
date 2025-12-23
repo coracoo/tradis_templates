@@ -1,0 +1,114 @@
+{
+  "templates": [
+    {
+      "id": 1,
+      "name": "nginx",
+      "category": "network",
+      "description": "nginx（“ 引擎 x ”）是一个集 HTTP Web 服务器、反向代理、内容缓存、负载均衡、TCP/UDP 代理服务器和邮件代理服务器于一体的综合性服务商。",
+      "version": "latest",
+      "logo": "https://nginx.org/img/nginx_logo.svg",
+      "website": "https://nginx.org/",
+      "file": "templates/nginx.json"
+    },
+    {
+      "id": 2,
+      "name": "cronmaster",
+      "category": "platform",
+      "description": "轻松管理 Cron 任务",
+      "version": "latest",
+      "logo": "https://raw.githubusercontent.com/fccview/cronmaster/main/public/heading.png",
+      "website": "https://github.com/fccview/cronmaster",
+      "file": "templates/cronmaster.json"
+    },
+    {
+      "id": 3,
+      "name": "music-tag-web",
+      "category": "entertainment",
+      "description": "『音乐标签』Web版是一款可以编辑歌曲的标题，专辑，艺术家，歌词，封面等信息的音乐标签编辑器程序， 支持FLAC, APE, WAV, AIFF, WV, TTA, MP3, M4A, OGG, MPC, OPUS, WMA, DSF, MP4等音频格式。",
+      "version": "latest",
+      "logo": "https://github.com/xhongc/music-tag-web/raw/dev_1.0/img_6.jpg",
+      "website": "https://github.com/xhongc/music-tag-web",
+      "file": "templates/music-tag-web.json"
+    },
+    {
+      "id": 4,
+      "name": "cloudsaver",
+      "category": "entertainment",
+      "description": "一个基于 Vue 3 + Express 的网盘资源搜索与转存工具。",
+      "version": "latest",
+      "logo": "https://github.com/jiangrui1994/CloudSaver/blob/main/frontend/src/assets/images/logo.png?raw=true",
+      "website": "https://github.com/jiangrui1994/CloudSaver",
+      "file": "templates/cloudsaver.json"
+    },
+    {
+      "id": 5,
+      "name": "openlist",
+      "category": "file",
+      "description": "OpenList 是 AList 的一个具有弹性、长期治理、社区驱动的分支，旨在保护开源软件免受基于信任的攻击。官方文档地址：https://doc.oplist.org.cn/",
+      "version": "latest",
+      "logo": "https://raw.githubusercontent.com/OpenListTeam/Logo/main/logo.svg",
+      "website": "https://github.com/OpenListTeam/OpenList",
+      "file": "templates/openlist.json"
+    },
+    {
+      "id": 6,
+      "name": "runtipi",
+      "category": "network",
+      "description": "",
+      "version": "",
+      "logo": "",
+      "website": "",
+      "file": "templates/runtipi.json"
+    },
+    {
+      "id": 7,
+      "name": "xiaomialbumsyncer",
+      "category": "photos",
+      "description": "全量/增量/定时 下载小米云服务中的相册到本地",
+      "version": "latest",
+      "logo": "https://github.com/Coooolfan/XiaomiAlbumSyncer/raw/main/static/xiaomi-album-syncer-logo.png",
+      "website": "https://github.com/Coooolfan/XiaomiAlbumSyncer",
+      "file": "templates/xiaomialbumsyncer.json"
+    },
+    {
+      "id": 8,
+      "name": "cfui",
+      "category": "network",
+      "description": "一个现代化的基于 Web 的控制面板，用于管理 Cloudflare Tunnel (cloudflared)，具有直观的界面。\n\n",
+      "version": "latest",
+      "logo": "https://ts1.tc.mm.bing.net/th/id/ODF.I9Ybdjf_TZdpg6eu9bGSZA?w=32&h=32&qlt=92&pcl=fffffa&o=6&cb=ucfimg1&pid=1.2&ucfimg=1",
+      "website": "https://github.com/dockers-x/cfui",
+      "file": "templates/cfui.json"
+    },
+    {
+      "id": 9,
+      "name": "mi-note-export",
+      "category": "hobby",
+      "description": "📝 小米笔记秒变个人博客网站，一键备份小米笔记（包含图片、录音等文件）",
+      "version": "latest",
+      "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108&h=108&c=1&bgcl=133901&r=0&o=7&cb=ucfimg1&dpr=1.5&pid=ImgRC&rm=3&ucfimg=1",
+      "website": "https://github.com/idootop/mi-note-export",
+      "file": "templates/mi-note-export.json"
+    },
+    {
+      "id": 10,
+      "name": "omnibox",
+      "category": "entertainment",
+      "description": "在线免费观影，支持采集站，网盘等多种资源形式",
+      "version": "latest",
+      "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108&h=108&c=1&bgcl=133901&r=0&o=7&cb=ucfimg1&dpr=1.5&pid=ImgRC&rm=3&ucfimg=1",
+      "website": "https://hub.docker.com/r/lampon/omnibox/",
+      "file": "templates/omnibox.json"
+    },
+    {
+      "id": 11,
+      "name": "stirling-pdf",
+      "category": "file",
+      "description": "GitHub 上排名第一的 PDF 应用，让您随时随地在任何设备上编辑 PDF 文件。Stirling PDF 是一个功能强大的开源 PDF 编辑平台。您可以将其作为个人桌面应用程序在浏览器中运行，也可以将其部署在您自己的服务器上并使用私有 API。无需将文档发送到外部服务，即可编辑、签名、编辑、转换和自动化处理 PDF 文件。",
+      "version": "latest",
+      "logo": "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png",
+      "website": "https://github.com/Stirling-Tools/Stirling-PDF",
+      "file": "templates/stirling-pdf.json"
+    }
+  ]
+}
