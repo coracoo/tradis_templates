@@ -1,7 +1,7 @@
 {
-  "note": "2025-12-23 21:22:46，更新项目0个",
-  "templates_note": "累计项目6个",
-  "generated_at": "2025-12-23T21:22:46+08:00",
+  "note": "2025-12-23 22:15:10，更新项目1个",
+  "templates_note": "累计项目5个",
+  "generated_at": "2025-12-23T22:15:10+08:00",
   "templates": [
     {
       "id": 4,
@@ -32,16 +32,6 @@
       "logo": "https://github.com/xhongc/music-tag-web/raw/dev_1.0/img_6.jpg",
       "website": "https://github.com/xhongc/music-tag-web",
       "file": "templates/music-tag-web.json"
-    },
-    {
-      "id": 1,
-      "name": "nginx",
-      "category": "network",
-      "description": "nginx（“ 引擎 x ”）是一个集 HTTP Web 服务器、反向代理、内容缓存、负载均衡、TCP/UDP 代理服务器和邮件代理服务器于一体的综合性服务商。",
-      "version": "latest",
-      "logo": "https://nginx.org/img/nginx_logo.svg",
-      "website": "https://nginx.org/",
-      "file": "templates/nginx.json"
     },
     {
       "id": 5,

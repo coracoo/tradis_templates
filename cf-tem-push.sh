@@ -27,15 +27,13 @@ else
     echo -e "${GREEN}Git 仓库已存在。${NC}"
 fi
 
-# 3. 检查 .gitignore（关键修改：删除父仓库的忽略项）
+# 3. 检查 .gitignore
 if [ ! -f ".gitignore" ]; then
     echo -e "${RED}警告: 未找到 .gitignore 文件！建议先创建以避免上传垃圾文件。${NC}"
     echo -e "${YELLOW}正在尝试创建默认 .gitignore...${NC}"
     echo "node_modules/" >> .gitignore
     echo "dist/" >> .gitignore
     echo "*.log" >> .gitignore
-    # 删掉原脚本的 docker-manager-backend（子仓库无需忽略这个）
-    # 可根据子仓库需求添加忽略项，比如：echo "temp/" >> .gitignore
 fi
 
 # 4. 添加文件并提交
@@ -69,15 +67,12 @@ else
     echo -e "${GREEN}本地提交完成。${NC}"
 fi
 
-# 5. 配置远程仓库 (自动转换为 SSH)
+# 5. 配置远程仓库
 current_remote=$(git remote get-url origin 2>/dev/null)
-
-# 关键：确认 SSH_KEY_PATH 与父仓库一致（父仓库能用，说明这个路径是对的）
 SSH_KEY_PATH="$HOME/.ssh/github/id_rsa"
 
 if [ -f "$SSH_KEY_PATH" ]; then
     echo -e "${GREEN}检测到 SSH Key: $SSH_KEY_PATH${NC}"
-    # 设置 GIT_SSH_COMMAND 环境变量，指定 key 文件
     export GIT_SSH_COMMAND="ssh -i $SSH_KEY_PATH -o IdentitiesOnly=yes -o StrictHostKeyChecking=no"
 else
     echo -e "${RED}警告: 未找到 SSH Key ($SSH_KEY_PATH)，将使用默认 SSH 配置。${NC}"
@@ -100,7 +95,6 @@ else
         current_remote="$GIT_SYNC_REPO_URL"
         echo -e "${GREEN}origin 已更新为: $current_remote${NC}"
     fi
-    # 检查是否为 HTTPS，如果是则尝试转换为 SSH
     if [[ "$current_remote" == https://* ]]; then
         echo -e "${YELLOW}检测到 HTTPS 协议，正在转换为 SSH 协议...${NC}"
         clean_url=$(echo "$current_remote" | sed -E 's/https?:\/\/(.*@)?//')
@@ -120,7 +114,6 @@ else
     echo -e "${RED}❌ 推送失败。${NC}"
     echo -e "${YELLOW}=== 故障排查 ===${NC}"
     
-    # 检查是否因为远程有更新
     echo -e "${YELLOW}尝试拉取远程更改并变基 (git pull --rebase)...${NC}"
     if git pull origin main --rebase; then
         echo -e "${GREEN}合并成功，正在重试推送...${NC}"
