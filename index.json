@@ -1,8 +1,18 @@
 {
-  "note": "2025-12-23 22:43:33，更新项目1个",
-  "templates_note": "累计项目6个",
-  "generated_at": "2025-12-23T22:43:33+08:00",
+  "note": "2025-12-23 23:43:27，更新项目11个",
+  "templates_note": "累计项目13个",
+  "generated_at": "2025-12-23T23:43:27+08:00",
   "templates": [
+    {
+      "id": 8,
+      "name": "cfui",
+      "category": "network",
+      "description": "一个现代化的基于 Web 的控制面板，用于管理 Cloudflare Tunnel (cloudflared)，具有直观的界面。\n\n",
+      "version": "latest",
+      "logo": "https://ts1.tc.mm.bing.net/th/id/ODF.I9Ybdjf_TZdpg6eu9bGSZA?w=32\u0026h=32\u0026qlt=92\u0026pcl=fffffa\u0026o=6\u0026cb=ucfimg1\u0026pid=1.2\u0026ucfimg=1",
+      "website": "https://github.com/dockers-x/cfui",
+      "file": "templates/cfui.json"
+    },
     {
       "id": 4,
       "name": "cloudsaver",
@@ -22,6 +32,16 @@
       "logo": "https://raw.githubusercontent.com/fccview/cronmaster/main/public/heading.png",
       "website": "https://github.com/fccview/cronmaster",
       "file": "templates/cronmaster.json"
+    },
+    {
+      "id": 9,
+      "name": "mi-note-export",
+      "category": "hobby",
+      "description": "📝 小米笔记秒变个人博客网站，一键备份小米笔记（包含图片、录音等文件）",
+      "version": "latest",
+      "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+      "website": "https://github.com/idootop/mi-note-export",
+      "file": "templates/mi-note-export.json"
     },
     {
       "id": 3,
@@ -44,6 +64,26 @@
       "file": "templates/nginx.json"
     },
     {
+      "id": 11,
+      "name": "octopus",
+      "category": "productivity",
+      "description": "为个人打造的简单、美观、优雅的 LLM API 聚合与负载均衡服务\n\n",
+      "version": "latest",
+      "logo": "https://github.com/bestruirui/octopus/raw/dev/web/public/logo.svg",
+      "website": "https://github.com/bestruirui/octopus",
+      "file": "templates/octopus.json"
+    },
+    {
+      "id": 10,
+      "name": "omnibox",
+      "category": "entertainment",
+      "description": "在线免费观影，支持采集站，网盘等多种资源形式",
+      "version": "latest",
+      "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+      "website": "https://hub.docker.com/r/lampon/omnibox/",
+      "file": "templates/omnibox.json"
+    },
+    {
       "id": 5,
       "name": "openlist",
       "category": "file",
@@ -54,14 +94,44 @@
       "file": "templates/openlist.json"
     },
     {
+      "id": 13,
+      "name": "qm-music",
+      "category": "entertainment",
+      "description": "QM-Music 是一个基于 Subsonic 构建的轻量级私有云音乐服务器，专为音乐爱好者设计的轻量级高性能解决方案。支持 Docker 一键部署，完美兼容 Subsonic 生态客户端（如音流/Amperfy/substreamer/feishin/music-assistant），让您随时随地安全访问个人音乐库。",
+      "version": "latest",
+      "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+      "website": "https://github.com/chenqimiao/qm-music",
+      "file": "templates/qm-music.json"
+    },
+    {
+      "id": 12,
+      "name": "seerr",
+      "category": "entertainment",
+      "description": "Seerr 是一款免费开源的软件应用程序，用于管理媒体库的请求。它可以与您选择的媒体服务器集成，例如 Jellyfin 、 Plex 和 Emby 。此外，它还可以与您现有的服务集成，例如 Sonarr 和 Radarr 。",
+      "version": "latest",
+      "logo": "https://avatars.githubusercontent.com/u/101442446?s=48\u0026v=4",
+      "website": "https://github.com/seerr-team/seerr",
+      "file": "templates/seerr.json"
+    },
+    {
       "id": 6,
-      "name": "runtipi",
-      "category": "network",
-      "description": "",
-      "version": "",
-      "logo": "",
-      "website": "",
-      "file": "templates/runtipi.json"
+      "name": "stirling-pdf",
+      "category": "file",
+      "description": "GitHub 上排名第一的 PDF 应用，让您随时随地在任何设备上编辑 PDF 文件。Stirling PDF 是一个功能强大的开源 PDF 编辑平台。您可以将其作为个人桌面应用程序在浏览器中运行，也可以将其部署在您自己的服务器上并使用私有 API。无需将文档发送到外部服务，即可编辑、签名、编辑、转换和自动化处理 PDF 文件。",
+      "version": "latest",
+      "logo": "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png",
+      "website": "https://github.com/Stirling-Tools/Stirling-PDF",
+      "file": "templates/stirling-pdf.json"
+    },
+    {
+      "id": 7,
+      "name": "xiaomialbumsyncer",
+      "category": "photos",
+      "description": "全量/增量/定时 下载小米云服务中的相册到本地",
+      "version": "latest",
+      "logo": "https://github.com/Coooolfan/XiaomiAlbumSyncer/raw/main/static/xiaomi-album-syncer-logo.png",
+      "website": "https://github.com/Coooolfan/XiaomiAlbumSyncer",
+      "file": "templates/xiaomialbumsyncer.json"
     }
   ]
 }

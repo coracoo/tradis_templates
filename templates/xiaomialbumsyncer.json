@@ -1,0 +1,48 @@
+{
+  "id": 7,
+  "name": "xiaomialbumsyncer",
+  "category": "photos",
+  "description": "全量/增量/定时 下载小米云服务中的相册到本地",
+  "version": "latest",
+  "logo": "https://github.com/Coooolfan/XiaomiAlbumSyncer/raw/main/static/xiaomi-album-syncer-logo.png",
+  "website": "https://github.com/Coooolfan/XiaomiAlbumSyncer",
+  "tutorial": " 📸 下载指定相册中的所有照片\n\n ⏭️ 自动跳过已下载的照片\n\n 🔄 自动刷新 Cookie\n\n ⏰ 支持定时任务\n\n 📥 支持增量下载（超快）\n\n 🗂️ 支持按相册分类存储照片\n\n 🌍 友好的 Web UI\n\n 📅 填充照片和视频的 Exif 时间信息\n\n 📅 填充照片和视频的文件系统时间\n\n初次登录，要配置一个管理员密码。这里建议大家配置的复杂一点，毕竟这个项目直接套用了你的 小米 cookie，如果因为弱口令导致 ck 泄露，那得不偿失。\n![QQ_1764774496781.png](https://cgakki.top:61061/2025/12/QQ_1764774496781.png)\n\n系统首页，在上方切换到**设置**标签，这里我们主要要配置 `PassToken` 和 `userID` 两个小米云服务的 `ck` 参数。\n![QQ_1764774536977.png](https://cgakki.top:61061/2025/12/QQ_1764774536977.png)\n\n如何获取小米的`PassToken`和`userID`呢？方法很简单，和获取`Cookie`的方式差不多，首先打开网页版的小米云服务，使用你的小米账号登录。\n![QQ_1762498561017.png](https://cgakki.top:61061/2025/11/202511071541060.png)\n\n如果是首次使用云服务的，需要点击进入云相册，然后授权信任此设备。\n![QQ_1764774078042.png](https://cgakki.top:61061/2025/12/QQ_1764774078042.png)\n\n接着在浏览器里按下 F12 调出开发者面板，然后点击右上角的**用户头像**，选择**我的小米账号**，这个时候点击开发者面板下发的**应用程序**，选择 Cookie 下的网站，然后在右侧找到`passToken`和`userID`。\n![QQ_1764774791470.png](https://cgakki.top:61061/2025/12/QQ_1764774791470.png)\n\n接着回到系统面板，依次将对应的值复制到输入框里，点击更新。\n![QQ_1764774921861.png](https://cgakki.top:61061/2025/12/QQ_1764774921861.png)\n",
+  "dotenv": "",
+  "compose": "services:\n  app:\n    image: coolfan1024/xiaomi-album-syncer:latest\n    container_name: xiaomi-album-syncer\n    ports:\n      - \"38232:8080\"\n    volumes:\n      - ./download:/app/download\n      - ./db:/app/db\n    restart: unless-stopped",
+  "screenshots": [
+    "https://github.com/Coooolfan/XiaomiAlbumSyncer/raw/main/static/banner.avif"
+  ],
+  "schema": [
+    {
+      "name": "38232",
+      "label": "",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "8080",
+      "category": "basic",
+      "serviceName": "app",
+      "paramType": "port"
+    },
+    {
+      "name": "./download",
+      "label": "",
+      "description": "云相册下载路径",
+      "type": "path",
+      "default": "/app/download",
+      "category": "basic",
+      "serviceName": "app",
+      "paramType": "path"
+    },
+    {
+      "name": "./db",
+      "label": "",
+      "description": "容器持久化存储路径",
+      "type": "path",
+      "default": "/app/db",
+      "category": "advanced",
+      "serviceName": "app",
+      "paramType": "path"
+    }
+  ],
+  "enabled": true
+}

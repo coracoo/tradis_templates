@@ -1,0 +1,139 @@
+{
+  "id": 13,
+  "name": "qm-music",
+  "category": "entertainment",
+  "description": "QM-Music 是一个基于 Subsonic 构建的轻量级私有云音乐服务器，专为音乐爱好者设计的轻量级高性能解决方案。支持 Docker 一键部署，完美兼容 Subsonic 生态客户端（如音流/Amperfy/substreamer/feishin/music-assistant），让您随时随地安全访问个人音乐库。",
+  "version": "latest",
+  "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+  "website": "https://github.com/chenqimiao/qm-music",
+  "tutorial": "## 核心功能\n\nSubsonic 协议全兼容 - 完美适配音流/feishin/Amperfy/substreamer/music-assistant 等客户端\n\n智能音频转码 - 动态切换 libmp3lame/acc 编码（按需启用）,节省带宽流量\n\n多格式支持 - MP3/FLAC/AAC/WAV 等主流格式全覆盖\n\n中文曲库友好 - 支持繁简字互搜，中文排序/检索优化\n\n## 🎧 用户体验\n\n多用户体系 - 独立账号系统与权限管理\n\n个性化歌单 - 支持创建/管理自定义播放列表\n\n收藏与喜欢 - 实时同步的收藏夹功能\n\n歌词同步 - 智能匹配本地与在线歌词资源\n\n## 🗂️ 音乐管理\n\n自动化曲库 - 定时监测音乐目录变动，自动刷新元数据\n\n高效元数据解析 - 精准识别 ID3 标签与专辑信息\n\n结构化展示 - 专辑/艺术家/流派多维分类浏览\n\n云端播放统计 - 记录播放历史与用户偏好\n\n## 🔍 探索发现\n\n全局搜索 - 支持歌曲/专辑/艺术家关键词检索\n\n智能推荐 - 基于风格的相似歌曲与歌手推荐\n\n流派分类 - 按音乐风格快速筛选曲目",
+  "dotenv": "QM_SPOTIFY_CLIENT_ID=\nQM_SPOTIFY_CLIENT_SECRET=\nQM_LASTFM_API_KEY=",
+  "compose": "version: '3'\nservices:\n  qm-music:\n    image: qmmusic/qm-music:latest\n    ports:\n      - \"6688:6688\"\n    volumes:\n      - ./music:/data/qm-music/music_dir\n      - ./db:/data/qm-music/db\n      - ./cache:/data/qm-music/cache \n    environment:\n      - QM_FFMPEG_ENABLE=true\n      - TZ=Asia/Shanghai\n      - QM_SPOTIFY_ENABLE=false\n      - QM_SPOTIFY_CLIENT_ID=[QM_SPOTIFY_CLIENT_ID]\n      - QM_SPOTIFY_CLIENT_SECRET=[QM_SPOTIFY_CLIENT_SECRET]\n      - QM_LASTFM_ENABLE=false\n      - QM_LASTFM_API_KEY=[QM_LASTFM_API_KEY]\n      - QM_REFRESH_AUTO=true\n    restart: unless-stopped",
+  "screenshots": [
+    "https://github.com/chenqimiao/qm-music/raw/main/docs/assets/IMG119.jpg",
+    "https://github.com/chenqimiao/qm-music/raw/main/docs/assets/433026401-e91adfc7-2721-4b5e-82df-5a967fc6ae87.png"
+  ],
+  "schema": [
+    {
+      "name": "6688",
+      "label": "6688",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "6688",
+      "category": "basic",
+      "serviceName": "qm-music",
+      "paramType": "port"
+    },
+    {
+      "name": "./music",
+      "label": "./music",
+      "description": "音乐文件路径，修改成自己的",
+      "type": "path",
+      "default": "/data/qm-music/music_dir",
+      "category": "basic",
+      "serviceName": "qm-music",
+      "paramType": "path"
+    },
+    {
+      "name": "./db",
+      "label": "./db",
+      "description": "容器持久化数据",
+      "type": "path",
+      "default": "/data/qm-music/db",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "path"
+    },
+    {
+      "name": "./cache",
+      "label": "./cache",
+      "description": "容器缓存",
+      "type": "path",
+      "default": "/data/qm-music/cache",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "path"
+    },
+    {
+      "name": "QM_FFMPEG_ENABLE",
+      "label": "QM_FFMPEG_ENABLE",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "name": "QM_SPOTIFY_ENABLE",
+      "label": "QM_SPOTIFY_ENABLE",
+      "description": "开启 SPOTIFY 需填写变量，要魔法",
+      "type": "string",
+      "default": "false",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "name": "QM_SPOTIFY_CLIENT_ID",
+      "label": "QM_SPOTIFY_CLIENT_ID",
+      "description": "",
+      "type": "string",
+      "default": "[QM_SPOTIFY_CLIENT_ID]",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "name": "QM_SPOTIFY_CLIENT_SECRET",
+      "label": "QM_SPOTIFY_CLIENT_SECRET",
+      "description": "",
+      "type": "password",
+      "default": "[QM_SPOTIFY_CLIENT_SECRET]",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "name": "QM_LASTFM_ENABLE",
+      "label": "QM_LASTFM_ENABLE",
+      "description": "开启 LASTFM 需填写变量，要魔法",
+      "type": "string",
+      "default": "false",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "name": "QM_LASTFM_API_KEY",
+      "label": "QM_LASTFM_API_KEY",
+      "description": "",
+      "type": "password",
+      "default": "[QM_LASTFM_API_KEY]",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "name": "QM_REFRESH_AUTO",
+      "label": "QM_REFRESH_AUTO",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

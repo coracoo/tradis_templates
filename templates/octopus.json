@@ -1,0 +1,39 @@
+{
+  "id": 11,
+  "name": "octopus",
+  "category": "productivity",
+  "description": "为个人打造的简单、美观、优雅的 LLM API 聚合与负载均衡服务\n\n",
+  "version": "latest",
+  "logo": "https://github.com/bestruirui/octopus/raw/dev/web/public/logo.svg",
+  "website": "https://github.com/bestruirui/octopus",
+  "tutorial": "🔀 多渠道聚合 - 支持接入多个 LLM 供应商渠道，统一管理\n\n⚖️ 负载均衡 - 自动分配请求，确保服务稳定高效\n\n🔄 协议互转 - 支持 OpenAI Chat / OpenAI Responses / Anthropic 三种 API 格式互相转换\n\n💰 价格同步 - 自动更新模型价格\n\n🔃 模型同步 - 自动与渠道同步可用模型列表，省心省力\n\n📊 数据统计 - 全面的请求统计、Token 消耗、费用追踪\n\n🎨 优雅界面 - 简洁美观的 Web 管理面板",
+  "dotenv": "",
+  "compose": "services:\n  octopus:\n    image: bestrui/octopus\n    ports:\n       - '8080:8080'\n    volumes:      \n       - './data:/app/data'\n    container_name: octopus\n    restart: unless-stopped",
+  "screenshots": [
+    "https://github.com/bestruirui/octopus/raw/dev/web/public/screenshot/desktop-home.png",
+    "https://github.com/bestruirui/octopus/raw/dev/web/public/screenshot/desktop-channel.png"
+  ],
+  "schema": [
+    {
+      "name": "8080",
+      "label": "",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "8080",
+      "category": "basic",
+      "serviceName": "octopus",
+      "paramType": "port"
+    },
+    {
+      "name": "./data",
+      "label": "",
+      "description": "容器持久化存储路径",
+      "type": "path",
+      "default": "/app/data",
+      "category": "advanced",
+      "serviceName": "octopus",
+      "paramType": "path"
+    }
+  ],
+  "enabled": true
+}

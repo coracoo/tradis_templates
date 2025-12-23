@@ -13,8 +13,8 @@
   "schema": [
     {
       "name": "5244",
-      "label": "5244",
-      "description": "",
+      "label": "",
+      "description": "容器 WEB HTTP 端口",
       "type": "port",
       "default": "5244",
       "category": "basic",
@@ -23,41 +23,31 @@
     },
     {
       "name": "5245",
-      "label": "5245",
-      "description": "",
+      "label": "",
+      "description": "容器 WEB HTTPS 端口",
       "type": "port",
       "default": "5245",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "openlist",
       "paramType": "port"
     },
     {
       "name": "./openlist",
-      "label": "./openlist",
-      "description": "",
+      "label": "",
+      "description": "挂载容器持久化路径",
       "type": "path",
       "default": "/opt/openlist/data",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "openlist",
       "paramType": "path"
     },
     {
       "name": "UMASK",
-      "label": "UMASK",
+      "label": "",
       "description": "",
       "type": "string",
       "default": "022",
-      "category": "basic",
-      "serviceName": "openlist",
-      "paramType": "env"
-    },
-    {
-      "name": "TZ",
-      "label": "TZ",
-      "description": "",
-      "type": "string",
-      "default": "Asia/Shanghai",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "openlist",
       "paramType": "env"
     }
