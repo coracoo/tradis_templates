@@ -14,11 +14,11 @@ if ! command -v git &> /dev/null; then
     exit 1
 fi
 
-# 2. 初始化/检查仓库（关键修改：分支名改为 master，匹配子仓库）
+# 2. 初始化/检查仓库
 if [ ! -d ".git" ]; then
     echo -e "${YELLOW}正在初始化 git 仓库...${NC}"
     git init
-    git branch -M master  # 原脚本是 main，改为 master
+    git branch -M main
 else
     echo -e "${GREEN}Git 仓库已存在。${NC}"
 fi
@@ -86,10 +86,10 @@ else
     fi
 fi
 
-# 6. 推送代码（关键修改：分支名改为 master）
+# 6. 推送代码
 echo -e "${YELLOW}正在尝试通过 SSH 推送代码...${NC}"
 
-if git push -u origin master; then  # 原脚本是 main，改为 master
+if git push -u origin main; then
     echo -e "${GREEN}✅ 子仓库代码上传成功！${NC}"
     exit 0
 else
@@ -98,9 +98,9 @@ else
     
     # 检查是否因为远程有更新
     echo -e "${YELLOW}尝试拉取远程更改并变基 (git pull --rebase)...${NC}"
-    if git pull origin master --rebase; then  # 分支名改为 master
+    if git pull origin main --rebase; then
         echo -e "${GREEN}合并成功，正在重试推送...${NC}"
-        if git push -u origin master; then  # 分支名改为 master
+        if git push -u origin main; then
             echo -e "${GREEN}✅ 子仓库代码上传成功！${NC}"
             exit 0
         fi
