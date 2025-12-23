@@ -1,1 +1,39 @@
-{"id":4,"name":"cloudsaver","category":"entertainment","description":"一个基于 Vue 3 + Express 的网盘资源搜索与转存工具。","version":"latest","logo":"https://github.com/jiangrui1994/CloudSaver/blob/main/frontend/src/assets/images/logo.png?raw=true","website":"https://github.com/jiangrui1994/CloudSaver","tutorial":"# /app/config 目录说明\n## env 文件：包含后端环境变量配置\n```\n# JWT配置\nJWT_SECRET=your_jwt_secret_here\n\n# Telegram配置\nTELEGRAM_BASE_URL=https://t.me/s\n\n# Telegram频道配置(0.3.0及之后版本无效)\nTELE_CHANNELS=[{\"id\":\"xxxx\",\"name\":\"xxxx资源分享\"}]\n```\n# 注意事项\n资源搜索需要配置代理环境\n默认注册码\n管理员：230713\n普通用户：9527","dotenv":"","compose":"version: \"3\"\nservices:\n  cloudsaver:\n    image: jiangrui1994/cloudsaver:latest\n    container_name: cloud-saver\n    ports:\n      - \"8008:8008\"\n    volumes:\n      - ./data:/app/data\n      - ./app/config\n    restart: unless-stopped","screenshots":["https://github.com/jiangrui1994/CloudSaver/blob/main/docs/images/pc/douban.png?raw=true","https://github.com/jiangrui1994/CloudSaver/blob/main/docs/images/pc/save1.png?raw=true"],"schema":[{"name":"8008","label":"","description":"容器 WEB HTTP 端口","type":"port","default":"8008","category":"basic","serviceName":"cloudsaver","paramType":"port"},{"name":"./data","label":"","description":"挂载容器持久化目录","type":"path","default":"/app/data","category":"advanced","serviceName":"cloudsaver","paramType":"path"}]}
+{
+  "id": 4,
+  "name": "cloudsaver",
+  "category": "entertainment",
+  "description": "一个基于 Vue 3 + Express 的网盘资源搜索与转存工具。",
+  "version": "latest",
+  "logo": "https://github.com/jiangrui1994/CloudSaver/blob/main/frontend/src/assets/images/logo.png?raw=true",
+  "website": "https://github.com/jiangrui1994/CloudSaver",
+  "tutorial": "# /app/config 目录说明\n## env 文件：包含后端环境变量配置\n```\n# JWT配置\nJWT_SECRET=your_jwt_secret_here\n\n# Telegram配置\nTELEGRAM_BASE_URL=https://t.me/s\n\n# Telegram频道配置(0.3.0及之后版本无效)\nTELE_CHANNELS=[{\"id\":\"xxxx\",\"name\":\"xxxx资源分享\"}]\n```\n# 注意事项\n资源搜索需要配置代理环境\n默认注册码\n管理员：230713\n普通用户：9527",
+  "dotenv": "",
+  "compose": "version: \"3\"\nservices:\n  cloudsaver:\n    image: jiangrui1994/cloudsaver:latest\n    container_name: cloud-saver\n    ports:\n      - \"8008:8008\"\n    volumes:\n      - ./data:/app/data\n      - ./app/config\n    restart: unless-stopped",
+  "screenshots": [
+    "https://github.com/jiangrui1994/CloudSaver/blob/main/docs/images/pc/douban.png?raw=true",
+    "https://github.com/jiangrui1994/CloudSaver/blob/main/docs/images/pc/save1.png?raw=true"
+  ],
+  "schema": [
+    {
+      "name": "8008",
+      "label": "",
+      "description": "容器 WEB HTTP 端口",
+      "type": "port",
+      "default": "8008",
+      "category": "basic",
+      "serviceName": "cloudsaver",
+      "paramType": "port"
+    },
+    {
+      "name": "./data",
+      "label": "",
+      "description": "挂载容器持久化目录",
+      "type": "path",
+      "default": "/app/data",
+      "category": "advanced",
+      "serviceName": "cloudsaver",
+      "paramType": "path"
+    }
+  ],
+  "enabled": true
+}

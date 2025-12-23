@@ -1,1 +1,119 @@
-{"id":2,"name":"cronmaster","category":"platform","description":"轻松管理 Cron 任务","version":"latest","logo":"https://raw.githubusercontent.com/fccview/cronmaster/main/public/heading.png","website":"https://github.com/fccview/cronmaster","tutorial":"管理员的登录密码，就是我们在 yaml 里配置的密码，如果忘记修改了，那默认的是`Cherry4nas@666`。\n![QQ_1764653424472.png](https://cgakki.top:61061/2025/12/202512021330087.png)\n\n先来看界面风格，CronMaster 这个项目分为左右两栏。\n\n左侧是当前 NAS （服务器）的性能信息，包括运**行时间、内存使用量、CPU使用率、GPU信息、网络流量、性能一览**，所有的硬件信息都是30秒刷新一次，相对还是比较实时、准确的。\n![QQ_1764653495830.png](https://cgakki.top:61061/2025/12/202512021331758.png)\n\n右侧的话，是当前 NAS 的 Cron 任务列表，**支持详细展示和简略展示**。\n\n🔻详细展示包括了 定时时间（含Cron 翻译成自然语言）、脚本路径、运行用户等。\n![QQ_1764662090064.png](https://cgakki.top:61061/2025/12/202512021554234.png)\n\n🔻简略信息的话只包括 Cron、脚本路径。\n![QQ_1764662150156.png](https://cgakki.top:61061/2025/12/202512021555493.png)\n\n功能上，主要功能包括筛选、备份、新建Cron；然后单独每一个 Cron 支持启停改删等常用功能，还提供了快速开启日志归档、复制任务的快捷指令。\n![QQ_1764662714961.png](https://cgakki.top:61061/2025/12/202512021605220.png)\n\n新建的任务计划，支持 Command 指令，以及复杂的脚本指令。前者就不多介绍了，主要我看来介绍一下后者。\n![QQ_1764662794814.png](https://cgakki.top:61061/2025/12/202512021606113.png)\n\n在复杂脚本指令里，允许用户编**Shell**脚本，并且内置了近 30种兼容 NAS 的脚本可以直接导入。\n\n这些脚本包括但不限于：影音文件移动、文件复制、重启服务、清除日志、数据库备份、遍历文件、检查 SSL、检查端口、备份文件、rsync 同步等等。\n![QQ_1764662865053.png](https://cgakki.top:61061/2025/12/202512021607352.png)\n","dotenv":"","compose":"# For all configuration options, see howto/DOCKER.md\nservices:\n  cronmaster:\n    image: ghcr.io/fccview/cronmaster:latest\n    container_name: cronmaster\n    user: \"root\"\n    ports:\n      - \"40123:3000\"\n    environment:\n      - NODE_ENV=production\n      - DOCKER=true\n      - NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL=30000\n      - AUTH_PASSWORD=very_strong_password\n      - HOST_CRONTAB_USER=root\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock\n      - ./scripts:/app/scripts\n      - ./data:/app/data\n      - ./snippets:/app/snippets\n    pid: \"host\"\n    privileged: true\n    restart: always\n    init: true","screenshots":["https://raw.githubusercontent.com/fccview/cronmaster/main/screenshots/home.png","https://raw.githubusercontent.com/fccview/cronmaster/main/screenshots/live-running.png"],"schema":[{"name":"40123","label":"","description":"容器 WEB HTTP 端口","type":"port","default":"3000","category":"basic","serviceName":"cronmaster","paramType":"port"},{"name":"/var/run/docker.sock","label":"","description":"必须挂载","type":"path","default":"/var/run/docker.sock","category":"advanced","serviceName":"cronmaster","paramType":"path"},{"name":"./scripts","label":"","description":"挂载脚本文件","type":"path","default":"/app/scripts","category":"advanced","serviceName":"cronmaster","paramType":"path"},{"name":"./data","label":"","description":"挂载容器持久化目录","type":"path","default":"/app/data","category":"advanced","serviceName":"cronmaster","paramType":"path"},{"name":"./snippets","label":"","description":"挂载代码文件","type":"path","default":"/app/snippets","category":"advanced","serviceName":"cronmaster","paramType":"path"},{"name":"NODE_ENV","label":"","description":"","type":"string","default":"production","category":"advanced","serviceName":"cronmaster","paramType":"env"},{"name":"DOCKER","label":"","description":"","type":"string","default":"true","category":"advanced","serviceName":"cronmaster","paramType":"env"},{"name":"NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL","label":"","description":"","type":"string","default":"30000","category":"advanced","serviceName":"cronmaster","paramType":"env"},{"name":"AUTH_PASSWORD","label":"","description":"自定义root密码","type":"password","default":"Cherry4nas@666","category":"basic","serviceName":"cronmaster","paramType":"env"},{"name":"HOST_CRONTAB_USER","label":"","description":"","type":"string","default":"root","category":"advanced","serviceName":"cronmaster","paramType":"env"}]}
+{
+  "id": 2,
+  "name": "cronmaster",
+  "category": "platform",
+  "description": "轻松管理 Cron 任务",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/fccview/cronmaster/main/public/heading.png",
+  "website": "https://github.com/fccview/cronmaster",
+  "tutorial": "管理员的登录密码，就是我们在 yaml 里配置的密码，如果忘记修改了，那默认的是`Cherry4nas@666`。\n![QQ_1764653424472.png](https://cgakki.top:61061/2025/12/202512021330087.png)\n\n先来看界面风格，CronMaster 这个项目分为左右两栏。\n\n左侧是当前 NAS （服务器）的性能信息，包括运**行时间、内存使用量、CPU使用率、GPU信息、网络流量、性能一览**，所有的硬件信息都是30秒刷新一次，相对还是比较实时、准确的。\n![QQ_1764653495830.png](https://cgakki.top:61061/2025/12/202512021331758.png)\n\n右侧的话，是当前 NAS 的 Cron 任务列表，**支持详细展示和简略展示**。\n\n🔻详细展示包括了 定时时间（含Cron 翻译成自然语言）、脚本路径、运行用户等。\n![QQ_1764662090064.png](https://cgakki.top:61061/2025/12/202512021554234.png)\n\n🔻简略信息的话只包括 Cron、脚本路径。\n![QQ_1764662150156.png](https://cgakki.top:61061/2025/12/202512021555493.png)\n\n功能上，主要功能包括筛选、备份、新建Cron；然后单独每一个 Cron 支持启停改删等常用功能，还提供了快速开启日志归档、复制任务的快捷指令。\n![QQ_1764662714961.png](https://cgakki.top:61061/2025/12/202512021605220.png)\n\n新建的任务计划，支持 Command 指令，以及复杂的脚本指令。前者就不多介绍了，主要我看来介绍一下后者。\n![QQ_1764662794814.png](https://cgakki.top:61061/2025/12/202512021606113.png)\n\n在复杂脚本指令里，允许用户编**Shell**脚本，并且内置了近 30种兼容 NAS 的脚本可以直接导入。\n\n这些脚本包括但不限于：影音文件移动、文件复制、重启服务、清除日志、数据库备份、遍历文件、检查 SSL、检查端口、备份文件、rsync 同步等等。\n![QQ_1764662865053.png](https://cgakki.top:61061/2025/12/202512021607352.png)\n",
+  "dotenv": "",
+  "compose": "# For all configuration options, see howto/DOCKER.md\nservices:\n  cronmaster:\n    image: ghcr.io/fccview/cronmaster:latest\n    container_name: cronmaster\n    user: \"root\"\n    ports:\n      - \"40123:3000\"\n    environment:\n      - NODE_ENV=production\n      - DOCKER=true\n      - NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL=30000\n      - AUTH_PASSWORD=very_strong_password\n      - HOST_CRONTAB_USER=root\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock\n      - ./scripts:/app/scripts\n      - ./data:/app/data\n      - ./snippets:/app/snippets\n    pid: \"host\"\n    privileged: true\n    restart: always\n    init: true",
+  "screenshots": [
+    "https://raw.githubusercontent.com/fccview/cronmaster/main/screenshots/home.png",
+    "https://raw.githubusercontent.com/fccview/cronmaster/main/screenshots/live-running.png"
+  ],
+  "schema": [
+    {
+      "name": "40123",
+      "label": "",
+      "description": "容器 WEB HTTP 端口",
+      "type": "port",
+      "default": "3000",
+      "category": "basic",
+      "serviceName": "cronmaster",
+      "paramType": "port"
+    },
+    {
+      "name": "/var/run/docker.sock",
+      "label": "",
+      "description": "必须挂载",
+      "type": "path",
+      "default": "/var/run/docker.sock",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "path"
+    },
+    {
+      "name": "./scripts",
+      "label": "",
+      "description": "挂载脚本文件",
+      "type": "path",
+      "default": "/app/scripts",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "path"
+    },
+    {
+      "name": "./data",
+      "label": "",
+      "description": "挂载容器持久化目录",
+      "type": "path",
+      "default": "/app/data",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "path"
+    },
+    {
+      "name": "./snippets",
+      "label": "",
+      "description": "挂载代码文件",
+      "type": "path",
+      "default": "/app/snippets",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "path"
+    },
+    {
+      "name": "NODE_ENV",
+      "label": "",
+      "description": "",
+      "type": "string",
+      "default": "production",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "env"
+    },
+    {
+      "name": "DOCKER",
+      "label": "",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "env"
+    },
+    {
+      "name": "NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
+      "label": "",
+      "description": "",
+      "type": "string",
+      "default": "30000",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "env"
+    },
+    {
+      "name": "AUTH_PASSWORD",
+      "label": "",
+      "description": "自定义root密码",
+      "type": "password",
+      "default": "Cherry4nas@666",
+      "category": "basic",
+      "serviceName": "cronmaster",
+      "paramType": "env"
+    },
+    {
+      "name": "HOST_CRONTAB_USER",
+      "label": "",
+      "description": "",
+      "type": "string",
+      "default": "root",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

@@ -8,6 +8,10 @@ NC='\033[0m' # No Color
 
 echo -e "${GREEN}=== 子仓库(cloudflare)自动上传代码脚本 (SSH模式) ===${NC}"
 
+# 0. 读取外部传入配置（用于后端自动化调用，避免交互）
+GIT_SYNC_REPO_URL="${GIT_SYNC_REPO_URL:-}"
+GIT_SYNC_COMMIT_MESSAGE="${GIT_SYNC_COMMIT_MESSAGE:-}"
+
 # 1. 检查 git 环境
 if ! command -v git &> /dev/null; then
     echo -e "${RED}错误: 未找到 git 命令，请先安装 git。${NC}"
@@ -43,8 +47,25 @@ if [ -z "$status" ]; then
     echo -e "${GREEN}没有检测到新的更改，无需提交。${NC}"
 else
     echo -e "${YELLOW}正在提交更改...${NC}"
-    timestamp=$(date "+%Y-%m-%d %H:%M:%S")
-    git commit -m "Auto backup (cloudflare): $timestamp"  # 备注加子仓库标识，便于区分
+    if [ -n "$GIT_SYNC_COMMIT_MESSAGE" ]; then
+        mapfile -t _commit_lines <<< "$GIT_SYNC_COMMIT_MESSAGE"
+        commit_args=()
+        for _line in "${_commit_lines[@]}"; do
+            _line="$(echo -n "$_line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+            if [ -n "$_line" ]; then
+                commit_args+=(-m "$_line")
+            fi
+        done
+        if [ ${#commit_args[@]} -eq 0 ]; then
+            timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+            git commit -m "Auto backup (cloudflare): $timestamp"
+        else
+            git commit "${commit_args[@]}"
+        fi
+    else
+        timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+        git commit -m "Auto backup (cloudflare): $timestamp"  # 备注加子仓库标识，便于区分
+    fi
     echo -e "${GREEN}本地提交完成。${NC}"
 fi
 
@@ -64,18 +85,21 @@ fi
 
 if [ -z "$current_remote" ]; then
     echo -e "${YELLOW}未配置远程仓库 (origin)。${NC}"
-    echo -e "请输入您的 GitHub 子仓库地址 (格式: git@github.com:user/子仓库名.git)"
-    read -p "地址: " repo_url
-    
-    if [ -n "$repo_url" ]; then
-        git remote add origin "$repo_url"
-        echo -e "${GREEN}已添加远程仓库: $repo_url${NC}"
+    if [ -n "$GIT_SYNC_REPO_URL" ]; then
+        git remote add origin "$GIT_SYNC_REPO_URL"
+        echo -e "${GREEN}已添加远程仓库: $GIT_SYNC_REPO_URL${NC}"
     else
-        echo -e "${RED}未输入地址，跳过推送步骤。${NC}"
-        exit 0
+        echo -e "${RED}错误: 未提供远程仓库地址。请设置环境变量 GIT_SYNC_REPO_URL。${NC}"
+        exit 1
     fi
 else
     echo -e "${GREEN}当前远程仓库: $current_remote${NC}"
+    if [ -n "$GIT_SYNC_REPO_URL" ] && [ "$current_remote" != "$GIT_SYNC_REPO_URL" ]; then
+        echo -e "${YELLOW}检测到指定远程仓库地址，正在更新 origin...${NC}"
+        git remote set-url origin "$GIT_SYNC_REPO_URL"
+        current_remote="$GIT_SYNC_REPO_URL"
+        echo -e "${GREEN}origin 已更新为: $current_remote${NC}"
+    fi
     # 检查是否为 HTTPS，如果是则尝试转换为 SSH
     if [[ "$current_remote" == https://* ]]; then
         echo -e "${YELLOW}检测到 HTTPS 协议，正在转换为 SSH 协议...${NC}"
