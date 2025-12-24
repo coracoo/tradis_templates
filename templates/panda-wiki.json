@@ -566,7 +566,7 @@
       "label": "SUBNET_PREFIX",
       "description": "",
       "type": "string",
-      "default": "169.254.15",
+      "default": "192.168.62",
       "category": "basic",
       "serviceName": "Global",
       "paramType": "env"
