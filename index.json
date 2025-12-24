@@ -1,7 +1,7 @@
 {
-  "note": "2025-12-23 23:43:27，更新项目11个",
-  "templates_note": "累计项目13个",
-  "generated_at": "2025-12-23T23:43:27+08:00",
+  "note": "2025-12-24 19:34:16，更新项目1个",
+  "templates_note": "累计项目14个",
+  "generated_at": "2025-12-24T19:34:16+08:00",
   "templates": [
     {
       "id": 8,
@@ -92,6 +92,16 @@
       "logo": "https://raw.githubusercontent.com/OpenListTeam/Logo/main/logo.svg",
       "website": "https://github.com/OpenListTeam/OpenList",
       "file": "templates/openlist.json"
+    },
+    {
+      "id": 14,
+      "name": "panda-wiki",
+      "category": "team",
+      "description": "",
+      "version": "",
+      "logo": "",
+      "website": "",
+      "file": "templates/panda-wiki.json"
     },
     {
       "id": 13,
