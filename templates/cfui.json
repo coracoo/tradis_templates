@@ -13,13 +13,23 @@
   "schema": [
     {
       "name": "14333",
-      "label": "",
-      "description": "容器 WEB 端口",
+      "label": "14333",
+      "description": "",
       "type": "port",
       "default": "14333",
       "category": "basic",
       "serviceName": "cfui",
       "paramType": "port"
+    },
+    {
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "basic",
+      "serviceName": "cfui",
+      "paramType": "env"
     }
   ],
   "enabled": true
