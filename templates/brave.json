@@ -1,0 +1,88 @@
+{
+  "id": 16,
+  "name": "brave",
+  "category": "other",
+  "description": "Brave 浏览器 NAS 版本",
+  "version": "latest",
+  "logo": "https://avatars.githubusercontent.com/u/12301619?s=48\u0026v=4",
+  "website": "https://github.com/brave/brave-browser",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  brave:\n    image: lscr.io/linuxserver/brave:latest\n    environment:\n      - PUID=1000\n      - PGID=1000\n      - TZ=Asia/Shanghai\n      - LC_ALL=zh_CN.UTF-8\n    volumes:\n      - ./config:/config\n    ports:\n      - 3000:3000\n      - 3001:3001\n    shm_size: \"1gb\"\n    restart: unless-stopped",
+  "screenshots": [
+    "https://github.com/brave/brave-browser/raw/master/docs/source/_static/Brave.svg"
+  ],
+  "schema": [
+    {
+      "name": "3000",
+      "label": "3000",
+      "description": "容器 HTTP 端口",
+      "type": "port",
+      "default": "3000",
+      "category": "basic",
+      "serviceName": "brave",
+      "paramType": "port"
+    },
+    {
+      "name": "3001",
+      "label": "3001",
+      "description": "容器 HTTPS 端口",
+      "type": "port",
+      "default": "3001",
+      "category": "basic",
+      "serviceName": "brave",
+      "paramType": "port"
+    },
+    {
+      "name": "./config",
+      "label": "./config",
+      "description": "容器持久化路径",
+      "type": "path",
+      "default": "/config",
+      "category": "basic",
+      "serviceName": "brave",
+      "paramType": "path"
+    },
+    {
+      "name": "PUID",
+      "label": "PUID",
+      "description": "",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    },
+    {
+      "name": "PGID",
+      "label": "PGID",
+      "description": "",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    },
+    {
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    },
+    {
+      "name": "LC_ALL",
+      "label": "LC_ALL",
+      "description": "",
+      "type": "string",
+      "default": "zh_CN.UTF-8",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

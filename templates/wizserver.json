@@ -1,0 +1,66 @@
+{
+  "id": 15,
+  "name": "wizserver",
+  "category": "knowledge",
+  "description": "为知笔记自托管版本",
+  "version": "latest",
+  "logo": "https://ts1.tc.mm.bing.net/th/id/ODF.RY_kiO84dijVtjMAt75zbg?w=32\u0026h=32\u0026qlt=90\u0026pcl=fffffc\u0026r=0\u0026o=6\u0026cb=ucfimg1\u0026pid=1.2\u0026ucfimg=1",
+  "website": "https://hub.docker.com/r/wiznote/wizserver",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    wizserver:\n        restart: unless-stopped\n        stdin_open: true\n        tty: true\n        volumes:\n            - ./wizdata:/wiz/storage\n            - /etc/localtime:/etc/localtime\n        ports:\n            - 6666:80\n            - 9269:9269/udp\n        image: wiznote/wizserver",
+  "screenshots": [],
+  "schema": [
+    {
+      "name": "80",
+      "label": "6666",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "wizserver",
+      "paramType": "port"
+    },
+    {
+      "name": "9269",
+      "label": "9269",
+      "description": "UDP 端口",
+      "type": "port",
+      "default": "9269",
+      "category": "advanced",
+      "serviceName": "wizserver",
+      "paramType": "port"
+    },
+    {
+      "name": "/etc/localtime",
+      "label": "/etc/localtime",
+      "description": "时区",
+      "type": "path",
+      "default": "/etc/localtime",
+      "category": "basic",
+      "serviceName": "wizserver",
+      "paramType": "path"
+    },
+    {
+      "name": "./wizdata",
+      "label": "./wizdata",
+      "description": "数据存储路径",
+      "type": "path",
+      "default": "/wiz/storage",
+      "category": "basic",
+      "serviceName": "wizserver",
+      "paramType": "path"
+    },
+    {
+      "name": "6666",
+      "label": "6666",
+      "description": "",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "wizserver",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

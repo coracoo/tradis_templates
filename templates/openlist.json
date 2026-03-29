@@ -50,16 +50,6 @@
       "category": "advanced",
       "serviceName": "openlist",
       "paramType": "env"
-    },
-    {
-      "name": "TZ",
-      "label": "TZ",
-      "description": "",
-      "type": "string",
-      "default": "Asia/Shanghai",
-      "category": "basic",
-      "serviceName": "openlist",
-      "paramType": "env"
     }
   ],
   "enabled": true

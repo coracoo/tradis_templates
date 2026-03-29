@@ -1,0 +1,68 @@
+{
+  "id": 25,
+  "name": "n8n",
+  "category": "productivity",
+  "description": "（无额外数据库版本）公平代码工作流自动化平台，具备原生 AI 功能。支持可视化构建与自定义代码相结合，可自托管或云端部署，并集成 400 多个应用。",
+  "version": "latest",
+  "logo": "https://avatars.githubusercontent.com/u/45487711?s=48\u0026v=4",
+  "website": "https://github.com/n8n-io/n8n",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  n8n:\n    ports:\n      - 35678:5678\n    volumes:\n      - n8n_data:/home/node/.n8n\n    environment:\n      - N8N_SECURE_COOKIE=false\n      - GENERIC_TIMEZONE=Asia/Shanghai\n      - HTTP_PROXY=http://192.168.0.1:7890\n      - HTTPS_PROXY=http://192.168.0.1:7890\n    image: docker.n8n.io/n8nio/n8n\nvolumes:\n    n8n_data:",
+  "screenshots": [
+    "https://raw.githubusercontent.com/n8n-io/n8n/master/assets/n8n-screenshot-readme.png"
+  ],
+  "schema": [
+    {
+      "name": "35678",
+      "label": "35678",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "5678",
+      "category": "basic",
+      "serviceName": "n8n",
+      "paramType": "port"
+    },
+    {
+      "name": "N8N_SECURE_COOKIE",
+      "label": "N8N_SECURE_COOKIE",
+      "description": "",
+      "type": "string",
+      "default": "false",
+      "category": "advanced",
+      "serviceName": "n8n",
+      "paramType": "env"
+    },
+    {
+      "name": "GENERIC_TIMEZONE",
+      "label": "GENERIC_TIMEZONE",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "n8n",
+      "paramType": "env"
+    },
+    {
+      "name": "HTTP_PROXY",
+      "label": "HTTP_PROXY",
+      "description": "自行挂代理，不用则删除",
+      "type": "string",
+      "default": "http://192.168.0.1:7890",
+      "category": "basic",
+      "serviceName": "n8n",
+      "paramType": "env"
+    },
+    {
+      "name": "HTTPS_PROXY",
+      "label": "HTTPS_PROXY",
+      "description": "自行挂代理，不用则删除",
+      "type": "string",
+      "default": "http://192.168.0.1:7890",
+      "category": "basic",
+      "serviceName": "n8n",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

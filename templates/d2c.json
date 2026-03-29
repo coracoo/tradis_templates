@@ -1,0 +1,78 @@
+{
+  "id": 24,
+  "name": "d2c",
+  "category": "platform",
+  "description": "把存量docker 转换为compose.yaml",
+  "version": "latest",
+  "logo": "/uploads/d2c_icon.png",
+  "website": "https://github.com/coracoo/docker2compose",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  d2c:\n    image: crpi-xg6dfmt5h2etc7hg.cn-hangzhou.personal.cr.aliyuncs.com/cherry4nas/d2c:latest\n    ports:\n      - \"5000:5000\"\n    environment:\n      - TZ=Asia/Shanghai\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock:ro\n      - ./d2c/compose:/app/compose\n      - ./d2c/logs:/app/logs\n      - ./d2c/config:/app/config",
+  "screenshots": [
+    "https://private-user-images.githubusercontent.com/120569020/462279771-d1b40dd7-408b-4f87-9756-a35ffe74a5da.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjY2MzEwMzgsIm5iZiI6MTc2NjYzMDczOCwicGF0aCI6Ii8xMjA1NjkwMjAvNDYyMjc5NzcxLWQxYjQwZGQ3LTQwOGItNGY4Ny05NzU2LWEzNWZmZTc0YTVkYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMjI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTIyNVQwMjQ1MzhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05YjdiZjIxYjNkOWJhNjZlODg2MGI3NTk5N2E2MmFhNzA3NWM3YTVlYmNiMjMxOTNmOWMzMWZiODY0ZGMxMzA3JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.PLH0tMZegENTKvd69w8YDEAiKLNMzmiZbtbl85gGvLI"
+  ],
+  "schema": [
+    {
+      "name": "5000",
+      "label": "5000",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "5000",
+      "category": "basic",
+      "serviceName": "d2c",
+      "paramType": "port"
+    },
+    {
+      "name": "/var/run/docker.sock",
+      "label": "/var/run/docker.sock",
+      "description": "",
+      "type": "path",
+      "default": "/var/run/docker.sock",
+      "category": "advanced",
+      "serviceName": "d2c",
+      "paramType": "path"
+    },
+    {
+      "name": "./d2c/compose",
+      "label": "./d2c/compose",
+      "description": "",
+      "type": "path",
+      "default": "/app/compose",
+      "category": "advanced",
+      "serviceName": "d2c",
+      "paramType": "path"
+    },
+    {
+      "name": "./d2c/logs",
+      "label": "./d2c/logs",
+      "description": "",
+      "type": "path",
+      "default": "/app/logs",
+      "category": "advanced",
+      "serviceName": "d2c",
+      "paramType": "path"
+    },
+    {
+      "name": "./d2c/config",
+      "label": "./d2c/config",
+      "description": "",
+      "type": "path",
+      "default": "/app/config",
+      "category": "advanced",
+      "serviceName": "d2c",
+      "paramType": "path"
+    },
+    {
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "d2c",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

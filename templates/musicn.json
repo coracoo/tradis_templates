@@ -1,0 +1,38 @@
+{
+  "id": 18,
+  "name": "musicn",
+  "category": "entertainment",
+  "description": "🎵 一个可播放及下载音乐的 Node.js 命令行工具",
+  "version": "latest",
+  "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+  "website": "https://github.com/wy580477/musicn-container",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "version: '3.4'\nservices:\n  musicn:\n    image: ghcr.io/wy580477/musicn-container:latest\n    container_name: musicn\n    restart: unless-stopped\n    entrypoint: [\"/sbin/tini\", \"--\", \"msc\", \"-q\"]\n    ports:\n      - \"7478:7478\"\n    volumes:\n      - ./musicn:/data",
+  "screenshots": [
+    "https://private-user-images.githubusercontent.com/44596995/249805741-f673ad83-f867-41c5-84c9-9e0c531ecce6.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjY1NDM2OTksIm5iZiI6MTc2NjU0MzM5OSwicGF0aCI6Ii80NDU5Njk5NS8yNDk4MDU3NDEtZjY3M2FkODMtZjg2Ny00MWM1LTg0YzktOWUwYzUzMWVjY2U2LmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjI0VDAyMjk1OVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTBiMTgwN2QxZDdiMjVjMjEwMDU0YzljZTdkYTJiZDM1MDdkZmYzYjVkM2E2YmMwODBkMmI2MDk1YzMwNzg1MjImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.ZOHw0ucETK6dU5RFZER3YMklQk2nm8dHx2Xo8cwHHLU"
+  ],
+  "schema": [
+    {
+      "name": "7478",
+      "label": "7478",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "7478",
+      "category": "basic",
+      "serviceName": "musicn",
+      "paramType": "port"
+    },
+    {
+      "name": "./musicn",
+      "label": "./musicn",
+      "description": "修改为你的音乐路径",
+      "type": "path",
+      "default": "/data",
+      "category": "basic",
+      "serviceName": "musicn",
+      "paramType": "path"
+    }
+  ],
+  "enabled": true
+}

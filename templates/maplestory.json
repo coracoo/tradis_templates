@@ -1,0 +1,116 @@
+{
+  "id": 27,
+  "name": "maplestory",
+  "category": "game",
+  "description": "Global MapleStory Server BeiDou(冒险岛GMS服务端北斗)",
+  "version": "1.9",
+  "logo": "https://github.com/BeiDouMS/BeiDou-Server/raw/master/gms-ui/src/assets/logo.png?raw=true",
+  "website": "https://github.com/BeiDouMS/BeiDou-Server",
+  "tutorial": "客户端下载地址：https://github.com/BeiDouMS/BeiDou-Server/releases/tag/1.9",
+  "dotenv": "NASIP=\"修改成你NAS IP\"\n",
+  "compose": "version: '3.4'\n\nservices:\n  beidou-server:\n    container_name: beidou-server\n    image: ghcr.io/beidoums/beidou-server:nightly\n    environment:\n      - TZ=Asia/Shanghai\n    ports:\n      - \"8484:8484\"\n      - \"7575:7575\"\n      - \"7576:7576\"\n      - \"7577:7577\"\n    volumes:\n      - ./beidou-server-nightly:/opt/server\n    command:\n      - --mybatis-flex.datasource.mysql.url=jdbc:mysql://beidou-db:3306/beidou?useUnicode=true\u0026characterEncoding=utf-8\u0026useSSL=false\u0026serverTimezone=Asia/Shanghai\n      - --mybatis-flex.datasource.mysql.username=root\n      - --mybatis-flex.datasource.mysql.password=root_password\n      - --gms.service.wan-host=${NASIP}\n      - --gms.service.lan-host=${NASIP}\n      - --gms.service.localhost=${NASIP}\n    healthcheck:\n      test: [\"CMD\", \"sh\", \"-c\", \"netstat -tunlp | grep 0.0.0.0:8484 || exit 1\"]\n      interval: 10s\n      timeout: 5s\n      retries: 10\n    depends_on:\n      beidou-db:\n        condition: service_healthy\n    networks:\n      - beidou-network\n\n  beidou-ui:\n    container_name: beidou-ui\n    image: ghcr.io/beidoums/beidou-ui:nightly\n    ports:\n      - \"8686:8686\"\n    depends_on:\n      - beidou-server\n    networks:\n      - beidou-network\n\n  beidou-db:\n    container_name: beidou-db\n    image: mysql:8.4.0\n    environment:\n      - MYSQL_ROOT_PASSWORD=root_password\n    volumes:\n      - ./docker-db-data:/var/lib/mysql\n    healthcheck:\n      test: [\"CMD\", \"mysqladmin\", \"ping\", \"-h\", \"localhost\", \"-uroot\", \"-proot\"]\n      interval: 10s\n      timeout: 5s\n      retries: 10\n      start_period: 10s\n    networks:\n      - beidou-network\n\nnetworks:\n  beidou-network:\n    driver: bridge",
+  "screenshots": [],
+  "schema": [
+    {
+      "name": "8484",
+      "label": "8484",
+      "description": "服务器配置端口",
+      "type": "port",
+      "default": "8484",
+      "category": "basic",
+      "serviceName": "beidou-server",
+      "paramType": "port"
+    },
+    {
+      "name": "7575",
+      "label": "7575",
+      "description": "不要修改",
+      "type": "port",
+      "default": "7575",
+      "category": "advanced",
+      "serviceName": "beidou-server",
+      "paramType": "port"
+    },
+    {
+      "name": "7576",
+      "label": "7576",
+      "description": "不要修改",
+      "type": "port",
+      "default": "7576",
+      "category": "advanced",
+      "serviceName": "beidou-server",
+      "paramType": "port"
+    },
+    {
+      "name": "7577",
+      "label": "7577",
+      "description": "不要修改",
+      "type": "port",
+      "default": "7577",
+      "category": "advanced",
+      "serviceName": "beidou-server",
+      "paramType": "port"
+    },
+    {
+      "name": "./beidou-server-nightly",
+      "label": "./beidou-server-nightly",
+      "description": "",
+      "type": "path",
+      "default": "/opt/server",
+      "category": "advanced",
+      "serviceName": "beidou-server",
+      "paramType": "path"
+    },
+    {
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "beidou-server",
+      "paramType": "env"
+    },
+    {
+      "name": "8686",
+      "label": "8686",
+      "description": "GM 管理面板",
+      "type": "port",
+      "default": "8686",
+      "category": "basic",
+      "serviceName": "beidou-ui",
+      "paramType": "port"
+    },
+    {
+      "name": "./docker-db-data",
+      "label": "./docker-db-data",
+      "description": "",
+      "type": "path",
+      "default": "/var/lib/mysql",
+      "category": "advanced",
+      "serviceName": "beidou-db",
+      "paramType": "path"
+    },
+    {
+      "name": "MYSQL_ROOT_PASSWORD",
+      "label": "MYSQL_ROOT_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "root_password",
+      "category": "advanced",
+      "serviceName": "beidou-db",
+      "paramType": "env"
+    },
+    {
+      "name": "NASIP",
+      "label": "NASIP",
+      "description": "",
+      "type": "string",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

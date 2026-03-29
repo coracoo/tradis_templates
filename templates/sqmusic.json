@@ -1,0 +1,119 @@
+{
+  "id": 29,
+  "name": "sqmusic",
+  "category": "entertainment",
+  "description": "NAS音乐下载工具",
+  "version": "latest",
+  "logo": "",
+  "website": "https://github.com/59799517/simple_sq_music_plus",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "version: '3.8'\n\nservices:\n  sqmusic_main:\n    image: registry.cn-hangzhou.aliyuncs.com/sqdockler/simple_sq_music_plus:v3.0.28\n    container_name: sqmusic_main\n    environment:\n      - DB_IP=mysql\n      - DB_PORT=3306\n      - DB_NAME=sqmusicv3\n      - DB_USERNAME=root\n      - DB_PASSWORD=sqmusicv3password\n    volumes:\n      - ./sqmusic/file:/music\n    depends_on:\n      mysql:\n        condition: service_healthy\n    networks:\n      - sq-app-network\n    expose:\n      - \"8099\"\n    restart: always\n\n  sqmusic_web:\n    image: registry.cn-hangzhou.aliyuncs.com/sqdockler/simple_sq_music_plus_web:v3.0.15\n    container_name: sqmusic_web\n    ports:\n      - \"8096:80\"\n    networks:\n      - sq-app-network\n    depends_on:\n      - sqmusic_main\n    restart: always\n\n  mysql:\n    image: mysql:5.7\n    container_name: sqmusic_mysql\n    environment:\n      MYSQL_ROOT_PASSWORD: sqmusicv3password\n      MYSQL_DATABASE: sqmusicv3\n    volumes:\n      - ./mysql_data:/var/lib/mysql\n    networks:\n      - sq-app-network\n    healthcheck:\n      test: [\"CMD\", \"mysqladmin\", \"ping\", \"-h\", \"localhost\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n    restart: always\n\nnetworks:\n  sq-app-network:\n    driver: bridge",
+  "screenshots": [
+    "https://github.com/59799517/simple_sq_music_plus/raw/3.0/img/wechat_2025-09-28_160855_350.png",
+    "https://github.com/59799517/simple_sq_music_plus/raw/3.0/img/wechat_2025-09-28_161552_590.png"
+  ],
+  "schema": [
+    {
+      "name": "./sqmusic/file",
+      "label": "./sqmusic/file",
+      "description": "自己修改音乐库路径",
+      "type": "path",
+      "default": "/music",
+      "category": "basic",
+      "serviceName": "sqmusic_main",
+      "paramType": "path"
+    },
+    {
+      "name": "DB_IP",
+      "label": "DB_IP",
+      "description": "",
+      "type": "string",
+      "default": "mysql",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "name": "DB_PORT",
+      "label": "DB_PORT",
+      "description": "",
+      "type": "string",
+      "default": "3306",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "name": "DB_NAME",
+      "label": "DB_NAME",
+      "description": "",
+      "type": "string",
+      "default": "sqmusicv3",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "name": "DB_USERNAME",
+      "label": "DB_USERNAME",
+      "description": "",
+      "type": "string",
+      "default": "root",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "name": "DB_PASSWORD",
+      "label": "DB_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "sqmusicv3password",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "name": "8096",
+      "label": "8096",
+      "description": "",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "sqmusic_web",
+      "paramType": "port"
+    },
+    {
+      "name": "./mysql_data",
+      "label": "./mysql_data",
+      "description": "",
+      "type": "path",
+      "default": "/var/lib/mysql",
+      "category": "advanced",
+      "serviceName": "mysql",
+      "paramType": "path"
+    },
+    {
+      "name": "MYSQL_ROOT_PASSWORD",
+      "label": "MYSQL_ROOT_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "sqmusicv3password",
+      "category": "advanced",
+      "serviceName": "mysql",
+      "paramType": "env"
+    },
+    {
+      "name": "MYSQL_DATABASE",
+      "label": "MYSQL_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "sqmusicv3",
+      "category": "advanced",
+      "serviceName": "mysql",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

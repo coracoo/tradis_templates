@@ -1,8 +1,28 @@
 {
-  "note": "2025-12-26 22:46:45，更新项目1个",
-  "templates_note": "累计项目14个",
-  "generated_at": "2025-12-26T22:46:45+08:00",
+  "note": "2026-03-29 17:21:31，更新项目21个",
+  "templates_note": "累计项目31个",
+  "generated_at": "2026-03-29T17:21:31+08:00",
   "templates": [
+    {
+      "id": 22,
+      "name": "anynote",
+      "category": "knowledge",
+      "description": "一款功能强大的跨平台同步笔记应用，随时记录，支持 MAC、安卓、PC、WEB、Linux",
+      "version": "latest",
+      "logo": "https://anynote.online/rspress-icon.png",
+      "website": "https://anynote.online/guide/index.html",
+      "file": "templates/anynote.json"
+    },
+    {
+      "id": 16,
+      "name": "brave",
+      "category": "other",
+      "description": "Brave 浏览器 NAS 版本",
+      "version": "latest",
+      "logo": "https://avatars.githubusercontent.com/u/12301619?s=48\u0026v=4",
+      "website": "https://github.com/brave/brave-browser",
+      "file": "templates/brave.json"
+    },
     {
       "id": 8,
       "name": "cfui",
@@ -34,6 +54,76 @@
       "file": "templates/cronmaster.json"
     },
     {
+      "id": 24,
+      "name": "d2c",
+      "category": "platform",
+      "description": "把存量docker 转换为compose.yaml",
+      "version": "latest",
+      "logo": "/uploads/d2c_icon.png",
+      "website": "https://github.com/coracoo/docker2compose",
+      "file": "templates/d2c.json"
+    },
+    {
+      "id": 14,
+      "name": "dailyhot",
+      "category": "social",
+      "description": "今日热榜，一个聚合热门咨询展示平台",
+      "version": "latest",
+      "logo": "https://github.com/imsyy/DailyHotApi/raw/master/public/favicon.png",
+      "website": "https://github.com/imsyy/DailyHotApi",
+      "file": "templates/dailyhot.json"
+    },
+    {
+      "id": 26,
+      "name": "daoliyu",
+      "category": "entertainment",
+      "description": "这是一个全栈音乐管理系统，包含后端API服务器和React前端应用。",
+      "version": "0.1.9",
+      "logo": "/uploads/daoliyu_icon.png",
+      "website": "https://club.fnnas.com/forum.php?mod=viewthread\u0026tid=38427",
+      "file": "templates/daoliyu.json"
+    },
+    {
+      "id": 32,
+      "name": "deeptutor",
+      "category": "hobby",
+      "description": "香港大学开源的 AI 驱动的个性化学习助手",
+      "version": "latest",
+      "logo": "https://github.com/HKUDS/DeepTutor/raw/main/assets/logo-ver2.png",
+      "website": "https://github.com/HKUDS/DeepTutor",
+      "file": "templates/deeptutor.json"
+    },
+    {
+      "id": 19,
+      "name": "iptv-tool",
+      "category": "entertainment",
+      "description": "IPTV工具箱， 支持EPG管理、直播源管理、台标管理，兼容DIYP/百川、超级直播及xmltv格式。",
+      "version": "latest",
+      "logo": "/uploads/iptv-tool_icon.png",
+      "website": "https://github.com/taksssss/iptv-tool",
+      "file": "templates/iptv-tool.json"
+    },
+    {
+      "id": 30,
+      "name": "jotty",
+      "category": "knowledge",
+      "description": "jotty·page 是一个轻量级的个人清单和笔记管理替代方案。部署极其简单，所有数据都存储在自己的服务器上，可以让你对笔记进行加密/解密，让你安心。",
+      "version": "latest",
+      "logo": "https://github.com/fccview/jotty/raw/main/public/app-icons/logos/logo-animated.svg",
+      "website": "https://github.com/fccview/jotty",
+      "file": "templates/jotty.json"
+    },
+    {
+      "id": 27,
+      "name": "maplestory",
+      "category": "game",
+      "description": "Global MapleStory Server BeiDou(冒险岛GMS服务端北斗)",
+      "version": "1.9",
+      "logo": "https://github.com/BeiDouMS/BeiDou-Server/raw/master/gms-ui/src/assets/logo.png?raw=true",
+      "website": "https://github.com/BeiDouMS/BeiDou-Server",
+      "file": "templates/maplestory.json"
+    },
+    {
       "id": 9,
       "name": "mi-note-export",
       "category": "hobby",
@@ -52,6 +142,36 @@
       "logo": "https://github.com/xhongc/music-tag-web/raw/dev_1.0/img_6.jpg",
       "website": "https://github.com/xhongc/music-tag-web",
       "file": "templates/music-tag-web.json"
+    },
+    {
+      "id": 18,
+      "name": "musicn",
+      "category": "entertainment",
+      "description": "🎵 一个可播放及下载音乐的 Node.js 命令行工具",
+      "version": "latest",
+      "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+      "website": "https://github.com/wy580477/musicn-container",
+      "file": "templates/musicn.json"
+    },
+    {
+      "id": 31,
+      "name": "musicscraper",
+      "category": "entertainment",
+      "description": "musicDocker一键部署的音乐刮削器，支持多源混刮、多源互补、置信度管控、一键回退原始信息等功能。scraper",
+      "version": "latest",
+      "logo": "https://github.com/SimonLYU/MusicScraper/raw/main/docs/images/logo.svg",
+      "website": "https://github.com/SimonLYU/MusicScraper",
+      "file": "templates/musicscraper.json"
+    },
+    {
+      "id": 25,
+      "name": "n8n",
+      "category": "productivity",
+      "description": "（无额外数据库版本）公平代码工作流自动化平台，具备原生 AI 功能。支持可视化构建与自定义代码相结合，可自托管或云端部署，并集成 400 多个应用。",
+      "version": "latest",
+      "logo": "https://avatars.githubusercontent.com/u/45487711?s=48\u0026v=4",
+      "website": "https://github.com/n8n-io/n8n",
+      "file": "templates/n8n.json"
     },
     {
       "id": 1,
@@ -94,14 +214,34 @@
       "file": "templates/openlist.json"
     },
     {
-      "id": 14,
-      "name": "panda-wiki",
-      "category": "team",
-      "description": "",
-      "version": "",
+      "id": 21,
+      "name": "pancheck",
+      "category": "file",
+      "description": "PanCheck 是一个功能强大的网盘链接有效性检测系统，支持批量检测多种主流网盘平台的分享链接是否有效。夸克网盘\nUC网盘\n百度网盘\n天翼云盘\n123网盘\n115网盘\n阿里云盘\n迅雷云盘\n中国移动云盘\n\n",
+      "version": "latest",
       "logo": "",
-      "website": "",
+      "website": "https://github.com/Lampon/PanCheck",
+      "file": "templates/pancheck.json"
+    },
+    {
+      "id": 17,
+      "name": "panda-wiki",
+      "category": "knowledge",
+      "description": "客户端 v0.4.0 以上可用（不支持重复创建）。PandaWiki是一款AI驱动的开源知识库系统，支持构建产品文档、技术文档、FAQ和博客，提供AI创作、问答和搜索功能。具备富文本编辑、第三方集成和内容导入能力，采用AGPL-3.0开源协议。",
+      "version": "latest",
+      "logo": "https://pandawiki.docs.baizhi.cloud/static-file/6d7bb12f-ec0c-4fe4-9359-77766209035e/ec0c77ad-2c08-45ea-b22b-96240b5833d3.gif",
+      "website": "https://pandawiki.docs.baizhi.cloud/",
       "file": "templates/panda-wiki.json"
+    },
+    {
+      "id": 20,
+      "name": "pansou",
+      "category": "entertainment",
+      "description": "PanSou是一款高性能的网盘资源搜索API服务，支持TG频道和插件搜索。系统设计以性能和可扩展性为核心，支持多频道多插件并发搜索、结果智能排序和网盘类型分类。docker集成前后端，一键启动，开箱即用。",
+      "version": "latest",
+      "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+      "website": "https://github.com/fish2018/pansou",
+      "file": "templates/pansou.json"
     },
     {
       "id": 13,
@@ -124,6 +264,16 @@
       "file": "templates/seerr.json"
     },
     {
+      "id": 29,
+      "name": "sqmusic",
+      "category": "entertainment",
+      "description": "NAS音乐下载工具",
+      "version": "latest",
+      "logo": "",
+      "website": "https://github.com/59799517/simple_sq_music_plus",
+      "file": "templates/sqmusic.json"
+    },
+    {
       "id": 6,
       "name": "stirling-pdf",
       "category": "file",
@@ -132,6 +282,26 @@
       "logo": "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png",
       "website": "https://github.com/Stirling-Tools/Stirling-PDF",
       "file": "templates/stirling-pdf.json"
+    },
+    {
+      "id": 23,
+      "name": "vert",
+      "category": "file",
+      "description": "新一代文件转换器。开源、完全本地化部署。",
+      "version": "latest",
+      "logo": "",
+      "website": "https://github.com/VERT-sh/VERT",
+      "file": "templates/vert.json"
+    },
+    {
+      "id": 15,
+      "name": "wizserver",
+      "category": "knowledge",
+      "description": "为知笔记自托管版本",
+      "version": "latest",
+      "logo": "https://ts1.tc.mm.bing.net/th/id/ODF.RY_kiO84dijVtjMAt75zbg?w=32\u0026h=32\u0026qlt=90\u0026pcl=fffffc\u0026r=0\u0026o=6\u0026cb=ucfimg1\u0026pid=1.2\u0026ucfimg=1",
+      "website": "https://hub.docker.com/r/wiznote/wizserver",
+      "file": "templates/wizserver.json"
     },
     {
       "id": 7,

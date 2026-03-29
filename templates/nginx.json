@@ -8,7 +8,7 @@
   "website": "https://nginx.org/",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n  web:\n    image: nginx\n    volumes:\n     - ./templates:/etc/nginx/templates\n    ports:\n     - \"8080:80\"\n    environment:\n     - NGINX_HOST=foobar.com\n     - NGINX_PORT=80",
+  "compose": "web:\n  image: nginx\n  volumes:\n   - ./templates:/etc/nginx/templates\n  ports:\n   - \"8080:80\"\n  environment:\n   - NGINX_HOST=foobar.com\n   - NGINX_PORT=80\n",
   "screenshots": [],
   "schema": [
     {
@@ -24,10 +24,10 @@
     {
       "name": "./templates",
       "label": "./templates",
-      "description": "",
+      "description": "容器存储路径",
       "type": "path",
       "default": "/etc/nginx/templates",
-      "category": "advanced",
+      "category": "basic",
       "serviceName": "web",
       "paramType": "path"
     },
@@ -37,7 +37,7 @@
       "description": "",
       "type": "string",
       "default": "foobar.com",
-      "category": "advanced",
+      "category": "basic",
       "serviceName": "web",
       "paramType": "env"
     },
@@ -47,7 +47,7 @@
       "description": "",
       "type": "string",
       "default": "80",
-      "category": "advanced",
+      "category": "basic",
       "serviceName": "web",
       "paramType": "env"
     }

@@ -1,0 +1,58 @@
+{
+  "id": 14,
+  "name": "dailyhot",
+  "category": "social",
+  "description": "今日热榜，一个聚合热门咨询展示平台",
+  "version": "latest",
+  "logo": "https://github.com/imsyy/DailyHotApi/raw/master/public/favicon.png",
+  "website": "https://github.com/imsyy/DailyHotApi",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  dailyhot:\n    ports:\n      - \"8080:80\"\n    environment:\n      - APP_ICP=京备ICP12345\n      - APP_COPYRIGHT=Example\n      - APP_COPYRIGHT_URL=http://www.example.org\n    image: rehiy/dailyhot",
+  "screenshots": [
+    "https://github.com/imsyy/DailyHot/raw/master/screenshots/main.jpg"
+  ],
+  "schema": [
+    {
+      "name": "APP_ICP",
+      "label": "APP_ICP",
+      "description": "备案号",
+      "type": "string",
+      "default": "京备ICP12345",
+      "category": "advanced",
+      "serviceName": "dailyhot",
+      "paramType": "env"
+    },
+    {
+      "name": "APP_COPYRIGHT",
+      "label": "APP_COPYRIGHT",
+      "description": "",
+      "type": "string",
+      "default": "Example",
+      "category": "advanced",
+      "serviceName": "dailyhot",
+      "paramType": "env"
+    },
+    {
+      "name": "APP_COPYRIGHT_URL",
+      "label": "APP_COPYRIGHT_URL",
+      "description": "域名",
+      "type": "string",
+      "default": "http://www.example.org",
+      "category": "advanced",
+      "serviceName": "dailyhot",
+      "paramType": "env"
+    },
+    {
+      "name": "8080",
+      "label": "8080",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "dailyhot",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}
