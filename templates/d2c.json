@@ -74,5 +74,6 @@
       "paramType": "env"
     }
   ],
+  "deployment_count": 4,
   "enabled": true
 }

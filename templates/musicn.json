@@ -34,5 +34,6 @@
       "paramType": "path"
     }
   ],
+  "deployment_count": 0,
   "enabled": true
 }

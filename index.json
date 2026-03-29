@@ -1,7 +1,7 @@
 {
-  "note": "2026-03-29 21:46:50，更新项目0个",
+  "note": "2026-03-29 21:47:23，更新项目31个",
   "templates_note": "累计项目31个",
-  "generated_at": "2026-03-29T21:46:50+08:00",
+  "generated_at": "2026-03-29T21:47:23+08:00",
   "templates": [
     {
       "id": 1,
@@ -11,6 +11,7 @@
       "version": "latest",
       "logo": "https://nginx.org/img/nginx_logo.svg",
       "website": "https://nginx.org/",
+      "deployment_count": 0,
       "file": "templates/nginx.json"
     },
     {
@@ -21,6 +22,7 @@
       "version": "latest",
       "logo": "https://raw.githubusercontent.com/fccview/cronmaster/main/public/heading.png",
       "website": "https://github.com/fccview/cronmaster",
+      "deployment_count": 2,
       "file": "templates/cronmaster.json"
     },
     {
@@ -31,6 +33,7 @@
       "version": "latest",
       "logo": "https://github.com/xhongc/music-tag-web/raw/dev_1.0/img_6.jpg",
       "website": "https://github.com/xhongc/music-tag-web",
+      "deployment_count": 1,
       "file": "templates/music-tag-web.json"
     },
     {
@@ -41,6 +44,7 @@
       "version": "latest",
       "logo": "https://github.com/jiangrui1994/CloudSaver/blob/main/frontend/src/assets/images/logo.png?raw=true",
       "website": "https://github.com/jiangrui1994/CloudSaver",
+      "deployment_count": 0,
       "file": "templates/cloudsaver.json"
     },
     {
@@ -51,6 +55,7 @@
       "version": "latest",
       "logo": "https://raw.githubusercontent.com/OpenListTeam/Logo/main/logo.svg",
       "website": "https://github.com/OpenListTeam/OpenList",
+      "deployment_count": 0,
       "file": "templates/openlist.json"
     },
     {
@@ -61,6 +66,7 @@
       "version": "latest",
       "logo": "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png",
       "website": "https://github.com/Stirling-Tools/Stirling-PDF",
+      "deployment_count": 1,
       "file": "templates/stirling-pdf.json"
     },
     {
@@ -71,6 +77,7 @@
       "version": "latest",
       "logo": "https://github.com/Coooolfan/XiaomiAlbumSyncer/raw/main/static/xiaomi-album-syncer-logo.png",
       "website": "https://github.com/Coooolfan/XiaomiAlbumSyncer",
+      "deployment_count": 0,
       "file": "templates/xiaomialbumsyncer.json"
     },
     {
@@ -81,6 +88,7 @@
       "version": "latest",
       "logo": "https://ts1.tc.mm.bing.net/th/id/ODF.I9Ybdjf_TZdpg6eu9bGSZA?w=32\u0026h=32\u0026qlt=92\u0026pcl=fffffa\u0026o=6\u0026cb=ucfimg1\u0026pid=1.2\u0026ucfimg=1",
       "website": "https://github.com/dockers-x/cfui",
+      "deployment_count": 1,
       "file": "templates/cfui.json"
     },
     {
@@ -91,6 +99,7 @@
       "version": "latest",
       "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
       "website": "https://github.com/idootop/mi-note-export",
+      "deployment_count": 1,
       "file": "templates/mi-note-export.json"
     },
     {
@@ -101,6 +110,7 @@
       "version": "latest",
       "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
       "website": "https://hub.docker.com/r/lampon/omnibox/",
+      "deployment_count": 0,
       "file": "templates/omnibox.json"
     },
     {
@@ -111,6 +121,7 @@
       "version": "latest",
       "logo": "https://github.com/bestruirui/octopus/raw/dev/web/public/logo.svg",
       "website": "https://github.com/bestruirui/octopus",
+      "deployment_count": 1,
       "file": "templates/octopus.json"
     },
     {
@@ -121,6 +132,7 @@
       "version": "latest",
       "logo": "https://avatars.githubusercontent.com/u/101442446?s=48\u0026v=4",
       "website": "https://github.com/seerr-team/seerr",
+      "deployment_count": 0,
       "file": "templates/seerr.json"
     },
     {
@@ -131,6 +143,7 @@
       "version": "latest",
       "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
       "website": "https://github.com/chenqimiao/qm-music",
+      "deployment_count": 0,
       "file": "templates/qm-music.json"
     },
     {
@@ -141,6 +154,7 @@
       "version": "latest",
       "logo": "https://github.com/imsyy/DailyHotApi/raw/master/public/favicon.png",
       "website": "https://github.com/imsyy/DailyHotApi",
+      "deployment_count": 2,
       "file": "templates/dailyhot.json"
     },
     {
@@ -151,6 +165,7 @@
       "version": "latest",
       "logo": "https://ts1.tc.mm.bing.net/th/id/ODF.RY_kiO84dijVtjMAt75zbg?w=32\u0026h=32\u0026qlt=90\u0026pcl=fffffc\u0026r=0\u0026o=6\u0026cb=ucfimg1\u0026pid=1.2\u0026ucfimg=1",
       "website": "https://hub.docker.com/r/wiznote/wizserver",
+      "deployment_count": 0,
       "file": "templates/wizserver.json"
     },
     {
@@ -161,6 +176,7 @@
       "version": "latest",
       "logo": "https://avatars.githubusercontent.com/u/12301619?s=48\u0026v=4",
       "website": "https://github.com/brave/brave-browser",
+      "deployment_count": 1,
       "file": "templates/brave.json"
     },
     {
@@ -171,6 +187,7 @@
       "version": "latest",
       "logo": "https://pandawiki.docs.baizhi.cloud/static-file/6d7bb12f-ec0c-4fe4-9359-77766209035e/ec0c77ad-2c08-45ea-b22b-96240b5833d3.gif",
       "website": "https://pandawiki.docs.baizhi.cloud/",
+      "deployment_count": 2,
       "file": "templates/panda-wiki.json"
     },
     {
@@ -181,6 +198,7 @@
       "version": "latest",
       "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
       "website": "https://github.com/wy580477/musicn-container",
+      "deployment_count": 0,
       "file": "templates/musicn.json"
     },
     {
@@ -191,6 +209,7 @@
       "version": "latest",
       "logo": "/uploads/iptv-tool_icon.png",
       "website": "https://github.com/taksssss/iptv-tool",
+      "deployment_count": 1,
       "file": "templates/iptv-tool.json"
     },
     {
@@ -201,6 +220,7 @@
       "version": "latest",
       "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
       "website": "https://github.com/fish2018/pansou",
+      "deployment_count": 0,
       "file": "templates/pansou.json"
     },
     {
@@ -211,6 +231,7 @@
       "version": "latest",
       "logo": "",
       "website": "https://github.com/Lampon/PanCheck",
+      "deployment_count": 1,
       "file": "templates/pancheck.json"
     },
     {
@@ -221,6 +242,7 @@
       "version": "latest",
       "logo": "https://anynote.online/rspress-icon.png",
       "website": "https://anynote.online/guide/index.html",
+      "deployment_count": 0,
       "file": "templates/anynote.json"
     },
     {
@@ -231,6 +253,7 @@
       "version": "latest",
       "logo": "",
       "website": "https://github.com/VERT-sh/VERT",
+      "deployment_count": 0,
       "file": "templates/vert.json"
     },
     {
@@ -241,6 +264,7 @@
       "version": "latest",
       "logo": "/uploads/d2c_icon.png",
       "website": "https://github.com/coracoo/docker2compose",
+      "deployment_count": 4,
       "file": "templates/d2c.json"
     },
     {
@@ -251,6 +275,7 @@
       "version": "latest",
       "logo": "https://avatars.githubusercontent.com/u/45487711?s=48\u0026v=4",
       "website": "https://github.com/n8n-io/n8n",
+      "deployment_count": 1,
       "file": "templates/n8n.json"
     },
     {
@@ -261,6 +286,7 @@
       "version": "0.1.9",
       "logo": "/uploads/daoliyu_icon.png",
       "website": "https://club.fnnas.com/forum.php?mod=viewthread\u0026tid=38427",
+      "deployment_count": 1,
       "file": "templates/daoliyu.json"
     },
     {
@@ -271,6 +297,7 @@
       "version": "1.9",
       "logo": "https://github.com/BeiDouMS/BeiDou-Server/raw/master/gms-ui/src/assets/logo.png?raw=true",
       "website": "https://github.com/BeiDouMS/BeiDou-Server",
+      "deployment_count": 7,
       "file": "templates/maplestory.json"
     },
     {
@@ -281,6 +308,7 @@
       "version": "latest",
       "logo": "",
       "website": "https://github.com/59799517/simple_sq_music_plus",
+      "deployment_count": 1,
       "file": "templates/sqmusic.json"
     },
     {
@@ -291,6 +319,7 @@
       "version": "latest",
       "logo": "https://github.com/fccview/jotty/raw/main/public/app-icons/logos/logo-animated.svg",
       "website": "https://github.com/fccview/jotty",
+      "deployment_count": 0,
       "file": "templates/jotty.json"
     },
     {
@@ -301,6 +330,7 @@
       "version": "latest",
       "logo": "https://github.com/SimonLYU/MusicScraper/raw/main/docs/images/logo.svg",
       "website": "https://github.com/SimonLYU/MusicScraper",
+      "deployment_count": 0,
       "file": "templates/musicscraper.json"
     },
     {
@@ -311,6 +341,7 @@
       "version": "latest",
       "logo": "https://github.com/HKUDS/DeepTutor/raw/main/assets/logo-ver2.png",
       "website": "https://github.com/HKUDS/DeepTutor",
+      "deployment_count": 0,
       "file": "templates/deeptutor.json"
     }
   ]

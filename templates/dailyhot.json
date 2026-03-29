@@ -54,5 +54,6 @@
       "paramType": "port"
     }
   ],
+  "deployment_count": 2,
   "enabled": true
 }
