@@ -1,5 +1,6 @@
 {
   "id": 32,
+  "sort_order": 31,
   "name": "deeptutor",
   "category": "hobby",
   "description": "香港大学开源的 AI 驱动的个性化学习助手",

@@ -1,5 +1,6 @@
 {
   "id": 30,
+  "sort_order": 29,
   "name": "jotty",
   "category": "knowledge",
   "description": "jotty·page 是一个轻量级的个人清单和笔记管理替代方案。部署极其简单，所有数据都存储在自己的服务器上，可以让你对笔记进行加密/解密，让你安心。",

@@ -1,5 +1,6 @@
 {
   "id": 5,
+  "sort_order": 5,
   "name": "openlist",
   "category": "file",
   "description": "OpenList 是 AList 的一个具有弹性、长期治理、社区驱动的分支，旨在保护开源软件免受基于信任的攻击。官方文档地址：https://doc.oplist.org.cn/",

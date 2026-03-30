@@ -1,5 +1,6 @@
 {
   "id": 2,
+  "sort_order": 2,
   "name": "cronmaster",
   "category": "platform",
   "description": "轻松管理 Cron 任务",

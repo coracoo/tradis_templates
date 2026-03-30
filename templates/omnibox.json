@@ -1,5 +1,6 @@
 {
   "id": 10,
+  "sort_order": 10,
   "name": "omnibox",
   "category": "entertainment",
   "description": "在线免费观影，支持采集站，网盘等多种资源形式",

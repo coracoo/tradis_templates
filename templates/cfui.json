@@ -1,5 +1,6 @@
 {
   "id": 8,
+  "sort_order": 8,
   "name": "cfui",
   "category": "network",
   "description": "一个现代化的基于 Web 的控制面板，用于管理 Cloudflare Tunnel (cloudflared)，具有直观的界面。\n\n",

@@ -1,5 +1,6 @@
 {
   "id": 1,
+  "sort_order": 1,
   "name": "nginx",
   "category": "network",
   "description": "nginx（“ 引擎 x ”）是一个集 HTTP Web 服务器、反向代理、内容缓存、负载均衡、TCP/UDP 代理服务器和邮件代理服务器于一体的综合性服务商。",

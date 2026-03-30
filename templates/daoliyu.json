@@ -1,5 +1,6 @@
 {
   "id": 26,
+  "sort_order": 26,
   "name": "daoliyu",
   "category": "entertainment",
   "description": "这是一个全栈音乐管理系统，包含后端API服务器和React前端应用。",

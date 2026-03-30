@@ -1,5 +1,6 @@
 {
   "id": 12,
+  "sort_order": 12,
   "name": "seerr",
   "category": "entertainment",
   "description": "Seerr 是一款免费开源的软件应用程序，用于管理媒体库的请求。它可以与您选择的媒体服务器集成，例如 Jellyfin 、 Plex 和 Emby 。此外，它还可以与您现有的服务集成，例如 Sonarr 和 Radarr 。",

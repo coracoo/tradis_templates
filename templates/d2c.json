@@ -1,5 +1,6 @@
 {
   "id": 24,
+  "sort_order": 24,
   "name": "d2c",
   "category": "platform",
   "description": "把存量docker 转换为compose.yaml",

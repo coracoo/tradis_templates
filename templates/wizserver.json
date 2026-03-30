@@ -1,5 +1,6 @@
 {
   "id": 15,
+  "sort_order": 15,
   "name": "wizserver",
   "category": "knowledge",
   "description": "为知笔记自托管版本",

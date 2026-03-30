@@ -1,5 +1,6 @@
 {
   "id": 21,
+  "sort_order": 21,
   "name": "pancheck",
   "category": "file",
   "description": "PanCheck 是一个功能强大的网盘链接有效性检测系统，支持批量检测多种主流网盘平台的分享链接是否有效。夸克网盘\nUC网盘\n百度网盘\n天翼云盘\n123网盘\n115网盘\n阿里云盘\n迅雷云盘\n中国移动云盘\n\n",

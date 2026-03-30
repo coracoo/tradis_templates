@@ -1,5 +1,6 @@
 {
   "id": 6,
+  "sort_order": 6,
   "name": "stirling-pdf",
   "category": "file",
   "description": "GitHub 上排名第一的 PDF 应用，让您随时随地在任何设备上编辑 PDF 文件。Stirling PDF 是一个功能强大的开源 PDF 编辑平台。您可以将其作为个人桌面应用程序在浏览器中运行，也可以将其部署在您自己的服务器上并使用私有 API。无需将文档发送到外部服务，即可编辑、签名、编辑、转换和自动化处理 PDF 文件。",

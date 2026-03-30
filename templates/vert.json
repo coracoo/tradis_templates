@@ -1,5 +1,6 @@
 {
   "id": 23,
+  "sort_order": 23,
   "name": "vert",
   "category": "file",
   "description": "新一代文件转换器。开源、完全本地化部署。",

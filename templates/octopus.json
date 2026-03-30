@@ -1,5 +1,6 @@
 {
   "id": 11,
+  "sort_order": 11,
   "name": "octopus",
   "category": "productivity",
   "description": "为个人打造的简单、美观、优雅的 LLM API 聚合与负载均衡服务\n\n",

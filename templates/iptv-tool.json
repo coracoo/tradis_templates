@@ -1,5 +1,6 @@
 {
   "id": 19,
+  "sort_order": 19,
   "name": "iptv-tool",
   "category": "entertainment",
   "description": "IPTV工具箱， 支持EPG管理、直播源管理、台标管理，兼容DIYP/百川、超级直播及xmltv格式。",

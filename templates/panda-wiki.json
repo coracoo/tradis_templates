@@ -1,5 +1,6 @@
 {
   "id": 17,
+  "sort_order": 17,
   "name": "panda-wiki",
   "category": "knowledge",
   "description": "客户端 v0.4.0 以上可用（不支持重复创建）。PandaWiki是一款AI驱动的开源知识库系统，支持构建产品文档、技术文档、FAQ和博客，提供AI创作、问答和搜索功能。具备富文本编辑、第三方集成和内容导入能力，采用AGPL-3.0开源协议。",

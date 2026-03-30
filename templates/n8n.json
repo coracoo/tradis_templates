@@ -1,5 +1,6 @@
 {
   "id": 25,
+  "sort_order": 25,
   "name": "n8n",
   "category": "productivity",
   "description": "（无额外数据库版本）公平代码工作流自动化平台，具备原生 AI 功能。支持可视化构建与自定义代码相结合，可自托管或云端部署，并集成 400 多个应用。",

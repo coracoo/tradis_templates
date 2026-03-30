@@ -1,5 +1,6 @@
 {
   "id": 4,
+  "sort_order": 4,
   "name": "cloudsaver",
   "category": "entertainment",
   "description": "一个基于 Vue 3 + Express 的网盘资源搜索与转存工具。",
