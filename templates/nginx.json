@@ -1,0 +1,58 @@
+{
+  "id": 1,
+  "sort_order": 1,
+  "name": "nginx",
+  "category": "network",
+  "description": "nginx（“ 引擎 x ”）是一个集 HTTP Web 服务器、反向代理、内容缓存、负载均衡、TCP/UDP 代理服务器和邮件代理服务器于一体的综合性服务商。",
+  "version": "latest",
+  "logo": "https://nginx.org/img/nginx_logo.svg",
+  "website": "https://nginx.org/",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "web:\n  image: nginx\n  volumes:\n   - ./templates:/etc/nginx/templates\n  ports:\n   - \"8080:80\"\n  environment:\n   - NGINX_HOST=foobar.com\n   - NGINX_PORT=80\n",
+  "screenshots": [],
+  "schema": [
+    {
+      "name": "8080",
+      "label": "8080",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "web",
+      "paramType": "port"
+    },
+    {
+      "name": "./templates",
+      "label": "./templates",
+      "description": "容器存储路径",
+      "type": "path",
+      "default": "/etc/nginx/templates",
+      "category": "basic",
+      "serviceName": "web",
+      "paramType": "path"
+    },
+    {
+      "name": "NGINX_HOST",
+      "label": "NGINX_HOST",
+      "description": "",
+      "type": "string",
+      "default": "foobar.com",
+      "category": "basic",
+      "serviceName": "web",
+      "paramType": "env"
+    },
+    {
+      "name": "NGINX_PORT",
+      "label": "NGINX_PORT",
+      "description": "",
+      "type": "string",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "web",
+      "paramType": "env"
+    }
+  ],
+  "deployment_count": 0,
+  "enabled": true
+}

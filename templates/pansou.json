@@ -1,0 +1,138 @@
+{
+  "id": 20,
+  "sort_order": 20,
+  "name": "pansou",
+  "category": "entertainment",
+  "description": "PanSou是一款高性能的网盘资源搜索API服务，支持TG频道和插件搜索。系统设计以性能和可扩展性为核心，支持多频道多插件并发搜索、结果智能排序和网盘类型分类。docker集成前后端，一键启动，开箱即用。",
+  "version": "latest",
+  "logo": "https://ts2.tc.mm.bing.net/th/id/OIP-C.Yb_TWldxJ4Czo6cYCVc2nwHaEq?w=108\u0026h=108\u0026c=1\u0026bgcl=133901\u0026r=0\u0026o=7\u0026cb=ucfimg1\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3\u0026ucfimg=1",
+  "website": "https://github.com/fish2018/pansou",
+  "tutorial": "高性能搜索：并发执行多个TG频道及异步插件搜索，显著提升搜索速度；工作池设计，高效管理并发任务\n\n网盘类型分类：自动识别多种网盘链接，按类型归类展示\n\n智能排序：基于插件等级、时间新鲜度和优先关键词的多维度综合排序算法\n\n异步插件系统：支持通过插件扩展搜索来源，支持\"尽快响应，持续处理\"的异步搜索模式，解决了某些搜索源响应时间长的问题。详情参考插件开发指南\n\n二级缓存：分片内存+分片磁盘缓存机制，大幅提升重复查询速度和并发性能",
+  "dotenv": "",
+  "compose": "version: '3.3'\n\nservices:\n  pansou:\n    image: ghcr.io/fish2018/pansou-web:latest\n    container_name: pansou-app\n    labels:\n      - \"autoheal=true\"  # 标记此容器允许被autoheal重启\n    ports:\n      - \"805:80\"\n    environment:\n      - DOMAIN=localhost\n      - PANSOU_PORT=8888\n      - PANSOU_HOST=127.0.0.1\n      - CACHE_PATH=/app/data/cache\n      - LOG_PATH=/app/data/logs\n      - ENABLED_PLUGINS=labi,zhizhen,shandian,duoduo,muou,wanou,hunhepan,jikepan,panwiki,pansearch,panta,qupansou,hdr4k,pan666,susu,thepiratebay,xuexizhinan,panyq,ouge,huban,cyg,erxiao,miaoso,fox4k,pianku,clmao,wuji,cldi,xiaozhang,libvio,leijing,xb6v,xys,ddys,hdmoli,clxiong,jutoushe,sdso,xiaoji,xdyh,haisou,bixin,djgou,nyaa,xinjuc,aikanzy,qupanshe,xdpan,discourse,yunsou,ahhhhfs,nsgame,quark4k,quarksoo,sousou,ash,feikuai,kkmao,alupan,ypfxw,mikuclub,daishudj,dyyj,meitizy,jsnoteclub,mizixing,lou1,yiove,zxzj,qingying,kkv\n      - CHANNELS=tgsearchers4,Aliyun_4K_Movies,bdbdndn11,yunpanx,bsbdbfjfjff,yp123pan,sbsbsnsqq,yunpanxunlei,tianyifc,BaiduCloudDisk,txtyzy,peccxinpd,gotopan,PanjClub,kkxlzy,baicaoZY,MCPH01,MCPH02,MCPH03,bdwpzhpd,ysxb48,jdjdn1111,yggpan,MCPH086,zaihuayun,Q66Share,ucwpzy,shareAliyun,alyp_1,dianyingshare,Quark_Movies,XiangxiuNBB,ydypzyfx,ucquark,xx123pan,yingshifenxiang123,zyfb123,tyypzhpd,tianyirigeng,cloudtianyi,hdhhd21,Lsp115,oneonefivewpfx,qixingzhenren,taoxgzy,Channel_Shares_115,tyysypzypd,vip115hot,wp123zy,yunpan139,yunpan189,yunpanuc,yydf_hzl,leoziyuan,Q_dongman,yoyokuakeduanju,TG654TG,WFYSFX02,QukanMovie,yeqingjie_GJG666,movielover8888_film3,Baidu_netdisk,D_wusun,FLMdongtianfudi,KaiPanshare,QQZYDAPP,rjyxfx,PikPak_Share_Channel,btzhi,newproductsourcing,cctv1211,duan_ju,QuarkFree,yunpanNB,kkdj001,xxzlzn,pxyunpanxunlei,jxwpzy,kuakedongman,liangxingzhinan,xiangnikanj,solidsexydoll,guoman4K,zdqxm,kduanju,cilidianying,CBduanju,SharePanFilms,dzsgx,BooksRealm,Oscar_4Kmovies,douerpan,baidu_yppan,Q_jilupian,Netdisk_Movies,yunpanquark,ammmziyuan,ciliziyuanku,cili8888,jzmm_123pan,Q_dianying,domgmingapk,dianying4k,q_dianshiju,tgbokee,ucshare,godupan,gokuapan\n      - PROXY=socks5://xxx.xxx.xxx.xxx:7897\n      - HTTP_PROXY=http://xxx.xxx.xxx.xxx:7890\n      - HTTPS_PROXY=http://xxx.xxx.xxx.xxx:7890\n    volumes:\n      - pansou-data:/app/data\n      - ./ssl:/app/data/ssl\n    restart: unless-stopped\n\nvolumes:\n  pansou-data:\n    driver: local",
+  "screenshots": [],
+  "schema": [
+    {
+      "name": "805",
+      "label": "805",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "pansou",
+      "paramType": "port"
+    },
+    {
+      "name": "./ssl",
+      "label": "./ssl",
+      "description": "SSL 证书，建议删除",
+      "type": "path",
+      "default": "/app/data/ssl",
+      "category": "basic",
+      "serviceName": "pansou",
+      "paramType": "path"
+    },
+    {
+      "name": "DOMAIN",
+      "label": "DOMAIN",
+      "description": "",
+      "type": "string",
+      "default": "localhost",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "PANSOU_PORT",
+      "label": "PANSOU_PORT",
+      "description": "",
+      "type": "string",
+      "default": "8888",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "PANSOU_HOST",
+      "label": "PANSOU_HOST",
+      "description": "",
+      "type": "string",
+      "default": "127.0.0.1",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "CACHE_PATH",
+      "label": "CACHE_PATH",
+      "description": "",
+      "type": "string",
+      "default": "/app/data/cache",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "LOG_PATH",
+      "label": "LOG_PATH",
+      "description": "",
+      "type": "string",
+      "default": "/app/data/logs",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "ENABLED_PLUGINS",
+      "label": "ENABLED_PLUGINS",
+      "description": "",
+      "type": "string",
+      "default": "labi,zhizhen,shandian,duoduo,muou,wanou,hunhepan,jikepan,panwiki,pansearch,panta,qupansou,hdr4k,pan666,susu,thepiratebay,xuexizhinan,panyq,ouge,huban,cyg,erxiao,miaoso,fox4k,pianku,clmao,wuji,cldi,xiaozhang,libvio,leijing,xb6v,xys,ddys,hdmoli,clxiong,jutoushe,sdso,xiaoji,xdyh,haisou,bixin,djgou,nyaa,xinjuc,aikanzy,qupanshe,xdpan,discourse,yunsou,ahhhhfs,nsgame,quark4k,quarksoo,sousou,ash,feikuai,kkmao,alupan,ypfxw,mikuclub,daishudj,dyyj,meitizy,jsnoteclub,mizixing,lou1,yiove,zxzj,qingying,kkv",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "CHANNELS",
+      "label": "CHANNELS",
+      "description": "",
+      "type": "string",
+      "default": "tgsearchers4,Aliyun_4K_Movies,bdbdndn11,yunpanx,bsbdbfjfjff,yp123pan,sbsbsnsqq,yunpanxunlei,tianyifc,BaiduCloudDisk,txtyzy,peccxinpd,gotopan,PanjClub,kkxlzy,baicaoZY,MCPH01,MCPH02,MCPH03,bdwpzhpd,ysxb48,jdjdn1111,yggpan,MCPH086,zaihuayun,Q66Share,ucwpzy,shareAliyun,alyp_1,dianyingshare,Quark_Movies,XiangxiuNBB,ydypzyfx,ucquark,xx123pan,yingshifenxiang123,zyfb123,tyypzhpd,tianyirigeng,cloudtianyi,hdhhd21,Lsp115,oneonefivewpfx,qixingzhenren,taoxgzy,Channel_Shares_115,tyysypzypd,vip115hot,wp123zy,yunpan139,yunpan189,yunpanuc,yydf_hzl,leoziyuan,Q_dongman,yoyokuakeduanju,TG654TG,WFYSFX02,QukanMovie,yeqingjie_GJG666,movielover8888_film3,Baidu_netdisk,D_wusun,FLMdongtianfudi,KaiPanshare,QQZYDAPP,rjyxfx,PikPak_Share_Channel,btzhi,newproductsourcing,cctv1211,duan_ju,QuarkFree,yunpanNB,kkdj001,xxzlzn,pxyunpanxunlei,jxwpzy,kuakedongman,liangxingzhinan,xiangnikanj,solidsexydoll,guoman4K,zdqxm,kduanju,cilidianying,CBduanju,SharePanFilms,dzsgx,BooksRealm,Oscar_4Kmovies,douerpan,baidu_yppan,Q_jilupian,Netdisk_Movies,yunpanquark,ammmziyuan,ciliziyuanku,cili8888,jzmm_123pan,Q_dianying,domgmingapk,dianying4k,q_dianshiju,tgbokee,ucshare,godupan,gokuapan",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "PROXY",
+      "label": "PROXY",
+      "description": "SOCKS5 代理",
+      "type": "string",
+      "default": "socks5://xxx.xxx.xxx.xxx:7897",
+      "category": "basic",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "HTTP_PROXY",
+      "label": "HTTP_PROXY",
+      "description": "HTTP 代理",
+      "type": "string",
+      "default": "http://xxx.xxx.xxx.xxx:7890",
+      "category": "basic",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "name": "HTTPS_PROXY",
+      "label": "HTTPS_PROXY",
+      "description": "HTTPS 代理",
+      "type": "string",
+      "default": "http://xxx.xxx.xxx.xxx:7890",
+      "category": "basic",
+      "serviceName": "pansou",
+      "paramType": "env"
+    }
+  ],
+  "deployment_count": 0,
+  "enabled": true
+}

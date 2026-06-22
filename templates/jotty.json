@@ -1,0 +1,70 @@
+{
+  "id": 30,
+  "sort_order": 29,
+  "name": "jotty",
+  "category": "knowledge",
+  "description": "jotty·page 是一个轻量级的个人清单和笔记管理替代方案。部署极其简单，所有数据都存储在自己的服务器上，可以让你对笔记进行加密/解密，让你安心。",
+  "version": "latest",
+  "logo": "https://github.com/fccview/jotty/raw/main/public/app-icons/logos/logo-animated.svg",
+  "website": "https://github.com/fccview/jotty",
+  "tutorial": "检查表： 创建任务列表，可进行拖放重新排序、进度条和类别。支持简单的检查表和使用 Kanban 平台和时间跟踪的高级任务项目。\n\n富文本笔记：TipTap 为你的笔记提供了一个干净的 WYSIWYG 编辑器，支持完整的 Markdown 和语法高亮显示。\n\n共享： 与实例上的其他用户共享检查清单或笔记，包括使用可共享的链接进行公开共享。\n\n基于文件： 不需要数据库！一切存储在单个数据目录中的简单 Markdown 和 JSON 文件中。\n\n用户管理： 一个管理面板，用于创建和管理用户帐户，并跟踪会话。\n\n可自定义：14 个内置主题，以及可自定义主题支持，包括自定义表情符号和图标。\n\n加密：PGP 加密完全启用，有关更多信息，请参见 howto/ENCRYPTION.md\n\nAPI 访问： 通过 REST API 以及身份验证，对您的待办事项清单和笔记进行程序化访问。",
+  "dotenv": "",
+  "compose": "services:\n  jotty:\n    image: ghcr.io/fccview/jotty:latest\n    container_name: jotty\n    user: \"1000:1000\"\n    ports:\n      - \"3122:3000\"\n    volumes:\n      - ./data:/app/data:rw\n      - ./config:/app/config:rw\n      - ./cache:/app/.next/cache:rw\n    restart: unless-stopped\n    environment:\n      - NODE_ENV=production",
+  "screenshots": [
+    "https://github.com/fccview/jotty/raw/main/public/app-screenshots/note-markdown.png"
+  ],
+  "schema": [
+    {
+      "name": "3122",
+      "label": "3122",
+      "description": "",
+      "type": "port",
+      "default": "3000",
+      "category": "basic",
+      "serviceName": "jotty",
+      "paramType": "port"
+    },
+    {
+      "name": "./data",
+      "label": "./data",
+      "description": "",
+      "type": "path",
+      "default": "/app/data",
+      "category": "advanced",
+      "serviceName": "jotty",
+      "paramType": "path"
+    },
+    {
+      "name": "./config",
+      "label": "./config",
+      "description": "",
+      "type": "path",
+      "default": "/app/config",
+      "category": "advanced",
+      "serviceName": "jotty",
+      "paramType": "path"
+    },
+    {
+      "name": "./cache",
+      "label": "./cache",
+      "description": "",
+      "type": "path",
+      "default": "/app/.next/cache",
+      "category": "advanced",
+      "serviceName": "jotty",
+      "paramType": "path"
+    },
+    {
+      "name": "NODE_ENV",
+      "label": "NODE_ENV",
+      "description": "",
+      "type": "string",
+      "default": "production",
+      "category": "advanced",
+      "serviceName": "jotty",
+      "paramType": "env"
+    }
+  ],
+  "deployment_count": 0,
+  "enabled": true
+}
