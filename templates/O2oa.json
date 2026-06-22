@@ -1,0 +1,17 @@
+{
+  "id": 46,
+  "sort_order": 46,
+  "name": "O2oa",
+  "category": "productivity",
+  "description": "国内很好用的的一款OA系统，通过插件可以实现如车辆管理、财务管理等其它系统功能",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/o2oa/o2oa",
+  "website": "https://github.com/o2oa/o2oa",
+  "tutorial": "https://post.smzdm.com/p/axo588gd/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

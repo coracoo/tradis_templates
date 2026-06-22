@@ -1,0 +1,17 @@
+{
+  "id": 11,
+  "sort_order": 11,
+  "name": "Docker copilot",
+  "category": "management",
+  "description": "绿联极空间docker管理工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/onlyLTY/dockerCopilot",
+  "website": "https://github.com/onlyLTY/dockerCopilot",
+  "tutorial": "https://post.smzdm.com/p/a8pxeopl/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

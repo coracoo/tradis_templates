@@ -1,0 +1,17 @@
+{
+  "id": 79,
+  "sort_order": 79,
+  "name": "Cashbook",
+  "category": "lifestyle",
+  "description": "支持支付宝、微信、京东金融导入的个人记账工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/dingdangdog/cashbook",
+  "website": "https://github.com/dingdangdog/cashbook",
+  "tutorial": "https://post.smzdm.com/p/anmkqmo0/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

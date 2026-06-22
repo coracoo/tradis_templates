@@ -1,0 +1,17 @@
+{
+  "id": 82,
+  "sort_order": 82,
+  "name": "ChineseSubFinder",
+  "category": "media",
+  "description": "中文字幕下载工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/ChineseSubFinder/ChineseSubFinder",
+  "website": "https://github.com/ChineseSubFinder/ChineseSubFinder",
+  "tutorial": "https://post.smzdm.com/p/aqq5m787/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

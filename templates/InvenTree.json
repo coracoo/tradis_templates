@@ -1,0 +1,17 @@
+{
+  "id": 43,
+  "sort_order": 43,
+  "name": "InvenTree",
+  "category": "productivity",
+  "description": "开源的库存管理系统，提供直观的零件管理和库存控制",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/inventree/InvenTree",
+  "website": "https://github.com/inventree/InvenTree",
+  "tutorial": "https://post.smzdm.com/p/a3x9wlmn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 187,
+  "sort_order": 187,
+  "name": "Codecombat",
+  "category": "game",
+  "description": "扣哒世界，用游戏来学习编程",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/codecombat/codecombat",
+  "website": "https://github.com/codecombat/codecombat",
+  "tutorial": "https://post.smzdm.com/p/ag5og3gd/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

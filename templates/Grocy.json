@@ -1,0 +1,17 @@
+{
+  "id": 64,
+  "sort_order": 64,
+  "name": "Grocy",
+  "category": "lifestyle",
+  "description": "一款专注于家庭、厨卫、物资的家用ERP系统",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/linuxserver/docker-grocy",
+  "website": "https://github.com/linuxserver/docker-grocy",
+  "tutorial": "https://post.smzdm.com/p/ag5z6lv6/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

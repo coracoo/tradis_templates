@@ -1,0 +1,17 @@
+{
+  "id": 156,
+  "sort_order": 156,
+  "name": "Filebrowser",
+  "category": "files",
+  "description": "经典的文件管理工具，没有多余的功能模块，就是简简单单的管理文件、文件夹",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/filebrowser/filebrowser",
+  "website": "https://github.com/filebrowser/filebrowser",
+  "tutorial": "https://post.smzdm.com/p/ag5r8076/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

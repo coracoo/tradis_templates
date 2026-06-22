@@ -1,0 +1,17 @@
+{
+  "id": 154,
+  "sort_order": 154,
+  "name": "Wiki.js",
+  "category": "knowledge",
+  "description": "基于js的高颜值wiki项目",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/requarks/wiki",
+  "website": "https://github.com/requarks/wiki",
+  "tutorial": "https://post.smzdm.com/p/a5xrgv0x/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

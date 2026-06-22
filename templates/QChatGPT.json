@@ -1,0 +1,17 @@
+{
+  "id": 132,
+  "sort_order": 132,
+  "name": "QChatGPT",
+  "category": "ai",
+  "description": "支持AI接入的QQ/QQ频道/OneBot 机器人平台",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/RockChinQ/QChatGPT",
+  "website": "https://github.com/RockChinQ/QChatGPT",
+  "tutorial": "https://post.smzdm.com/p/ag5z6lv6/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

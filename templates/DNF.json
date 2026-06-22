@@ -1,0 +1,17 @@
+{
+  "id": 178,
+  "sort_order": 178,
+  "name": "DNF",
+  "category": "game",
+  "description": "一款老版本的DNF私服",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/1995chen/dnf",
+  "website": "https://github.com/1995chen/dnf",
+  "tutorial": "https://post.smzdm.com/p/a8pnw860/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

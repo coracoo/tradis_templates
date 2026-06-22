@@ -1,0 +1,17 @@
+{
+  "id": 58,
+  "sort_order": 58,
+  "name": "卷王",
+  "category": "productivity",
+  "description": "开源问卷\u0026在线考试",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/xianyu-one/surveyking-docker",
+  "website": "https://github.com/xianyu-one/surveyking-docker",
+  "tutorial": "https://post.smzdm.com/p/a5xmwo37/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

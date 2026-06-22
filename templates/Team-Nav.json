@@ -1,0 +1,17 @@
+{
+  "id": 27,
+  "sort_order": 27,
+  "name": "Team-Nav",
+  "category": "navigation",
+  "description": "一款适合团队使用的导航栏工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/tuituidan/team-nav",
+  "website": "https://github.com/tuituidan/team-nav",
+  "tutorial": "https://post.smzdm.com/p/axo0gxw4/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

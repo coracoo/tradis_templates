@@ -1,0 +1,17 @@
+{
+  "id": 130,
+  "sort_order": 130,
+  "name": "LocalAI",
+  "category": "ai",
+  "description": "完全离线运行的本地AI大模型系统，支持抱脸虫上的各类库，支持api输出",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/mudler/LocalAI",
+  "website": "https://github.com/mudler/LocalAI",
+  "tutorial": "https://post.smzdm.com/p/a3x3qngr/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

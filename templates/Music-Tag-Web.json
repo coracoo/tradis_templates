@@ -1,0 +1,17 @@
+{
+  "id": 94,
+  "sort_order": 94,
+  "name": "Music-Tag-Web",
+  "category": "media",
+  "description": "最好用的音乐元数据刮削工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/xhongc/music-tag-web",
+  "website": "https://github.com/xhongc/music-tag-web",
+  "tutorial": "https://post.smzdm.com/p/aovxg0d7/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

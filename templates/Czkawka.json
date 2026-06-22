@@ -1,0 +1,17 @@
+{
+  "id": 165,
+  "sort_order": 165,
+  "name": "Czkawka",
+  "category": "gallery",
+  "description": "一款多平台的相册去重工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/qarmin/czkawka",
+  "website": "https://github.com/qarmin/czkawka",
+  "tutorial": "https://post.smzdm.com/p/an945pgp/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

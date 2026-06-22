@@ -1,0 +1,17 @@
+{
+  "id": 120,
+  "sort_order": 120,
+  "name": "ChatALL",
+  "category": "ai",
+  "description": "同时与ChatGPT、Bing Chat、Bard、Alpaca、Vicuna、Claude、ChatGLM、MOSS、讯飞星火、文心一言等聊天的集成客户端。",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/sunner/ChatALL",
+  "website": "https://github.com/sunner/ChatALL",
+  "tutorial": "https://post.smzdm.com/p/awo7e94p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 16,
+  "sort_order": 16,
+  "name": "fnOS",
+  "category": "nas-os",
+  "description": "免费的国产NAS操作系统",
+  "version": "latest",
+  "logo": "",
+  "website": "https://www.fnnas.com/",
+  "tutorial": "https://post.smzdm.com/p/a5xge4ek/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

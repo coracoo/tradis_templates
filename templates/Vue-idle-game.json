@@ -1,0 +1,17 @@
+{
+  "id": 185,
+  "sort_order": 185,
+  "name": "Vue-idle-game",
+  "category": "game",
+  "description": "一个放置的西幻点击游戏",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/Couy69/vue-idle-game",
+  "website": "https://github.com/Couy69/vue-idle-game",
+  "tutorial": "https://post.smzdm.com/p/a0x6z4e9/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

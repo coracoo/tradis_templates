@@ -1,0 +1,17 @@
+{
+  "id": 142,
+  "sort_order": 142,
+  "name": "Huntly",
+  "category": "knowledge",
+  "description": "RSS集大成者，包含RSS、稍后阅读、收藏功能，支持github、推特文章优化",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/lcomplete/huntly",
+  "website": "https://github.com/lcomplete/huntly",
+  "tutorial": "https://post.smzdm.com/p/a5x5v253/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

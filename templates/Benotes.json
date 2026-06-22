@@ -1,0 +1,17 @@
+{
+  "id": 140,
+  "sort_order": 140,
+  "name": "Benotes",
+  "category": "knowledge",
+  "description": "一个开源的自托管笔记和书签网络应用程序",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/fr0tt/benotes",
+  "website": "https://github.com/fr0tt/benotes",
+  "tutorial": "https://post.smzdm.com/p/a0x5ol58/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

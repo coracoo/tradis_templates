@@ -1,0 +1,17 @@
+{
+  "id": 65,
+  "sort_order": 65,
+  "name": "Habitica",
+  "category": "lifestyle",
+  "description": "将习惯养成变为一种mmoprg游戏，支持职业、武器、宠物、副本等",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/HabitRPG/habitica",
+  "website": "https://github.com/HabitRPG/habitica",
+  "tutorial": "https://post.smzdm.com/p/am3g004k/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

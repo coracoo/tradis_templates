@@ -1,0 +1,17 @@
+{
+  "id": 113,
+  "sort_order": 113,
+  "name": "Fiora",
+  "category": "social",
+  "description": "自建开源社交即时聊天工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/yinxin630/fiora",
+  "website": "https://github.com/yinxin630/fiora",
+  "tutorial": "https://post.smzdm.com/p/a4x9lkz7/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

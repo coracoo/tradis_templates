@@ -1,0 +1,17 @@
+{
+  "id": 98,
+  "sort_order": 98,
+  "name": "Iptvnator",
+  "category": "media",
+  "description": "具有多种功能的跨平台 IPTV 播放器应用程序",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/4gray/iptvnator",
+  "website": "https://github.com/4gray/iptvnator",
+  "tutorial": "https://post.smzdm.com/p/azo9m7do/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 89,
+  "sort_order": 89,
+  "name": "R3PLAY",
+  "category": "media",
+  "description": "网易云第三方播放器，docker部署版",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/qier222/YesPlayMusic",
+  "website": "https://github.com/qier222/YesPlayMusic",
+  "tutorial": "https://post.smzdm.com/p/adm5pwen/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

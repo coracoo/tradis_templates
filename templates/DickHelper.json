@@ -1,0 +1,17 @@
+{
+  "id": 80,
+  "sort_order": 80,
+  "name": "DickHelper",
+  "category": "lifestyle",
+  "description": "牛子管理器........",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/zzzdajb/DickHelper",
+  "website": "https://github.com/zzzdajb/DickHelper",
+  "tutorial": "https://post.smzdm.com/p/al9d23dg/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

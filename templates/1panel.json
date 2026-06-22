@@ -1,0 +1,17 @@
+{
+  "id": 17,
+  "sort_order": 17,
+  "name": "1panel",
+  "category": "server-management",
+  "description": "1panel的docker版本",
+  "version": "latest",
+  "logo": "",
+  "website": "https://registry.hub.docker.com/r/moelin/1panel",
+  "tutorial": "https://post.smzdm.com/p/apm2o3e7/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 91,
+  "sort_order": 91,
+  "name": "Xiaomusic",
+  "category": "media",
+  "description": "小米/红米/小爱音箱第三方口令与音乐下载、播放工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/hanxi/xiaomusic",
+  "website": "https://github.com/hanxi/xiaomusic",
+  "tutorial": "https://post.smzdm.com/p/avpe7n99/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

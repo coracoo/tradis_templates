@@ -1,0 +1,17 @@
+{
+  "id": 155,
+  "sort_order": 155,
+  "name": "小书匠",
+  "category": "knowledge",
+  "description": "支持选择性同步的全平台覆盖知识管理笔记软件",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/suziwen/markdownxiaoshujiang?tab=readme-ov-file",
+  "website": "https://github.com/suziwen/markdownxiaoshujiang?tab=readme-ov-file",
+  "tutorial": "https://post.smzdm.com/p/al8zk2d0/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

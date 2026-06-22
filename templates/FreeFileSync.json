@@ -1,0 +1,17 @@
+{
+  "id": 158,
+  "sort_order": 158,
+  "name": "FreeFileSync",
+  "category": "files",
+  "description": "一款文件夹比较和同步软件，可创建和管理所有重要文件的备份副本",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/jlesage/docker-freefilesync",
+  "website": "https://github.com/jlesage/docker-freefilesync",
+  "tutorial": "https://post.smzdm.com/p/aov74pkr//",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

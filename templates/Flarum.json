@@ -1,0 +1,17 @@
+{
+  "id": 114,
+  "sort_order": 114,
+  "name": "Flarum",
+  "category": "social",
+  "description": "一款高颜值、轻量化的论坛",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/mondediefr/docker-flarum",
+  "website": "https://github.com/mondediefr/docker-flarum",
+  "tutorial": "https://post.smzdm.com/p/a7przldd/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

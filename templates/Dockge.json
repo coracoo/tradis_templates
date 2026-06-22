@@ -1,0 +1,17 @@
+{
+  "id": 5,
+  "sort_order": 5,
+  "name": "Dockge",
+  "category": "management",
+  "description": "docker-compose可视化管理",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/louislam/dockge",
+  "website": "https://github.com/louislam/dockge",
+  "tutorial": "https://post.smzdm.com/p/am3dq2gd/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

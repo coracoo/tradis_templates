@@ -1,0 +1,17 @@
+{
+  "id": 61,
+  "sort_order": 61,
+  "name": "DailyTxT",
+  "category": "lifestyle",
+  "description": "一款加密的个人日记工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/PhiTux/DailyTxT",
+  "website": "https://github.com/PhiTux/DailyTxT",
+  "tutorial": "https://post.smzdm.com/p/arromn07/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

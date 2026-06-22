@@ -1,0 +1,17 @@
+{
+  "id": 181,
+  "sort_order": 181,
+  "name": "Palworld",
+  "category": "game",
+  "description": "幻兽帕鲁的服务器搭建docker",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/jammsen/docker-palworld-dedicated-server",
+  "website": "https://github.com/jammsen/docker-palworld-dedicated-server",
+  "tutorial": "https://post.smzdm.com/p/aeqgp8wk/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

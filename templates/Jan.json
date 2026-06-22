@@ -1,0 +1,17 @@
+{
+  "id": 127,
+  "sort_order": 127,
+  "name": "Jan",
+  "category": "ai",
+  "description": "一款100%在本地运行的多平台的OpenAI模型，支持MacOS、Windows、Linux客户端，支持Docker环境部署。",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/janhq/jan",
+  "website": "https://github.com/janhq/jan",
+  "tutorial": "https://post.smzdm.com/p/awo7e94p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

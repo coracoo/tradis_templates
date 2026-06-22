@@ -1,0 +1,17 @@
+{
+  "id": 42,
+  "sort_order": 42,
+  "name": "ILLA",
+  "category": "productivity",
+  "description": "一个强大的开源低代码平台，供开发人员构建内部工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/illacloud/illa-builder",
+  "website": "https://github.com/illacloud/illa-builder",
+  "tutorial": "https://post.smzdm.com/p/a0x5ol58/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

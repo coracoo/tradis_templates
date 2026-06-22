@@ -1,0 +1,17 @@
+{
+  "id": 37,
+  "sort_order": 37,
+  "name": "Safeline",
+  "category": "security",
+  "description": "开源的waf工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/chaitin/SafeLine",
+  "website": "https://github.com/chaitin/SafeLine",
+  "tutorial": "https://post.smzdm.com/p/a2x26eg2/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

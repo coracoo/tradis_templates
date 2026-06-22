@@ -1,0 +1,17 @@
+{
+  "id": 105,
+  "sort_order": 105,
+  "name": "Metube",
+  "category": "download",
+  "description": "一款基于ytb-dlp的可视化下载工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/alexta69/metube",
+  "website": "https://github.com/alexta69/metube",
+  "tutorial": "https://post.smzdm.com/p/ag5644zd/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

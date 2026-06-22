@@ -1,0 +1,17 @@
+{
+  "id": 45,
+  "sort_order": 45,
+  "name": "Kimai",
+  "category": "productivity",
+  "description": "个人时间管理工具，管理打工人自己在不同项目、不同工种上的时间分配",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/kimai/kimai",
+  "website": "https://github.com/kimai/kimai",
+  "tutorial": "https://post.smzdm.com/p/a4xnxdwx/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

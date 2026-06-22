@@ -1,0 +1,17 @@
+{
+  "id": 68,
+  "sort_order": 68,
+  "name": "Howtocook",
+  "category": "lifestyle",
+  "description": "程序员烧饭手册大全",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/Anduin2017/HowToCook",
+  "website": "https://github.com/Anduin2017/HowToCook",
+  "tutorial": "https://post.smzdm.com/p/aovd0p0m/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 148,
+  "sort_order": 148,
+  "name": "Reference",
+  "category": "knowledge",
+  "description": "稳定更新的快速开发备忘录，包含数据库、前端、后端、api、各类工具命令等170个工具、软件，",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/jaywcjlove/reference",
+  "website": "https://github.com/jaywcjlove/reference",
+  "tutorial": "https://post.smzdm.com/p/a4x2zv08/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

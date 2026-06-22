@@ -1,0 +1,17 @@
+{
+  "id": 90,
+  "sort_order": 90,
+  "name": "Teemii",
+  "category": "media",
+  "description": "在线漫画下载与管理",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/dokkaner/teemii",
+  "website": "https://github.com/dokkaner/teemii",
+  "tutorial": "https://post.smzdm.com/p/a3xew2kn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

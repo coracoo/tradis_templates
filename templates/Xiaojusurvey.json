@@ -1,0 +1,17 @@
+{
+  "id": 57,
+  "sort_order": 57,
+  "name": "Xiaojusurvey",
+  "category": "productivity",
+  "description": "针对调查问卷开发的在线问卷系统",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/didi/xiaoju-survey",
+  "website": "https://github.com/didi/xiaoju-survey",
+  "tutorial": "https://post.smzdm.com/p/adm60wzn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

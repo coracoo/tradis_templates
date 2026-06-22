@@ -1,0 +1,17 @@
+{
+  "id": 10,
+  "sort_order": 10,
+  "name": "Yacht",
+  "category": "management",
+  "description": "docker可视化管理",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/SelfhostedPro/Yacht",
+  "website": "https://github.com/SelfhostedPro/Yacht",
+  "tutorial": "https://post.smzdm.com/p/arr493pg/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

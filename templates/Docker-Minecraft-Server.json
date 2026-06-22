@@ -1,0 +1,17 @@
+{
+  "id": 179,
+  "sort_order": 179,
+  "name": "Docker-Minecraft-Server",
+  "category": "game",
+  "description": "专门运行在docker里的minecraft（Java 版）社区服务器",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/itzg/docker-minecraft-server",
+  "website": "https://github.com/itzg/docker-minecraft-server",
+  "tutorial": "https://post.smzdm.com/p/arr4q90q/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

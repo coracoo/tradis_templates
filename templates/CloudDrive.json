@@ -1,0 +1,17 @@
+{
+  "id": 109,
+  "sort_order": 109,
+  "name": "CloudDrive",
+  "category": "download",
+  "description": "将网盘挂载为本地磁盘",
+  "version": "latest",
+  "logo": "",
+  "website": "https://hub.docker.com/r/cloudnas/clouddrive2",
+  "tutorial": "https://post.smzdm.com/p/a96e9pr0/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

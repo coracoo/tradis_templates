@@ -1,0 +1,17 @@
+{
+  "id": 174,
+  "sort_order": 174,
+  "name": "Easyimage2",
+  "category": "gallery",
+  "description": "轻量级图床",
+  "version": "latest",
+  "logo": "",
+  "website": "https://hub.docker.com/r/ddsderek/easyimage",
+  "tutorial": "https://post.smzdm.com/p/awog2w92/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 129,
+  "sort_order": 129,
+  "name": "Koishi",
+  "category": "ai",
+  "description": "一个跨平台、可扩展、高性能的机器人框架",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/koishijs/koishi",
+  "website": "https://github.com/koishijs/koishi",
+  "tutorial": "https://post.smzdm.com/p/awo7e94p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

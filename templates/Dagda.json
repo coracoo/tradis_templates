@@ -1,0 +1,17 @@
+{
+  "id": 3,
+  "sort_order": 3,
+  "name": "Dagda",
+  "category": "management",
+  "description": "用于对 docker 镜像/容器中的已知漏洞、木马、病毒、恶意软件和其他恶意威胁进行静态分析的工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/eliasgranderubio/dagda",
+  "website": "https://github.com/eliasgranderubio/dagda",
+  "tutorial": "https://post.smzdm.com/p/ag5z6lv6/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

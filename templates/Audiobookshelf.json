@@ -1,0 +1,17 @@
+{
+  "id": 81,
+  "sort_order": 81,
+  "name": "Audiobookshelf",
+  "category": "media",
+  "description": "一款管理播客和有声书的自托管系统",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/advplyr/audiobookshelf",
+  "website": "https://github.com/advplyr/audiobookshelf",
+  "tutorial": "https://post.smzdm.com/p/aovll8e9/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

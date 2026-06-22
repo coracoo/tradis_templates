@@ -1,0 +1,17 @@
+{
+  "id": 73,
+  "sort_order": 73,
+  "name": "SheetAble",
+  "category": "lifestyle",
+  "description": "一款易于使用的乐谱整理器和乐谱软件",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/SheetAble/SheetAble",
+  "website": "https://github.com/SheetAble/SheetAble",
+  "tutorial": "https://post.smzdm.com/p/awogdx6p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

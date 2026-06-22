@@ -1,0 +1,17 @@
+{
+  "id": 25,
+  "sort_order": 25,
+  "name": "Fenrus",
+  "category": "navigation",
+  "description": "一款花里胡哨的导航系统，支持引入外部连接和导航嵌套",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/revenz/Fenrus",
+  "website": "https://github.com/revenz/Fenrus",
+  "tutorial": "https://post.smzdm.com/p/a3xklmrn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

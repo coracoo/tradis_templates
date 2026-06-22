@@ -1,0 +1,17 @@
+{
+  "id": 189,
+  "sort_order": 189,
+  "name": "Acg-Faka",
+  "category": "monetization",
+  "description": "acg-faka是一款二次元风格的卡券管理平台",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/lizhipay/acg-faka",
+  "website": "https://github.com/lizhipay/acg-faka",
+  "tutorial": "https://post.smzdm.com/p/a4xvkmkk/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

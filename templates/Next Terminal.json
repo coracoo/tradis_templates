@@ -1,0 +1,17 @@
+{
+  "id": 35,
+  "sort_order": 35,
+  "name": "Next Terminal",
+  "category": "security",
+  "description": "开源堡垒机系统，支持RDP、SSH、VNC、Telnet、Kubernetes协议",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/dushixiang/next-terminal",
+  "website": "https://github.com/dushixiang/next-terminal",
+  "tutorial": "https://post.smzdm.com/p/adm669zp/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

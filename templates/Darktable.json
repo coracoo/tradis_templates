@@ -1,0 +1,17 @@
+{
+  "id": 123,
+  "sort_order": 123,
+  "name": "Darktable",
+  "category": "ai",
+  "description": "专门面向摄影师服务的开源数字摄影后期处理软件，平替Lightroom",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/darktable-org/darktable",
+  "website": "https://github.com/darktable-org/darktable",
+  "tutorial": "https://post.smzdm.com/p/a5xmn9xx/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

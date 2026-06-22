@@ -1,0 +1,17 @@
+{
+  "id": 39,
+  "sort_order": 39,
+  "name": "SamWaf",
+  "category": "security",
+  "description": "轻量级的waf防火墙",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/samwafgo/SamWaf",
+  "website": "https://github.com/samwafgo/SamWaf",
+  "tutorial": "https://post.smzdm.com/p/apmrvglw/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

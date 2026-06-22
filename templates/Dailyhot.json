@@ -1,0 +1,17 @@
+{
+  "id": 29,
+  "sort_order": 29,
+  "name": "Dailyhot",
+  "category": "navigation",
+  "description": "汇聚全网27个主流网站实时热榜",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/rehiy/dailyhot-docker",
+  "website": "https://github.com/rehiy/dailyhot-docker",
+  "tutorial": "https://post.smzdm.com/p/a8pprrm0/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

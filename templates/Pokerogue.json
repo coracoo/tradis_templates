@@ -1,0 +1,17 @@
+{
+  "id": 182,
+  "sort_order": 182,
+  "name": "Pokerogue",
+  "category": "game",
+  "description": "PokéRogue 是一款基于浏览器的神奇宝贝同人游戏，深受 Roguelite 类型的启发。",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/pagefaultgames/pokerogue",
+  "website": "https://github.com/pagefaultgames/pokerogue",
+  "tutorial": "https://post.smzdm.com/p/a3xnnn5k/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 111,
+  "sort_order": 111,
+  "name": "蓝眼云盘",
+  "category": "download",
+  "description": "一个优雅，好用，高效，克制的开源云盘",
+  "version": "latest",
+  "logo": "",
+  "website": "https://tank-doc.eyeblue.cn/zh/basic/",
+  "tutorial": "https://post.smzdm.com/p/ag522nl6/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

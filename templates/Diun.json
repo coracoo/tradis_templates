@@ -1,0 +1,17 @@
+{
+  "id": 4,
+  "sort_order": 4,
+  "name": "Diun",
+  "category": "management",
+  "description": "docker镜像升级提醒，支持多渠道通知",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/crazy-max/diun",
+  "website": "https://github.com/crazy-max/diun",
+  "tutorial": "https://post.smzdm.com/p/a7pxkkml/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

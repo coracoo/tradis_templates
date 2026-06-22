@@ -1,0 +1,17 @@
+{
+  "id": 62,
+  "sort_order": 62,
+  "name": "Actual",
+  "category": "lifestyle",
+  "description": "以预算管理为核心的一款个人财务管理系统",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/actualbudget/actual",
+  "website": "https://github.com/actualbudget/actual",
+  "tutorial": "https://post.smzdm.com/p/axo5zop4/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

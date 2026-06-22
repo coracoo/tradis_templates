@@ -1,0 +1,17 @@
+{
+  "id": 83,
+  "sort_order": 83,
+  "name": "Douban-Tool（弃坑）",
+  "category": "media",
+  "description": "基于豆瓣想看的BT下载工具",
+  "version": "latest",
+  "logo": "",
+  "website": "https://hub.docker.com/r/zack357/douban-tool",
+  "tutorial": "https://post.smzdm.com/p/an94l6nv/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

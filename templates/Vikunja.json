@@ -1,0 +1,17 @@
+{
+  "id": 54,
+  "sort_order": 54,
+  "name": "Vikunja",
+  "category": "productivity",
+  "description": "支持项目管理、团队管理、任务管理的todo应用，worklite开源替代项目",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/go-vikunja/vikunja",
+  "website": "https://github.com/go-vikunja/vikunja",
+  "tutorial": "https://post.smzdm.com/p/an9pn760/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

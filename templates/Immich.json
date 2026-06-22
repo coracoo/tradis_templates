@@ -1,0 +1,17 @@
+{
+  "id": 168,
+  "sort_order": 168,
+  "name": "Immich",
+  "category": "gallery",
+  "description": "开源家庭相册管理，支持clip",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/immich-app/immich",
+  "website": "https://github.com/immich-app/immich",
+  "tutorial": "https://post.smzdm.com/p/a8p33pnl/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

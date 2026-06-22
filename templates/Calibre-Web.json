@@ -1,0 +1,17 @@
+{
+  "id": 104,
+  "sort_order": 104,
+  "name": "Calibre-Web",
+  "category": "media",
+  "description": "用于浏览、阅读和下载存储在Calibre中的Web应用",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/janeczku/calibre-web",
+  "website": "https://github.com/janeczku/calibre-web",
+  "tutorial": "https://post.smzdm.com/p/arrnv57x/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

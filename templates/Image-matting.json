@@ -1,0 +1,17 @@
+{
+  "id": 126,
+  "sort_order": 126,
+  "name": "Image-matting",
+  "category": "ai",
+  "description": "一键在线扣除图片背景",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/ihmily/image-matting",
+  "website": "https://github.com/ihmily/image-matting",
+  "tutorial": "https://post.smzdm.com/p/al82xpxe/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

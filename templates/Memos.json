@@ -1,0 +1,17 @@
+{
+  "id": 146,
+  "sort_order": 146,
+  "name": "Memos",
+  "category": "knowledge",
+  "description": "碎片化知识闪记、笔记",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/usememos/memos",
+  "website": "https://github.com/usememos/memos",
+  "tutorial": "https://post.smzdm.com/p/awog97x2/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

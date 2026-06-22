@@ -1,0 +1,17 @@
+{
+  "id": 96,
+  "sort_order": 96,
+  "name": "Guovin_TV",
+  "category": "media",
+  "description": "IPTV电视直播源更新项目，从Guovin_TV升级而来",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/Guovin/iptv-api",
+  "website": "https://github.com/Guovin/iptv-api",
+  "tutorial": "https://post.smzdm.com/p/arrz7p5w/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

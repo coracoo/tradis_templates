@@ -1,0 +1,17 @@
+{
+  "id": 169,
+  "sort_order": 169,
+  "name": "Kamera",
+  "category": "gallery",
+  "description": "专供摄影佬使用的记录网站，采用瀑布流图片展示方式",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/besscroft/kamera",
+  "website": "https://github.com/besscroft/kamera",
+  "tutorial": "https://post.smzdm.com/p/aqq5m787/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

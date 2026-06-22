@@ -1,0 +1,17 @@
+{
+  "id": 71,
+  "sort_order": 71,
+  "name": "Manyfold",
+  "category": "lifestyle",
+  "description": "用于管理3D打印机资料的开源项目",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/manyfold3d/manyfold",
+  "website": "https://github.com/manyfold3d/manyfold",
+  "tutorial": "https://post.smzdm.com/p/awogdx6p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

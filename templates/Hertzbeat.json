@@ -1,0 +1,17 @@
+{
+  "id": 19,
+  "sort_order": 19,
+  "name": "Hertzbeat",
+  "category": "server-management",
+  "description": "一站式实时监控、预警、通知系统，支持网络、服务器性能、数据库、容器等",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/apache/hertzbeat",
+  "website": "https://github.com/apache/hertzbeat",
+  "tutorial": "https://post.smzdm.com/p/a96zn847/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

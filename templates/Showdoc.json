@@ -1,0 +1,17 @@
+{
+  "id": 149,
+  "sort_order": 149,
+  "name": "Showdoc",
+  "category": "knowledge",
+  "description": "专门针对IT场景开发的个人知识库、团队文档管理工具，支持通过api生成文档，支持api文档、数据字典等",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/star7th/showdoc",
+  "website": "https://github.com/star7th/showdoc",
+  "tutorial": "https://post.smzdm.com/p/al8go3no/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

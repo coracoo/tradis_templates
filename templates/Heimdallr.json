@@ -1,0 +1,17 @@
+{
+  "id": 177,
+  "sort_order": 177,
+  "name": "Heimdallr",
+  "category": "notification",
+  "description": "支持根据不同消息来源，不同消息目的进行消息推送的聚合消息推送平台，支持10+消息推送方式",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/LeslieLeung/heimdallr",
+  "website": "https://github.com/LeslieLeung/heimdallr",
+  "tutorial": "https://post.smzdm.com/p/awoer49g/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

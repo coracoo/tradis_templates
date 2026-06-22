@@ -1,0 +1,17 @@
+{
+  "id": 116,
+  "sort_order": 116,
+  "name": "TailChat",
+  "category": "social",
+  "description": "类似discord的开源自建聊天服务器",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/msgbyte/tailchat",
+  "website": "https://github.com/msgbyte/tailchat",
+  "tutorial": "https://post.smzdm.com/p/apm4z88x/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

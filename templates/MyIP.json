@@ -1,0 +1,17 @@
+{
+  "id": 34,
+  "sort_order": 34,
+  "name": "MyIP",
+  "category": "security",
+  "description": "在线网络工具箱，支持IP查询、魔法查询等",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/jason5ng32/MyIP",
+  "website": "https://github.com/jason5ng32/MyIP",
+  "tutorial": "https://post.smzdm.com/p/a96o5lne/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

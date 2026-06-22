@@ -1,0 +1,17 @@
+{
+  "id": 76,
+  "sort_order": 76,
+  "name": "Gramps-web",
+  "category": "lifestyle",
+  "description": "一款专业的自托管族谱项目",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/gramps-project/gramps-web",
+  "website": "https://github.com/gramps-project/gramps-web",
+  "tutorial": "https://post.smzdm.com/p/ag53rm93/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

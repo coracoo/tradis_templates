@@ -1,0 +1,17 @@
+{
+  "id": 14,
+  "sort_order": 14,
+  "name": "IstoreNAS",
+  "category": "nas-os",
+  "description": "基于openwrt的开源nas操作系统",
+  "version": "latest",
+  "logo": "",
+  "website": "https://fw.koolcenter.com/iStoreNAS/",
+  "tutorial": "https://post.smzdm.com/p/a4x7k2k8/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

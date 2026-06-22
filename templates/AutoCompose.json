@@ -1,0 +1,17 @@
+{
+  "id": 2,
+  "sort_order": 2,
+  "name": "AutoCompose",
+  "category": "management",
+  "description": "一键转换现存docker",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/Red5d/docker-autocompose",
+  "website": "https://github.com/Red5d/docker-autocompose",
+  "tutorial": "https://post.smzdm.com/p/a96zqolo/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

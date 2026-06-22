@@ -1,0 +1,17 @@
+{
+  "id": 143,
+  "sort_order": 143,
+  "name": "Language-tool",
+  "category": "knowledge",
+  "description": "语言在线校验工具，支持30多种语言的在线翻译和书写校验",
+  "version": "latest",
+  "logo": "",
+  "website": "https://elest.io/open-source/languagetool",
+  "tutorial": "https://post.smzdm.com/p/an9ek28p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

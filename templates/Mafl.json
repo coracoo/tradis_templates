@@ -1,0 +1,17 @@
+{
+  "id": 26,
+  "sort_order": 26,
+  "name": "Mafl",
+  "category": "navigation",
+  "description": "一款新上线github的极简导航工具，使用yaml部署导航栏，支持主题设定，支持分组，超过200,000种免费图标，支持中文。",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/hywax/mafl",
+  "website": "https://github.com/hywax/mafl",
+  "tutorial": "https://post.smzdm.com/p/arr4q90q/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

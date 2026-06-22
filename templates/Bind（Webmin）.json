@@ -1,0 +1,17 @@
+{
+  "id": 18,
+  "sort_order": 18,
+  "name": "Bind（Webmin）",
+  "category": "server-management",
+  "description": "一个基于 Web 的Linux/Unix 系统管理软件",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/sameersbn/docker-bind",
+  "website": "https://github.com/sameersbn/docker-bind",
+  "tutorial": "https://post.smzdm.com/p/arr4q90q/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

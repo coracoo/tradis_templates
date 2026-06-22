@@ -1,0 +1,17 @@
+{
+  "id": 145,
+  "sort_order": 145,
+  "name": "Memonts",
+  "category": "knowledge",
+  "description": "自托管的“朋友圈”风格博客",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/kingwrcy/moments",
+  "website": "https://github.com/kingwrcy/moments/",
+  "tutorial": "https://post.smzdm.com/p/a6p27wxn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

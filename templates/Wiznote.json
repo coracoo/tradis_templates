@@ -1,0 +1,17 @@
+{
+  "id": 151,
+  "sort_order": 151,
+  "name": "Wiznote",
+  "category": "knowledge",
+  "description": "为知笔记的自托管版本",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/WizTeam/WizNoteLite",
+  "website": "https://github.com/WizTeam/WizNoteLite",
+  "tutorial": "https://post.smzdm.com/p/avpvwnxn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

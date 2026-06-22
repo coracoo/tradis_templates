@@ -1,0 +1,17 @@
+{
+  "id": 51,
+  "sort_order": 51,
+  "name": "Superset",
+  "category": "productivity",
+  "description": "免费的BI系统、数据驾驶舱系统",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/apache/superset",
+  "website": "https://github.com/apache/superset",
+  "tutorial": "https://post.smzdm.com/p/a5x706zk/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

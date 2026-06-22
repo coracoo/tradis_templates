@@ -1,0 +1,17 @@
+{
+  "id": 180,
+  "sort_order": 180,
+  "name": "Karaoke-eternal",
+  "category": "game",
+  "description": "一款以KTV氛围设计的卡拉ok软件",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/bhj/KaraokeEternal",
+  "website": "https://github.com/bhj/KaraokeEternal",
+  "tutorial": "https://post.smzdm.com/p/arr4q90q/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

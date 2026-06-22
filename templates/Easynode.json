@@ -1,0 +1,17 @@
+{
+  "id": 23,
+  "sort_order": 23,
+  "name": "Easynode",
+  "category": "server-management",
+  "description": "多功能Linux服务器WEB面板(webSSH\u0026webSFTP)",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/chaos-zhu/easynode",
+  "website": "https://github.com/chaos-zhu/easynode",
+  "tutorial": "https://post.smzdm.com/p/axo487v2/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

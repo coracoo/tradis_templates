@@ -1,0 +1,17 @@
+{
+  "id": 74,
+  "sort_order": 74,
+  "name": "Traggo",
+  "category": "lifestyle",
+  "description": "以时间轴为核心的时间分配、管理工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/traggo/website",
+  "website": "https://github.com/traggo/website",
+  "tutorial": "https://post.smzdm.com/p/a6p6x62o/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

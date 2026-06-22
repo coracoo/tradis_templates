@@ -1,0 +1,17 @@
+{
+  "id": 88,
+  "sort_order": 88,
+  "name": "Onelist",
+  "category": "media",
+  "description": "用于alist挂载后的影视刮削工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/msterzhang/onelist",
+  "website": "https://github.com/msterzhang/onelist",
+  "tutorial": "https://post.smzdm.com/p/an9wdeo3/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

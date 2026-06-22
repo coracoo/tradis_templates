@@ -1,0 +1,17 @@
+{
+  "id": 139,
+  "sort_order": 139,
+  "name": "Affine",
+  "category": "knowledge",
+  "description": "无界白板+超强文档管理，Notion的开源替代",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/toeverything/AFFiNE",
+  "website": "https://github.com/toeverything/AFFiNE",
+  "tutorial": "https://post.smzdm.com/p/am3w7724/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

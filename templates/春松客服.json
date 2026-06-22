@@ -1,0 +1,17 @@
+{
+  "id": 118,
+  "sort_order": 118,
+  "name": "春松客服",
+  "category": "social",
+  "description": "在线客服管理系统，支持多平台外挂式接入，支持坐席管理",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/cskefu/cskefu",
+  "website": "https://github.com/cskefu/cskefu",
+  "tutorial": "https://post.smzdm.com/p/a6pgn2v0/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

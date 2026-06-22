@@ -1,0 +1,17 @@
+{
+  "id": 97,
+  "sort_order": 97,
+  "name": "NextBeats",
+  "category": "media",
+  "description": "一款基于油管的lofi音乐流播放器",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/btahir/next-beats",
+  "website": "https://github.com/btahir/next-beats",
+  "tutorial": "https://post.smzdm.com/p/a7plrn05/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

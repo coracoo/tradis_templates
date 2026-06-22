@@ -1,0 +1,17 @@
+{
+  "id": 52,
+  "sort_order": 52,
+  "name": "Twenty",
+  "category": "productivity",
+  "description": "高颜值跨平台的开源CRM项目，核心还在财务和客户管理",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/twentyhq/twenty",
+  "website": "https://github.com/twentyhq/twenty",
+  "tutorial": "https://post.smzdm.com/p/a8pvk290/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

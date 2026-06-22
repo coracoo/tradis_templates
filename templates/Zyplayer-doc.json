@@ -1,0 +1,17 @@
+{
+  "id": 199,
+  "sort_order": 199,
+  "name": "Zyplayer-doc",
+  "category": "monetization",
+  "description": "团队、个人知识库、文档管理工具，支持付费阅读",
+  "version": "latest",
+  "logo": "",
+  "website": "https://doc.zyplayer.com/",
+  "tutorial": "https://post.smzdm.com/p/a3x96d77/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

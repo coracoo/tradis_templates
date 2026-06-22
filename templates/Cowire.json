@@ -1,0 +1,17 @@
+{
+  "id": 32,
+  "sort_order": 32,
+  "name": "Cowire",
+  "category": "security",
+  "description": "ssh蜜罐",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/cowrie/cowrie",
+  "website": "https://github.com/cowrie/cowrie",
+  "tutorial": "https://post.smzdm.com/p/ag5m9326/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

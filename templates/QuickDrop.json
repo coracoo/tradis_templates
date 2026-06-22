@@ -1,0 +1,17 @@
+{
+  "id": 163,
+  "sort_order": 163,
+  "name": "QuickDrop",
+  "category": "files",
+  "description": "一款易于使用的文件共享应用程序，允许用户在没有帐户的情况下共享",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/RoastSlav/quickdrop",
+  "website": "https://github.com/RoastSlav/quickdrop",
+  "tutorial": "https://post.smzdm.com/p/a3x875pn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

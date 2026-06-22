@@ -1,0 +1,17 @@
+{
+  "id": 60,
+  "sort_order": 60,
+  "name": "Tududi",
+  "category": "productivity",
+  "description": "一个极简的开源任务和项目管理工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/chrisvel/tududi",
+  "website": "https://github.com/chrisvel/tududi",
+  "tutorial": "https://post.smzdm.com/p/a8p848zn/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

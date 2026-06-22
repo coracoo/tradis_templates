@@ -1,0 +1,17 @@
+{
+  "id": 147,
+  "sort_order": 147,
+  "name": "Perlite",
+  "category": "knowledge",
+  "description": "Obsidian Publish开源代替项目，支持在线阅读md文件，支持分权限共享",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/secure-77/Perlite",
+  "website": "https://github.com/secure-77/Perlite",
+  "tutorial": "https://post.smzdm.com/p/admp5wgz/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}
