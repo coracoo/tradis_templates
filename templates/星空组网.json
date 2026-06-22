@@ -1,0 +1,17 @@
+{
+  "id": 224,
+  "sort_order": 224,
+  "name": "星空组网",
+  "category": "network",
+  "description": "一款国产开发的异地组网工具",
+  "version": "latest",
+  "logo": "",
+  "website": "https://doc.starvpn.cn/",
+  "tutorial": "https://post.smzdm.com/p/apmolqw7/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

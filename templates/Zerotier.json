@@ -1,0 +1,17 @@
+{
+  "id": 223,
+  "sort_order": 223,
+  "name": "Zerotier",
+  "category": "network",
+  "description": "异地组网工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/zerotier/ZeroTierOne",
+  "website": "https://github.com/zerotier/ZeroTierOne",
+  "tutorial": "https://post.smzdm.com/p/apmolqw7/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": 202,
+  "sort_order": 202,
+  "name": "Quark--Save",
+  "category": "monetization",
+  "description": "夸克自动签到工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/Cp0204/quark-auto-save",
+  "website": "https://github.com/Cp0204/quark-auto-save",
+  "tutorial": "https://post.smzdm.com/p/arrp8oew/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

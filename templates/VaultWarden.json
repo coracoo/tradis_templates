@@ -1,0 +1,17 @@
+{
+  "id": 216,
+  "sort_order": 216,
+  "name": "VaultWarden",
+  "category": "tools",
+  "description": "跨平台的2FA、密码管理工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/dani-garcia/vaultwarden",
+  "website": "https://github.com/dani-garcia/vaultwarden",
+  "tutorial": "https://post.smzdm.com/p/a2xl798d/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

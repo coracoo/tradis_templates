@@ -1,0 +1,17 @@
+{
+  "id": 218,
+  "sort_order": 218,
+  "name": "Yourls",
+  "category": "network",
+  "description": "网站短链接生成",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/YOURLS/YOURLS",
+  "website": "https://github.com/YOURLS/YOURLS",
+  "tutorial": "https://post.smzdm.com/p/a6pmelqg/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

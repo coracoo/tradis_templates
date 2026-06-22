@@ -1,0 +1,17 @@
+{
+  "id": 231,
+  "sort_order": 231,
+  "name": "内链通",
+  "category": "network",
+  "description": "一款基于STUN的内网穿透工具",
+  "version": "latest",
+  "logo": "",
+  "website": "https://mi-d.cn/10963",
+  "tutorial": "https://post.smzdm.com/p/a5x244ex/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

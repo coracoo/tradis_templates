@@ -1,0 +1,17 @@
+{
+  "id": 203,
+  "sort_order": 203,
+  "name": "instock",
+  "category": "monetization",
+  "description": "InStock股票系统，抓取每日股票、ETF关键数据等，是量化投资的好帮手",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/myhhub/stock",
+  "website": "https://github.com/myhhub/stock",
+  "tutorial": "https://post.smzdm.com/p/apm93dlw/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

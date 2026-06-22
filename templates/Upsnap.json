@@ -1,0 +1,17 @@
+{
+  "id": 221,
+  "sort_order": 221,
+  "name": "Upsnap",
+  "category": "network",
+  "description": "一款局域网唤醒 Web 应用程序",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/seriousm4x/UpSnap",
+  "website": "https://github.com/seriousm4x/UpSnap",
+  "tutorial": "https://post.smzdm.com/p/awogdx6p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

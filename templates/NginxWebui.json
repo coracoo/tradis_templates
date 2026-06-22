@@ -1,0 +1,17 @@
+{
+  "id": 219,
+  "sort_order": 219,
+  "name": "NginxWebui",
+  "category": "network",
+  "description": "基于Nginx开发的可视化配置工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/cym1102/nginxWebUI",
+  "website": "https://github.com/cym1102/nginxWebUI",
+  "tutorial": "https://post.smzdm.com/p/aeq473oz/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

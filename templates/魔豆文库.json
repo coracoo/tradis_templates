@@ -1,0 +1,17 @@
+{
+  "id": 201,
+  "sort_order": 201,
+  "name": "魔豆文库",
+  "category": "monetization",
+  "description": "开源版百度文库系统，支持知识付费",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/mnt-ltd/moredoc",
+  "website": "https://github.com/mnt-ltd/moredoc",
+  "tutorial": "https://post.smzdm.com/p/a6pgrkxo/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

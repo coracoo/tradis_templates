@@ -1,0 +1,17 @@
+{
+  "id": 220,
+  "sort_order": 220,
+  "name": "Umami",
+  "category": "network",
+  "description": "个人博客网站流量分析工具，支持流量分析到页到ip",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/umami-software/umami",
+  "website": "https://github.com/umami-software/umami",
+  "tutorial": "https://post.smzdm.com/p/a96ok3kp/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

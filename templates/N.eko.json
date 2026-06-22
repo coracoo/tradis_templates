@@ -1,0 +1,17 @@
+{
+  "id": 210,
+  "sort_order": 210,
+  "name": "N.eko",
+  "category": "tools",
+  "description": "基于webRTC的嵌套浏览器",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/m1k1o/neko-rooms",
+  "website": "https://github.com/m1k1o/neko-rooms",
+  "tutorial": "https://post.smzdm.com/p/awogdx6p/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

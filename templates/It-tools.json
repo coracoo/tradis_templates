@@ -1,0 +1,17 @@
+{
+  "id": 207,
+  "sort_order": 207,
+  "name": "It-tools",
+  "category": "tools",
+  "description": "在线IT工具箱",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/CorentinTh/it-tools",
+  "website": "https://github.com/CorentinTh/it-tools",
+  "tutorial": "https://post.smzdm.com/p/aovl8lo7/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}

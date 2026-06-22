@@ -1,0 +1,17 @@
+{
+  "id": 229,
+  "sort_order": 229,
+  "name": "Certimate",
+  "category": "network",
+  "description": "一款SSL证书自动续签工具",
+  "version": "latest",
+  "logo": "https://opengraph.githubassets.com/1/usual2970/certimate",
+  "website": "https://github.com/usual2970/certimate",
+  "tutorial": "https://post.smzdm.com/p/axok7wv3/",
+  "dotenv": "",
+  "compose": "",
+  "screenshots": [],
+  "schema": [],
+  "deployment_count": 0,
+  "enabled": true
+}
