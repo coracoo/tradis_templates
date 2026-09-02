@@ -1,0 +1,429 @@
+{
+  "id": 44,
+  "sort_order": 41,
+  "name": "qbittorrent",
+  "category": "file",
+  "description": "qBittorrent 是一款功能强大、轻量级的 BitTorrent 客户端，基于 linuxserver.io 镜像，提供 Web UI 远程管理，支持 RSS、搜索引擎。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/linuxserver/docker-qbittorrent/master/logo/qbittorrent-icon.png",
+  "website": "https://github.com/linuxserver/docker-qbittorrent",
+  "tutorial": "访问地址：http://服务器IP:8080\n首次启动临时管理员密码在容器日志中查看。\nPUID/PGID 设为拥有下载目录的宿主用户 ID。\nWEBUI_PORT 必须与端口映射右侧一致。",
+  "dotenv": "",
+  "compose": "services:\n  qbittorrent:\n    image: lscr.io/linuxserver/qbittorrent:latest\n    restart: unless-stopped\n    ports:\n      - \"8080:8080\"\n      - \"6881:6881\"\n      - \"6881:6881/udp\"\n    volumes:\n      - ./config:/config\n      - ./downloads:/downloads\n    environment:\n      - PUID=1000\n      - PGID=1000\n      - TZ=Asia/Shanghai\n      - WEBUI_PORT=8080\n      - TORRENTING_PORT=6881",
+  "input_metadata": {
+    "bind:qbittorrent:/config": {
+      "label": "./config",
+      "description": "配置",
+      "group": "basic"
+    },
+    "bind:qbittorrent:/downloads": {
+      "label": "./downloads",
+      "description": "下载目录",
+      "group": "basic"
+    },
+    "port:qbittorrent:6881/tcp": {
+      "group": "basic"
+    },
+    "port:qbittorrent:6881/udp": {
+      "group": "basic"
+    },
+    "port:qbittorrent:8080/tcp": {
+      "label": "8080",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:qbittorrent:PGID": {
+      "label": "PGID",
+      "description": "组 ID",
+      "group": "advanced"
+    },
+    "service:qbittorrent:PUID": {
+      "label": "PUID",
+      "description": "用户 ID",
+      "group": "advanced"
+    },
+    "service:qbittorrent:TORRENTING_PORT": {
+      "label": "TORRENTING_PORT",
+      "description": "BT 端口",
+      "group": "advanced"
+    },
+    "service:qbittorrent:TZ": {
+      "label": "TZ",
+      "description": "时区",
+      "group": "advanced"
+    },
+    "service:qbittorrent:WEBUI_PORT": {
+      "label": "WEBUI_PORT",
+      "description": "WEBUI 端口",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:9a1c3cd8d0bfcd7c3de810ea258fe52532e0a04324c7e3cb5c23d745b4b9201a",
+    "manifest_digest": "sha256:ad21214e05474f705a4880c68c80022f000656ba918a2abf4b91127d3782597c",
+    "services": [
+      "qbittorrent"
+    ],
+    "inputs": [
+      {
+        "id": "bind:qbittorrent:/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "description": "配置",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:qbittorrent:/downloads",
+        "key": "./downloads",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./downloads",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./downloads",
+          "description": "下载目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:qbittorrent:6881/tcp",
+        "key": "6881",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "6881",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:qbittorrent:6881/udp",
+        "key": "6881",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "6881",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:qbittorrent:8080/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:qbittorrent:PGID",
+        "key": "PGID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PGID",
+          "description": "组 ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qbittorrent:PUID",
+        "key": "PUID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PUID",
+          "description": "用户 ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qbittorrent:TORRENTING_PORT",
+        "key": "TORRENTING_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "6881",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TORRENTING_PORT",
+          "description": "BT 端口",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qbittorrent:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "description": "时区",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qbittorrent:WEBUI_PORT",
+        "key": "WEBUI_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "WEBUI_PORT",
+          "description": "WEBUI 端口",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:qbittorrent:PGID",
+        "service": "qbittorrent",
+        "target_kind": "environment",
+        "target_key": "PGID",
+        "yaml_path": "services.qbittorrent.environment[1]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:qbittorrent:PUID",
+        "service": "qbittorrent",
+        "target_kind": "environment",
+        "target_key": "PUID",
+        "yaml_path": "services.qbittorrent.environment[0]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:qbittorrent:TORRENTING_PORT",
+        "service": "qbittorrent",
+        "target_kind": "environment",
+        "target_key": "TORRENTING_PORT",
+        "yaml_path": "services.qbittorrent.environment[4]",
+        "line": 17,
+        "column": 9
+      },
+      {
+        "input_id": "service:qbittorrent:TZ",
+        "service": "qbittorrent",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.qbittorrent.environment[2]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:qbittorrent:WEBUI_PORT",
+        "service": "qbittorrent",
+        "target_kind": "environment",
+        "target_key": "WEBUI_PORT",
+        "yaml_path": "services.qbittorrent.environment[3]",
+        "line": 16,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:qbittorrent:/config",
+        "kind": "bind",
+        "service": "qbittorrent",
+        "source": "./config",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.qbittorrent.volumes[0]"
+      },
+      {
+        "id": "bind:qbittorrent:/downloads",
+        "kind": "bind",
+        "service": "qbittorrent",
+        "source": "./downloads",
+        "target": "/downloads",
+        "editable": true,
+        "yaml_path": "services.qbittorrent.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:qbittorrent:6881/tcp",
+        "kind": "port",
+        "service": "qbittorrent",
+        "source": "6881",
+        "target": "6881",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.qbittorrent.ports[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:qbittorrent:6881/udp",
+        "kind": "port",
+        "service": "qbittorrent",
+        "source": "6881",
+        "target": "6881",
+        "protocol": "udp",
+        "editable": true,
+        "yaml_path": "services.qbittorrent.ports[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "port:qbittorrent:8080/tcp",
+        "kind": "port",
+        "service": "qbittorrent",
+        "source": "8080",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.qbittorrent.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:9a1c3cd8d0bfcd7c3de810ea258fe52532e0a04324c7e3cb5c23d745b4b9201a",
+  "manifest_digest": "sha256:ad21214e05474f705a4880c68c80022f000656ba918a2abf4b91127d3782597c",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:qbittorrent:/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "配置",
+      "type": "path",
+      "default": "./config",
+      "category": "basic",
+      "serviceName": "qbittorrent",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:qbittorrent:/downloads",
+      "name": "./downloads",
+      "label": "./downloads",
+      "description": "下载目录",
+      "type": "path",
+      "default": "./downloads",
+      "category": "basic",
+      "serviceName": "qbittorrent",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:qbittorrent:6881/tcp",
+      "name": "6881",
+      "label": "6881",
+      "description": "",
+      "type": "port",
+      "default": "6881",
+      "category": "basic",
+      "serviceName": "qbittorrent",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:qbittorrent:6881/udp",
+      "name": "6881",
+      "label": "6881",
+      "description": "",
+      "type": "port",
+      "default": "6881",
+      "category": "basic",
+      "serviceName": "qbittorrent",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:qbittorrent:8080/tcp",
+      "name": "8080",
+      "label": "8080",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8080",
+      "category": "basic",
+      "serviceName": "qbittorrent",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:qbittorrent:PGID",
+      "name": "PGID",
+      "label": "PGID",
+      "description": "组 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "qbittorrent",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qbittorrent:PUID",
+      "name": "PUID",
+      "label": "PUID",
+      "description": "用户 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "qbittorrent",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qbittorrent:TORRENTING_PORT",
+      "name": "TORRENTING_PORT",
+      "label": "TORRENTING_PORT",
+      "description": "BT 端口",
+      "type": "string",
+      "default": "6881",
+      "category": "advanced",
+      "serviceName": "qbittorrent",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qbittorrent:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "时区",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "qbittorrent",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qbittorrent:WEBUI_PORT",
+      "name": "WEBUI_PORT",
+      "label": "WEBUI_PORT",
+      "description": "WEBUI 端口",
+      "type": "string",
+      "default": "8080",
+      "category": "advanced",
+      "serviceName": "qbittorrent",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

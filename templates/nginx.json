@@ -9,50 +9,190 @@
   "website": "https://nginx.org/",
   "tutorial": "",
   "dotenv": "",
-  "compose": "web:\n  image: nginx\n  volumes:\n   - ./templates:/etc/nginx/templates\n  ports:\n   - \"8080:80\"\n  environment:\n   - NGINX_HOST=foobar.com\n   - NGINX_PORT=80\n",
+  "compose": "services:\n  web:\n    image: nginx\n    volumes:\n     - ./templates:/etc/nginx/templates\n    ports:\n     - \"8080:80\"\n    environment:\n     - NGINX_HOST=foobar.com\n     - NGINX_PORT=80\n",
+  "input_metadata": {
+    "bind:web:/etc/nginx/templates": {
+      "label": "./templates",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "port:web:80/tcp": {
+      "label": "8080",
+      "group": "basic",
+      "sensitive": false
+    },
+    "service:web:NGINX_HOST": {
+      "label": "NGINX_HOST",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:web:NGINX_PORT": {
+      "label": "NGINX_PORT",
+      "group": "advanced",
+      "sensitive": false
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:b278577cf6b14679cd605eef5c2f231d1f70d337d47f91deb7c493c7d5d91fab",
+    "manifest_digest": "sha256:ba68940abb8d45dd8ec08073a60fd7a65894fab53fa6a59257a5b2b1d2bf15c1",
+    "services": [
+      "web"
+    ],
+    "inputs": [
+      {
+        "id": "bind:web:/etc/nginx/templates",
+        "key": "./templates",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./templates",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./templates",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "port:web:80/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "group": "basic",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:web:NGINX_HOST",
+        "key": "NGINX_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "foobar.com",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NGINX_HOST",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:web:NGINX_PORT",
+        "key": "NGINX_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "80",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NGINX_PORT",
+          "group": "advanced",
+          "sensitive": false
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:web:NGINX_HOST",
+        "service": "web",
+        "target_kind": "environment",
+        "target_key": "NGINX_HOST",
+        "yaml_path": "services.web.environment[0]",
+        "line": 9,
+        "column": 8
+      },
+      {
+        "input_id": "service:web:NGINX_PORT",
+        "service": "web",
+        "target_kind": "environment",
+        "target_key": "NGINX_PORT",
+        "yaml_path": "services.web.environment[1]",
+        "line": 10,
+        "column": 8
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:web:/etc/nginx/templates",
+        "kind": "bind",
+        "service": "web",
+        "source": "./templates",
+        "target": "/etc/nginx/templates",
+        "editable": true,
+        "yaml_path": "services.web.volumes[0]"
+      },
+      {
+        "id": "port:web:80/tcp",
+        "kind": "port",
+        "service": "web",
+        "source": "8080",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.web.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:b278577cf6b14679cd605eef5c2f231d1f70d337d47f91deb7c493c7d5d91fab",
+  "manifest_digest": "sha256:ba68940abb8d45dd8ec08073a60fd7a65894fab53fa6a59257a5b2b1d2bf15c1",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
+      "inputId": "bind:web:/etc/nginx/templates",
+      "name": "./templates",
+      "label": "./templates",
+      "description": "",
+      "type": "path",
+      "default": "./templates",
+      "category": "advanced",
+      "serviceName": "web",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:web:80/tcp",
       "name": "8080",
       "label": "8080",
-      "description": "容器 WEB 端口",
+      "description": "",
       "type": "port",
-      "default": "80",
+      "default": "8080",
       "category": "basic",
       "serviceName": "web",
       "paramType": "port"
     },
     {
-      "name": "./templates",
-      "label": "./templates",
-      "description": "容器存储路径",
-      "type": "path",
-      "default": "/etc/nginx/templates",
-      "category": "basic",
-      "serviceName": "web",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:web:NGINX_HOST",
       "name": "NGINX_HOST",
       "label": "NGINX_HOST",
       "description": "",
       "type": "string",
       "default": "foobar.com",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "web",
       "paramType": "env"
     },
     {
+      "inputId": "service:web:NGINX_PORT",
       "name": "NGINX_PORT",
       "label": "NGINX_PORT",
       "description": "",
       "type": "string",
       "default": "80",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "web",
       "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

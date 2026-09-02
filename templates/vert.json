@@ -10,22 +10,74 @@
   "tutorial": "使用 WebAssembly* 直接在您的设备上转换文件\n\n没有文件或文件大小限制\n\n转换图像、音频、文档和视频*\n\n支持超过 250 种文件格式",
   "dotenv": "",
   "compose": "services:\n  vert:\n    image: ghcr.io/vert-sh/vert:latest\n    restart: unless-stopped\n    ports:\n      - 3000:80",
+  "input_metadata": {
+    "port:vert:80/tcp": {
+      "label": "3000",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:ba23bf045539172bc4167e9805ecd6c42c443ef98811d20a03fc3a6f93a1035b",
+    "manifest_digest": "sha256:a5d8f303435c4f25b231f406f9c4544fd27083c6627b60d80e78a8ab71b62b2a",
+    "services": [
+      "vert"
+    ],
+    "inputs": [
+      {
+        "id": "port:vert:80/tcp",
+        "key": "3000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3000",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "port:vert:80/tcp",
+        "kind": "port",
+        "service": "vert",
+        "source": "3000",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.vert.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:ba23bf045539172bc4167e9805ecd6c42c443ef98811d20a03fc3a6f93a1035b",
+  "manifest_digest": "sha256:a5d8f303435c4f25b231f406f9c4544fd27083c6627b60d80e78a8ab71b62b2a",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/VERT-sh/VERT/raw/main/docs/images/screenshot-home.png",
     "https://github.com/VERT-sh/VERT/raw/main/docs/images/screenshot-convert.png"
   ],
   "schema": [
     {
+      "inputId": "port:vert:80/tcp",
       "name": "3000",
       "label": "3000",
       "description": "容器 WEB 端口",
       "type": "port",
-      "default": "80",
+      "default": "3000",
       "category": "basic",
       "serviceName": "vert",
       "paramType": "port"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

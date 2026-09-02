@@ -10,6 +10,1010 @@
   "tutorial": "APP 下载地址：https://www.amcfy.com/\n\n媒体扫描：支持多目录配置，自动解析 ID3 元数据、封面、歌词并写入数据库。\n\n智能播放：Web 前端提供队列、收藏、下一首/上一首、音量与进度控制，支持令牌式音频流与 HLS。\n\n账号系统：区分管理员与普通用户，支持注册开关、资料修改、密码变更与头像上传。\n\n收藏体系：曲目、专辑收藏与歌单管理一应俱全，可直接加入播放器队列。\n\n实时通知：内置 WebSocket 网关，后续可扩展扫描与播放的实时反馈。\n\n转码缓存：集成 FFmpeg 实时转码，支持自动生成指定码率的缓存文件并在后台统计与清理。\n\n有声书：有声书按目录入库支持绝大部分已刮削\n\n音乐视频：音乐视频入库点播\n\n插件与元数据：插件清单自动识别目录内 manifest，元数据提供方支持启用、优先级配置与第三方源扩展。",
   "dotenv": "ADMIN_DISPLAY_NAME=\nADMIN_EMAIL=\nADMIN_PASSWORD=\nACOUSTID_API_KEY=\"\"\nLASTFM_API_KEY=\"\"\nLASTFM_API_SECRET=\"\"\nSPOTIFY_TOKEN=\"\"\nSPOTIFY_CLIENT_ID=\"\"\nSPOTIFY_CLIENT_SECRET=\"\"\n",
   "compose": "services:\n  postgres:\n    image: postgres:16-alpine\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: \"daoliyu\"\n      POSTGRES_USER: \"daoliyu\"\n      POSTGRES_PASSWORD: \"daoliyupassword\"\n      PGDATA: \"/var/lib/postgresql/data/pgdata\"\n    command:\n      - \"postgres\"\n      - \"-c\"\n      - \"max_connections=200\"\n      - \"-c\"\n      - \"shared_buffers=256MB\"\n      - \"-c\"\n      - \"work_mem=32MB\"\n      - \"-c\"\n      - \"maintenance_work_mem=256MB\"\n      - \"-c\"\n      - \"checkpoint_completion_target=0.9\"\n      - \"-c\"\n      - \"wal_buffers=16MB\"\n      - \"-c\"\n      - \"port=5433\"\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U daoliyu -d daoliyu -p 5433\"]\n      interval: 10s\n      timeout: 5s\n      retries: 6\n      start_period: 30s\n    volumes:\n      - ./docker-data/postgres:/var/lib/postgresql/data\n\n  redis:\n    image: redis:7-alpine\n    container_name: daoliyu-redis\n    restart: unless-stopped\n    command: [\"redis-server\", \"--appendonly\", \"yes\"]\n    volumes:\n      - ./docker-data/redis:/data\n    healthcheck:\n      test: [\"CMD\", \"redis-cli\", \"ping\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n\n  backend:\n    image: msmkls/daoliyu-backend:0.1.9\n    restart: unless-stopped\n    depends_on:\n      postgres:\n        condition: service_healthy\n      redis:\n        condition: service_started\n    environment:\n      NODE_ENV: production\n      DATABASE_URL: \"postgresql://daoliyu:daoliyupassword@postgres:5433/daoliyu?schema=public\u0026connection_limit=25\u0026pool_timeout=10\u0026statement_timeout=60000\u0026idle_in_transaction_session_timeout=60000\"\n      APP_PORT: 4000\n      ADMIN_DISPLAY_NAME: \"${ADMIN_DISPLAY_NAME}\"\n      ADMIN_EMAIL: \"${ADMIN_EMAIL}\"\n      ADMIN_PASSWORD: \"${ADMIN_PASSWORD}\"\n      LIBRARY_ROOT: \"/data/media\"\n      AUDIOBOOK_LIBRARY_ROOT: \"/data/audiobooks\"\n      VIDEO_LIBRARY_ROOT: \"/data/music-videos\"\n      VIDEO_TRANSCODE_CACHE: \"/app/storage/transcoded/videos\"\n      VIDEO_THUMBNAIL_CACHE: \"/app/storage/thumbnails/videos\"\n      PLAYLISTS_IMPORT_ROOT: \"/data/playlists\"\n      REGISTRATION_OPEN: \"true\"\n      PLUGINS_DIR: \"/plugins\"\n      REDIS_URL: \"redis://redis:6379/0\"\n      ACOUSTID_API_KEY: \"${ACOUSTID_API_KEY}\"\n      LASTFM_API_KEY: \"${LASTFM_API_KEY}\"\n      LASTFM_API_SECRET: \"${LASTFM_API_SECRET}\"\n      SPOTIFY_TOKEN: \"${SPOTIFY_TOKEN}\"\n      SPOTIFY_CLIENT_ID: \"${SPOTIFY_CLIENT_ID}\"\n      SPOTIFY_CLIENT_SECRET: \"${SPOTIFY_CLIENT_SECRET}\"\n      LOG_LEVEL: \"info\"\n      DEBUG: \"true\"\n    volumes:\n      - ./backend-storage:/app/storage\n      - ./media:/data/media\n      - ./audiobooks:/data/audiobooks\n      - ./music-videos:/data/music-videos\n      - ./playlists:/data/playlists\n      - ./plugins:/plugins\n    healthcheck:\n      test: [\"CMD\", \"wget\", \"-qO-\", \"http://localhost:4000/health\"]\n      interval: 30s\n      timeout: 5s\n      retries: 5\n\n  frontend:\n    image: msmkls/daoliyu-frontend:0.1.9\n    restart: unless-stopped\n    depends_on:\n      backend:\n        condition: service_healthy\n    ports:\n      - \"5173:8080\"",
+  "input_metadata": {
+    "bind:backend:/app/storage": {
+      "label": "./backend-storage",
+      "group": "advanced"
+    },
+    "bind:backend:/data/audiobooks": {
+      "label": "./audiobooks",
+      "description": "有声书路径",
+      "group": "basic"
+    },
+    "bind:backend:/data/media": {
+      "label": "./media",
+      "description": "音乐路径",
+      "group": "basic"
+    },
+    "bind:backend:/data/music-videos": {
+      "label": "./music-videos",
+      "description": "MV 路径",
+      "group": "basic"
+    },
+    "bind:backend:/data/playlists": {
+      "label": "./playlists",
+      "description": "播单路径",
+      "group": "advanced"
+    },
+    "bind:backend:/plugins": {
+      "label": "./plugins",
+      "description": "插件路径",
+      "group": "advanced"
+    },
+    "bind:postgres:/var/lib/postgresql/data": {
+      "label": "./docker-data/postgres",
+      "group": "advanced"
+    },
+    "bind:redis:/data": {
+      "label": "./docker-data/redis",
+      "group": "advanced"
+    },
+    "port:frontend:8080/tcp": {
+      "label": "5173",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "project:ACOUSTID_API_KEY": {
+      "label": "ACOUSTID_API_KEY",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:ADMIN_DISPLAY_NAME": {
+      "label": "ADMIN_DISPLAY_NAME",
+      "group": "basic"
+    },
+    "project:ADMIN_EMAIL": {
+      "label": "ADMIN_EMAIL",
+      "group": "basic"
+    },
+    "project:ADMIN_PASSWORD": {
+      "label": "ADMIN_PASSWORD",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:LASTFM_API_KEY": {
+      "label": "LASTFM_API_KEY",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:LASTFM_API_SECRET": {
+      "label": "LASTFM_API_SECRET",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:SPOTIFY_CLIENT_ID": {
+      "label": "SPOTIFY_CLIENT_ID",
+      "group": "basic"
+    },
+    "project:SPOTIFY_CLIENT_SECRET": {
+      "label": "SPOTIFY_CLIENT_SECRET",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:SPOTIFY_TOKEN": {
+      "label": "SPOTIFY_TOKEN",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:backend:APP_PORT": {
+      "label": "APP_PORT",
+      "group": "advanced"
+    },
+    "service:backend:AUDIOBOOK_LIBRARY_ROOT": {
+      "label": "AUDIOBOOK_LIBRARY_ROOT",
+      "group": "advanced"
+    },
+    "service:backend:DATABASE_URL": {
+      "label": "DATABASE_URL",
+      "group": "advanced"
+    },
+    "service:backend:DEBUG": {
+      "label": "DEBUG",
+      "group": "advanced"
+    },
+    "service:backend:LIBRARY_ROOT": {
+      "label": "LIBRARY_ROOT",
+      "group": "basic"
+    },
+    "service:backend:LOG_LEVEL": {
+      "label": "LOG_LEVEL",
+      "group": "advanced"
+    },
+    "service:backend:NODE_ENV": {
+      "label": "NODE_ENV",
+      "group": "advanced"
+    },
+    "service:backend:PLAYLISTS_IMPORT_ROOT": {
+      "label": "PLAYLISTS_IMPORT_ROOT",
+      "group": "advanced"
+    },
+    "service:backend:PLUGINS_DIR": {
+      "label": "PLUGINS_DIR",
+      "group": "advanced"
+    },
+    "service:backend:REDIS_URL": {
+      "label": "REDIS_URL",
+      "group": "advanced"
+    },
+    "service:backend:REGISTRATION_OPEN": {
+      "label": "REGISTRATION_OPEN",
+      "group": "advanced"
+    },
+    "service:backend:VIDEO_LIBRARY_ROOT": {
+      "label": "VIDEO_LIBRARY_ROOT",
+      "group": "advanced"
+    },
+    "service:backend:VIDEO_THUMBNAIL_CACHE": {
+      "label": "VIDEO_THUMBNAIL_CACHE",
+      "group": "advanced"
+    },
+    "service:backend:VIDEO_TRANSCODE_CACHE": {
+      "label": "VIDEO_TRANSCODE_CACHE",
+      "group": "advanced"
+    },
+    "service:postgres:PGDATA": {
+      "label": "PGDATA",
+      "group": "advanced"
+    },
+    "service:postgres:POSTGRES_DB": {
+      "label": "POSTGRES_DB",
+      "group": "advanced"
+    },
+    "service:postgres:POSTGRES_PASSWORD": {
+      "label": "POSTGRES_PASSWORD",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:postgres:POSTGRES_USER": {
+      "label": "POSTGRES_USER",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:afaef4afb8501e8128748b504ee9cf5db844d22dc88c2828d191566dcdf3f6a7",
+    "manifest_digest": "sha256:6d558a45e6a25df08f5b561cbeea138fd456f9067d93de703bcd48d89db2d7b5",
+    "services": [
+      "backend",
+      "frontend",
+      "postgres",
+      "redis"
+    ],
+    "inputs": [
+      {
+        "id": "bind:backend:/app/storage",
+        "key": "./backend-storage",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./backend-storage",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./backend-storage",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:backend:/data/audiobooks",
+        "key": "./audiobooks",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./audiobooks",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./audiobooks",
+          "description": "有声书路径",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:backend:/data/media",
+        "key": "./media",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./media",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./media",
+          "description": "音乐路径",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:backend:/data/music-videos",
+        "key": "./music-videos",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./music-videos",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./music-videos",
+          "description": "MV 路径",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:backend:/data/playlists",
+        "key": "./playlists",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./playlists",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./playlists",
+          "description": "播单路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:backend:/plugins",
+        "key": "./plugins",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./plugins",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./plugins",
+          "description": "插件路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:postgres:/var/lib/postgresql/data",
+        "key": "./docker-data/postgres",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./docker-data/postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./docker-data/postgres",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:redis:/data",
+        "key": "./docker-data/redis",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./docker-data/redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./docker-data/redis",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:frontend:8080/tcp",
+        "key": "5173",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5173",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "5173",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:ACOUSTID_API_KEY",
+        "key": "ACOUSTID_API_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "ACOUSTID_API_KEY",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:ADMIN_DISPLAY_NAME",
+        "key": "ADMIN_DISPLAY_NAME",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": false,
+        "presentation": {
+          "label": "ADMIN_DISPLAY_NAME",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:ADMIN_EMAIL",
+        "key": "ADMIN_EMAIL",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": false,
+        "presentation": {
+          "label": "ADMIN_EMAIL",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:ADMIN_PASSWORD",
+        "key": "ADMIN_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "ADMIN_PASSWORD",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:LASTFM_API_KEY",
+        "key": "LASTFM_API_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "LASTFM_API_KEY",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:LASTFM_API_SECRET",
+        "key": "LASTFM_API_SECRET",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "LASTFM_API_SECRET",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:SPOTIFY_CLIENT_ID",
+        "key": "SPOTIFY_CLIENT_ID",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": false,
+        "presentation": {
+          "label": "SPOTIFY_CLIENT_ID",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:SPOTIFY_CLIENT_SECRET",
+        "key": "SPOTIFY_CLIENT_SECRET",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "SPOTIFY_CLIENT_SECRET",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:SPOTIFY_TOKEN",
+        "key": "SPOTIFY_TOKEN",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "SPOTIFY_TOKEN",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:backend:APP_PORT",
+        "key": "APP_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "4000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "APP_PORT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:AUDIOBOOK_LIBRARY_ROOT",
+        "key": "AUDIOBOOK_LIBRARY_ROOT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/data/audiobooks",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "AUDIOBOOK_LIBRARY_ROOT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:DATABASE_URL",
+        "key": "DATABASE_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgresql://daoliyu:daoliyupassword@postgres:5433/daoliyu?schema=public\u0026connection_limit=25\u0026pool_timeout=10\u0026statement_timeout=60000\u0026idle_in_transaction_session_timeout=60000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_URL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:DEBUG",
+        "key": "DEBUG",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DEBUG",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:LIBRARY_ROOT",
+        "key": "LIBRARY_ROOT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/data/media",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LIBRARY_ROOT",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:backend:LOG_LEVEL",
+        "key": "LOG_LEVEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "info",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LOG_LEVEL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:NODE_ENV",
+        "key": "NODE_ENV",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "production",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NODE_ENV",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:PLAYLISTS_IMPORT_ROOT",
+        "key": "PLAYLISTS_IMPORT_ROOT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/data/playlists",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PLAYLISTS_IMPORT_ROOT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:PLUGINS_DIR",
+        "key": "PLUGINS_DIR",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/plugins",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PLUGINS_DIR",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:REDIS_URL",
+        "key": "REDIS_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis://redis:6379/0",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_URL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:REGISTRATION_OPEN",
+        "key": "REGISTRATION_OPEN",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REGISTRATION_OPEN",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:VIDEO_LIBRARY_ROOT",
+        "key": "VIDEO_LIBRARY_ROOT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/data/music-videos",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "VIDEO_LIBRARY_ROOT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:VIDEO_THUMBNAIL_CACHE",
+        "key": "VIDEO_THUMBNAIL_CACHE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/storage/thumbnails/videos",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "VIDEO_THUMBNAIL_CACHE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:backend:VIDEO_TRANSCODE_CACHE",
+        "key": "VIDEO_TRANSCODE_CACHE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/storage/transcoded/videos",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "VIDEO_TRANSCODE_CACHE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:postgres:PGDATA",
+        "key": "PGDATA",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/var/lib/postgresql/data/pgdata",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PGDATA",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:postgres:POSTGRES_DB",
+        "key": "POSTGRES_DB",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "daoliyu",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_DB",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:postgres:POSTGRES_PASSWORD",
+        "key": "POSTGRES_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "daoliyupassword",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "POSTGRES_PASSWORD",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:postgres:POSTGRES_USER",
+        "key": "POSTGRES_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "daoliyu",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_USER",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:ACOUSTID_API_KEY",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "ACOUSTID_API_KEY",
+        "expression": "${ACOUSTID_API_KEY}",
+        "yaml_path": "services.backend.environment.ACOUSTID_API_KEY",
+        "line": 72,
+        "column": 25
+      },
+      {
+        "input_id": "project:ADMIN_DISPLAY_NAME",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "ADMIN_DISPLAY_NAME",
+        "expression": "${ADMIN_DISPLAY_NAME}",
+        "yaml_path": "services.backend.environment.ADMIN_DISPLAY_NAME",
+        "line": 60,
+        "column": 27
+      },
+      {
+        "input_id": "project:ADMIN_EMAIL",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "ADMIN_EMAIL",
+        "expression": "${ADMIN_EMAIL}",
+        "yaml_path": "services.backend.environment.ADMIN_EMAIL",
+        "line": 61,
+        "column": 20
+      },
+      {
+        "input_id": "project:ADMIN_PASSWORD",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "ADMIN_PASSWORD",
+        "expression": "${ADMIN_PASSWORD}",
+        "yaml_path": "services.backend.environment.ADMIN_PASSWORD",
+        "line": 62,
+        "column": 23
+      },
+      {
+        "input_id": "project:LASTFM_API_KEY",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "LASTFM_API_KEY",
+        "expression": "${LASTFM_API_KEY}",
+        "yaml_path": "services.backend.environment.LASTFM_API_KEY",
+        "line": 73,
+        "column": 23
+      },
+      {
+        "input_id": "project:LASTFM_API_SECRET",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "LASTFM_API_SECRET",
+        "expression": "${LASTFM_API_SECRET}",
+        "yaml_path": "services.backend.environment.LASTFM_API_SECRET",
+        "line": 74,
+        "column": 26
+      },
+      {
+        "input_id": "project:SPOTIFY_CLIENT_ID",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "SPOTIFY_CLIENT_ID",
+        "expression": "${SPOTIFY_CLIENT_ID}",
+        "yaml_path": "services.backend.environment.SPOTIFY_CLIENT_ID",
+        "line": 76,
+        "column": 26
+      },
+      {
+        "input_id": "project:SPOTIFY_CLIENT_SECRET",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "SPOTIFY_CLIENT_SECRET",
+        "expression": "${SPOTIFY_CLIENT_SECRET}",
+        "yaml_path": "services.backend.environment.SPOTIFY_CLIENT_SECRET",
+        "line": 77,
+        "column": 30
+      },
+      {
+        "input_id": "project:SPOTIFY_TOKEN",
+        "service": "backend",
+        "target_kind": "interpolation",
+        "target_key": "SPOTIFY_TOKEN",
+        "expression": "${SPOTIFY_TOKEN}",
+        "yaml_path": "services.backend.environment.SPOTIFY_TOKEN",
+        "line": 75,
+        "column": 22
+      },
+      {
+        "input_id": "service:backend:APP_PORT",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "APP_PORT",
+        "yaml_path": "services.backend.environment.APP_PORT",
+        "line": 59,
+        "column": 17
+      },
+      {
+        "input_id": "service:backend:AUDIOBOOK_LIBRARY_ROOT",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "AUDIOBOOK_LIBRARY_ROOT",
+        "yaml_path": "services.backend.environment.AUDIOBOOK_LIBRARY_ROOT",
+        "line": 64,
+        "column": 31
+      },
+      {
+        "input_id": "service:backend:DATABASE_URL",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "DATABASE_URL",
+        "yaml_path": "services.backend.environment.DATABASE_URL",
+        "line": 58,
+        "column": 21
+      },
+      {
+        "input_id": "service:backend:DEBUG",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "DEBUG",
+        "yaml_path": "services.backend.environment.DEBUG",
+        "line": 79,
+        "column": 14
+      },
+      {
+        "input_id": "service:backend:LIBRARY_ROOT",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "LIBRARY_ROOT",
+        "yaml_path": "services.backend.environment.LIBRARY_ROOT",
+        "line": 63,
+        "column": 21
+      },
+      {
+        "input_id": "service:backend:LOG_LEVEL",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "LOG_LEVEL",
+        "yaml_path": "services.backend.environment.LOG_LEVEL",
+        "line": 78,
+        "column": 18
+      },
+      {
+        "input_id": "service:backend:NODE_ENV",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "NODE_ENV",
+        "yaml_path": "services.backend.environment.NODE_ENV",
+        "line": 57,
+        "column": 17
+      },
+      {
+        "input_id": "service:backend:PLAYLISTS_IMPORT_ROOT",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "PLAYLISTS_IMPORT_ROOT",
+        "yaml_path": "services.backend.environment.PLAYLISTS_IMPORT_ROOT",
+        "line": 68,
+        "column": 30
+      },
+      {
+        "input_id": "service:backend:PLUGINS_DIR",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "PLUGINS_DIR",
+        "yaml_path": "services.backend.environment.PLUGINS_DIR",
+        "line": 70,
+        "column": 20
+      },
+      {
+        "input_id": "service:backend:REDIS_URL",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "REDIS_URL",
+        "yaml_path": "services.backend.environment.REDIS_URL",
+        "line": 71,
+        "column": 18
+      },
+      {
+        "input_id": "service:backend:REGISTRATION_OPEN",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "REGISTRATION_OPEN",
+        "yaml_path": "services.backend.environment.REGISTRATION_OPEN",
+        "line": 69,
+        "column": 26
+      },
+      {
+        "input_id": "service:backend:VIDEO_LIBRARY_ROOT",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "VIDEO_LIBRARY_ROOT",
+        "yaml_path": "services.backend.environment.VIDEO_LIBRARY_ROOT",
+        "line": 65,
+        "column": 27
+      },
+      {
+        "input_id": "service:backend:VIDEO_THUMBNAIL_CACHE",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "VIDEO_THUMBNAIL_CACHE",
+        "yaml_path": "services.backend.environment.VIDEO_THUMBNAIL_CACHE",
+        "line": 67,
+        "column": 30
+      },
+      {
+        "input_id": "service:backend:VIDEO_TRANSCODE_CACHE",
+        "service": "backend",
+        "target_kind": "environment",
+        "target_key": "VIDEO_TRANSCODE_CACHE",
+        "yaml_path": "services.backend.environment.VIDEO_TRANSCODE_CACHE",
+        "line": 66,
+        "column": 30
+      },
+      {
+        "input_id": "service:postgres:PGDATA",
+        "service": "postgres",
+        "target_kind": "environment",
+        "target_key": "PGDATA",
+        "yaml_path": "services.postgres.environment.PGDATA",
+        "line": 9,
+        "column": 15
+      },
+      {
+        "input_id": "service:postgres:POSTGRES_DB",
+        "service": "postgres",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_DB",
+        "yaml_path": "services.postgres.environment.POSTGRES_DB",
+        "line": 6,
+        "column": 20
+      },
+      {
+        "input_id": "service:postgres:POSTGRES_PASSWORD",
+        "service": "postgres",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_PASSWORD",
+        "yaml_path": "services.postgres.environment.POSTGRES_PASSWORD",
+        "line": 8,
+        "column": 26
+      },
+      {
+        "input_id": "service:postgres:POSTGRES_USER",
+        "service": "postgres",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_USER",
+        "yaml_path": "services.postgres.environment.POSTGRES_USER",
+        "line": 7,
+        "column": 22
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:backend:/app/storage",
+        "kind": "bind",
+        "service": "backend",
+        "source": "./backend-storage",
+        "target": "/app/storage",
+        "editable": true,
+        "yaml_path": "services.backend.volumes[0]"
+      },
+      {
+        "id": "bind:backend:/data/audiobooks",
+        "kind": "bind",
+        "service": "backend",
+        "source": "./audiobooks",
+        "target": "/data/audiobooks",
+        "editable": true,
+        "yaml_path": "services.backend.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:backend:/data/media",
+        "kind": "bind",
+        "service": "backend",
+        "source": "./media",
+        "target": "/data/media",
+        "editable": true,
+        "yaml_path": "services.backend.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:backend:/data/music-videos",
+        "kind": "bind",
+        "service": "backend",
+        "source": "./music-videos",
+        "target": "/data/music-videos",
+        "editable": true,
+        "yaml_path": "services.backend.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "bind:backend:/data/playlists",
+        "kind": "bind",
+        "service": "backend",
+        "source": "./playlists",
+        "target": "/data/playlists",
+        "editable": true,
+        "yaml_path": "services.backend.volumes[4]",
+        "sequence_index": 4
+      },
+      {
+        "id": "bind:backend:/plugins",
+        "kind": "bind",
+        "service": "backend",
+        "source": "./plugins",
+        "target": "/plugins",
+        "editable": true,
+        "yaml_path": "services.backend.volumes[5]",
+        "sequence_index": 5
+      },
+      {
+        "id": "bind:postgres:/var/lib/postgresql/data",
+        "kind": "bind",
+        "service": "postgres",
+        "source": "./docker-data/postgres",
+        "target": "/var/lib/postgresql/data",
+        "editable": true,
+        "yaml_path": "services.postgres.volumes[0]"
+      },
+      {
+        "id": "bind:redis:/data",
+        "kind": "bind",
+        "service": "redis",
+        "source": "./docker-data/redis",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.redis.volumes[0]"
+      },
+      {
+        "id": "port:frontend:8080/tcp",
+        "kind": "port",
+        "service": "frontend",
+        "source": "5173",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.frontend.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:afaef4afb8501e8128748b504ee9cf5db844d22dc88c2828d191566dcdf3f6a7",
+  "manifest_digest": "sha256:6d558a45e6a25df08f5b561cbeea138fd456f9067d93de703bcd48d89db2d7b5",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://club.fnnas.com/data/attachment/forum/202511/27/185343sysii99kgywkayqy.png",
     "https://club.fnnas.com/data/attachment/forum/202511/27/185544zjyot35cmb1tg9t3.png",
@@ -17,146 +1021,214 @@
   ],
   "schema": [
     {
+      "inputId": "bind:backend:/app/storage",
+      "name": "./backend-storage",
+      "label": "./backend-storage",
+      "description": "",
+      "type": "path",
+      "default": "./backend-storage",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:backend:/data/audiobooks",
+      "name": "./audiobooks",
+      "label": "./audiobooks",
+      "description": "有声书路径",
+      "type": "path",
+      "default": "./audiobooks",
+      "category": "basic",
+      "serviceName": "backend",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:backend:/data/media",
+      "name": "./media",
+      "label": "./media",
+      "description": "音乐路径",
+      "type": "path",
+      "default": "./media",
+      "category": "basic",
+      "serviceName": "backend",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:backend:/data/music-videos",
+      "name": "./music-videos",
+      "label": "./music-videos",
+      "description": "MV 路径",
+      "type": "path",
+      "default": "./music-videos",
+      "category": "basic",
+      "serviceName": "backend",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:backend:/data/playlists",
+      "name": "./playlists",
+      "label": "./playlists",
+      "description": "播单路径",
+      "type": "path",
+      "default": "./playlists",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:backend:/plugins",
+      "name": "./plugins",
+      "label": "./plugins",
+      "description": "插件路径",
+      "type": "path",
+      "default": "./plugins",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:postgres:/var/lib/postgresql/data",
       "name": "./docker-data/postgres",
       "label": "./docker-data/postgres",
       "description": "",
       "type": "path",
-      "default": "/var/lib/postgresql/data",
+      "default": "./docker-data/postgres",
       "category": "advanced",
       "serviceName": "postgres",
       "paramType": "path"
     },
     {
-      "name": "POSTGRES_DB",
-      "label": "POSTGRES_DB",
-      "description": "",
-      "type": "string",
-      "default": "daoliyu",
-      "category": "advanced",
-      "serviceName": "postgres",
-      "paramType": "env"
-    },
-    {
-      "name": "POSTGRES_USER",
-      "label": "POSTGRES_USER",
-      "description": "",
-      "type": "string",
-      "default": "daoliyu",
-      "category": "advanced",
-      "serviceName": "postgres",
-      "paramType": "env"
-    },
-    {
-      "name": "POSTGRES_PASSWORD",
-      "label": "POSTGRES_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "daoliyupassword",
-      "category": "advanced",
-      "serviceName": "postgres",
-      "paramType": "env"
-    },
-    {
-      "name": "PGDATA",
-      "label": "PGDATA",
-      "description": "",
-      "type": "string",
-      "default": "/var/lib/postgresql/data/pgdata",
-      "category": "advanced",
-      "serviceName": "postgres",
-      "paramType": "env"
-    },
-    {
+      "inputId": "bind:redis:/data",
       "name": "./docker-data/redis",
       "label": "./docker-data/redis",
       "description": "",
       "type": "path",
-      "default": "/data",
+      "default": "./docker-data/redis",
       "category": "advanced",
       "serviceName": "redis",
       "paramType": "path"
     },
     {
-      "name": "./backend-storage",
-      "label": "./backend-storage",
+      "inputId": "port:frontend:8080/tcp",
+      "name": "5173",
+      "label": "5173",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "5173",
+      "category": "basic",
+      "serviceName": "frontend",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:ACOUSTID_API_KEY",
+      "name": "ACOUSTID_API_KEY",
+      "label": "ACOUSTID_API_KEY",
       "description": "",
-      "type": "path",
-      "default": "/app/storage",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "path"
-    },
-    {
-      "name": "./media",
-      "label": "./media",
-      "description": "音乐路径",
-      "type": "path",
-      "default": "/data/media",
+      "type": "password",
+      "default": "",
       "category": "basic",
-      "serviceName": "backend",
-      "paramType": "path"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "./audiobooks",
-      "label": "./audiobooks",
-      "description": "有声书路径",
-      "type": "path",
-      "default": "/data/audiobooks",
-      "category": "basic",
-      "serviceName": "backend",
-      "paramType": "path"
-    },
-    {
-      "name": "./music-videos",
-      "label": "./music-videos",
-      "description": "MV 路径",
-      "type": "path",
-      "default": "/data/music-videos",
-      "category": "basic",
-      "serviceName": "backend",
-      "paramType": "path"
-    },
-    {
-      "name": "./playlists",
-      "label": "./playlists",
-      "description": "播单路径",
-      "type": "path",
-      "default": "/data/playlists",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "path"
-    },
-    {
-      "name": "./plugins",
-      "label": "./plugins",
-      "description": "插件路径",
-      "type": "path",
-      "default": "/plugins",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "path"
-    },
-    {
-      "name": "NODE_ENV",
-      "label": "NODE_ENV",
+      "inputId": "project:ADMIN_DISPLAY_NAME",
+      "name": "ADMIN_DISPLAY_NAME",
+      "label": "ADMIN_DISPLAY_NAME",
       "description": "",
       "type": "string",
-      "default": "production",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "DATABASE_URL",
-      "label": "DATABASE_URL",
+      "inputId": "project:ADMIN_EMAIL",
+      "name": "ADMIN_EMAIL",
+      "label": "ADMIN_EMAIL",
       "description": "",
       "type": "string",
-      "default": "postgresql://daoliyu:daoliyupassword@postgres:5433/daoliyu?schema=public\u0026connection_limit=25\u0026pool_timeout=10\u0026statement_timeout=60000\u0026idle_in_transaction_session_timeout=60000",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
+      "inputId": "project:ADMIN_PASSWORD",
+      "name": "ADMIN_PASSWORD",
+      "label": "ADMIN_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:LASTFM_API_KEY",
+      "name": "LASTFM_API_KEY",
+      "label": "LASTFM_API_KEY",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:LASTFM_API_SECRET",
+      "name": "LASTFM_API_SECRET",
+      "label": "LASTFM_API_SECRET",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:SPOTIFY_CLIENT_ID",
+      "name": "SPOTIFY_CLIENT_ID",
+      "label": "SPOTIFY_CLIENT_ID",
+      "description": "",
+      "type": "string",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:SPOTIFY_CLIENT_SECRET",
+      "name": "SPOTIFY_CLIENT_SECRET",
+      "label": "SPOTIFY_CLIENT_SECRET",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:SPOTIFY_TOKEN",
+      "name": "SPOTIFY_TOKEN",
+      "label": "SPOTIFY_TOKEN",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:backend:APP_PORT",
       "name": "APP_PORT",
       "label": "APP_PORT",
       "description": "",
@@ -167,46 +1239,7 @@
       "paramType": "env"
     },
     {
-      "name": "ADMIN_DISPLAY_NAME",
-      "label": "ADMIN_DISPLAY_NAME",
-      "description": "管理员账号",
-      "type": "string",
-      "default": "${ADMIN_DISPLAY_NAME}",
-      "category": "basic",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "ADMIN_EMAIL",
-      "label": "ADMIN_EMAIL",
-      "description": "管理员邮箱",
-      "type": "string",
-      "default": "${ADMIN_EMAIL}",
-      "category": "basic",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "ADMIN_PASSWORD",
-      "label": "ADMIN_PASSWORD",
-      "description": "管理员密码",
-      "type": "password",
-      "default": "${ADMIN_PASSWORD}",
-      "category": "basic",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "LIBRARY_ROOT",
-      "label": "LIBRARY_ROOT",
-      "description": "",
-      "type": "string",
-      "default": "/data/media",
-      "category": "basic",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:backend:AUDIOBOOK_LIBRARY_ROOT",
       "name": "AUDIOBOOK_LIBRARY_ROOT",
       "label": "AUDIOBOOK_LIBRARY_ROOT",
       "description": "",
@@ -217,146 +1250,18 @@
       "paramType": "env"
     },
     {
-      "name": "VIDEO_LIBRARY_ROOT",
-      "label": "VIDEO_LIBRARY_ROOT",
+      "inputId": "service:backend:DATABASE_URL",
+      "name": "DATABASE_URL",
+      "label": "DATABASE_URL",
       "description": "",
       "type": "string",
-      "default": "/data/music-videos",
+      "default": "postgresql://daoliyu:daoliyupassword@postgres:5433/daoliyu?schema=public\u0026connection_limit=25\u0026pool_timeout=10\u0026statement_timeout=60000\u0026idle_in_transaction_session_timeout=60000",
       "category": "advanced",
       "serviceName": "backend",
       "paramType": "env"
     },
     {
-      "name": "VIDEO_TRANSCODE_CACHE",
-      "label": "VIDEO_TRANSCODE_CACHE",
-      "description": "",
-      "type": "string",
-      "default": "/app/storage/transcoded/videos",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "VIDEO_THUMBNAIL_CACHE",
-      "label": "VIDEO_THUMBNAIL_CACHE",
-      "description": "",
-      "type": "string",
-      "default": "/app/storage/thumbnails/videos",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "PLAYLISTS_IMPORT_ROOT",
-      "label": "PLAYLISTS_IMPORT_ROOT",
-      "description": "",
-      "type": "string",
-      "default": "/data/playlists",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "REGISTRATION_OPEN",
-      "label": "REGISTRATION_OPEN",
-      "description": "",
-      "type": "string",
-      "default": "true",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "PLUGINS_DIR",
-      "label": "PLUGINS_DIR",
-      "description": "",
-      "type": "string",
-      "default": "/plugins",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_URL",
-      "label": "REDIS_URL",
-      "description": "",
-      "type": "string",
-      "default": "redis://redis:6379/0",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "ACOUSTID_API_KEY",
-      "label": "ACOUSTID_API_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${ACOUSTID_API_KEY}",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "LASTFM_API_KEY",
-      "label": "LASTFM_API_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${LASTFM_API_KEY}",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "LASTFM_API_SECRET",
-      "label": "LASTFM_API_SECRET",
-      "description": "",
-      "type": "password",
-      "default": "${LASTFM_API_SECRET}",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "SPOTIFY_TOKEN",
-      "label": "SPOTIFY_TOKEN",
-      "description": "",
-      "type": "password",
-      "default": "${SPOTIFY_TOKEN}",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "SPOTIFY_CLIENT_ID",
-      "label": "SPOTIFY_CLIENT_ID",
-      "description": "",
-      "type": "string",
-      "default": "${SPOTIFY_CLIENT_ID}",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "SPOTIFY_CLIENT_SECRET",
-      "label": "SPOTIFY_CLIENT_SECRET",
-      "description": "",
-      "type": "password",
-      "default": "${SPOTIFY_CLIENT_SECRET}",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
-      "name": "LOG_LEVEL",
-      "label": "LOG_LEVEL",
-      "description": "",
-      "type": "string",
-      "default": "info",
-      "category": "advanced",
-      "serviceName": "backend",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:backend:DEBUG",
       "name": "DEBUG",
       "label": "DEBUG",
       "description": "",
@@ -367,106 +1272,159 @@
       "paramType": "env"
     },
     {
-      "name": "5173",
-      "label": "5173",
-      "description": "容器 WEB 端口",
-      "type": "port",
-      "default": "8080",
-      "category": "basic",
-      "serviceName": "frontend",
-      "paramType": "port"
-    },
-    {
-      "name": "ADMIN_DISPLAY_NAME",
-      "label": "ADMIN_DISPLAY_NAME",
+      "inputId": "service:backend:LIBRARY_ROOT",
+      "name": "LIBRARY_ROOT",
+      "label": "LIBRARY_ROOT",
       "description": "",
       "type": "string",
-      "default": "",
+      "default": "/data/media",
       "category": "basic",
-      "serviceName": "Global",
+      "serviceName": "backend",
       "paramType": "env"
     },
     {
-      "name": "ADMIN_EMAIL",
-      "label": "ADMIN_EMAIL",
+      "inputId": "service:backend:LOG_LEVEL",
+      "name": "LOG_LEVEL",
+      "label": "LOG_LEVEL",
       "description": "",
       "type": "string",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
+      "default": "info",
+      "category": "advanced",
+      "serviceName": "backend",
       "paramType": "env"
     },
     {
-      "name": "ADMIN_PASSWORD",
-      "label": "ADMIN_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "ACOUSTID_API_KEY",
-      "label": "ACOUSTID_API_KEY",
-      "description": "",
-      "type": "password",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "LASTFM_API_KEY",
-      "label": "LASTFM_API_KEY",
-      "description": "",
-      "type": "password",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "LASTFM_API_SECRET",
-      "label": "LASTFM_API_SECRET",
-      "description": "",
-      "type": "password",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "SPOTIFY_TOKEN",
-      "label": "SPOTIFY_TOKEN",
-      "description": "",
-      "type": "password",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "SPOTIFY_CLIENT_ID",
-      "label": "SPOTIFY_CLIENT_ID",
+      "inputId": "service:backend:NODE_ENV",
+      "name": "NODE_ENV",
+      "label": "NODE_ENV",
       "description": "",
       "type": "string",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
+      "default": "production",
+      "category": "advanced",
+      "serviceName": "backend",
       "paramType": "env"
     },
     {
-      "name": "SPOTIFY_CLIENT_SECRET",
-      "label": "SPOTIFY_CLIENT_SECRET",
+      "inputId": "service:backend:PLAYLISTS_IMPORT_ROOT",
+      "name": "PLAYLISTS_IMPORT_ROOT",
+      "label": "PLAYLISTS_IMPORT_ROOT",
+      "description": "",
+      "type": "string",
+      "default": "/data/playlists",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:backend:PLUGINS_DIR",
+      "name": "PLUGINS_DIR",
+      "label": "PLUGINS_DIR",
+      "description": "",
+      "type": "string",
+      "default": "/plugins",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:backend:REDIS_URL",
+      "name": "REDIS_URL",
+      "label": "REDIS_URL",
+      "description": "",
+      "type": "string",
+      "default": "redis://redis:6379/0",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:backend:REGISTRATION_OPEN",
+      "name": "REGISTRATION_OPEN",
+      "label": "REGISTRATION_OPEN",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:backend:VIDEO_LIBRARY_ROOT",
+      "name": "VIDEO_LIBRARY_ROOT",
+      "label": "VIDEO_LIBRARY_ROOT",
+      "description": "",
+      "type": "string",
+      "default": "/data/music-videos",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:backend:VIDEO_THUMBNAIL_CACHE",
+      "name": "VIDEO_THUMBNAIL_CACHE",
+      "label": "VIDEO_THUMBNAIL_CACHE",
+      "description": "",
+      "type": "string",
+      "default": "/app/storage/thumbnails/videos",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:backend:VIDEO_TRANSCODE_CACHE",
+      "name": "VIDEO_TRANSCODE_CACHE",
+      "label": "VIDEO_TRANSCODE_CACHE",
+      "description": "",
+      "type": "string",
+      "default": "/app/storage/transcoded/videos",
+      "category": "advanced",
+      "serviceName": "backend",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:postgres:PGDATA",
+      "name": "PGDATA",
+      "label": "PGDATA",
+      "description": "",
+      "type": "string",
+      "default": "/var/lib/postgresql/data/pgdata",
+      "category": "advanced",
+      "serviceName": "postgres",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:postgres:POSTGRES_DB",
+      "name": "POSTGRES_DB",
+      "label": "POSTGRES_DB",
+      "description": "",
+      "type": "string",
+      "default": "daoliyu",
+      "category": "advanced",
+      "serviceName": "postgres",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:postgres:POSTGRES_PASSWORD",
+      "name": "POSTGRES_PASSWORD",
+      "label": "POSTGRES_PASSWORD",
       "description": "",
       "type": "password",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
+      "default": "daoliyupassword",
+      "category": "advanced",
+      "serviceName": "postgres",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:postgres:POSTGRES_USER",
+      "name": "POSTGRES_USER",
+      "label": "POSTGRES_USER",
+      "description": "",
+      "type": "string",
+      "default": "daoliyu",
+      "category": "advanced",
+      "serviceName": "postgres",
       "paramType": "env"
     }
   ],
-  "deployment_count": 1,
   "enabled": true
 }

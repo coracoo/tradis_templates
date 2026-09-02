@@ -1,0 +1,155 @@
+{
+  "id": 66,
+  "sort_order": 63,
+  "name": "sonovel",
+  "category": "other",
+  "description": "从网页中提取结构化信息，并将其灵活导出为 EPUB、TXT、PDF 等多种标准电子文档格式。适用于学习采集、格式转换、电子书制作等场景。",
+  "version": "",
+  "logo": "https://github.com/freeok/so-novel/raw/main/assets/logo.png",
+  "website": "https://github.com/freeok/so-novel",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  sonovel:\n    image: ghcr.io/freeok/sonovel:latest\n    container_name: sonovel\n    ports:\n      - \"7765:7765\"\n    environment:\n      JAVA_OPTS: \"-Dmode=web\"\n    volumes:\n      - ./sonovel_data:/sonovel\n    restart: unless-stopped",
+  "input_metadata": {
+    "bind:sonovel:/sonovel": {
+      "label": "./sonovel_data",
+      "group": "advanced"
+    },
+    "port:sonovel:7765/tcp": {
+      "label": "7765",
+      "group": "basic"
+    },
+    "service:sonovel:JAVA_OPTS": {
+      "label": "JAVA_OPTS",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:5837cae14d81ea5dae0516f7f198db749e735f211f7f6434706321f4c32b077b",
+    "manifest_digest": "sha256:d7b0717fea0a3c65ea95e230dedf794f68b6d2115a9bec9ba919fc330c432a49",
+    "services": [
+      "sonovel"
+    ],
+    "inputs": [
+      {
+        "id": "bind:sonovel:/sonovel",
+        "key": "./sonovel_data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./sonovel_data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./sonovel_data",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:sonovel:7765/tcp",
+        "key": "7765",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7765",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7765",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:sonovel:JAVA_OPTS",
+        "key": "JAVA_OPTS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "-Dmode=web",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "JAVA_OPTS",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:sonovel:JAVA_OPTS",
+        "service": "sonovel",
+        "target_kind": "environment",
+        "target_key": "JAVA_OPTS",
+        "yaml_path": "services.sonovel.environment.JAVA_OPTS",
+        "line": 8,
+        "column": 18
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:sonovel:/sonovel",
+        "kind": "bind",
+        "service": "sonovel",
+        "source": "./sonovel_data",
+        "target": "/sonovel",
+        "editable": true,
+        "yaml_path": "services.sonovel.volumes[0]"
+      },
+      {
+        "id": "port:sonovel:7765/tcp",
+        "kind": "port",
+        "service": "sonovel",
+        "source": "7765",
+        "target": "7765",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.sonovel.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:5837cae14d81ea5dae0516f7f198db749e735f211f7f6434706321f4c32b077b",
+  "manifest_digest": "sha256:d7b0717fea0a3c65ea95e230dedf794f68b6d2115a9bec9ba919fc330c432a49",
+  "compiler_version": "1.0.1",
+  "screenshots": [
+    "https://github.com/freeok/so-novel/raw/main/assets/preview-tui.png"
+  ],
+  "schema": [
+    {
+      "inputId": "bind:sonovel:/sonovel",
+      "name": "./sonovel_data",
+      "label": "./sonovel_data",
+      "description": "",
+      "type": "path",
+      "default": "./sonovel_data",
+      "category": "advanced",
+      "serviceName": "sonovel",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:sonovel:7765/tcp",
+      "name": "7765",
+      "label": "7765",
+      "description": "",
+      "type": "port",
+      "default": "7765",
+      "category": "basic",
+      "serviceName": "sonovel",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:sonovel:JAVA_OPTS",
+      "name": "JAVA_OPTS",
+      "label": "JAVA_OPTS",
+      "description": "",
+      "type": "string",
+      "default": "-Dmode=web",
+      "category": "advanced",
+      "serviceName": "sonovel",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

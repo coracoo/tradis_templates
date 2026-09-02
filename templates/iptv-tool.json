@@ -10,41 +10,171 @@
   "tutorial": "📡 多格式：支持返回 DIYP/百川、超级直播以及 xmltv 格式文件。\n\n🐳 多架构：提供 amd64、arm64 和 armv7 架构的 Docker 镜像。\n\n📦 小体积镜像：基于 Alpine 构建，压缩后仅 20 MB。\n\n🗃️ 数据库管理：支持 SQLite 和 MySQL 数据库，内置 phpLiteAdmin 管理工具。\n\n🖼️ 台标管理：支持台标模糊匹配，支持 tvbox 接口。\n\n➰ 直播源管理：支持聚合 TXT/M3U 直播源、测速校验、直播源代理。\n\n🔒 访问权限控制：支持设置 TOKEN 、User-Agent、IP 黑白名单。\n\n⏱️ 缓存支持：集成 Memcached，支持 Redis。\n\n🔄 频道匹配：支持繁体中文频道匹配、模糊匹配；支持频道别名、正则表达式。\n\n⏳ 定时任务：支持定时更新数据。\n\n📝 节目单生成：支持生成指定频道节目单并匹配 M3U 的 xmltv 格式文件。\n\n🗂️ 兼容多种格式：支持不同标准格式的 XMLTV 文件，支持自定义数据源。\n\n🛠️ 文件管理：集成 tinyfilemanager 文件管理器。\n\n🌐 界面设置：包含简单易用的网页设置页面，便于操作和管理。",
   "dotenv": "",
   "compose": "services:\n    php-epg:\n        container_name: php-epg\n        ports:\n            - 5678:80\n        volumes:\n            - ./epg:/htdocs/data\n        environment:\n            - PHP_MEMORY_LIMIT=512M\n            - ENABLE_FFMPEG=true\n        restart: unless-stopped\n        image: taksss/php-epg:latest",
+  "input_metadata": {
+    "bind:php-epg:/htdocs/data": {
+      "label": "./epg",
+      "description": "电子节目单存储路径",
+      "group": "advanced"
+    },
+    "port:php-epg:80/tcp": {
+      "label": "5678",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:php-epg:ENABLE_FFMPEG": {
+      "label": "ENABLE_FFMPEG",
+      "description": "启用 ffmpeg 组件",
+      "group": "basic"
+    },
+    "service:php-epg:PHP_MEMORY_LIMIT": {
+      "label": "PHP_MEMORY_LIMIT",
+      "description": "PHP 内存限制",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:904a57ab4377f147376f3b0d1badd2ee65e76d29a50b129a0dbd89c83df48aaf",
+    "manifest_digest": "sha256:95094e0bfc58e78a3d0799fa4294f8dfd98303a17e16855f960633368a284152",
+    "services": [
+      "php-epg"
+    ],
+    "inputs": [
+      {
+        "id": "bind:php-epg:/htdocs/data",
+        "key": "./epg",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./epg",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./epg",
+          "description": "电子节目单存储路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:php-epg:80/tcp",
+        "key": "5678",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5678",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "5678",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:php-epg:ENABLE_FFMPEG",
+        "key": "ENABLE_FFMPEG",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "ENABLE_FFMPEG",
+          "description": "启用 ffmpeg 组件",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:php-epg:PHP_MEMORY_LIMIT",
+        "key": "PHP_MEMORY_LIMIT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "512M",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PHP_MEMORY_LIMIT",
+          "description": "PHP 内存限制",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:php-epg:ENABLE_FFMPEG",
+        "service": "php-epg",
+        "target_kind": "environment",
+        "target_key": "ENABLE_FFMPEG",
+        "yaml_path": "services.php-epg.environment[1]",
+        "line": 10,
+        "column": 15
+      },
+      {
+        "input_id": "service:php-epg:PHP_MEMORY_LIMIT",
+        "service": "php-epg",
+        "target_kind": "environment",
+        "target_key": "PHP_MEMORY_LIMIT",
+        "yaml_path": "services.php-epg.environment[0]",
+        "line": 9,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:php-epg:/htdocs/data",
+        "kind": "bind",
+        "service": "php-epg",
+        "source": "./epg",
+        "target": "/htdocs/data",
+        "editable": true,
+        "yaml_path": "services.php-epg.volumes[0]"
+      },
+      {
+        "id": "port:php-epg:80/tcp",
+        "kind": "port",
+        "service": "php-epg",
+        "source": "5678",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.php-epg.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:904a57ab4377f147376f3b0d1badd2ee65e76d29a50b129a0dbd89c83df48aaf",
+  "manifest_digest": "sha256:95094e0bfc58e78a3d0799fa4294f8dfd98303a17e16855f960633368a284152",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/taksssss/iptv-tool/raw/main/pic/management.png"
   ],
   "schema": [
     {
-      "name": "5678",
-      "label": "5678",
-      "description": "容器 WEB 端口",
-      "type": "port",
-      "default": "80",
-      "category": "basic",
-      "serviceName": "php-epg",
-      "paramType": "port"
-    },
-    {
+      "inputId": "bind:php-epg:/htdocs/data",
       "name": "./epg",
       "label": "./epg",
       "description": "电子节目单存储路径",
       "type": "path",
-      "default": "/htdocs/data",
+      "default": "./epg",
       "category": "advanced",
       "serviceName": "php-epg",
       "paramType": "path"
     },
     {
-      "name": "PHP_MEMORY_LIMIT",
-      "label": "PHP_MEMORY_LIMIT",
-      "description": "PHP 内存限制",
-      "type": "string",
-      "default": "512M",
-      "category": "advanced",
+      "inputId": "port:php-epg:80/tcp",
+      "name": "5678",
+      "label": "5678",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "5678",
+      "category": "basic",
       "serviceName": "php-epg",
-      "paramType": "env"
+      "paramType": "port"
     },
     {
+      "inputId": "service:php-epg:ENABLE_FFMPEG",
       "name": "ENABLE_FFMPEG",
       "label": "ENABLE_FFMPEG",
       "description": "启用 ffmpeg 组件",
@@ -53,8 +183,18 @@
       "category": "basic",
       "serviceName": "php-epg",
       "paramType": "env"
+    },
+    {
+      "inputId": "service:php-epg:PHP_MEMORY_LIMIT",
+      "name": "PHP_MEMORY_LIMIT",
+      "label": "PHP_MEMORY_LIMIT",
+      "description": "PHP 内存限制",
+      "type": "string",
+      "default": "512M",
+      "category": "advanced",
+      "serviceName": "php-epg",
+      "paramType": "env"
     }
   ],
-  "deployment_count": 1,
   "enabled": true
 }

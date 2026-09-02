@@ -10,51 +10,184 @@
   "tutorial": "如何获取小米的Cookies呢？方法很简单，打开网页版的小米云服务，使用你的小米账号登录。\n![QQ_1762498561017.png](https://cgakki.top:61061/2025/11/202511071541060.png)\n\n接着按 F12 进入开发者模式，将下方的标签切换到`网络`页面，之后在云服务里点击笔记进行笔记详情页。\n\n这个时候，你可以看到有一个 `h5` 的名称（也有其它的，你可以按照cookis排序），点击后在右侧选择`标头`标签页，下拉直到看见`Cookie`这一栏，右侧的一长串就是你小米账号的 CK 值，把这整一串复制到刚才的 `ENV` 文件对应的位置保存。\n![QQ_1762499274124.png](https://cgakki.top:61061/2025/11/202511071541062.png)\n",
   "dotenv": "",
   "compose": "services:\n  mi-note-sync:\n    volumes:\n      - ./data:/app/public/data\n    environment:\n      - MI_COOKIE= ''\n    image: idootop/mi-note-sync:latest\n    restart: \"no\"\n\n  mi-note-web:\n    init: true\n    ports:\n      - 8000:3000\n    volumes:\n      - ./data:/home/static/data\n    image: idootop/mi-note-web:latest\n    restart: unless-stopped",
+  "input_metadata": {
+    "bind:mi-note-sync:/app/public/data": {
+      "description": "笔记下载路径",
+      "group": "advanced"
+    },
+    "bind:mi-note-web:/home/static/data": {
+      "description": "笔记下载路径",
+      "group": "advanced"
+    },
+    "port:mi-note-web:3000/tcp": {
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:mi-note-sync:MI_COOKIE": {
+      "description": "填入你的小米 Cookie",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:275e65f6d86d0e0c6bb40bd76bd9c145a60d29d8e1224c4c1b8e72dfc670e2ae",
+    "manifest_digest": "sha256:e70384590d243491bf3909646a0e20bc9aaa3e836f89414dcad3391bb592ff93",
+    "services": [
+      "mi-note-sync",
+      "mi-note-web"
+    ],
+    "inputs": [
+      {
+        "id": "bind:mi-note-sync:/app/public/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "笔记下载路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:mi-note-web:/home/static/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "笔记下载路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:mi-note-web:3000/tcp",
+        "key": "8000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:mi-note-sync:MI_COOKIE",
+        "key": "MI_COOKIE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": " ''",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "填入你的小米 Cookie",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:mi-note-sync:MI_COOKIE",
+        "service": "mi-note-sync",
+        "target_kind": "environment",
+        "target_key": "MI_COOKIE",
+        "yaml_path": "services.mi-note-sync.environment[0]",
+        "line": 6,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:mi-note-sync:/app/public/data",
+        "kind": "bind",
+        "service": "mi-note-sync",
+        "source": "./data",
+        "target": "/app/public/data",
+        "editable": true,
+        "yaml_path": "services.mi-note-sync.volumes[0]"
+      },
+      {
+        "id": "bind:mi-note-web:/home/static/data",
+        "kind": "bind",
+        "service": "mi-note-web",
+        "source": "./data",
+        "target": "/home/static/data",
+        "editable": true,
+        "yaml_path": "services.mi-note-web.volumes[0]"
+      },
+      {
+        "id": "port:mi-note-web:3000/tcp",
+        "kind": "port",
+        "service": "mi-note-web",
+        "source": "8000",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.mi-note-web.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:275e65f6d86d0e0c6bb40bd76bd9c145a60d29d8e1224c4c1b8e72dfc670e2ae",
+  "manifest_digest": "sha256:e70384590d243491bf3909646a0e20bc9aaa3e836f89414dcad3391bb592ff93",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/idootop/mi-note-export/raw/main/screenshots/banner.png"
   ],
   "schema": [
     {
+      "inputId": "bind:mi-note-sync:/app/public/data",
       "name": "./data",
-      "label": "",
+      "label": "./data",
       "description": "笔记下载路径",
       "type": "path",
-      "default": "/app/public/data",
+      "default": "./data",
       "category": "advanced",
       "serviceName": "mi-note-sync",
       "paramType": "path"
     },
     {
-      "name": "MI_COOKIE",
-      "label": "",
-      "description": "填入你的小米 Cookie",
-      "type": "string",
-      "default": "123",
-      "category": "basic",
-      "serviceName": "mi-note-sync",
-      "paramType": "env"
+      "inputId": "bind:mi-note-web:/home/static/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "笔记下载路径",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
+      "serviceName": "mi-note-web",
+      "paramType": "path"
     },
     {
+      "inputId": "port:mi-note-web:3000/tcp",
       "name": "8000",
-      "label": "",
+      "label": "8000",
       "description": "容器 WEB 端口",
       "type": "port",
-      "default": "3000",
+      "default": "8000",
       "category": "basic",
       "serviceName": "mi-note-web",
       "paramType": "port"
     },
     {
-      "name": "./data",
-      "label": "",
-      "description": "笔记下载路径",
-      "type": "path",
-      "default": "/home/static/data",
-      "category": "advanced",
-      "serviceName": "mi-note-web",
-      "paramType": "path"
+      "inputId": "service:mi-note-sync:MI_COOKIE",
+      "name": "MI_COOKIE",
+      "label": "MI_COOKIE",
+      "description": "填入你的小米 Cookie",
+      "type": "string",
+      "default": " ''",
+      "category": "basic",
+      "serviceName": "mi-note-sync",
+      "paramType": "env"
     }
   ],
-  "deployment_count": 1,
   "enabled": true
 }

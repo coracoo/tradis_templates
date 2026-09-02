@@ -10,24 +10,330 @@
   "tutorial": "管理员的登录密码，就是我们在 yaml 里配置的密码，如果忘记修改了，那默认的是`Cherry4nas@666`。\n![QQ_1764653424472.png](https://cgakki.top:61061/2025/12/202512021330087.png)\n\n先来看界面风格，CronMaster 这个项目分为左右两栏。\n\n左侧是当前 NAS （服务器）的性能信息，包括运**行时间、内存使用量、CPU使用率、GPU信息、网络流量、性能一览**，所有的硬件信息都是30秒刷新一次，相对还是比较实时、准确的。\n![QQ_1764653495830.png](https://cgakki.top:61061/2025/12/202512021331758.png)\n\n右侧的话，是当前 NAS 的 Cron 任务列表，**支持详细展示和简略展示**。\n\n🔻详细展示包括了 定时时间（含Cron 翻译成自然语言）、脚本路径、运行用户等。\n![QQ_1764662090064.png](https://cgakki.top:61061/2025/12/202512021554234.png)\n\n🔻简略信息的话只包括 Cron、脚本路径。\n![QQ_1764662150156.png](https://cgakki.top:61061/2025/12/202512021555493.png)\n\n功能上，主要功能包括筛选、备份、新建Cron；然后单独每一个 Cron 支持启停改删等常用功能，还提供了快速开启日志归档、复制任务的快捷指令。\n![QQ_1764662714961.png](https://cgakki.top:61061/2025/12/202512021605220.png)\n\n新建的任务计划，支持 Command 指令，以及复杂的脚本指令。前者就不多介绍了，主要我看来介绍一下后者。\n![QQ_1764662794814.png](https://cgakki.top:61061/2025/12/202512021606113.png)\n\n在复杂脚本指令里，允许用户编**Shell**脚本，并且内置了近 30种兼容 NAS 的脚本可以直接导入。\n\n这些脚本包括但不限于：影音文件移动、文件复制、重启服务、清除日志、数据库备份、遍历文件、检查 SSL、检查端口、备份文件、rsync 同步等等。\n![QQ_1764662865053.png](https://cgakki.top:61061/2025/12/202512021607352.png)\n",
   "dotenv": "",
   "compose": "# For all configuration options, see howto/DOCKER.md\nservices:\n  cronmaster:\n    image: ghcr.io/fccview/cronmaster:latest\n    container_name: cronmaster\n    user: \"root\"\n    ports:\n      - \"40123:3000\"\n    environment:\n      - NODE_ENV=production\n      - DOCKER=true\n      - NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL=30000\n      - AUTH_PASSWORD=very_strong_password\n      - HOST_CRONTAB_USER=root\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock\n      - ./scripts:/app/scripts\n      - ./data:/app/data\n      - ./snippets:/app/snippets\n    pid: \"host\"\n    privileged: true\n    restart: always\n    init: true",
+  "input_metadata": {
+    "bind:cronmaster:/app/data": {
+      "description": "挂载容器持久化目录",
+      "group": "advanced"
+    },
+    "bind:cronmaster:/app/scripts": {
+      "description": "挂载脚本文件",
+      "group": "advanced"
+    },
+    "bind:cronmaster:/app/snippets": {
+      "description": "挂载代码文件",
+      "group": "advanced"
+    },
+    "bind:cronmaster:/var/run/docker.sock": {
+      "description": "必须挂载",
+      "group": "advanced"
+    },
+    "port:cronmaster:3000/tcp": {
+      "description": "容器 WEB HTTP 端口",
+      "group": "basic"
+    },
+    "service:cronmaster:AUTH_PASSWORD": {
+      "description": "自定义root密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:cronmaster:DOCKER": {
+      "group": "advanced"
+    },
+    "service:cronmaster:HOST_CRONTAB_USER": {
+      "group": "advanced"
+    },
+    "service:cronmaster:NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL": {
+      "group": "advanced"
+    },
+    "service:cronmaster:NODE_ENV": {
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:41ed1ac0de960d06fb7b882e4433662a076fcdc710dc8014b5fba7a13240c65d",
+    "manifest_digest": "sha256:e8a6951c8d84922a69b51893ddb4490e495c4d3a6069788c89446819554eb3d5",
+    "services": [
+      "cronmaster"
+    ],
+    "inputs": [
+      {
+        "id": "bind:cronmaster:/app/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "挂载容器持久化目录",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:cronmaster:/app/scripts",
+        "key": "./scripts",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./scripts",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "挂载脚本文件",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:cronmaster:/app/snippets",
+        "key": "./snippets",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./snippets",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "挂载代码文件",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:cronmaster:/var/run/docker.sock",
+        "key": "/var/run/docker.sock",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/var/run/docker.sock",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "必须挂载",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:cronmaster:3000/tcp",
+        "key": "40123",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "40123",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器 WEB HTTP 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:cronmaster:AUTH_PASSWORD",
+        "key": "AUTH_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "very_strong_password",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "description": "自定义root密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:cronmaster:DOCKER",
+        "key": "DOCKER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:cronmaster:HOST_CRONTAB_USER",
+        "key": "HOST_CRONTAB_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "root",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:cronmaster:NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
+        "key": "NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "30000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:cronmaster:NODE_ENV",
+        "key": "NODE_ENV",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "production",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:cronmaster:AUTH_PASSWORD",
+        "service": "cronmaster",
+        "target_kind": "environment",
+        "target_key": "AUTH_PASSWORD",
+        "yaml_path": "services.cronmaster.environment[3]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:cronmaster:DOCKER",
+        "service": "cronmaster",
+        "target_kind": "environment",
+        "target_key": "DOCKER",
+        "yaml_path": "services.cronmaster.environment[1]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:cronmaster:HOST_CRONTAB_USER",
+        "service": "cronmaster",
+        "target_kind": "environment",
+        "target_key": "HOST_CRONTAB_USER",
+        "yaml_path": "services.cronmaster.environment[4]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:cronmaster:NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
+        "service": "cronmaster",
+        "target_kind": "environment",
+        "target_key": "NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
+        "yaml_path": "services.cronmaster.environment[2]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:cronmaster:NODE_ENV",
+        "service": "cronmaster",
+        "target_kind": "environment",
+        "target_key": "NODE_ENV",
+        "yaml_path": "services.cronmaster.environment[0]",
+        "line": 10,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:cronmaster:/app/data",
+        "kind": "bind",
+        "service": "cronmaster",
+        "source": "./data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.cronmaster.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:cronmaster:/app/scripts",
+        "kind": "bind",
+        "service": "cronmaster",
+        "source": "./scripts",
+        "target": "/app/scripts",
+        "editable": true,
+        "yaml_path": "services.cronmaster.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:cronmaster:/app/snippets",
+        "kind": "bind",
+        "service": "cronmaster",
+        "source": "./snippets",
+        "target": "/app/snippets",
+        "editable": true,
+        "yaml_path": "services.cronmaster.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "bind:cronmaster:/var/run/docker.sock",
+        "kind": "bind",
+        "service": "cronmaster",
+        "source": "/var/run/docker.sock",
+        "target": "/var/run/docker.sock",
+        "editable": true,
+        "yaml_path": "services.cronmaster.volumes[0]"
+      },
+      {
+        "id": "port:cronmaster:3000/tcp",
+        "kind": "port",
+        "service": "cronmaster",
+        "source": "40123",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.cronmaster.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:41ed1ac0de960d06fb7b882e4433662a076fcdc710dc8014b5fba7a13240c65d",
+  "manifest_digest": "sha256:e8a6951c8d84922a69b51893ddb4490e495c4d3a6069788c89446819554eb3d5",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://raw.githubusercontent.com/fccview/cronmaster/main/screenshots/home.png",
     "https://raw.githubusercontent.com/fccview/cronmaster/main/screenshots/live-running.png"
   ],
   "schema": [
     {
-      "name": "40123",
-      "label": "",
-      "description": "容器 WEB HTTP 端口",
-      "type": "port",
-      "default": "3000",
-      "category": "basic",
+      "inputId": "bind:cronmaster:/app/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "挂载容器持久化目录",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
       "serviceName": "cronmaster",
-      "paramType": "port"
+      "paramType": "path"
     },
     {
+      "inputId": "bind:cronmaster:/app/scripts",
+      "name": "./scripts",
+      "label": "./scripts",
+      "description": "挂载脚本文件",
+      "type": "path",
+      "default": "./scripts",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:cronmaster:/app/snippets",
+      "name": "./snippets",
+      "label": "./snippets",
+      "description": "挂载代码文件",
+      "type": "path",
+      "default": "./snippets",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:cronmaster:/var/run/docker.sock",
       "name": "/var/run/docker.sock",
-      "label": "",
+      "label": "/var/run/docker.sock",
       "description": "必须挂载",
       "type": "path",
       "default": "/var/run/docker.sock",
@@ -36,48 +342,31 @@
       "paramType": "path"
     },
     {
-      "name": "./scripts",
-      "label": "",
-      "description": "挂载脚本文件",
-      "type": "path",
-      "default": "/app/scripts",
-      "category": "advanced",
+      "inputId": "port:cronmaster:3000/tcp",
+      "name": "40123",
+      "label": "40123",
+      "description": "容器 WEB HTTP 端口",
+      "type": "port",
+      "default": "40123",
+      "category": "basic",
       "serviceName": "cronmaster",
-      "paramType": "path"
+      "paramType": "port"
     },
     {
-      "name": "./data",
-      "label": "",
-      "description": "挂载容器持久化目录",
-      "type": "path",
-      "default": "/app/data",
-      "category": "advanced",
-      "serviceName": "cronmaster",
-      "paramType": "path"
-    },
-    {
-      "name": "./snippets",
-      "label": "",
-      "description": "挂载代码文件",
-      "type": "path",
-      "default": "/app/snippets",
-      "category": "advanced",
-      "serviceName": "cronmaster",
-      "paramType": "path"
-    },
-    {
-      "name": "NODE_ENV",
-      "label": "",
-      "description": "",
-      "type": "string",
-      "default": "production",
-      "category": "advanced",
+      "inputId": "service:cronmaster:AUTH_PASSWORD",
+      "name": "AUTH_PASSWORD",
+      "label": "AUTH_PASSWORD",
+      "description": "自定义root密码",
+      "type": "password",
+      "default": "very_strong_password",
+      "category": "basic",
       "serviceName": "cronmaster",
       "paramType": "env"
     },
     {
+      "inputId": "service:cronmaster:DOCKER",
       "name": "DOCKER",
-      "label": "",
+      "label": "DOCKER",
       "description": "",
       "type": "string",
       "default": "true",
@@ -86,8 +375,20 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:cronmaster:HOST_CRONTAB_USER",
+      "name": "HOST_CRONTAB_USER",
+      "label": "HOST_CRONTAB_USER",
+      "description": "",
+      "type": "string",
+      "default": "root",
+      "category": "advanced",
+      "serviceName": "cronmaster",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:cronmaster:NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
       "name": "NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
-      "label": "",
+      "label": "NEXT_PUBLIC_CLOCK_UPDATE_INTERVAL",
       "description": "",
       "type": "string",
       "default": "30000",
@@ -96,26 +397,16 @@
       "paramType": "env"
     },
     {
-      "name": "AUTH_PASSWORD",
-      "label": "",
-      "description": "自定义root密码",
-      "type": "password",
-      "default": "Cherry4nas@666",
-      "category": "basic",
-      "serviceName": "cronmaster",
-      "paramType": "env"
-    },
-    {
-      "name": "HOST_CRONTAB_USER",
-      "label": "",
+      "inputId": "service:cronmaster:NODE_ENV",
+      "name": "NODE_ENV",
+      "label": "NODE_ENV",
       "description": "",
       "type": "string",
-      "default": "root",
+      "default": "production",
       "category": "advanced",
       "serviceName": "cronmaster",
       "paramType": "env"
     }
   ],
-  "deployment_count": 2,
   "enabled": true
 }

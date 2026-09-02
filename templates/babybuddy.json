@@ -1,0 +1,275 @@
+{
+  "id": 58,
+  "sort_order": 55,
+  "name": "babybuddy",
+  "category": "hobby",
+  "description": "BabyBuddy 是一款帮助父母追踪宝宝喂养、睡眠、换尿布、如厕、俯卧时间等日常活动的应用，提供图表与提醒。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/linuxserver/docker-babybuddy/master/logo/babybuddy.png",
+  "website": "https://github.com/babybuddy/babybuddy",
+  "tutorial": "访问地址：http://服务器IP:8000\n首次访问创建管理员账号。\n数据（SQLite）在 ./config。反代时需设置 CSRF_TRUSTED_ORIGINS。",
+  "dotenv": "",
+  "compose": "services:\n  babybuddy:\n    image: lscr.io/linuxserver/babybuddy:latest\n    restart: unless-stopped\n    ports:\n      - \"8000:8000\"\n    volumes:\n      - ./config:/config\n    environment:\n      - PUID=1000\n      - PGID=1000\n      - TZ=Asia/Shanghai\n      - CSRF_TRUSTED_ORIGINS=",
+  "input_metadata": {
+    "bind:babybuddy:/config": {
+      "label": "./config",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:babybuddy:8000/tcp": {
+      "label": "8000",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:babybuddy:CSRF_TRUSTED_ORIGINS": {
+      "label": "CSRF_TRUSTED_ORIGINS",
+      "description": "反代信任域",
+      "group": "advanced"
+    },
+    "service:babybuddy:PGID": {
+      "label": "PGID",
+      "description": "组 ID",
+      "group": "advanced"
+    },
+    "service:babybuddy:PUID": {
+      "label": "PUID",
+      "description": "用户 ID",
+      "group": "advanced"
+    },
+    "service:babybuddy:TZ": {
+      "label": "TZ",
+      "description": "时区",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:34937ab7776c4b9011c68d8131863c44c501705b82594b951d6e5b0f500f45d6",
+    "manifest_digest": "sha256:05bc1a3a9f9c30adff19e4754effdc53206a3072ecfd6db40e0e5a524c2f7920",
+    "services": [
+      "babybuddy"
+    ],
+    "inputs": [
+      {
+        "id": "bind:babybuddy:/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:babybuddy:8000/tcp",
+        "key": "8000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8000",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:babybuddy:CSRF_TRUSTED_ORIGINS",
+        "key": "CSRF_TRUSTED_ORIGINS",
+        "kind": "env",
+        "scope": "service",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "CSRF_TRUSTED_ORIGINS",
+          "description": "反代信任域",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:babybuddy:PGID",
+        "key": "PGID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PGID",
+          "description": "组 ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:babybuddy:PUID",
+        "key": "PUID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PUID",
+          "description": "用户 ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:babybuddy:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "description": "时区",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:babybuddy:CSRF_TRUSTED_ORIGINS",
+        "service": "babybuddy",
+        "target_kind": "environment",
+        "target_key": "CSRF_TRUSTED_ORIGINS",
+        "yaml_path": "services.babybuddy.environment[3]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:babybuddy:PGID",
+        "service": "babybuddy",
+        "target_kind": "environment",
+        "target_key": "PGID",
+        "yaml_path": "services.babybuddy.environment[1]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:babybuddy:PUID",
+        "service": "babybuddy",
+        "target_kind": "environment",
+        "target_key": "PUID",
+        "yaml_path": "services.babybuddy.environment[0]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:babybuddy:TZ",
+        "service": "babybuddy",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.babybuddy.environment[2]",
+        "line": 12,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:babybuddy:/config",
+        "kind": "bind",
+        "service": "babybuddy",
+        "source": "./config",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.babybuddy.volumes[0]"
+      },
+      {
+        "id": "port:babybuddy:8000/tcp",
+        "kind": "port",
+        "service": "babybuddy",
+        "source": "8000",
+        "target": "8000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.babybuddy.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:34937ab7776c4b9011c68d8131863c44c501705b82594b951d6e5b0f500f45d6",
+  "manifest_digest": "sha256:05bc1a3a9f9c30adff19e4754effdc53206a3072ecfd6db40e0e5a524c2f7920",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:babybuddy:/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./config",
+      "category": "basic",
+      "serviceName": "babybuddy",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:babybuddy:8000/tcp",
+      "name": "8000",
+      "label": "8000",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8000",
+      "category": "basic",
+      "serviceName": "babybuddy",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:babybuddy:CSRF_TRUSTED_ORIGINS",
+      "name": "CSRF_TRUSTED_ORIGINS",
+      "label": "CSRF_TRUSTED_ORIGINS",
+      "description": "反代信任域",
+      "type": "string",
+      "default": "",
+      "category": "advanced",
+      "serviceName": "babybuddy",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:babybuddy:PGID",
+      "name": "PGID",
+      "label": "PGID",
+      "description": "组 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "babybuddy",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:babybuddy:PUID",
+      "name": "PUID",
+      "label": "PUID",
+      "description": "用户 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "babybuddy",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:babybuddy:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "时区",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "babybuddy",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

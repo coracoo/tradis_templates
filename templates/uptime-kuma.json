@@ -1,0 +1,119 @@
+{
+  "id": 37,
+  "sort_order": 34,
+  "name": "uptime-kuma",
+  "category": "other",
+  "description": "Uptime Kuma 是一个功能强大的自托管监控工具，支持 HTTP/HTTPS、TCP、Ping、DNS 等多种监控方式，提供精美的状态页面和丰富的通知渠道。",
+  "version": "1",
+  "logo": "https://raw.githubusercontent.com/louislam/uptime-kuma/master/public/icon.svg",
+  "website": "https://github.com/louislam/uptime-kuma",
+  "tutorial": "访问地址：http://服务器IP:3001\n首次进入需创建管理员账号。\n支持监控 HTTP(s)、TCP、Ping、DNS、Docker 容器等。\n内置 SQLite，数据存储在 /app/data。",
+  "dotenv": "",
+  "compose": "services:\n  uptime-kuma:\n    image: louislam/uptime-kuma:1\n    restart: unless-stopped\n    ports:\n      - \"3001:3001\"\n    volumes:\n      - ./uptime-kuma-data:/app/data",
+  "input_metadata": {
+    "bind:uptime-kuma:/app/data": {
+      "label": "./uptime-kuma-data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:uptime-kuma:3001/tcp": {
+      "label": "3001",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:244efc5e5f4b1f81440c6a0ae5904de8b8b1aaa9eb89c66e559c6d574dc6e6c1",
+    "manifest_digest": "sha256:fda35dcd6e309d7b5fa4c5a61e69a22bb3a4b4b1e91b78d97f51659a9e07daba",
+    "services": [
+      "uptime-kuma"
+    ],
+    "inputs": [
+      {
+        "id": "bind:uptime-kuma:/app/data",
+        "key": "./uptime-kuma-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./uptime-kuma-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./uptime-kuma-data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:uptime-kuma:3001/tcp",
+        "key": "3001",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3001",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:uptime-kuma:/app/data",
+        "kind": "bind",
+        "service": "uptime-kuma",
+        "source": "./uptime-kuma-data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.uptime-kuma.volumes[0]"
+      },
+      {
+        "id": "port:uptime-kuma:3001/tcp",
+        "kind": "port",
+        "service": "uptime-kuma",
+        "source": "3001",
+        "target": "3001",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.uptime-kuma.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:244efc5e5f4b1f81440c6a0ae5904de8b8b1aaa9eb89c66e559c6d574dc6e6c1",
+  "manifest_digest": "sha256:fda35dcd6e309d7b5fa4c5a61e69a22bb3a4b4b1e91b78d97f51659a9e07daba",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:uptime-kuma:/app/data",
+      "name": "./uptime-kuma-data",
+      "label": "./uptime-kuma-data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./uptime-kuma-data",
+      "category": "basic",
+      "serviceName": "uptime-kuma",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:uptime-kuma:3001/tcp",
+      "name": "3001",
+      "label": "3001",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "3001",
+      "category": "basic",
+      "serviceName": "uptime-kuma",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

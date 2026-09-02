@@ -1,0 +1,561 @@
+{
+  "id": 64,
+  "sort_order": 61,
+  "name": "immich",
+  "category": "photos",
+  "description": "Immich 是一款高性能的自托管照片与视频备份方案，类似 Google 相册，提供自动备份、人脸识别、搜索、相册、共享，多端客户端。",
+  "version": "release",
+  "logo": "https://raw.githubusercontent.com/immich-app/immich/main/design/immich-logo.svg",
+  "website": "https://github.com/immich-app/immich",
+  "tutorial": "访问地址：http://服务器IP:2283\n首次访问注册管理员账号。\n此为简化部署（server + machine-learning + postgres + redis）。\n上传文件与数据库在 ./library、./upload、./pgdata。\n机器学习模型首次启动会自动下载。",
+  "dotenv": "DB_PASSWORD=\n",
+  "compose": "services:\n  immich-server:\n    image: ghcr.io/immich-app/immich-server:release\n    restart: unless-stopped\n    depends_on: [redis, database]\n    ports:\n      - \"2283:2283\"\n    volumes:\n      - ./upload:/usr/src/app/upload\n      - ./library:/usr/src/app/library\n      - /etc/localtime:/etc/localtime:ro\n    environment:\n      - DB_HOSTNAME=database\n      - DB_USERNAME=postgres\n      - DB_PASSWORD=${DB_PASSWORD}\n      - DB_DATABASE_NAME=immich\n      - REDIS_HOSTNAME=redis\n\n  immich-machine-learning:\n    image: ghcr.io/immich-app/immich-machine-learning:release\n    restart: unless-stopped\n    volumes:\n      - ./model-cache:/cache\n\n  redis:\n    image: redis:6-alpine\n    restart: unless-stopped\n\n  database:\n    image: tensorchord/pgvecto-rs:pg16\n    restart: unless-stopped\n    environment:\n      - POSTGRES_PASSWORD=${DB_PASSWORD}\n      - POSTGRES_USER=postgres\n      - POSTGRES_DB=immich\n    volumes:\n      - ./pgdata:/var/lib/postgresql/data",
+  "input_metadata": {
+    "bind:database:/var/lib/postgresql/data": {
+      "label": "./pgdata",
+      "description": "数据库存储",
+      "group": "basic"
+    },
+    "bind:immich-machine-learning:/cache": {
+      "label": "./model-cache",
+      "description": "模型缓存",
+      "group": "basic"
+    },
+    "bind:immich-server:/etc/localtime": {
+      "group": "basic"
+    },
+    "bind:immich-server:/usr/src/app/library": {
+      "label": "./library",
+      "description": "媒体库",
+      "group": "basic"
+    },
+    "bind:immich-server:/usr/src/app/upload": {
+      "label": "./upload",
+      "description": "上传文件",
+      "group": "basic"
+    },
+    "port:immich-server:2283/tcp": {
+      "label": "2283",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:DB_PASSWORD": {
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:database:POSTGRES_DB": {
+      "group": "basic"
+    },
+    "service:database:POSTGRES_USER": {
+      "label": "POSTGRES_USER",
+      "description": "数据库用户",
+      "group": "advanced"
+    },
+    "service:immich-server:DB_DATABASE_NAME": {
+      "label": "DB_DATABASE_NAME",
+      "description": "数据库名",
+      "group": "advanced"
+    },
+    "service:immich-server:DB_HOSTNAME": {
+      "label": "DB_HOSTNAME",
+      "description": "数据库地址",
+      "group": "advanced"
+    },
+    "service:immich-server:DB_USERNAME": {
+      "label": "DB_USERNAME",
+      "description": "数据库用户",
+      "group": "advanced"
+    },
+    "service:immich-server:REDIS_HOSTNAME": {
+      "label": "REDIS_HOSTNAME",
+      "description": "Redis 地址",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:7ad0fbdd47c7e99deee065c34b5c26116477917b3eb8ffd031e8c8464fa369e2",
+    "manifest_digest": "sha256:34f7a43a6c23f088d8bd0861477dcb0094ea69e2575ae8345b47ec750496b5c0",
+    "services": [
+      "database",
+      "immich-machine-learning",
+      "immich-server",
+      "redis"
+    ],
+    "inputs": [
+      {
+        "id": "bind:database:/var/lib/postgresql/data",
+        "key": "./pgdata",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./pgdata",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./pgdata",
+          "description": "数据库存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:immich-machine-learning:/cache",
+        "key": "./model-cache",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./model-cache",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./model-cache",
+          "description": "模型缓存",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:immich-server:/etc/localtime",
+        "key": "/etc/localtime",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/etc/localtime",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:immich-server:/usr/src/app/library",
+        "key": "./library",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./library",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./library",
+          "description": "媒体库",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:immich-server:/usr/src/app/upload",
+        "key": "./upload",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./upload",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./upload",
+          "description": "上传文件",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:immich-server:2283/tcp",
+        "key": "2283",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "2283",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "2283",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:DB_PASSWORD",
+        "key": "DB_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "DB_PASSWORD",
+          "description": "数据库密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:database:POSTGRES_DB",
+        "key": "POSTGRES_DB",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "immich",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:database:POSTGRES_USER",
+        "key": "POSTGRES_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_USER",
+          "description": "数据库用户",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:immich-server:DB_DATABASE_NAME",
+        "key": "DB_DATABASE_NAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "immich",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_DATABASE_NAME",
+          "description": "数据库名",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:immich-server:DB_HOSTNAME",
+        "key": "DB_HOSTNAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "database",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_HOSTNAME",
+          "description": "数据库地址",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:immich-server:DB_USERNAME",
+        "key": "DB_USERNAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_USERNAME",
+          "description": "数据库用户",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:immich-server:REDIS_HOSTNAME",
+        "key": "REDIS_HOSTNAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_HOSTNAME",
+          "description": "Redis 地址",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "database",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.database.environment[0]",
+        "line": 33,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "immich-server",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.immich-server.environment[2]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:database:POSTGRES_DB",
+        "service": "database",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_DB",
+        "yaml_path": "services.database.environment[2]",
+        "line": 35,
+        "column": 9
+      },
+      {
+        "input_id": "service:database:POSTGRES_USER",
+        "service": "database",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_USER",
+        "yaml_path": "services.database.environment[1]",
+        "line": 34,
+        "column": 9
+      },
+      {
+        "input_id": "service:immich-server:DB_DATABASE_NAME",
+        "service": "immich-server",
+        "target_kind": "environment",
+        "target_key": "DB_DATABASE_NAME",
+        "yaml_path": "services.immich-server.environment[3]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:immich-server:DB_HOSTNAME",
+        "service": "immich-server",
+        "target_kind": "environment",
+        "target_key": "DB_HOSTNAME",
+        "yaml_path": "services.immich-server.environment[0]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:immich-server:DB_USERNAME",
+        "service": "immich-server",
+        "target_kind": "environment",
+        "target_key": "DB_USERNAME",
+        "yaml_path": "services.immich-server.environment[1]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:immich-server:REDIS_HOSTNAME",
+        "service": "immich-server",
+        "target_kind": "environment",
+        "target_key": "REDIS_HOSTNAME",
+        "yaml_path": "services.immich-server.environment[4]",
+        "line": 17,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:database:/var/lib/postgresql/data",
+        "kind": "bind",
+        "service": "database",
+        "source": "./pgdata",
+        "target": "/var/lib/postgresql/data",
+        "editable": true,
+        "yaml_path": "services.database.volumes[0]"
+      },
+      {
+        "id": "bind:immich-machine-learning:/cache",
+        "kind": "bind",
+        "service": "immich-machine-learning",
+        "source": "./model-cache",
+        "target": "/cache",
+        "editable": true,
+        "yaml_path": "services.immich-machine-learning.volumes[0]"
+      },
+      {
+        "id": "bind:immich-server:/etc/localtime",
+        "kind": "bind",
+        "service": "immich-server",
+        "source": "/etc/localtime",
+        "target": "/etc/localtime",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.immich-server.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:immich-server:/usr/src/app/library",
+        "kind": "bind",
+        "service": "immich-server",
+        "source": "./library",
+        "target": "/usr/src/app/library",
+        "editable": true,
+        "yaml_path": "services.immich-server.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:immich-server:/usr/src/app/upload",
+        "kind": "bind",
+        "service": "immich-server",
+        "source": "./upload",
+        "target": "/usr/src/app/upload",
+        "editable": true,
+        "yaml_path": "services.immich-server.volumes[0]"
+      },
+      {
+        "id": "port:immich-server:2283/tcp",
+        "kind": "port",
+        "service": "immich-server",
+        "source": "2283",
+        "target": "2283",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.immich-server.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:7ad0fbdd47c7e99deee065c34b5c26116477917b3eb8ffd031e8c8464fa369e2",
+  "manifest_digest": "sha256:34f7a43a6c23f088d8bd0861477dcb0094ea69e2575ae8345b47ec750496b5c0",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:database:/var/lib/postgresql/data",
+      "name": "./pgdata",
+      "label": "./pgdata",
+      "description": "数据库存储",
+      "type": "path",
+      "default": "./pgdata",
+      "category": "basic",
+      "serviceName": "database",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:immich-machine-learning:/cache",
+      "name": "./model-cache",
+      "label": "./model-cache",
+      "description": "模型缓存",
+      "type": "path",
+      "default": "./model-cache",
+      "category": "basic",
+      "serviceName": "immich-machine-learning",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:immich-server:/etc/localtime",
+      "name": "/etc/localtime",
+      "label": "/etc/localtime",
+      "description": "",
+      "type": "path",
+      "default": "/etc/localtime",
+      "category": "basic",
+      "serviceName": "immich-server",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:immich-server:/usr/src/app/library",
+      "name": "./library",
+      "label": "./library",
+      "description": "媒体库",
+      "type": "path",
+      "default": "./library",
+      "category": "basic",
+      "serviceName": "immich-server",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:immich-server:/usr/src/app/upload",
+      "name": "./upload",
+      "label": "./upload",
+      "description": "上传文件",
+      "type": "path",
+      "default": "./upload",
+      "category": "basic",
+      "serviceName": "immich-server",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:immich-server:2283/tcp",
+      "name": "2283",
+      "label": "2283",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "2283",
+      "category": "basic",
+      "serviceName": "immich-server",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:DB_PASSWORD",
+      "name": "DB_PASSWORD",
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:database:POSTGRES_DB",
+      "name": "POSTGRES_DB",
+      "label": "POSTGRES_DB",
+      "description": "",
+      "type": "string",
+      "default": "immich",
+      "category": "basic",
+      "serviceName": "database",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:database:POSTGRES_USER",
+      "name": "POSTGRES_USER",
+      "label": "POSTGRES_USER",
+      "description": "数据库用户",
+      "type": "string",
+      "default": "postgres",
+      "category": "advanced",
+      "serviceName": "database",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:immich-server:DB_DATABASE_NAME",
+      "name": "DB_DATABASE_NAME",
+      "label": "DB_DATABASE_NAME",
+      "description": "数据库名",
+      "type": "string",
+      "default": "immich",
+      "category": "advanced",
+      "serviceName": "immich-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:immich-server:DB_HOSTNAME",
+      "name": "DB_HOSTNAME",
+      "label": "DB_HOSTNAME",
+      "description": "数据库地址",
+      "type": "string",
+      "default": "database",
+      "category": "advanced",
+      "serviceName": "immich-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:immich-server:DB_USERNAME",
+      "name": "DB_USERNAME",
+      "label": "DB_USERNAME",
+      "description": "数据库用户",
+      "type": "string",
+      "default": "postgres",
+      "category": "advanced",
+      "serviceName": "immich-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:immich-server:REDIS_HOSTNAME",
+      "name": "REDIS_HOSTNAME",
+      "label": "REDIS_HOSTNAME",
+      "description": "Redis 地址",
+      "type": "string",
+      "default": "redis",
+      "category": "advanced",
+      "serviceName": "immich-server",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

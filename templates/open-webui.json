@@ -1,0 +1,280 @@
+{
+  "id": 52,
+  "sort_order": 49,
+  "name": "open-webui",
+  "category": "productivity",
+  "description": "Open WebUI（原 Ollama WebUI）是一个功能强大的自托管 LLM Web 界面，支持 Ollama、OpenAI 兼容 API，多用户、多模型、文档对话、RAG。",
+  "version": "main",
+  "logo": "https://raw.githubusercontent.com/open-webui/open-webui/main/static/favicon.png",
+  "website": "https://github.com/open-webui/open-webui",
+  "tutorial": "访问地址：http://服务器IP:3000\n可连接本地 Ollama（OLLAMA_BASE_URL）或 OpenAI 兼容接口。\n首次访问注册的首个用户即管理员。\n数据（用户、聊天、知识库）在 ./data。",
+  "dotenv": "OPENAI_API_KEY=\n",
+  "compose": "services:\n  open-webui:\n    image: ghcr.io/open-webui/open-webui:main\n    restart: unless-stopped\n    ports:\n      - \"3000:8080\"\n    volumes:\n      - ./data:/app/backend/data\n    environment:\n      - OLLAMA_BASE_URL=http://host.docker.internal:11434\n      - OPENAI_API_BASE_URL=https://api.openai.com/v1\n      - OPENAI_API_KEY=${OPENAI_API_KEY}\n      - WEBUI_AUTH=true",
+  "input_metadata": {
+    "bind:open-webui:/app/backend/data": {
+      "label": "./data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:open-webui:8080/tcp": {
+      "label": "3000",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:OPENAI_API_KEY": {
+      "label": "OPENAI_API_KEY",
+      "description": "OpenAI 密钥",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:open-webui:OLLAMA_BASE_URL": {
+      "label": "OLLAMA_BASE_URL",
+      "description": "Ollama 地址",
+      "group": "basic"
+    },
+    "service:open-webui:OPENAI_API_BASE_URL": {
+      "label": "OPENAI_API_BASE_URL",
+      "description": "OpenAI 接口地址",
+      "group": "advanced"
+    },
+    "service:open-webui:WEBUI_AUTH": {
+      "label": "WEBUI_AUTH",
+      "description": "启用登录认证",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:649ffac2526ec0bec6457b93f2753670243a0525b23d26e3d897bd798a185675",
+    "manifest_digest": "sha256:7f1a01a363ab82445c5f2d0fb6013edac37282bc0d1232dfa453c11ab89516d3",
+    "services": [
+      "open-webui"
+    ],
+    "inputs": [
+      {
+        "id": "bind:open-webui:/app/backend/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:open-webui:8080/tcp",
+        "key": "3000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3000",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:OPENAI_API_KEY",
+        "key": "OPENAI_API_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "OPENAI_API_KEY",
+          "description": "OpenAI 密钥",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:open-webui:OLLAMA_BASE_URL",
+        "key": "OLLAMA_BASE_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://host.docker.internal:11434",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "OLLAMA_BASE_URL",
+          "description": "Ollama 地址",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:open-webui:OPENAI_API_BASE_URL",
+        "key": "OPENAI_API_BASE_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "https://api.openai.com/v1",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "OPENAI_API_BASE_URL",
+          "description": "OpenAI 接口地址",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:open-webui:WEBUI_AUTH",
+        "key": "WEBUI_AUTH",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "WEBUI_AUTH",
+          "description": "启用登录认证",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:OPENAI_API_KEY",
+        "service": "open-webui",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${OPENAI_API_KEY}",
+        "yaml_path": "services.open-webui.environment[2]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:open-webui:OLLAMA_BASE_URL",
+        "service": "open-webui",
+        "target_kind": "environment",
+        "target_key": "OLLAMA_BASE_URL",
+        "yaml_path": "services.open-webui.environment[0]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:open-webui:OPENAI_API_BASE_URL",
+        "service": "open-webui",
+        "target_kind": "environment",
+        "target_key": "OPENAI_API_BASE_URL",
+        "yaml_path": "services.open-webui.environment[1]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:open-webui:WEBUI_AUTH",
+        "service": "open-webui",
+        "target_kind": "environment",
+        "target_key": "WEBUI_AUTH",
+        "yaml_path": "services.open-webui.environment[3]",
+        "line": 13,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:open-webui:/app/backend/data",
+        "kind": "bind",
+        "service": "open-webui",
+        "source": "./data",
+        "target": "/app/backend/data",
+        "editable": true,
+        "yaml_path": "services.open-webui.volumes[0]"
+      },
+      {
+        "id": "port:open-webui:8080/tcp",
+        "kind": "port",
+        "service": "open-webui",
+        "source": "3000",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.open-webui.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:649ffac2526ec0bec6457b93f2753670243a0525b23d26e3d897bd798a185675",
+  "manifest_digest": "sha256:7f1a01a363ab82445c5f2d0fb6013edac37282bc0d1232dfa453c11ab89516d3",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:open-webui:/app/backend/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./data",
+      "category": "basic",
+      "serviceName": "open-webui",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:open-webui:8080/tcp",
+      "name": "3000",
+      "label": "3000",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "3000",
+      "category": "basic",
+      "serviceName": "open-webui",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:OPENAI_API_KEY",
+      "name": "OPENAI_API_KEY",
+      "label": "OPENAI_API_KEY",
+      "description": "OpenAI 密钥",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:open-webui:OLLAMA_BASE_URL",
+      "name": "OLLAMA_BASE_URL",
+      "label": "OLLAMA_BASE_URL",
+      "description": "Ollama 地址",
+      "type": "string",
+      "default": "http://host.docker.internal:11434",
+      "category": "basic",
+      "serviceName": "open-webui",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:open-webui:OPENAI_API_BASE_URL",
+      "name": "OPENAI_API_BASE_URL",
+      "label": "OPENAI_API_BASE_URL",
+      "description": "OpenAI 接口地址",
+      "type": "string",
+      "default": "https://api.openai.com/v1",
+      "category": "advanced",
+      "serviceName": "open-webui",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:open-webui:WEBUI_AUTH",
+      "name": "WEBUI_AUTH",
+      "label": "WEBUI_AUTH",
+      "description": "启用登录认证",
+      "type": "string",
+      "default": "true",
+      "category": "advanced",
+      "serviceName": "open-webui",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

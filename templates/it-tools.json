@@ -1,0 +1,80 @@
+{
+  "id": 55,
+  "sort_order": 52,
+  "name": "it-tools",
+  "category": "other",
+  "description": "IT Tools 是一组面向开发者的实用在线工具集合（加密、编码、转换、生成、网络、JSON、UUID 等），纯前端，自托管即开即用。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/CorentinTh/it-tools/main/public/favicon.svg",
+  "website": "https://github.com/CorentinTh/it-tools",
+  "tutorial": "访问地址：http://服务器IP:8080\n纯前端静态应用，无配置无数据持久化。",
+  "dotenv": "",
+  "compose": "services:\n  it-tools:\n    image: corentinth/it-tools:latest\n    restart: unless-stopped\n    ports:\n      - \"8082:80\"\n",
+  "input_metadata": {
+    "port:it-tools:80/tcp": {
+      "label": "8082",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:8a8a6b0e153c7d29efe7795d72d89f35b27f60a30dce5aebe3191a69369c92af",
+    "manifest_digest": "sha256:d0b7c2a085d908cc57ea4a90231c61b9a35a91a06774f1418ef042fe31c7a676",
+    "services": [
+      "it-tools"
+    ],
+    "inputs": [
+      {
+        "id": "port:it-tools:80/tcp",
+        "key": "8082",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8082",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8082",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "port:it-tools:80/tcp",
+        "kind": "port",
+        "service": "it-tools",
+        "source": "8082",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.it-tools.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:8a8a6b0e153c7d29efe7795d72d89f35b27f60a30dce5aebe3191a69369c92af",
+  "manifest_digest": "sha256:d0b7c2a085d908cc57ea4a90231c61b9a35a91a06774f1418ef042fe31c7a676",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:it-tools:80/tcp",
+      "name": "8082",
+      "label": "8082",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8082",
+      "category": "basic",
+      "serviceName": "it-tools",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

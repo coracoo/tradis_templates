@@ -10,11 +10,186 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n  jellyseerr:\n    image: fallenbagel/jellyseerr:latest\n    container_name: jellyseerr\n    environment:\n      - LOG_LEVEL=debug\n      - TZ=Asia/Shanghai\n      - PORT=7688\n    ports:\n      - 7688:7688\n    volumes:\n      - ./config:/app/config\n    restart: unless-stopped",
+  "input_metadata": {
+    "bind:jellyseerr:/app/config": {
+      "label": "./config",
+      "description": "容器持久化存储路径",
+      "group": "advanced"
+    },
+    "port:jellyseerr:7688/tcp": {
+      "label": "7688",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:jellyseerr:LOG_LEVEL": {
+      "label": "LOG_LEVEL",
+      "group": "advanced"
+    },
+    "service:jellyseerr:PORT": {
+      "label": "PORT",
+      "description": "容器启动端口，不建议改",
+      "group": "advanced"
+    },
+    "service:jellyseerr:TZ": {
+      "label": "TZ",
+      "description": "时区",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:1ca8af32f78bf1f90c9e8c798b86c5290f2664cc915d6f90e8c452df842f8841",
+    "manifest_digest": "sha256:a37a936b3a43603cd82fdffcd02be1eb37bc13c812d976d5d66af411501be067",
+    "services": [
+      "jellyseerr"
+    ],
+    "inputs": [
+      {
+        "id": "bind:jellyseerr:/app/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "description": "容器持久化存储路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:jellyseerr:7688/tcp",
+        "key": "7688",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7688",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7688",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:jellyseerr:LOG_LEVEL",
+        "key": "LOG_LEVEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "debug",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LOG_LEVEL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:jellyseerr:PORT",
+        "key": "PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "7688",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PORT",
+          "description": "容器启动端口，不建议改",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:jellyseerr:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "description": "时区",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:jellyseerr:LOG_LEVEL",
+        "service": "jellyseerr",
+        "target_kind": "environment",
+        "target_key": "LOG_LEVEL",
+        "yaml_path": "services.jellyseerr.environment[0]",
+        "line": 6,
+        "column": 9
+      },
+      {
+        "input_id": "service:jellyseerr:PORT",
+        "service": "jellyseerr",
+        "target_kind": "environment",
+        "target_key": "PORT",
+        "yaml_path": "services.jellyseerr.environment[2]",
+        "line": 8,
+        "column": 9
+      },
+      {
+        "input_id": "service:jellyseerr:TZ",
+        "service": "jellyseerr",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.jellyseerr.environment[1]",
+        "line": 7,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:jellyseerr:/app/config",
+        "kind": "bind",
+        "service": "jellyseerr",
+        "source": "./config",
+        "target": "/app/config",
+        "editable": true,
+        "yaml_path": "services.jellyseerr.volumes[0]"
+      },
+      {
+        "id": "port:jellyseerr:7688/tcp",
+        "kind": "port",
+        "service": "jellyseerr",
+        "source": "7688",
+        "target": "7688",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.jellyseerr.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:1ca8af32f78bf1f90c9e8c798b86c5290f2664cc915d6f90e8c452df842f8841",
+  "manifest_digest": "sha256:a37a936b3a43603cd82fdffcd02be1eb37bc13c812d976d5d66af411501be067",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/seerr-team/seerr/raw/develop/public/preview.jpg"
   ],
   "schema": [
     {
+      "inputId": "bind:jellyseerr:/app/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "容器持久化存储路径",
+      "type": "path",
+      "default": "./config",
+      "category": "advanced",
+      "serviceName": "jellyseerr",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:jellyseerr:7688/tcp",
       "name": "7688",
       "label": "7688",
       "description": "容器 WEB 端口",
@@ -25,16 +200,7 @@
       "paramType": "port"
     },
     {
-      "name": "./config",
-      "label": "./config",
-      "description": "容器持久化存储路径",
-      "type": "path",
-      "default": "/app/config",
-      "category": "advanced",
-      "serviceName": "jellyseerr",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:jellyseerr:LOG_LEVEL",
       "name": "LOG_LEVEL",
       "label": "LOG_LEVEL",
       "description": "",
@@ -45,16 +211,7 @@
       "paramType": "env"
     },
     {
-      "name": "TZ",
-      "label": "TZ",
-      "description": "时区",
-      "type": "string",
-      "default": "Asia/Shanghai",
-      "category": "advanced",
-      "serviceName": "jellyseerr",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:jellyseerr:PORT",
       "name": "PORT",
       "label": "PORT",
       "description": "容器启动端口，不建议改",
@@ -63,8 +220,18 @@
       "category": "advanced",
       "serviceName": "jellyseerr",
       "paramType": "env"
+    },
+    {
+      "inputId": "service:jellyseerr:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "时区",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "jellyseerr",
+      "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

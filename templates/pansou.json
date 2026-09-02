@@ -10,59 +10,389 @@
   "tutorial": "高性能搜索：并发执行多个TG频道及异步插件搜索，显著提升搜索速度；工作池设计，高效管理并发任务\n\n网盘类型分类：自动识别多种网盘链接，按类型归类展示\n\n智能排序：基于插件等级、时间新鲜度和优先关键词的多维度综合排序算法\n\n异步插件系统：支持通过插件扩展搜索来源，支持\"尽快响应，持续处理\"的异步搜索模式，解决了某些搜索源响应时间长的问题。详情参考插件开发指南\n\n二级缓存：分片内存+分片磁盘缓存机制，大幅提升重复查询速度和并发性能",
   "dotenv": "",
   "compose": "version: '3.3'\n\nservices:\n  pansou:\n    image: ghcr.io/fish2018/pansou-web:latest\n    container_name: pansou-app\n    labels:\n      - \"autoheal=true\"  # 标记此容器允许被autoheal重启\n    ports:\n      - \"805:80\"\n    environment:\n      - DOMAIN=localhost\n      - PANSOU_PORT=8888\n      - PANSOU_HOST=127.0.0.1\n      - CACHE_PATH=/app/data/cache\n      - LOG_PATH=/app/data/logs\n      - ENABLED_PLUGINS=labi,zhizhen,shandian,duoduo,muou,wanou,hunhepan,jikepan,panwiki,pansearch,panta,qupansou,hdr4k,pan666,susu,thepiratebay,xuexizhinan,panyq,ouge,huban,cyg,erxiao,miaoso,fox4k,pianku,clmao,wuji,cldi,xiaozhang,libvio,leijing,xb6v,xys,ddys,hdmoli,clxiong,jutoushe,sdso,xiaoji,xdyh,haisou,bixin,djgou,nyaa,xinjuc,aikanzy,qupanshe,xdpan,discourse,yunsou,ahhhhfs,nsgame,quark4k,quarksoo,sousou,ash,feikuai,kkmao,alupan,ypfxw,mikuclub,daishudj,dyyj,meitizy,jsnoteclub,mizixing,lou1,yiove,zxzj,qingying,kkv\n      - CHANNELS=tgsearchers4,Aliyun_4K_Movies,bdbdndn11,yunpanx,bsbdbfjfjff,yp123pan,sbsbsnsqq,yunpanxunlei,tianyifc,BaiduCloudDisk,txtyzy,peccxinpd,gotopan,PanjClub,kkxlzy,baicaoZY,MCPH01,MCPH02,MCPH03,bdwpzhpd,ysxb48,jdjdn1111,yggpan,MCPH086,zaihuayun,Q66Share,ucwpzy,shareAliyun,alyp_1,dianyingshare,Quark_Movies,XiangxiuNBB,ydypzyfx,ucquark,xx123pan,yingshifenxiang123,zyfb123,tyypzhpd,tianyirigeng,cloudtianyi,hdhhd21,Lsp115,oneonefivewpfx,qixingzhenren,taoxgzy,Channel_Shares_115,tyysypzypd,vip115hot,wp123zy,yunpan139,yunpan189,yunpanuc,yydf_hzl,leoziyuan,Q_dongman,yoyokuakeduanju,TG654TG,WFYSFX02,QukanMovie,yeqingjie_GJG666,movielover8888_film3,Baidu_netdisk,D_wusun,FLMdongtianfudi,KaiPanshare,QQZYDAPP,rjyxfx,PikPak_Share_Channel,btzhi,newproductsourcing,cctv1211,duan_ju,QuarkFree,yunpanNB,kkdj001,xxzlzn,pxyunpanxunlei,jxwpzy,kuakedongman,liangxingzhinan,xiangnikanj,solidsexydoll,guoman4K,zdqxm,kduanju,cilidianying,CBduanju,SharePanFilms,dzsgx,BooksRealm,Oscar_4Kmovies,douerpan,baidu_yppan,Q_jilupian,Netdisk_Movies,yunpanquark,ammmziyuan,ciliziyuanku,cili8888,jzmm_123pan,Q_dianying,domgmingapk,dianying4k,q_dianshiju,tgbokee,ucshare,godupan,gokuapan\n      - PROXY=socks5://xxx.xxx.xxx.xxx:7897\n      - HTTP_PROXY=http://xxx.xxx.xxx.xxx:7890\n      - HTTPS_PROXY=http://xxx.xxx.xxx.xxx:7890\n    volumes:\n      - pansou-data:/app/data\n      - ./ssl:/app/data/ssl\n    restart: unless-stopped\n\nvolumes:\n  pansou-data:\n    driver: local",
+  "input_metadata": {
+    "bind:pansou:/app/data/ssl": {
+      "label": "./ssl",
+      "description": "SSL 证书，建议删除",
+      "group": "basic"
+    },
+    "port:pansou:80/tcp": {
+      "label": "805",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:pansou:CACHE_PATH": {
+      "label": "CACHE_PATH",
+      "group": "advanced"
+    },
+    "service:pansou:CHANNELS": {
+      "label": "CHANNELS",
+      "group": "advanced"
+    },
+    "service:pansou:DOMAIN": {
+      "label": "DOMAIN",
+      "group": "advanced"
+    },
+    "service:pansou:ENABLED_PLUGINS": {
+      "label": "ENABLED_PLUGINS",
+      "group": "advanced"
+    },
+    "service:pansou:HTTPS_PROXY": {
+      "label": "HTTPS_PROXY",
+      "description": "HTTPS 代理",
+      "group": "basic"
+    },
+    "service:pansou:HTTP_PROXY": {
+      "label": "HTTP_PROXY",
+      "description": "HTTP 代理",
+      "group": "basic"
+    },
+    "service:pansou:LOG_PATH": {
+      "label": "LOG_PATH",
+      "group": "advanced"
+    },
+    "service:pansou:PANSOU_HOST": {
+      "label": "PANSOU_HOST",
+      "group": "advanced"
+    },
+    "service:pansou:PANSOU_PORT": {
+      "label": "PANSOU_PORT",
+      "group": "advanced"
+    },
+    "service:pansou:PROXY": {
+      "label": "PROXY",
+      "description": "SOCKS5 代理",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:f6d8335a817c5bdb13939207d6da164b80c446c7e86b558ebbb9a67da9af5cd7",
+    "manifest_digest": "sha256:ed142ccd533420f2bb001d6a266d8d50b02f274441177c0c8b5d3e27ac188104",
+    "services": [
+      "pansou"
+    ],
+    "inputs": [
+      {
+        "id": "bind:pansou:/app/data/ssl",
+        "key": "./ssl",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./ssl",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./ssl",
+          "description": "SSL 证书，建议删除",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:pansou:80/tcp",
+        "key": "805",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "805",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "805",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pansou:CACHE_PATH",
+        "key": "CACHE_PATH",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/data/cache",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "CACHE_PATH",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou:CHANNELS",
+        "key": "CHANNELS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "tgsearchers4,Aliyun_4K_Movies,bdbdndn11,yunpanx,bsbdbfjfjff,yp123pan,sbsbsnsqq,yunpanxunlei,tianyifc,BaiduCloudDisk,txtyzy,peccxinpd,gotopan,PanjClub,kkxlzy,baicaoZY,MCPH01,MCPH02,MCPH03,bdwpzhpd,ysxb48,jdjdn1111,yggpan,MCPH086,zaihuayun,Q66Share,ucwpzy,shareAliyun,alyp_1,dianyingshare,Quark_Movies,XiangxiuNBB,ydypzyfx,ucquark,xx123pan,yingshifenxiang123,zyfb123,tyypzhpd,tianyirigeng,cloudtianyi,hdhhd21,Lsp115,oneonefivewpfx,qixingzhenren,taoxgzy,Channel_Shares_115,tyysypzypd,vip115hot,wp123zy,yunpan139,yunpan189,yunpanuc,yydf_hzl,leoziyuan,Q_dongman,yoyokuakeduanju,TG654TG,WFYSFX02,QukanMovie,yeqingjie_GJG666,movielover8888_film3,Baidu_netdisk,D_wusun,FLMdongtianfudi,KaiPanshare,QQZYDAPP,rjyxfx,PikPak_Share_Channel,btzhi,newproductsourcing,cctv1211,duan_ju,QuarkFree,yunpanNB,kkdj001,xxzlzn,pxyunpanxunlei,jxwpzy,kuakedongman,liangxingzhinan,xiangnikanj,solidsexydoll,guoman4K,zdqxm,kduanju,cilidianying,CBduanju,SharePanFilms,dzsgx,BooksRealm,Oscar_4Kmovies,douerpan,baidu_yppan,Q_jilupian,Netdisk_Movies,yunpanquark,ammmziyuan,ciliziyuanku,cili8888,jzmm_123pan,Q_dianying,domgmingapk,dianying4k,q_dianshiju,tgbokee,ucshare,godupan,gokuapan",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "CHANNELS",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou:DOMAIN",
+        "key": "DOMAIN",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "localhost",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DOMAIN",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou:ENABLED_PLUGINS",
+        "key": "ENABLED_PLUGINS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "labi,zhizhen,shandian,duoduo,muou,wanou,hunhepan,jikepan,panwiki,pansearch,panta,qupansou,hdr4k,pan666,susu,thepiratebay,xuexizhinan,panyq,ouge,huban,cyg,erxiao,miaoso,fox4k,pianku,clmao,wuji,cldi,xiaozhang,libvio,leijing,xb6v,xys,ddys,hdmoli,clxiong,jutoushe,sdso,xiaoji,xdyh,haisou,bixin,djgou,nyaa,xinjuc,aikanzy,qupanshe,xdpan,discourse,yunsou,ahhhhfs,nsgame,quark4k,quarksoo,sousou,ash,feikuai,kkmao,alupan,ypfxw,mikuclub,daishudj,dyyj,meitizy,jsnoteclub,mizixing,lou1,yiove,zxzj,qingying,kkv",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "ENABLED_PLUGINS",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou:HTTPS_PROXY",
+        "key": "HTTPS_PROXY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://xxx.xxx.xxx.xxx:7890",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "HTTPS_PROXY",
+          "description": "HTTPS 代理",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pansou:HTTP_PROXY",
+        "key": "HTTP_PROXY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://xxx.xxx.xxx.xxx:7890",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "HTTP_PROXY",
+          "description": "HTTP 代理",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pansou:LOG_PATH",
+        "key": "LOG_PATH",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/data/logs",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LOG_PATH",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou:PANSOU_HOST",
+        "key": "PANSOU_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "127.0.0.1",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PANSOU_HOST",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou:PANSOU_PORT",
+        "key": "PANSOU_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "8888",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PANSOU_PORT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou:PROXY",
+        "key": "PROXY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "socks5://xxx.xxx.xxx.xxx:7897",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PROXY",
+          "description": "SOCKS5 代理",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:pansou:CACHE_PATH",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "CACHE_PATH",
+        "yaml_path": "services.pansou.environment[3]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:CHANNELS",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "CHANNELS",
+        "yaml_path": "services.pansou.environment[6]",
+        "line": 18,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:DOMAIN",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "DOMAIN",
+        "yaml_path": "services.pansou.environment[0]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:ENABLED_PLUGINS",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "ENABLED_PLUGINS",
+        "yaml_path": "services.pansou.environment[5]",
+        "line": 17,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:HTTPS_PROXY",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "HTTPS_PROXY",
+        "yaml_path": "services.pansou.environment[9]",
+        "line": 21,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:HTTP_PROXY",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "HTTP_PROXY",
+        "yaml_path": "services.pansou.environment[8]",
+        "line": 20,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:LOG_PATH",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "LOG_PATH",
+        "yaml_path": "services.pansou.environment[4]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:PANSOU_HOST",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "PANSOU_HOST",
+        "yaml_path": "services.pansou.environment[2]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:PANSOU_PORT",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "PANSOU_PORT",
+        "yaml_path": "services.pansou.environment[1]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:pansou:PROXY",
+        "service": "pansou",
+        "target_kind": "environment",
+        "target_key": "PROXY",
+        "yaml_path": "services.pansou.environment[7]",
+        "line": 19,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:pansou:/app/data/ssl",
+        "kind": "bind",
+        "service": "pansou",
+        "source": "./ssl",
+        "target": "/app/data/ssl",
+        "editable": true,
+        "yaml_path": "services.pansou.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:pansou:80/tcp",
+        "kind": "port",
+        "service": "pansou",
+        "source": "805",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.pansou.ports[0]"
+      },
+      {
+        "id": "volume:pansou:/app/data",
+        "kind": "volume",
+        "service": "pansou",
+        "source": "pansou-data",
+        "target": "/app/data",
+        "editable": false,
+        "yaml_path": "services.pansou.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:f6d8335a817c5bdb13939207d6da164b80c446c7e86b558ebbb9a67da9af5cd7",
+  "manifest_digest": "sha256:ed142ccd533420f2bb001d6a266d8d50b02f274441177c0c8b5d3e27ac188104",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
-      "name": "805",
-      "label": "805",
-      "description": "容器 WEB 端口",
-      "type": "port",
-      "default": "80",
-      "category": "basic",
-      "serviceName": "pansou",
-      "paramType": "port"
-    },
-    {
+      "inputId": "bind:pansou:/app/data/ssl",
       "name": "./ssl",
       "label": "./ssl",
       "description": "SSL 证书，建议删除",
       "type": "path",
-      "default": "/app/data/ssl",
+      "default": "./ssl",
       "category": "basic",
       "serviceName": "pansou",
       "paramType": "path"
     },
     {
-      "name": "DOMAIN",
-      "label": "DOMAIN",
-      "description": "",
-      "type": "string",
-      "default": "localhost",
-      "category": "advanced",
+      "inputId": "port:pansou:80/tcp",
+      "name": "805",
+      "label": "805",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "805",
+      "category": "basic",
       "serviceName": "pansou",
-      "paramType": "env"
+      "paramType": "port"
     },
     {
-      "name": "PANSOU_PORT",
-      "label": "PANSOU_PORT",
-      "description": "",
-      "type": "string",
-      "default": "8888",
-      "category": "advanced",
-      "serviceName": "pansou",
-      "paramType": "env"
-    },
-    {
-      "name": "PANSOU_HOST",
-      "label": "PANSOU_HOST",
-      "description": "",
-      "type": "string",
-      "default": "127.0.0.1",
-      "category": "advanced",
-      "serviceName": "pansou",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:pansou:CACHE_PATH",
       "name": "CACHE_PATH",
       "label": "CACHE_PATH",
       "description": "",
@@ -73,26 +403,7 @@
       "paramType": "env"
     },
     {
-      "name": "LOG_PATH",
-      "label": "LOG_PATH",
-      "description": "",
-      "type": "string",
-      "default": "/app/data/logs",
-      "category": "advanced",
-      "serviceName": "pansou",
-      "paramType": "env"
-    },
-    {
-      "name": "ENABLED_PLUGINS",
-      "label": "ENABLED_PLUGINS",
-      "description": "",
-      "type": "string",
-      "default": "labi,zhizhen,shandian,duoduo,muou,wanou,hunhepan,jikepan,panwiki,pansearch,panta,qupansou,hdr4k,pan666,susu,thepiratebay,xuexizhinan,panyq,ouge,huban,cyg,erxiao,miaoso,fox4k,pianku,clmao,wuji,cldi,xiaozhang,libvio,leijing,xb6v,xys,ddys,hdmoli,clxiong,jutoushe,sdso,xiaoji,xdyh,haisou,bixin,djgou,nyaa,xinjuc,aikanzy,qupanshe,xdpan,discourse,yunsou,ahhhhfs,nsgame,quark4k,quarksoo,sousou,ash,feikuai,kkmao,alupan,ypfxw,mikuclub,daishudj,dyyj,meitizy,jsnoteclub,mizixing,lou1,yiove,zxzj,qingying,kkv",
-      "category": "advanced",
-      "serviceName": "pansou",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:pansou:CHANNELS",
       "name": "CHANNELS",
       "label": "CHANNELS",
       "description": "",
@@ -103,16 +414,40 @@
       "paramType": "env"
     },
     {
-      "name": "PROXY",
-      "label": "PROXY",
-      "description": "SOCKS5 代理",
+      "inputId": "service:pansou:DOMAIN",
+      "name": "DOMAIN",
+      "label": "DOMAIN",
+      "description": "",
       "type": "string",
-      "default": "socks5://xxx.xxx.xxx.xxx:7897",
+      "default": "localhost",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pansou:ENABLED_PLUGINS",
+      "name": "ENABLED_PLUGINS",
+      "label": "ENABLED_PLUGINS",
+      "description": "",
+      "type": "string",
+      "default": "labi,zhizhen,shandian,duoduo,muou,wanou,hunhepan,jikepan,panwiki,pansearch,panta,qupansou,hdr4k,pan666,susu,thepiratebay,xuexizhinan,panyq,ouge,huban,cyg,erxiao,miaoso,fox4k,pianku,clmao,wuji,cldi,xiaozhang,libvio,leijing,xb6v,xys,ddys,hdmoli,clxiong,jutoushe,sdso,xiaoji,xdyh,haisou,bixin,djgou,nyaa,xinjuc,aikanzy,qupanshe,xdpan,discourse,yunsou,ahhhhfs,nsgame,quark4k,quarksoo,sousou,ash,feikuai,kkmao,alupan,ypfxw,mikuclub,daishudj,dyyj,meitizy,jsnoteclub,mizixing,lou1,yiove,zxzj,qingying,kkv",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pansou:HTTPS_PROXY",
+      "name": "HTTPS_PROXY",
+      "label": "HTTPS_PROXY",
+      "description": "HTTPS 代理",
+      "type": "string",
+      "default": "http://xxx.xxx.xxx.xxx:7890",
       "category": "basic",
       "serviceName": "pansou",
       "paramType": "env"
     },
     {
+      "inputId": "service:pansou:HTTP_PROXY",
       "name": "HTTP_PROXY",
       "label": "HTTP_PROXY",
       "description": "HTTP 代理",
@@ -123,16 +458,49 @@
       "paramType": "env"
     },
     {
-      "name": "HTTPS_PROXY",
-      "label": "HTTPS_PROXY",
-      "description": "HTTPS 代理",
+      "inputId": "service:pansou:LOG_PATH",
+      "name": "LOG_PATH",
+      "label": "LOG_PATH",
+      "description": "",
       "type": "string",
-      "default": "http://xxx.xxx.xxx.xxx:7890",
+      "default": "/app/data/logs",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pansou:PANSOU_HOST",
+      "name": "PANSOU_HOST",
+      "label": "PANSOU_HOST",
+      "description": "",
+      "type": "string",
+      "default": "127.0.0.1",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pansou:PANSOU_PORT",
+      "name": "PANSOU_PORT",
+      "label": "PANSOU_PORT",
+      "description": "",
+      "type": "string",
+      "default": "8888",
+      "category": "advanced",
+      "serviceName": "pansou",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pansou:PROXY",
+      "name": "PROXY",
+      "label": "PROXY",
+      "description": "SOCKS5 代理",
+      "type": "string",
+      "default": "socks5://xxx.xxx.xxx.xxx:7897",
       "category": "basic",
       "serviceName": "pansou",
       "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

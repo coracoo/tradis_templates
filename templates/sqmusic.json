@@ -10,92 +10,350 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "version: '3.8'\n\nservices:\n  sqmusic_main:\n    image: registry.cn-hangzhou.aliyuncs.com/sqdockler/simple_sq_music_plus:v3.0.28\n    container_name: sqmusic_main\n    environment:\n      - DB_IP=mysql\n      - DB_PORT=3306\n      - DB_NAME=sqmusicv3\n      - DB_USERNAME=root\n      - DB_PASSWORD=sqmusicv3password\n    volumes:\n      - ./sqmusic/file:/music\n    depends_on:\n      mysql:\n        condition: service_healthy\n    networks:\n      - sq-app-network\n    expose:\n      - \"8099\"\n    restart: always\n\n  sqmusic_web:\n    image: registry.cn-hangzhou.aliyuncs.com/sqdockler/simple_sq_music_plus_web:v3.0.15\n    container_name: sqmusic_web\n    ports:\n      - \"8096:80\"\n    networks:\n      - sq-app-network\n    depends_on:\n      - sqmusic_main\n    restart: always\n\n  mysql:\n    image: mysql:5.7\n    container_name: sqmusic_mysql\n    environment:\n      MYSQL_ROOT_PASSWORD: sqmusicv3password\n      MYSQL_DATABASE: sqmusicv3\n    volumes:\n      - ./mysql_data:/var/lib/mysql\n    networks:\n      - sq-app-network\n    healthcheck:\n      test: [\"CMD\", \"mysqladmin\", \"ping\", \"-h\", \"localhost\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n    restart: always\n\nnetworks:\n  sq-app-network:\n    driver: bridge",
+  "input_metadata": {
+    "bind:mysql:/var/lib/mysql": {
+      "label": "./mysql_data",
+      "group": "advanced"
+    },
+    "bind:sqmusic_main:/music": {
+      "label": "./sqmusic/file",
+      "description": "自己修改音乐库路径",
+      "group": "basic"
+    },
+    "port:sqmusic_web:80/tcp": {
+      "label": "8096",
+      "group": "basic"
+    },
+    "service:mysql:MYSQL_DATABASE": {
+      "label": "MYSQL_DATABASE",
+      "group": "advanced"
+    },
+    "service:mysql:MYSQL_ROOT_PASSWORD": {
+      "label": "MYSQL_ROOT_PASSWORD",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:sqmusic_main:DB_IP": {
+      "label": "DB_IP",
+      "group": "advanced"
+    },
+    "service:sqmusic_main:DB_NAME": {
+      "label": "DB_NAME",
+      "group": "advanced"
+    },
+    "service:sqmusic_main:DB_PASSWORD": {
+      "label": "DB_PASSWORD",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:sqmusic_main:DB_PORT": {
+      "label": "DB_PORT",
+      "group": "advanced"
+    },
+    "service:sqmusic_main:DB_USERNAME": {
+      "label": "DB_USERNAME",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:532acb333c29cd352b89e6fa49cdf958e7f99339a9d8a0c348305079819c40b9",
+    "manifest_digest": "sha256:9d1e76f2a597202a22758a0acbf9c16f13dc353edd96e9855e80c1e44223d763",
+    "services": [
+      "mysql",
+      "sqmusic_main",
+      "sqmusic_web"
+    ],
+    "inputs": [
+      {
+        "id": "bind:mysql:/var/lib/mysql",
+        "key": "./mysql_data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./mysql_data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./mysql_data",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:sqmusic_main:/music",
+        "key": "./sqmusic/file",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./sqmusic/file",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./sqmusic/file",
+          "description": "自己修改音乐库路径",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:sqmusic_web:80/tcp",
+        "key": "8096",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8096",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8096",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:mysql:MYSQL_DATABASE",
+        "key": "MYSQL_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "sqmusicv3",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MYSQL_DATABASE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:mysql:MYSQL_ROOT_PASSWORD",
+        "key": "MYSQL_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "sqmusicv3password",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "MYSQL_ROOT_PASSWORD",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:sqmusic_main:DB_IP",
+        "key": "DB_IP",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "mysql",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_IP",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:sqmusic_main:DB_NAME",
+        "key": "DB_NAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "sqmusicv3",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_NAME",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:sqmusic_main:DB_PASSWORD",
+        "key": "DB_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "sqmusicv3password",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "DB_PASSWORD",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:sqmusic_main:DB_PORT",
+        "key": "DB_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "3306",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_PORT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:sqmusic_main:DB_USERNAME",
+        "key": "DB_USERNAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "root",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_USERNAME",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:mysql:MYSQL_DATABASE",
+        "service": "mysql",
+        "target_kind": "environment",
+        "target_key": "MYSQL_DATABASE",
+        "yaml_path": "services.mysql.environment.MYSQL_DATABASE",
+        "line": 40,
+        "column": 23
+      },
+      {
+        "input_id": "service:mysql:MYSQL_ROOT_PASSWORD",
+        "service": "mysql",
+        "target_kind": "environment",
+        "target_key": "MYSQL_ROOT_PASSWORD",
+        "yaml_path": "services.mysql.environment.MYSQL_ROOT_PASSWORD",
+        "line": 39,
+        "column": 28
+      },
+      {
+        "input_id": "service:sqmusic_main:DB_IP",
+        "service": "sqmusic_main",
+        "target_kind": "environment",
+        "target_key": "DB_IP",
+        "yaml_path": "services.sqmusic_main.environment[0]",
+        "line": 8,
+        "column": 9
+      },
+      {
+        "input_id": "service:sqmusic_main:DB_NAME",
+        "service": "sqmusic_main",
+        "target_kind": "environment",
+        "target_key": "DB_NAME",
+        "yaml_path": "services.sqmusic_main.environment[2]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:sqmusic_main:DB_PASSWORD",
+        "service": "sqmusic_main",
+        "target_kind": "environment",
+        "target_key": "DB_PASSWORD",
+        "yaml_path": "services.sqmusic_main.environment[4]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:sqmusic_main:DB_PORT",
+        "service": "sqmusic_main",
+        "target_kind": "environment",
+        "target_key": "DB_PORT",
+        "yaml_path": "services.sqmusic_main.environment[1]",
+        "line": 9,
+        "column": 9
+      },
+      {
+        "input_id": "service:sqmusic_main:DB_USERNAME",
+        "service": "sqmusic_main",
+        "target_kind": "environment",
+        "target_key": "DB_USERNAME",
+        "yaml_path": "services.sqmusic_main.environment[3]",
+        "line": 11,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:mysql:/var/lib/mysql",
+        "kind": "bind",
+        "service": "mysql",
+        "source": "./mysql_data",
+        "target": "/var/lib/mysql",
+        "editable": true,
+        "yaml_path": "services.mysql.volumes[0]"
+      },
+      {
+        "id": "bind:sqmusic_main:/music",
+        "kind": "bind",
+        "service": "sqmusic_main",
+        "source": "./sqmusic/file",
+        "target": "/music",
+        "editable": true,
+        "yaml_path": "services.sqmusic_main.volumes[0]"
+      },
+      {
+        "id": "port:sqmusic_web:80/tcp",
+        "kind": "port",
+        "service": "sqmusic_web",
+        "source": "8096",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.sqmusic_web.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:532acb333c29cd352b89e6fa49cdf958e7f99339a9d8a0c348305079819c40b9",
+  "manifest_digest": "sha256:9d1e76f2a597202a22758a0acbf9c16f13dc353edd96e9855e80c1e44223d763",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/59799517/simple_sq_music_plus/raw/3.0/img/wechat_2025-09-28_160855_350.png",
     "https://github.com/59799517/simple_sq_music_plus/raw/3.0/img/wechat_2025-09-28_161552_590.png"
   ],
   "schema": [
     {
-      "name": "./sqmusic/file",
-      "label": "./sqmusic/file",
-      "description": "自己修改音乐库路径",
-      "type": "path",
-      "default": "/music",
-      "category": "basic",
-      "serviceName": "sqmusic_main",
-      "paramType": "path"
-    },
-    {
-      "name": "DB_IP",
-      "label": "DB_IP",
-      "description": "",
-      "type": "string",
-      "default": "mysql",
-      "category": "advanced",
-      "serviceName": "sqmusic_main",
-      "paramType": "env"
-    },
-    {
-      "name": "DB_PORT",
-      "label": "DB_PORT",
-      "description": "",
-      "type": "string",
-      "default": "3306",
-      "category": "advanced",
-      "serviceName": "sqmusic_main",
-      "paramType": "env"
-    },
-    {
-      "name": "DB_NAME",
-      "label": "DB_NAME",
-      "description": "",
-      "type": "string",
-      "default": "sqmusicv3",
-      "category": "advanced",
-      "serviceName": "sqmusic_main",
-      "paramType": "env"
-    },
-    {
-      "name": "DB_USERNAME",
-      "label": "DB_USERNAME",
-      "description": "",
-      "type": "string",
-      "default": "root",
-      "category": "advanced",
-      "serviceName": "sqmusic_main",
-      "paramType": "env"
-    },
-    {
-      "name": "DB_PASSWORD",
-      "label": "DB_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "sqmusicv3password",
-      "category": "advanced",
-      "serviceName": "sqmusic_main",
-      "paramType": "env"
-    },
-    {
-      "name": "8096",
-      "label": "8096",
-      "description": "",
-      "type": "port",
-      "default": "80",
-      "category": "basic",
-      "serviceName": "sqmusic_web",
-      "paramType": "port"
-    },
-    {
+      "inputId": "bind:mysql:/var/lib/mysql",
       "name": "./mysql_data",
       "label": "./mysql_data",
       "description": "",
       "type": "path",
-      "default": "/var/lib/mysql",
+      "default": "./mysql_data",
       "category": "advanced",
       "serviceName": "mysql",
       "paramType": "path"
     },
     {
+      "inputId": "bind:sqmusic_main:/music",
+      "name": "./sqmusic/file",
+      "label": "./sqmusic/file",
+      "description": "自己修改音乐库路径",
+      "type": "path",
+      "default": "./sqmusic/file",
+      "category": "basic",
+      "serviceName": "sqmusic_main",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:sqmusic_web:80/tcp",
+      "name": "8096",
+      "label": "8096",
+      "description": "",
+      "type": "port",
+      "default": "8096",
+      "category": "basic",
+      "serviceName": "sqmusic_web",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:mysql:MYSQL_DATABASE",
+      "name": "MYSQL_DATABASE",
+      "label": "MYSQL_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "sqmusicv3",
+      "category": "advanced",
+      "serviceName": "mysql",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:mysql:MYSQL_ROOT_PASSWORD",
       "name": "MYSQL_ROOT_PASSWORD",
       "label": "MYSQL_ROOT_PASSWORD",
       "description": "",
@@ -106,16 +364,60 @@
       "paramType": "env"
     },
     {
-      "name": "MYSQL_DATABASE",
-      "label": "MYSQL_DATABASE",
+      "inputId": "service:sqmusic_main:DB_IP",
+      "name": "DB_IP",
+      "label": "DB_IP",
+      "description": "",
+      "type": "string",
+      "default": "mysql",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:sqmusic_main:DB_NAME",
+      "name": "DB_NAME",
+      "label": "DB_NAME",
       "description": "",
       "type": "string",
       "default": "sqmusicv3",
       "category": "advanced",
-      "serviceName": "mysql",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:sqmusic_main:DB_PASSWORD",
+      "name": "DB_PASSWORD",
+      "label": "DB_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "sqmusicv3password",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:sqmusic_main:DB_PORT",
+      "name": "DB_PORT",
+      "label": "DB_PORT",
+      "description": "",
+      "type": "string",
+      "default": "3306",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:sqmusic_main:DB_USERNAME",
+      "name": "DB_USERNAME",
+      "label": "DB_USERNAME",
+      "description": "",
+      "type": "string",
+      "default": "root",
+      "category": "advanced",
+      "serviceName": "sqmusic_main",
       "paramType": "env"
     }
   ],
-  "deployment_count": 1,
   "enabled": true
 }

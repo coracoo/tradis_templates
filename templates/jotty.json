@@ -10,51 +10,216 @@
   "tutorial": "检查表： 创建任务列表，可进行拖放重新排序、进度条和类别。支持简单的检查表和使用 Kanban 平台和时间跟踪的高级任务项目。\n\n富文本笔记：TipTap 为你的笔记提供了一个干净的 WYSIWYG 编辑器，支持完整的 Markdown 和语法高亮显示。\n\n共享： 与实例上的其他用户共享检查清单或笔记，包括使用可共享的链接进行公开共享。\n\n基于文件： 不需要数据库！一切存储在单个数据目录中的简单 Markdown 和 JSON 文件中。\n\n用户管理： 一个管理面板，用于创建和管理用户帐户，并跟踪会话。\n\n可自定义：14 个内置主题，以及可自定义主题支持，包括自定义表情符号和图标。\n\n加密：PGP 加密完全启用，有关更多信息，请参见 howto/ENCRYPTION.md\n\nAPI 访问： 通过 REST API 以及身份验证，对您的待办事项清单和笔记进行程序化访问。",
   "dotenv": "",
   "compose": "services:\n  jotty:\n    image: ghcr.io/fccview/jotty:latest\n    container_name: jotty\n    user: \"1000:1000\"\n    ports:\n      - \"3122:3000\"\n    volumes:\n      - ./data:/app/data:rw\n      - ./config:/app/config:rw\n      - ./cache:/app/.next/cache:rw\n    restart: unless-stopped\n    environment:\n      - NODE_ENV=production",
+  "input_metadata": {
+    "bind:jotty:/app/.next/cache": {
+      "label": "./cache",
+      "group": "advanced"
+    },
+    "bind:jotty:/app/config": {
+      "label": "./config",
+      "group": "advanced"
+    },
+    "bind:jotty:/app/data": {
+      "label": "./data",
+      "group": "advanced"
+    },
+    "port:jotty:3000/tcp": {
+      "label": "3122",
+      "group": "basic"
+    },
+    "service:jotty:NODE_ENV": {
+      "label": "NODE_ENV",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:823e881ea04f57b0eeceed62f4d4806cc1d44a664142be0f037973ef0dd986d7",
+    "manifest_digest": "sha256:1a7c8d197f5ed6d816826f370c62c085bf47ad043ae76ac109f4b2fb5c1137e9",
+    "services": [
+      "jotty"
+    ],
+    "inputs": [
+      {
+        "id": "bind:jotty:/app/.next/cache",
+        "key": "./cache",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./cache",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./cache",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:jotty:/app/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:jotty:/app/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:jotty:3000/tcp",
+        "key": "3122",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3122",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3122",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:jotty:NODE_ENV",
+        "key": "NODE_ENV",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "production",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NODE_ENV",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:jotty:NODE_ENV",
+        "service": "jotty",
+        "target_kind": "environment",
+        "target_key": "NODE_ENV",
+        "yaml_path": "services.jotty.environment[0]",
+        "line": 14,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:jotty:/app/.next/cache",
+        "kind": "bind",
+        "service": "jotty",
+        "source": "./cache",
+        "target": "/app/.next/cache",
+        "mode": "rw",
+        "editable": true,
+        "yaml_path": "services.jotty.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:jotty:/app/config",
+        "kind": "bind",
+        "service": "jotty",
+        "source": "./config",
+        "target": "/app/config",
+        "mode": "rw",
+        "editable": true,
+        "yaml_path": "services.jotty.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:jotty:/app/data",
+        "kind": "bind",
+        "service": "jotty",
+        "source": "./data",
+        "target": "/app/data",
+        "mode": "rw",
+        "editable": true,
+        "yaml_path": "services.jotty.volumes[0]"
+      },
+      {
+        "id": "port:jotty:3000/tcp",
+        "kind": "port",
+        "service": "jotty",
+        "source": "3122",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.jotty.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:823e881ea04f57b0eeceed62f4d4806cc1d44a664142be0f037973ef0dd986d7",
+  "manifest_digest": "sha256:1a7c8d197f5ed6d816826f370c62c085bf47ad043ae76ac109f4b2fb5c1137e9",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/fccview/jotty/raw/main/public/app-screenshots/note-markdown.png"
   ],
   "schema": [
     {
+      "inputId": "bind:jotty:/app/.next/cache",
+      "name": "./cache",
+      "label": "./cache",
+      "description": "",
+      "type": "path",
+      "default": "./cache",
+      "category": "advanced",
+      "serviceName": "jotty",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:jotty:/app/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "",
+      "type": "path",
+      "default": "./config",
+      "category": "advanced",
+      "serviceName": "jotty",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:jotty:/app/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
+      "serviceName": "jotty",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:jotty:3000/tcp",
       "name": "3122",
       "label": "3122",
       "description": "",
       "type": "port",
-      "default": "3000",
+      "default": "3122",
       "category": "basic",
       "serviceName": "jotty",
       "paramType": "port"
     },
     {
-      "name": "./data",
-      "label": "./data",
-      "description": "",
-      "type": "path",
-      "default": "/app/data",
-      "category": "advanced",
-      "serviceName": "jotty",
-      "paramType": "path"
-    },
-    {
-      "name": "./config",
-      "label": "./config",
-      "description": "",
-      "type": "path",
-      "default": "/app/config",
-      "category": "advanced",
-      "serviceName": "jotty",
-      "paramType": "path"
-    },
-    {
-      "name": "./cache",
-      "label": "./cache",
-      "description": "",
-      "type": "path",
-      "default": "/app/.next/cache",
-      "category": "advanced",
-      "serviceName": "jotty",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:jotty:NODE_ENV",
       "name": "NODE_ENV",
       "label": "NODE_ENV",
       "description": "",
@@ -65,6 +230,5 @@
       "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

@@ -1,0 +1,205 @@
+{
+  "id": 54,
+  "sort_order": 51,
+  "name": "chatgpt-next-web",
+  "category": "productivity",
+  "description": "ChatGPT Next Web（NextChat）是一个跨平台 ChatGPT Web 应用，支持 GPT-4、流式响应、Mask、多会话、Artifacts，可一键部署。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/ChatGPTNextWeb/ChatGPT-Next-Web/main/public/favicon.ico",
+  "website": "https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web",
+  "tutorial": "访问地址：http://服务器IP:3000\n设置 OPENAI_API_KEY 或自定义接口 BASE_URL。\n可设置访问密码 CODE。",
+  "dotenv": "OPENAI_API_KEY=\nCODE=\n",
+  "compose": "services:\n  chatgpt-next-web:\n    image: yidadaa/chatgpt-next-web:latest\n    restart: unless-stopped\n    ports:\n      - \"3001:3000\"\n    environment:\n      - OPENAI_API_KEY=${OPENAI_API_KEY}\n      - CODE=${CODE}\n      - BASE_URL=",
+  "input_metadata": {
+    "port:chatgpt-next-web:3000/tcp": {
+      "label": "3001",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:CODE": {
+      "label": "CODE",
+      "description": "访问密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:OPENAI_API_KEY": {
+      "label": "OPENAI_API_KEY",
+      "description": "OpenAI 密钥",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:chatgpt-next-web:BASE_URL": {
+      "label": "BASE_URL",
+      "description": "OpenAI 接口地址",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:36f75178e0a2b8840b602bf1c536cc394d3dffad3f760c308027665777830b18",
+    "manifest_digest": "sha256:318e949d1e8f13dfb7e667bc5d6baa49b84f6bc9b163247ed763892774d7cd23",
+    "services": [
+      "chatgpt-next-web"
+    ],
+    "inputs": [
+      {
+        "id": "port:chatgpt-next-web:3000/tcp",
+        "key": "3001",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3001",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:CODE",
+        "key": "CODE",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "CODE",
+          "description": "访问密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:OPENAI_API_KEY",
+        "key": "OPENAI_API_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "OPENAI_API_KEY",
+          "description": "OpenAI 密钥",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:chatgpt-next-web:BASE_URL",
+        "key": "BASE_URL",
+        "kind": "env",
+        "scope": "service",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "BASE_URL",
+          "description": "OpenAI 接口地址",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:CODE",
+        "service": "chatgpt-next-web",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${CODE}",
+        "yaml_path": "services.chatgpt-next-web.environment[1]",
+        "line": 9,
+        "column": 9
+      },
+      {
+        "input_id": "project:OPENAI_API_KEY",
+        "service": "chatgpt-next-web",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${OPENAI_API_KEY}",
+        "yaml_path": "services.chatgpt-next-web.environment[0]",
+        "line": 8,
+        "column": 9
+      },
+      {
+        "input_id": "service:chatgpt-next-web:BASE_URL",
+        "service": "chatgpt-next-web",
+        "target_kind": "environment",
+        "target_key": "BASE_URL",
+        "yaml_path": "services.chatgpt-next-web.environment[2]",
+        "line": 10,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:chatgpt-next-web:3000/tcp",
+        "kind": "port",
+        "service": "chatgpt-next-web",
+        "source": "3001",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.chatgpt-next-web.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:36f75178e0a2b8840b602bf1c536cc394d3dffad3f760c308027665777830b18",
+  "manifest_digest": "sha256:318e949d1e8f13dfb7e667bc5d6baa49b84f6bc9b163247ed763892774d7cd23",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:chatgpt-next-web:3000/tcp",
+      "name": "3001",
+      "label": "3001",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "3001",
+      "category": "basic",
+      "serviceName": "chatgpt-next-web",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:CODE",
+      "name": "CODE",
+      "label": "CODE",
+      "description": "访问密码",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:OPENAI_API_KEY",
+      "name": "OPENAI_API_KEY",
+      "label": "OPENAI_API_KEY",
+      "description": "OpenAI 密钥",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:chatgpt-next-web:BASE_URL",
+      "name": "BASE_URL",
+      "label": "BASE_URL",
+      "description": "OpenAI 接口地址",
+      "type": "string",
+      "default": "",
+      "category": "basic",
+      "serviceName": "chatgpt-next-web",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

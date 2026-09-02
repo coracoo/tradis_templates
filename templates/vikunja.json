@@ -1,0 +1,241 @@
+{
+  "id": 60,
+  "sort_order": 57,
+  "name": "vikunja",
+  "category": "productivity",
+  "description": "Vikunja 是一款自托管的待办与任务管理应用，类似 Todoist，支持列表、命名空间、看板、提醒、团队协作，内置 SQLite。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/go-vikunja/vikunja/main/public/favicon.ico",
+  "website": "https://github.com/go-vikunja/vikunja",
+  "tutorial": "访问地址：http://服务器IP:3456\n内置 SQLite，数据在 ./files。\n首次访问注册首个用户即管理员。\nVIKUNJA_SERVICE_JWTSECRET 需保持不变。",
+  "dotenv": "JWTSECRET=\n",
+  "compose": "services:\n  vikunja:\n    image: vikunja/vikunja:latest\n    restart: unless-stopped\n    ports:\n      - \"3456:3456\"\n    volumes:\n      - ./files:/app/vikunja/files\n    environment:\n      - VIKUNJA_SERVICE_JWTSECRET=${JWTSECRET}\n      - VIKUNJA_SERVICE_PUBLICURL=http://localhost:3456\n      - VIKUNJA_DATABASE_PATH=/app/vikunja/files/vikunja.db",
+  "input_metadata": {
+    "bind:vikunja:/app/vikunja/files": {
+      "label": "./files",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:vikunja:3456/tcp": {
+      "label": "3456",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:JWTSECRET": {
+      "label": "JWTSECRET",
+      "description": "JWT 密钥",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:vikunja:VIKUNJA_DATABASE_PATH": {
+      "label": "VIKUNJA_DATABASE_PATH",
+      "description": "SQLite 路径",
+      "group": "advanced"
+    },
+    "service:vikunja:VIKUNJA_SERVICE_PUBLICURL": {
+      "label": "VIKUNJA_SERVICE_PUBLICURL",
+      "description": "访问地址",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:472e849782d9a10cefade86abad68aff3c6be442ca5f7e6d5f875ff716e14d45",
+    "manifest_digest": "sha256:707929e4442c6908d235d369a9e88631dc15db2db5ccac0b93c3710bed544856",
+    "services": [
+      "vikunja"
+    ],
+    "inputs": [
+      {
+        "id": "bind:vikunja:/app/vikunja/files",
+        "key": "./files",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./files",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./files",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:vikunja:3456/tcp",
+        "key": "3456",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3456",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3456",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:JWTSECRET",
+        "key": "JWTSECRET",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "JWTSECRET",
+          "description": "JWT 密钥",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:vikunja:VIKUNJA_DATABASE_PATH",
+        "key": "VIKUNJA_DATABASE_PATH",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/vikunja/files/vikunja.db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "VIKUNJA_DATABASE_PATH",
+          "description": "SQLite 路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:vikunja:VIKUNJA_SERVICE_PUBLICURL",
+        "key": "VIKUNJA_SERVICE_PUBLICURL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://localhost:3456",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "VIKUNJA_SERVICE_PUBLICURL",
+          "description": "访问地址",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:JWTSECRET",
+        "service": "vikunja",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${JWTSECRET}",
+        "yaml_path": "services.vikunja.environment[0]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:vikunja:VIKUNJA_DATABASE_PATH",
+        "service": "vikunja",
+        "target_kind": "environment",
+        "target_key": "VIKUNJA_DATABASE_PATH",
+        "yaml_path": "services.vikunja.environment[2]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:vikunja:VIKUNJA_SERVICE_PUBLICURL",
+        "service": "vikunja",
+        "target_kind": "environment",
+        "target_key": "VIKUNJA_SERVICE_PUBLICURL",
+        "yaml_path": "services.vikunja.environment[1]",
+        "line": 11,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:vikunja:/app/vikunja/files",
+        "kind": "bind",
+        "service": "vikunja",
+        "source": "./files",
+        "target": "/app/vikunja/files",
+        "editable": true,
+        "yaml_path": "services.vikunja.volumes[0]"
+      },
+      {
+        "id": "port:vikunja:3456/tcp",
+        "kind": "port",
+        "service": "vikunja",
+        "source": "3456",
+        "target": "3456",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.vikunja.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:472e849782d9a10cefade86abad68aff3c6be442ca5f7e6d5f875ff716e14d45",
+  "manifest_digest": "sha256:707929e4442c6908d235d369a9e88631dc15db2db5ccac0b93c3710bed544856",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:vikunja:/app/vikunja/files",
+      "name": "./files",
+      "label": "./files",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./files",
+      "category": "basic",
+      "serviceName": "vikunja",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:vikunja:3456/tcp",
+      "name": "3456",
+      "label": "3456",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "3456",
+      "category": "basic",
+      "serviceName": "vikunja",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:JWTSECRET",
+      "name": "JWTSECRET",
+      "label": "JWTSECRET",
+      "description": "JWT 密钥",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:vikunja:VIKUNJA_DATABASE_PATH",
+      "name": "VIKUNJA_DATABASE_PATH",
+      "label": "VIKUNJA_DATABASE_PATH",
+      "description": "SQLite 路径",
+      "type": "string",
+      "default": "/app/vikunja/files/vikunja.db",
+      "category": "advanced",
+      "serviceName": "vikunja",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:vikunja:VIKUNJA_SERVICE_PUBLICURL",
+      "name": "VIKUNJA_SERVICE_PUBLICURL",
+      "label": "VIKUNJA_SERVICE_PUBLICURL",
+      "description": "访问地址",
+      "type": "string",
+      "default": "http://localhost:3456",
+      "category": "advanced",
+      "serviceName": "vikunja",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

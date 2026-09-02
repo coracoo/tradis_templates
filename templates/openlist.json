@@ -10,11 +10,176 @@
   "tutorial": "# 多种存储\n本地存储\n\n阿里云盘\n\nOneDrive / Sharepoint（ 国际版 、 中国 、德国、美国）\n\n天翼云盘（个人、家庭）\n\nGoogle 云端硬盘\n\n 123云盘\n\n FTP/SFTP\n\n PikPak\n S3\n 海菲尔\n 又拍云对象存储\n WebDAV\n Teambition(中国, 国际)\n\n MediaFire\n 分秒帧\n 质子驱动\n 和彩云（个人、家庭、群组）\n YandexDisk\n 百度网盘\n 太拉盒\n UC网盘\n\n 夸克网盘\n\n 迅雷网盘\n\n 蓝奏云\n\n 蓝奏云优享版\n\n Google 相册\n\n Mega.nz\n\n 百度相册\n\n 中小企业\n\n 115\n\n Cloudreve\n\n Dropbox\n\n 飞机盘\n\n 多吉云\n\n Azure Blob 存储\n\n 超星\n\n 中央银行\n\n 德古\n\n 豆包\n Febbox\n\n GitHub\n\n OpenList\n\n Teldrive\n\n 微云\n\n## 项目特色\n\n 部署方便，开箱即用\n\n 文件预览（PDF、markdown、代码、纯文本等）\n\n 画廊模式下的图片预览\n\n 视频和音频预览，支持歌词和字幕\n\n Office 文档预览（docx、pptx、xlsx 等）\n\n README.md 预览渲染\n\n 文件永久链接复制和直接文件下载\n\n 黑暗模式\n\n 国际化\n\n 受保护的路由（密码保护和认证）\n\n WebDAV\n\nDocker 部门\n\n Cloudflare Workers 代理\n\n 文件/文件夹打包下载\n\n 网页上传（可允许访客上传）、删除、新建文件夹、重命名、移动和复制\n\n 离线下载\n\n 跨存储复制文件\n\n 单文件多线程下载/流式加速\n",
   "dotenv": "",
   "compose": "services:\n  openlist:\n    restart: always\n    volumes:\n      - ./openlist:/opt/openlist/data\n    ports:\n      - '5244:5244'\n      - '5245:5245'\n    user: '0:0'\n    environment:\n      - UMASK=022\n      - TZ=Asia/Shanghai\n    container_name: openlist\n    image: openlistteam/openlist:latest",
+  "input_metadata": {
+    "bind:openlist:/opt/openlist/data": {
+      "description": "挂载容器持久化路径",
+      "group": "advanced"
+    },
+    "port:openlist:5244/tcp": {
+      "description": "容器 WEB HTTP 端口",
+      "group": "basic"
+    },
+    "port:openlist:5245/tcp": {
+      "description": "容器 WEB HTTPS 端口",
+      "group": "advanced"
+    },
+    "service:openlist:TZ": {
+      "group": "basic"
+    },
+    "service:openlist:UMASK": {
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:043dd1fbb0ee2596a12f24361011fc9f2c688da217f9cfe4c68990524ba6ab80",
+    "manifest_digest": "sha256:5af34bae6a7b606601b9d899a7e03daa392332a380edc51987965f882d17fd98",
+    "services": [
+      "openlist"
+    ],
+    "inputs": [
+      {
+        "id": "bind:openlist:/opt/openlist/data",
+        "key": "./openlist",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./openlist",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "挂载容器持久化路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:openlist:5244/tcp",
+        "key": "5244",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5244",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器 WEB HTTP 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:openlist:5245/tcp",
+        "key": "5245",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5245",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器 WEB HTTPS 端口",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:openlist:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:openlist:UMASK",
+        "key": "UMASK",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "022",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:openlist:TZ",
+        "service": "openlist",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.openlist.environment[1]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:openlist:UMASK",
+        "service": "openlist",
+        "target_kind": "environment",
+        "target_key": "UMASK",
+        "yaml_path": "services.openlist.environment[0]",
+        "line": 11,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:openlist:/opt/openlist/data",
+        "kind": "bind",
+        "service": "openlist",
+        "source": "./openlist",
+        "target": "/opt/openlist/data",
+        "editable": true,
+        "yaml_path": "services.openlist.volumes[0]"
+      },
+      {
+        "id": "port:openlist:5244/tcp",
+        "kind": "port",
+        "service": "openlist",
+        "source": "5244",
+        "target": "5244",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.openlist.ports[0]"
+      },
+      {
+        "id": "port:openlist:5245/tcp",
+        "kind": "port",
+        "service": "openlist",
+        "source": "5245",
+        "target": "5245",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.openlist.ports[1]",
+        "sequence_index": 1
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:043dd1fbb0ee2596a12f24361011fc9f2c688da217f9cfe4c68990524ba6ab80",
+  "manifest_digest": "sha256:5af34bae6a7b606601b9d899a7e03daa392332a380edc51987965f882d17fd98",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
+      "inputId": "bind:openlist:/opt/openlist/data",
+      "name": "./openlist",
+      "label": "./openlist",
+      "description": "挂载容器持久化路径",
+      "type": "path",
+      "default": "./openlist",
+      "category": "advanced",
+      "serviceName": "openlist",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:openlist:5244/tcp",
       "name": "5244",
-      "label": "",
+      "label": "5244",
       "description": "容器 WEB HTTP 端口",
       "type": "port",
       "default": "5244",
@@ -23,8 +188,9 @@
       "paramType": "port"
     },
     {
+      "inputId": "port:openlist:5245/tcp",
       "name": "5245",
-      "label": "",
+      "label": "5245",
       "description": "容器 WEB HTTPS 端口",
       "type": "port",
       "default": "5245",
@@ -33,18 +199,20 @@
       "paramType": "port"
     },
     {
-      "name": "./openlist",
-      "label": "",
-      "description": "挂载容器持久化路径",
-      "type": "path",
-      "default": "/opt/openlist/data",
-      "category": "advanced",
+      "inputId": "service:openlist:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "basic",
       "serviceName": "openlist",
-      "paramType": "path"
+      "paramType": "env"
     },
     {
+      "inputId": "service:openlist:UMASK",
       "name": "UMASK",
-      "label": "",
+      "label": "UMASK",
       "description": "",
       "type": "string",
       "default": "022",
@@ -53,6 +221,5 @@
       "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

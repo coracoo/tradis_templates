@@ -10,12 +10,446 @@
   "tutorial": "## 核心功能\n\nSubsonic 协议全兼容 - 完美适配音流/feishin/Amperfy/substreamer/music-assistant 等客户端\n\n智能音频转码 - 动态切换 libmp3lame/acc 编码（按需启用）,节省带宽流量\n\n多格式支持 - MP3/FLAC/AAC/WAV 等主流格式全覆盖\n\n中文曲库友好 - 支持繁简字互搜，中文排序/检索优化\n\n## 🎧 用户体验\n\n多用户体系 - 独立账号系统与权限管理\n\n个性化歌单 - 支持创建/管理自定义播放列表\n\n收藏与喜欢 - 实时同步的收藏夹功能\n\n歌词同步 - 智能匹配本地与在线歌词资源\n\n## 🗂️ 音乐管理\n\n自动化曲库 - 定时监测音乐目录变动，自动刷新元数据\n\n高效元数据解析 - 精准识别 ID3 标签与专辑信息\n\n结构化展示 - 专辑/艺术家/流派多维分类浏览\n\n云端播放统计 - 记录播放历史与用户偏好\n\n## 🔍 探索发现\n\n全局搜索 - 支持歌曲/专辑/艺术家关键词检索\n\n智能推荐 - 基于风格的相似歌曲与歌手推荐\n\n流派分类 - 按音乐风格快速筛选曲目",
   "dotenv": "QM_SPOTIFY_CLIENT_ID=\nQM_SPOTIFY_CLIENT_SECRET=\nQM_LASTFM_API_KEY=",
   "compose": "version: '3'\nservices:\n  qm-music:\n    image: qmmusic/qm-music:latest\n    ports:\n      - \"6688:6688\"\n    volumes:\n      - ./music:/data/qm-music/music_dir\n      - ./db:/data/qm-music/db\n      - ./cache:/data/qm-music/cache \n    environment:\n      - QM_FFMPEG_ENABLE=true\n      - TZ=Asia/Shanghai\n      - QM_SPOTIFY_ENABLE=false\n      - QM_SPOTIFY_CLIENT_ID=[QM_SPOTIFY_CLIENT_ID]\n      - QM_SPOTIFY_CLIENT_SECRET=[QM_SPOTIFY_CLIENT_SECRET]\n      - QM_LASTFM_ENABLE=false\n      - QM_LASTFM_API_KEY=[QM_LASTFM_API_KEY]\n      - QM_REFRESH_AUTO=true\n    restart: unless-stopped",
+  "input_metadata": {
+    "bind:qm-music:/data/qm-music/cache": {
+      "label": "./cache",
+      "description": "容器缓存",
+      "group": "advanced"
+    },
+    "bind:qm-music:/data/qm-music/db": {
+      "label": "./db",
+      "description": "容器持久化数据",
+      "group": "advanced"
+    },
+    "bind:qm-music:/data/qm-music/music_dir": {
+      "label": "./music",
+      "description": "音乐文件路径，修改成自己的",
+      "group": "basic"
+    },
+    "port:qm-music:6688/tcp": {
+      "label": "6688",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "project:QM_LASTFM_API_KEY": {
+      "group": "basic"
+    },
+    "project:QM_SPOTIFY_CLIENT_ID": {
+      "group": "basic"
+    },
+    "project:QM_SPOTIFY_CLIENT_SECRET": {
+      "group": "basic"
+    },
+    "service:qm-music:QM_FFMPEG_ENABLE": {
+      "label": "QM_FFMPEG_ENABLE",
+      "group": "advanced"
+    },
+    "service:qm-music:QM_LASTFM_API_KEY": {
+      "label": "QM_LASTFM_API_KEY",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:qm-music:QM_LASTFM_ENABLE": {
+      "label": "QM_LASTFM_ENABLE",
+      "description": "开启 LASTFM 需填写变量，要魔法",
+      "group": "advanced"
+    },
+    "service:qm-music:QM_REFRESH_AUTO": {
+      "label": "QM_REFRESH_AUTO",
+      "group": "advanced"
+    },
+    "service:qm-music:QM_SPOTIFY_CLIENT_ID": {
+      "label": "QM_SPOTIFY_CLIENT_ID",
+      "group": "advanced"
+    },
+    "service:qm-music:QM_SPOTIFY_CLIENT_SECRET": {
+      "label": "QM_SPOTIFY_CLIENT_SECRET",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:qm-music:QM_SPOTIFY_ENABLE": {
+      "label": "QM_SPOTIFY_ENABLE",
+      "description": "开启 SPOTIFY 需填写变量，要魔法",
+      "group": "advanced"
+    },
+    "service:qm-music:TZ": {
+      "label": "TZ",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:035b4c9bf16738f14ead5300aee45bdabf2bc67a18e9536cdb37a514ce08124a",
+    "manifest_digest": "sha256:b10d1a332b78e1ff34746cb21b2aebd74af41753d4f3fbfe396b2cae90bc198b",
+    "services": [
+      "qm-music"
+    ],
+    "inputs": [
+      {
+        "id": "bind:qm-music:/data/qm-music/cache",
+        "key": "./cache",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./cache",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./cache",
+          "description": "容器缓存",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:qm-music:/data/qm-music/db",
+        "key": "./db",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./db",
+          "description": "容器持久化数据",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:qm-music:/data/qm-music/music_dir",
+        "key": "./music",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./music",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./music",
+          "description": "音乐文件路径，修改成自己的",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:qm-music:6688/tcp",
+        "key": "6688",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "6688",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "6688",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:QM_LASTFM_API_KEY",
+        "key": "QM_LASTFM_API_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:QM_SPOTIFY_CLIENT_ID",
+        "key": "QM_SPOTIFY_CLIENT_ID",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:QM_SPOTIFY_CLIENT_SECRET",
+        "key": "QM_SPOTIFY_CLIENT_SECRET",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:qm-music:QM_FFMPEG_ENABLE",
+        "key": "QM_FFMPEG_ENABLE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "QM_FFMPEG_ENABLE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qm-music:QM_LASTFM_API_KEY",
+        "key": "QM_LASTFM_API_KEY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "[QM_LASTFM_API_KEY]",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "QM_LASTFM_API_KEY",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:qm-music:QM_LASTFM_ENABLE",
+        "key": "QM_LASTFM_ENABLE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "QM_LASTFM_ENABLE",
+          "description": "开启 LASTFM 需填写变量，要魔法",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qm-music:QM_REFRESH_AUTO",
+        "key": "QM_REFRESH_AUTO",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "QM_REFRESH_AUTO",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qm-music:QM_SPOTIFY_CLIENT_ID",
+        "key": "QM_SPOTIFY_CLIENT_ID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "[QM_SPOTIFY_CLIENT_ID]",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "QM_SPOTIFY_CLIENT_ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qm-music:QM_SPOTIFY_CLIENT_SECRET",
+        "key": "QM_SPOTIFY_CLIENT_SECRET",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "[QM_SPOTIFY_CLIENT_SECRET]",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "QM_SPOTIFY_CLIENT_SECRET",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:qm-music:QM_SPOTIFY_ENABLE",
+        "key": "QM_SPOTIFY_ENABLE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "QM_SPOTIFY_ENABLE",
+          "description": "开启 SPOTIFY 需填写变量，要魔法",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:qm-music:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:qm-music:QM_FFMPEG_ENABLE",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "QM_FFMPEG_ENABLE",
+        "yaml_path": "services.qm-music.environment[0]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:qm-music:QM_LASTFM_API_KEY",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "QM_LASTFM_API_KEY",
+        "yaml_path": "services.qm-music.environment[6]",
+        "line": 18,
+        "column": 9
+      },
+      {
+        "input_id": "service:qm-music:QM_LASTFM_ENABLE",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "QM_LASTFM_ENABLE",
+        "yaml_path": "services.qm-music.environment[5]",
+        "line": 17,
+        "column": 9
+      },
+      {
+        "input_id": "service:qm-music:QM_REFRESH_AUTO",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "QM_REFRESH_AUTO",
+        "yaml_path": "services.qm-music.environment[7]",
+        "line": 19,
+        "column": 9
+      },
+      {
+        "input_id": "service:qm-music:QM_SPOTIFY_CLIENT_ID",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "QM_SPOTIFY_CLIENT_ID",
+        "yaml_path": "services.qm-music.environment[3]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:qm-music:QM_SPOTIFY_CLIENT_SECRET",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "QM_SPOTIFY_CLIENT_SECRET",
+        "yaml_path": "services.qm-music.environment[4]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:qm-music:QM_SPOTIFY_ENABLE",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "QM_SPOTIFY_ENABLE",
+        "yaml_path": "services.qm-music.environment[2]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:qm-music:TZ",
+        "service": "qm-music",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.qm-music.environment[1]",
+        "line": 13,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:qm-music:/data/qm-music/cache",
+        "kind": "bind",
+        "service": "qm-music",
+        "source": "./cache",
+        "target": "/data/qm-music/cache",
+        "editable": true,
+        "yaml_path": "services.qm-music.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:qm-music:/data/qm-music/db",
+        "kind": "bind",
+        "service": "qm-music",
+        "source": "./db",
+        "target": "/data/qm-music/db",
+        "editable": true,
+        "yaml_path": "services.qm-music.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:qm-music:/data/qm-music/music_dir",
+        "kind": "bind",
+        "service": "qm-music",
+        "source": "./music",
+        "target": "/data/qm-music/music_dir",
+        "editable": true,
+        "yaml_path": "services.qm-music.volumes[0]"
+      },
+      {
+        "id": "port:qm-music:6688/tcp",
+        "kind": "port",
+        "service": "qm-music",
+        "source": "6688",
+        "target": "6688",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.qm-music.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:035b4c9bf16738f14ead5300aee45bdabf2bc67a18e9536cdb37a514ce08124a",
+  "manifest_digest": "sha256:b10d1a332b78e1ff34746cb21b2aebd74af41753d4f3fbfe396b2cae90bc198b",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/chenqimiao/qm-music/raw/main/docs/assets/IMG119.jpg",
     "https://github.com/chenqimiao/qm-music/raw/main/docs/assets/433026401-e91adfc7-2721-4b5e-82df-5a967fc6ae87.png"
   ],
   "schema": [
     {
+      "inputId": "bind:qm-music:/data/qm-music/cache",
+      "name": "./cache",
+      "label": "./cache",
+      "description": "容器缓存",
+      "type": "path",
+      "default": "./cache",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:qm-music:/data/qm-music/db",
+      "name": "./db",
+      "label": "./db",
+      "description": "容器持久化数据",
+      "type": "path",
+      "default": "./db",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:qm-music:/data/qm-music/music_dir",
+      "name": "./music",
+      "label": "./music",
+      "description": "音乐文件路径，修改成自己的",
+      "type": "path",
+      "default": "./music",
+      "category": "basic",
+      "serviceName": "qm-music",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:qm-music:6688/tcp",
       "name": "6688",
       "label": "6688",
       "description": "容器 WEB 端口",
@@ -26,36 +460,43 @@
       "paramType": "port"
     },
     {
-      "name": "./music",
-      "label": "./music",
-      "description": "音乐文件路径，修改成自己的",
-      "type": "path",
-      "default": "/data/qm-music/music_dir",
+      "inputId": "project:QM_LASTFM_API_KEY",
+      "name": "QM_LASTFM_API_KEY",
+      "label": "QM_LASTFM_API_KEY",
+      "description": "",
+      "type": "password",
+      "default": "",
       "category": "basic",
-      "serviceName": "qm-music",
-      "paramType": "path"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "./db",
-      "label": "./db",
-      "description": "容器持久化数据",
-      "type": "path",
-      "default": "/data/qm-music/db",
-      "category": "advanced",
-      "serviceName": "qm-music",
-      "paramType": "path"
+      "inputId": "project:QM_SPOTIFY_CLIENT_ID",
+      "name": "QM_SPOTIFY_CLIENT_ID",
+      "label": "QM_SPOTIFY_CLIENT_ID",
+      "description": "",
+      "type": "string",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "./cache",
-      "label": "./cache",
-      "description": "容器缓存",
-      "type": "path",
-      "default": "/data/qm-music/cache",
-      "category": "advanced",
-      "serviceName": "qm-music",
-      "paramType": "path"
+      "inputId": "project:QM_SPOTIFY_CLIENT_SECRET",
+      "name": "QM_SPOTIFY_CLIENT_SECRET",
+      "label": "QM_SPOTIFY_CLIENT_SECRET",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
+      "inputId": "service:qm-music:QM_FFMPEG_ENABLE",
       "name": "QM_FFMPEG_ENABLE",
       "label": "QM_FFMPEG_ENABLE",
       "description": "",
@@ -66,56 +507,7 @@
       "paramType": "env"
     },
     {
-      "name": "TZ",
-      "label": "TZ",
-      "description": "",
-      "type": "string",
-      "default": "Asia/Shanghai",
-      "category": "advanced",
-      "serviceName": "qm-music",
-      "paramType": "env"
-    },
-    {
-      "name": "QM_SPOTIFY_ENABLE",
-      "label": "QM_SPOTIFY_ENABLE",
-      "description": "开启 SPOTIFY 需填写变量，要魔法",
-      "type": "string",
-      "default": "false",
-      "category": "advanced",
-      "serviceName": "qm-music",
-      "paramType": "env"
-    },
-    {
-      "name": "QM_SPOTIFY_CLIENT_ID",
-      "label": "QM_SPOTIFY_CLIENT_ID",
-      "description": "",
-      "type": "string",
-      "default": "[QM_SPOTIFY_CLIENT_ID]",
-      "category": "advanced",
-      "serviceName": "qm-music",
-      "paramType": "env"
-    },
-    {
-      "name": "QM_SPOTIFY_CLIENT_SECRET",
-      "label": "QM_SPOTIFY_CLIENT_SECRET",
-      "description": "",
-      "type": "password",
-      "default": "[QM_SPOTIFY_CLIENT_SECRET]",
-      "category": "advanced",
-      "serviceName": "qm-music",
-      "paramType": "env"
-    },
-    {
-      "name": "QM_LASTFM_ENABLE",
-      "label": "QM_LASTFM_ENABLE",
-      "description": "开启 LASTFM 需填写变量，要魔法",
-      "type": "string",
-      "default": "false",
-      "category": "advanced",
-      "serviceName": "qm-music",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:qm-music:QM_LASTFM_API_KEY",
       "name": "QM_LASTFM_API_KEY",
       "label": "QM_LASTFM_API_KEY",
       "description": "",
@@ -126,6 +518,18 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:qm-music:QM_LASTFM_ENABLE",
+      "name": "QM_LASTFM_ENABLE",
+      "label": "QM_LASTFM_ENABLE",
+      "description": "开启 LASTFM 需填写变量，要魔法",
+      "type": "string",
+      "default": "false",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qm-music:QM_REFRESH_AUTO",
       "name": "QM_REFRESH_AUTO",
       "label": "QM_REFRESH_AUTO",
       "description": "",
@@ -134,8 +538,51 @@
       "category": "advanced",
       "serviceName": "qm-music",
       "paramType": "env"
+    },
+    {
+      "inputId": "service:qm-music:QM_SPOTIFY_CLIENT_ID",
+      "name": "QM_SPOTIFY_CLIENT_ID",
+      "label": "QM_SPOTIFY_CLIENT_ID",
+      "description": "",
+      "type": "string",
+      "default": "[QM_SPOTIFY_CLIENT_ID]",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qm-music:QM_SPOTIFY_CLIENT_SECRET",
+      "name": "QM_SPOTIFY_CLIENT_SECRET",
+      "label": "QM_SPOTIFY_CLIENT_SECRET",
+      "description": "",
+      "type": "password",
+      "default": "[QM_SPOTIFY_CLIENT_SECRET]",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qm-music:QM_SPOTIFY_ENABLE",
+      "name": "QM_SPOTIFY_ENABLE",
+      "label": "QM_SPOTIFY_ENABLE",
+      "description": "开启 SPOTIFY 需填写变量，要魔法",
+      "type": "string",
+      "default": "false",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:qm-music:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "qm-music",
+      "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

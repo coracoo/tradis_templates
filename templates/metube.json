@@ -1,0 +1,198 @@
+{
+  "id": 46,
+  "sort_order": 43,
+  "name": "metube",
+  "category": "file",
+  "description": "MeTube 是一个基于 youtube-dl/yt-dlp 的 Web GUI 视频下载器，支持 YouTube 等数千个站点的视频/音频下载。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/alexta69/metube/master/README/screenshot.png",
+  "website": "https://github.com/alexta69/metube",
+  "tutorial": "访问地址：http://服务器IP:8081\n粘贴视频链接即可下载，文件保存到 ./downloads。\n无登录认证，建议部署在内网或加反代鉴权。",
+  "dotenv": "",
+  "compose": "services:\n  metube:\n    image: ghcr.io/alexta69/metube:latest\n    restart: unless-stopped\n    ports:\n      - \"8081:8081\"\n    volumes:\n      - ./downloads:/downloads\n    environment:\n      - THEME=Dark\n      - DOWNLOAD_DIR=/downloads",
+  "input_metadata": {
+    "bind:metube:/downloads": {
+      "label": "./downloads",
+      "description": "下载目录",
+      "group": "basic"
+    },
+    "port:metube:8081/tcp": {
+      "label": "8081",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:metube:DOWNLOAD_DIR": {
+      "label": "DOWNLOAD_DIR",
+      "description": "下载目录",
+      "group": "advanced"
+    },
+    "service:metube:THEME": {
+      "label": "THEME",
+      "description": "主题",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:322aae9247f04b1c0d0ca6c83435c85c6181d1f165c25fb5ed7a47d2037199e3",
+    "manifest_digest": "sha256:4266d46418e9aad86255f2c752853731923294db0c4047a44808c9322189e260",
+    "services": [
+      "metube"
+    ],
+    "inputs": [
+      {
+        "id": "bind:metube:/downloads",
+        "key": "./downloads",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./downloads",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./downloads",
+          "description": "下载目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:metube:8081/tcp",
+        "key": "8081",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8081",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8081",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:metube:DOWNLOAD_DIR",
+        "key": "DOWNLOAD_DIR",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/downloads",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DOWNLOAD_DIR",
+          "description": "下载目录",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:metube:THEME",
+        "key": "THEME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Dark",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "THEME",
+          "description": "主题",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:metube:DOWNLOAD_DIR",
+        "service": "metube",
+        "target_kind": "environment",
+        "target_key": "DOWNLOAD_DIR",
+        "yaml_path": "services.metube.environment[1]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:metube:THEME",
+        "service": "metube",
+        "target_kind": "environment",
+        "target_key": "THEME",
+        "yaml_path": "services.metube.environment[0]",
+        "line": 10,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:metube:/downloads",
+        "kind": "bind",
+        "service": "metube",
+        "source": "./downloads",
+        "target": "/downloads",
+        "editable": true,
+        "yaml_path": "services.metube.volumes[0]"
+      },
+      {
+        "id": "port:metube:8081/tcp",
+        "kind": "port",
+        "service": "metube",
+        "source": "8081",
+        "target": "8081",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.metube.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:322aae9247f04b1c0d0ca6c83435c85c6181d1f165c25fb5ed7a47d2037199e3",
+  "manifest_digest": "sha256:4266d46418e9aad86255f2c752853731923294db0c4047a44808c9322189e260",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:metube:/downloads",
+      "name": "./downloads",
+      "label": "./downloads",
+      "description": "下载目录",
+      "type": "path",
+      "default": "./downloads",
+      "category": "basic",
+      "serviceName": "metube",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:metube:8081/tcp",
+      "name": "8081",
+      "label": "8081",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8081",
+      "category": "basic",
+      "serviceName": "metube",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:metube:DOWNLOAD_DIR",
+      "name": "DOWNLOAD_DIR",
+      "label": "DOWNLOAD_DIR",
+      "description": "下载目录",
+      "type": "string",
+      "default": "/downloads",
+      "category": "advanced",
+      "serviceName": "metube",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:metube:THEME",
+      "name": "THEME",
+      "label": "THEME",
+      "description": "主题",
+      "type": "string",
+      "default": "Dark",
+      "category": "advanced",
+      "serviceName": "metube",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

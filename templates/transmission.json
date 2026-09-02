@@ -1,0 +1,473 @@
+{
+  "id": 45,
+  "sort_order": 42,
+  "name": "transmission",
+  "category": "file",
+  "description": "Transmission 是一款简单、轻量、跨平台的 BitTorrent 客户端，基于 linuxserver.io 镜像，提供 Web UI 管理下载。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/linuxserver/docker-transmission/master/logo/transmission.png",
+  "website": "https://github.com/linuxserver/docker-transmission",
+  "tutorial": "访问地址：http://服务器IP:9091\n默认 Web UI 无密码，可通过 USER/PASS 环境变量设置认证。\nPUID/PGID 设为拥有下载目录的宿主用户 ID。",
+  "dotenv": "TRANSMISSION_PASS=\n",
+  "compose": "services:\n  transmission:\n    image: lscr.io/linuxserver/transmission:latest\n    restart: unless-stopped\n    ports:\n      - \"9091:9091\"\n      - \"51413:51413\"\n      - \"51413:51413/udp\"\n    volumes:\n      - ./config:/config\n      - ./downloads:/downloads\n      - ./watch:/watch\n    environment:\n      - PUID=1000\n      - PGID=1000\n      - TZ=Asia/Shanghai\n      - USER=admin\n      - PASS=${TRANSMISSION_PASS}",
+  "input_metadata": {
+    "bind:transmission:/config": {
+      "label": "./config",
+      "description": "配置",
+      "group": "basic"
+    },
+    "bind:transmission:/downloads": {
+      "label": "./downloads",
+      "description": "下载目录",
+      "group": "basic"
+    },
+    "bind:transmission:/watch": {
+      "label": "./watch",
+      "description": "监视目录",
+      "group": "basic"
+    },
+    "port:transmission:51413/tcp": {
+      "group": "basic"
+    },
+    "port:transmission:51413/udp": {
+      "group": "basic"
+    },
+    "port:transmission:9091/tcp": {
+      "label": "9091",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:TRANSMISSION_PASS": {
+      "label": "TRANSMISSION_PASS",
+      "description": "Web 密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:transmission:PGID": {
+      "label": "PGID",
+      "description": "组 ID",
+      "group": "advanced"
+    },
+    "service:transmission:PUID": {
+      "label": "PUID",
+      "description": "用户 ID",
+      "group": "advanced"
+    },
+    "service:transmission:TZ": {
+      "label": "TZ",
+      "description": "时区",
+      "group": "advanced"
+    },
+    "service:transmission:USER": {
+      "label": "USER",
+      "description": "Web 用户名",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:b755aaae167ae8988f066095eac7ceba0d1b50279088ead882d3ab82110fcf1e",
+    "manifest_digest": "sha256:bd996a0762c726e2371e22ace71373691b8ce01fec632b7e5ed3e2715ee1571a",
+    "services": [
+      "transmission"
+    ],
+    "inputs": [
+      {
+        "id": "bind:transmission:/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "description": "配置",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:transmission:/downloads",
+        "key": "./downloads",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./downloads",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./downloads",
+          "description": "下载目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:transmission:/watch",
+        "key": "./watch",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./watch",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./watch",
+          "description": "监视目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:transmission:51413/tcp",
+        "key": "51413",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "51413",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:transmission:51413/udp",
+        "key": "51413",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "51413",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:transmission:9091/tcp",
+        "key": "9091",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "9091",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "9091",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:TRANSMISSION_PASS",
+        "key": "TRANSMISSION_PASS",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "TRANSMISSION_PASS",
+          "description": "Web 密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:transmission:PGID",
+        "key": "PGID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PGID",
+          "description": "组 ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:transmission:PUID",
+        "key": "PUID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PUID",
+          "description": "用户 ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:transmission:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "description": "时区",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:transmission:USER",
+        "key": "USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "admin",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "USER",
+          "description": "Web 用户名",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:TRANSMISSION_PASS",
+        "service": "transmission",
+        "target_kind": "interpolation",
+        "target_key": "[4]",
+        "expression": "${TRANSMISSION_PASS}",
+        "yaml_path": "services.transmission.environment[4]",
+        "line": 18,
+        "column": 9
+      },
+      {
+        "input_id": "service:transmission:PGID",
+        "service": "transmission",
+        "target_kind": "environment",
+        "target_key": "PGID",
+        "yaml_path": "services.transmission.environment[1]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:transmission:PUID",
+        "service": "transmission",
+        "target_kind": "environment",
+        "target_key": "PUID",
+        "yaml_path": "services.transmission.environment[0]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:transmission:TZ",
+        "service": "transmission",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.transmission.environment[2]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:transmission:USER",
+        "service": "transmission",
+        "target_kind": "environment",
+        "target_key": "USER",
+        "yaml_path": "services.transmission.environment[3]",
+        "line": 17,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:transmission:/config",
+        "kind": "bind",
+        "service": "transmission",
+        "source": "./config",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.transmission.volumes[0]"
+      },
+      {
+        "id": "bind:transmission:/downloads",
+        "kind": "bind",
+        "service": "transmission",
+        "source": "./downloads",
+        "target": "/downloads",
+        "editable": true,
+        "yaml_path": "services.transmission.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:transmission:/watch",
+        "kind": "bind",
+        "service": "transmission",
+        "source": "./watch",
+        "target": "/watch",
+        "editable": true,
+        "yaml_path": "services.transmission.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "port:transmission:51413/tcp",
+        "kind": "port",
+        "service": "transmission",
+        "source": "51413",
+        "target": "51413",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.transmission.ports[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:transmission:51413/udp",
+        "kind": "port",
+        "service": "transmission",
+        "source": "51413",
+        "target": "51413",
+        "protocol": "udp",
+        "editable": true,
+        "yaml_path": "services.transmission.ports[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "port:transmission:9091/tcp",
+        "kind": "port",
+        "service": "transmission",
+        "source": "9091",
+        "target": "9091",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.transmission.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:b755aaae167ae8988f066095eac7ceba0d1b50279088ead882d3ab82110fcf1e",
+  "manifest_digest": "sha256:bd996a0762c726e2371e22ace71373691b8ce01fec632b7e5ed3e2715ee1571a",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:transmission:/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "配置",
+      "type": "path",
+      "default": "./config",
+      "category": "basic",
+      "serviceName": "transmission",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:transmission:/downloads",
+      "name": "./downloads",
+      "label": "./downloads",
+      "description": "下载目录",
+      "type": "path",
+      "default": "./downloads",
+      "category": "basic",
+      "serviceName": "transmission",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:transmission:/watch",
+      "name": "./watch",
+      "label": "./watch",
+      "description": "监视目录",
+      "type": "path",
+      "default": "./watch",
+      "category": "basic",
+      "serviceName": "transmission",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:transmission:51413/tcp",
+      "name": "51413",
+      "label": "51413",
+      "description": "",
+      "type": "port",
+      "default": "51413",
+      "category": "basic",
+      "serviceName": "transmission",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:transmission:51413/udp",
+      "name": "51413",
+      "label": "51413",
+      "description": "",
+      "type": "port",
+      "default": "51413",
+      "category": "basic",
+      "serviceName": "transmission",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:transmission:9091/tcp",
+      "name": "9091",
+      "label": "9091",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "9091",
+      "category": "basic",
+      "serviceName": "transmission",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:TRANSMISSION_PASS",
+      "name": "TRANSMISSION_PASS",
+      "label": "TRANSMISSION_PASS",
+      "description": "Web 密码",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:transmission:PGID",
+      "name": "PGID",
+      "label": "PGID",
+      "description": "组 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "transmission",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:transmission:PUID",
+      "name": "PUID",
+      "label": "PUID",
+      "description": "用户 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "transmission",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:transmission:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "时区",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "transmission",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:transmission:USER",
+      "name": "USER",
+      "label": "USER",
+      "description": "Web 用户名",
+      "type": "string",
+      "default": "admin",
+      "category": "advanced",
+      "serviceName": "transmission",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

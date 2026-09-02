@@ -10,9 +10,732 @@
   "tutorial": "🔍 多平台支持：支持检测 9 种主流网盘平台的链接\n\n⚡ 高性能检测：支持并发检测，可配置检测频率和超时时间\n\n📊 数据统计：提供详细的检测统计和数据分析\n\n🔄 定时任务：支持创建定时检测任务，自动检测链接有效性\n\n💾 数据持久化：使用 MySQL 存储检测记录，Redis 缓存失效链接\n\n🎨 现代化界面：基于 React + TypeScript 的现代化管理后台\n\n🐳 容器化部署：提供 Docker Compose 一键部署方案",
   "dotenv": "",
   "compose": "services:\n  pancheck:\n    image: lampon/pancheck:latest\n    container_name: pancheck\n    ports:\n      - \"8080:8080\"\n    environment:\n      - SERVER_PORT=8080 # 服务端口\n      - SERVER_MODE=release # 服务模式\n      - SERVER_CORS_ORIGINS=* # 跨域请求允许的源\n      - DATABASE_TYPE=mysql # 数据库类型\n      - DATABASE_HOST=db # 数据库地址\n      - DATABASE_PORT=3306 # 数据库端口\n      - DATABASE_USER=root # 数据库用户名\n      - DATABASE_PASSWORD=your_password # 数据库密码\n      - DATABASE_DATABASE=pancheck # 数据库名称\n      - DATABASE_CHARSET=utf8mb4 # 数据库字符集\n      - CHECKER_DEFAULT_CONCURRENCY=5 # 默认并发数\n      - CHECKER_TIMEOUT=30 # 超时时间（秒）\n      - REDIS_ENABLED=true # 是否启用Redis\n      - REDIS_HOST=redis # Redis地址\n      - REDIS_PORT=6379 # Redis端口\n      - REDIS_USERNAME= # Redis用户名\n      - REDIS_PASSWORD= # Redis密码\n      - REDIS_INVALID_TTL=168   # 失效链接缓存时间（小时）\n      - ADMIN_PASSWORD=admin123 # 后台管理密码\n    volumes:\n      - ./data:/app/data\n    restart: unless-stopped\n    depends_on:\n      - db\n      - redis\n    healthcheck:\n      test: [\"CMD\", \"wget\", \"--no-verbose\", \"--tries=1\", \"--spider\", \"http://localhost:8080/api/v1/health\"]\n      interval: 30s\n      timeout: 10s\n      retries: 3\n      start_period: 40s\n  db:\n    image: mysql:8.0\n    container_name: pancheck-db\n    environment:\n      - MYSQL_ROOT_PASSWORD=your_password\n      - MYSQL_DATABASE=pancheck\n      - MYSQL_CHARACTER_SET_SERVER=utf8mb4\n      - MYSQL_COLLATION_SERVER=utf8mb4_unicode_ci\n    volumes:\n      - mysql_data:/var/lib/mysql\n    restart: unless-stopped\n    healthcheck:\n      test: [\"CMD\", \"mysqladmin\", \"ping\", \"-h\", \"localhost\", \"-u\", \"root\", \"-p$$MYSQL_ROOT_PASSWORD\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n  redis:\n    image: redis:latest\n    container_name: pancheck-redis\n    volumes:\n      - redis-data:/data\n    restart: unless-stopped\n    command: redis-server --appendonly yes\n    healthcheck:\n      test: [\"CMD\", \"redis-cli\", \"ping\"]\n      interval: 10s\n      timeout: 3s\n      retries: 3\nvolumes:\n  redis-data:\n  mysql_data:\n    driver: local",
+  "input_metadata": {
+    "bind:pancheck:/app/data": {
+      "label": "./data",
+      "description": "容器持久化路径",
+      "group": "advanced"
+    },
+    "port:pancheck:8080/tcp": {
+      "label": "8080",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:db:MYSQL_CHARACTER_SET_SERVER": {
+      "label": "MYSQL_CHARACTER_SET_SERVER",
+      "group": "advanced"
+    },
+    "service:db:MYSQL_COLLATION_SERVER": {
+      "label": "MYSQL_COLLATION_SERVER",
+      "group": "advanced"
+    },
+    "service:db:MYSQL_DATABASE": {
+      "label": "MYSQL_DATABASE",
+      "group": "advanced"
+    },
+    "service:db:MYSQL_ROOT_PASSWORD": {
+      "label": "MYSQL_ROOT_PASSWORD",
+      "description": "更换你的数据库密码，保持 一致",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:pancheck:ADMIN_PASSWORD": {
+      "label": "ADMIN_PASSWORD",
+      "description": "ADMIN 密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:pancheck:CHECKER_DEFAULT_CONCURRENCY": {
+      "label": "CHECKER_DEFAULT_CONCURRENCY",
+      "group": "advanced"
+    },
+    "service:pancheck:CHECKER_TIMEOUT": {
+      "label": "CHECKER_TIMEOUT",
+      "group": "advanced"
+    },
+    "service:pancheck:DATABASE_CHARSET": {
+      "label": "DATABASE_CHARSET",
+      "group": "advanced"
+    },
+    "service:pancheck:DATABASE_DATABASE": {
+      "label": "DATABASE_DATABASE",
+      "group": "advanced"
+    },
+    "service:pancheck:DATABASE_HOST": {
+      "label": "DATABASE_HOST",
+      "group": "advanced"
+    },
+    "service:pancheck:DATABASE_PASSWORD": {
+      "label": "DATABASE_PASSWORD",
+      "description": "更换你的数据库密码，保持 一致",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:pancheck:DATABASE_PORT": {
+      "label": "DATABASE_PORT",
+      "group": "advanced"
+    },
+    "service:pancheck:DATABASE_TYPE": {
+      "label": "DATABASE_TYPE",
+      "group": "advanced"
+    },
+    "service:pancheck:DATABASE_USER": {
+      "label": "DATABASE_USER",
+      "group": "advanced"
+    },
+    "service:pancheck:REDIS_ENABLED": {
+      "label": "REDIS_ENABLED",
+      "group": "advanced"
+    },
+    "service:pancheck:REDIS_HOST": {
+      "label": "REDIS_HOST",
+      "group": "advanced"
+    },
+    "service:pancheck:REDIS_INVALID_TTL": {
+      "label": "REDIS_INVALID_TTL",
+      "group": "advanced"
+    },
+    "service:pancheck:REDIS_PASSWORD": {
+      "label": "REDIS_PASSWORD",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:pancheck:REDIS_PORT": {
+      "label": "REDIS_PORT",
+      "group": "advanced"
+    },
+    "service:pancheck:REDIS_USERNAME": {
+      "label": "REDIS_USERNAME",
+      "group": "advanced"
+    },
+    "service:pancheck:SERVER_CORS_ORIGINS": {
+      "label": "SERVER_CORS_ORIGINS",
+      "group": "advanced"
+    },
+    "service:pancheck:SERVER_MODE": {
+      "label": "SERVER_MODE",
+      "group": "advanced"
+    },
+    "service:pancheck:SERVER_PORT": {
+      "label": "SERVER_PORT",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:d1860fbb13a35ed4411190612afc8b2cbe6a81847431072b25d79aca130339c1",
+    "manifest_digest": "sha256:5b209ab138556497ddd4663e4331d868c4f91f6232788fb851db30af04624744",
+    "services": [
+      "db",
+      "pancheck",
+      "redis"
+    ],
+    "inputs": [
+      {
+        "id": "bind:pancheck:/app/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "容器持久化路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:pancheck:8080/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_CHARACTER_SET_SERVER",
+        "key": "MYSQL_CHARACTER_SET_SERVER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "utf8mb4",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MYSQL_CHARACTER_SET_SERVER",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_COLLATION_SERVER",
+        "key": "MYSQL_COLLATION_SERVER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "utf8mb4_unicode_ci",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MYSQL_COLLATION_SERVER",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_DATABASE",
+        "key": "MYSQL_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "pancheck",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MYSQL_DATABASE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_ROOT_PASSWORD",
+        "key": "MYSQL_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "your_password",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "MYSQL_ROOT_PASSWORD",
+          "description": "更换你的数据库密码，保持 一致",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:pancheck:ADMIN_PASSWORD",
+        "key": "ADMIN_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "admin123",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "ADMIN_PASSWORD",
+          "description": "ADMIN 密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:pancheck:CHECKER_DEFAULT_CONCURRENCY",
+        "key": "CHECKER_DEFAULT_CONCURRENCY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "5",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "CHECKER_DEFAULT_CONCURRENCY",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:CHECKER_TIMEOUT",
+        "key": "CHECKER_TIMEOUT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "30",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "CHECKER_TIMEOUT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:DATABASE_CHARSET",
+        "key": "DATABASE_CHARSET",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "utf8mb4",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_CHARSET",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:DATABASE_DATABASE",
+        "key": "DATABASE_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "pancheck",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_DATABASE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:DATABASE_HOST",
+        "key": "DATABASE_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_HOST",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:DATABASE_PASSWORD",
+        "key": "DATABASE_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "your_password",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "DATABASE_PASSWORD",
+          "description": "更换你的数据库密码，保持 一致",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:pancheck:DATABASE_PORT",
+        "key": "DATABASE_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "3306",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_PORT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:DATABASE_TYPE",
+        "key": "DATABASE_TYPE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "mysql",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_TYPE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:DATABASE_USER",
+        "key": "DATABASE_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "root",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_USER",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:REDIS_ENABLED",
+        "key": "REDIS_ENABLED",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_ENABLED",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:REDIS_HOST",
+        "key": "REDIS_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_HOST",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:REDIS_INVALID_TTL",
+        "key": "REDIS_INVALID_TTL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "168",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_INVALID_TTL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:REDIS_PASSWORD",
+        "key": "REDIS_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "REDIS_PASSWORD",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:pancheck:REDIS_PORT",
+        "key": "REDIS_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "6379",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_PORT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:REDIS_USERNAME",
+        "key": "REDIS_USERNAME",
+        "kind": "env",
+        "scope": "service",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_USERNAME",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:SERVER_CORS_ORIGINS",
+        "key": "SERVER_CORS_ORIGINS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "*",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "SERVER_CORS_ORIGINS",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:SERVER_MODE",
+        "key": "SERVER_MODE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "release",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "SERVER_MODE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pancheck:SERVER_PORT",
+        "key": "SERVER_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "SERVER_PORT",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:db:MYSQL_CHARACTER_SET_SERVER",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_CHARACTER_SET_SERVER",
+        "yaml_path": "services.db.environment[2]",
+        "line": 45,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:MYSQL_COLLATION_SERVER",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_COLLATION_SERVER",
+        "yaml_path": "services.db.environment[3]",
+        "line": 46,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:MYSQL_DATABASE",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_DATABASE",
+        "yaml_path": "services.db.environment[1]",
+        "line": 44,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:MYSQL_ROOT_PASSWORD",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_ROOT_PASSWORD",
+        "yaml_path": "services.db.environment[0]",
+        "line": 43,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:ADMIN_PASSWORD",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "ADMIN_PASSWORD",
+        "yaml_path": "services.pancheck.environment[18]",
+        "line": 26,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:CHECKER_DEFAULT_CONCURRENCY",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "CHECKER_DEFAULT_CONCURRENCY",
+        "yaml_path": "services.pancheck.environment[10]",
+        "line": 18,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:CHECKER_TIMEOUT",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "CHECKER_TIMEOUT",
+        "yaml_path": "services.pancheck.environment[11]",
+        "line": 19,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:DATABASE_CHARSET",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "DATABASE_CHARSET",
+        "yaml_path": "services.pancheck.environment[9]",
+        "line": 17,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:DATABASE_DATABASE",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "DATABASE_DATABASE",
+        "yaml_path": "services.pancheck.environment[8]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:DATABASE_HOST",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "DATABASE_HOST",
+        "yaml_path": "services.pancheck.environment[4]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:DATABASE_PASSWORD",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "DATABASE_PASSWORD",
+        "yaml_path": "services.pancheck.environment[7]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:DATABASE_PORT",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "DATABASE_PORT",
+        "yaml_path": "services.pancheck.environment[5]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:DATABASE_TYPE",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "DATABASE_TYPE",
+        "yaml_path": "services.pancheck.environment[3]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:DATABASE_USER",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "DATABASE_USER",
+        "yaml_path": "services.pancheck.environment[6]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:REDIS_ENABLED",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "REDIS_ENABLED",
+        "yaml_path": "services.pancheck.environment[12]",
+        "line": 20,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:REDIS_HOST",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "REDIS_HOST",
+        "yaml_path": "services.pancheck.environment[13]",
+        "line": 21,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:REDIS_INVALID_TTL",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "REDIS_INVALID_TTL",
+        "yaml_path": "services.pancheck.environment[17]",
+        "line": 25,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:REDIS_PASSWORD",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "REDIS_PASSWORD",
+        "yaml_path": "services.pancheck.environment[16]",
+        "line": 24,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:REDIS_PORT",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "REDIS_PORT",
+        "yaml_path": "services.pancheck.environment[14]",
+        "line": 22,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:REDIS_USERNAME",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "REDIS_USERNAME",
+        "yaml_path": "services.pancheck.environment[15]",
+        "line": 23,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:SERVER_CORS_ORIGINS",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "SERVER_CORS_ORIGINS",
+        "yaml_path": "services.pancheck.environment[2]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:SERVER_MODE",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "SERVER_MODE",
+        "yaml_path": "services.pancheck.environment[1]",
+        "line": 9,
+        "column": 9
+      },
+      {
+        "input_id": "service:pancheck:SERVER_PORT",
+        "service": "pancheck",
+        "target_kind": "environment",
+        "target_key": "SERVER_PORT",
+        "yaml_path": "services.pancheck.environment[0]",
+        "line": 8,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:pancheck:/app/data",
+        "kind": "bind",
+        "service": "pancheck",
+        "source": "./data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.pancheck.volumes[0]"
+      },
+      {
+        "id": "port:pancheck:8080/tcp",
+        "kind": "port",
+        "service": "pancheck",
+        "source": "8080",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.pancheck.ports[0]"
+      },
+      {
+        "id": "volume:db:/var/lib/mysql",
+        "kind": "volume",
+        "service": "db",
+        "source": "mysql_data",
+        "target": "/var/lib/mysql",
+        "editable": false,
+        "yaml_path": "services.db.volumes[0]"
+      },
+      {
+        "id": "volume:redis:/data",
+        "kind": "volume",
+        "service": "redis",
+        "source": "redis-data",
+        "target": "/data",
+        "editable": false,
+        "yaml_path": "services.redis.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:d1860fbb13a35ed4411190612afc8b2cbe6a81847431072b25d79aca130339c1",
+  "manifest_digest": "sha256:5b209ab138556497ddd4663e4331d868c4f91f6232788fb851db30af04624744",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
+      "inputId": "bind:pancheck:/app/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "容器持久化路径",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:pancheck:8080/tcp",
       "name": "8080",
       "label": "8080",
       "description": "容器 WEB 端口",
@@ -23,226 +746,7 @@
       "paramType": "port"
     },
     {
-      "name": "./data",
-      "label": "./data",
-      "description": "容器持久化路径",
-      "type": "path",
-      "default": "/app/data",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "path"
-    },
-    {
-      "name": "SERVER_PORT",
-      "label": "SERVER_PORT",
-      "description": "",
-      "type": "string",
-      "default": "8080",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "SERVER_MODE",
-      "label": "SERVER_MODE",
-      "description": "",
-      "type": "string",
-      "default": "release",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "SERVER_CORS_ORIGINS",
-      "label": "SERVER_CORS_ORIGINS",
-      "description": "",
-      "type": "string",
-      "default": "*",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "DATABASE_TYPE",
-      "label": "DATABASE_TYPE",
-      "description": "",
-      "type": "string",
-      "default": "mysql",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "DATABASE_HOST",
-      "label": "DATABASE_HOST",
-      "description": "",
-      "type": "string",
-      "default": "db",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "DATABASE_PORT",
-      "label": "DATABASE_PORT",
-      "description": "",
-      "type": "string",
-      "default": "3306",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "DATABASE_USER",
-      "label": "DATABASE_USER",
-      "description": "",
-      "type": "string",
-      "default": "root",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "DATABASE_PASSWORD",
-      "label": "DATABASE_PASSWORD",
-      "description": "更换你的数据库密码，保持 一致",
-      "type": "password",
-      "default": "your_password",
-      "category": "basic",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "DATABASE_DATABASE",
-      "label": "DATABASE_DATABASE",
-      "description": "",
-      "type": "string",
-      "default": "pancheck",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "DATABASE_CHARSET",
-      "label": "DATABASE_CHARSET",
-      "description": "",
-      "type": "string",
-      "default": "utf8mb4",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "CHECKER_DEFAULT_CONCURRENCY",
-      "label": "CHECKER_DEFAULT_CONCURRENCY",
-      "description": "",
-      "type": "string",
-      "default": "5",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "CHECKER_TIMEOUT",
-      "label": "CHECKER_TIMEOUT",
-      "description": "",
-      "type": "string",
-      "default": "30",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_ENABLED",
-      "label": "REDIS_ENABLED",
-      "description": "",
-      "type": "string",
-      "default": "true",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_HOST",
-      "label": "REDIS_HOST",
-      "description": "",
-      "type": "string",
-      "default": "redis",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_PORT",
-      "label": "REDIS_PORT",
-      "description": "",
-      "type": "string",
-      "default": "6379",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_USERNAME",
-      "label": "REDIS_USERNAME",
-      "description": "",
-      "type": "string",
-      "default": "",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_PASSWORD",
-      "label": "REDIS_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_INVALID_TTL",
-      "label": "REDIS_INVALID_TTL",
-      "description": "",
-      "type": "string",
-      "default": "168",
-      "category": "advanced",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "ADMIN_PASSWORD",
-      "label": "ADMIN_PASSWORD",
-      "description": "ADMIN 密码",
-      "type": "password",
-      "default": "admin123",
-      "category": "basic",
-      "serviceName": "pancheck",
-      "paramType": "env"
-    },
-    {
-      "name": "MYSQL_ROOT_PASSWORD",
-      "label": "MYSQL_ROOT_PASSWORD",
-      "description": "更换你的数据库密码，保持 一致",
-      "type": "password",
-      "default": "your_password",
-      "category": "basic",
-      "serviceName": "db",
-      "paramType": "env"
-    },
-    {
-      "name": "MYSQL_DATABASE",
-      "label": "MYSQL_DATABASE",
-      "description": "",
-      "type": "string",
-      "default": "pancheck",
-      "category": "advanced",
-      "serviceName": "db",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:db:MYSQL_CHARACTER_SET_SERVER",
       "name": "MYSQL_CHARACTER_SET_SERVER",
       "label": "MYSQL_CHARACTER_SET_SERVER",
       "description": "",
@@ -253,6 +757,7 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:db:MYSQL_COLLATION_SERVER",
       "name": "MYSQL_COLLATION_SERVER",
       "label": "MYSQL_COLLATION_SERVER",
       "description": "",
@@ -261,8 +766,238 @@
       "category": "advanced",
       "serviceName": "db",
       "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_DATABASE",
+      "name": "MYSQL_DATABASE",
+      "label": "MYSQL_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "pancheck",
+      "category": "advanced",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_ROOT_PASSWORD",
+      "name": "MYSQL_ROOT_PASSWORD",
+      "label": "MYSQL_ROOT_PASSWORD",
+      "description": "更换你的数据库密码，保持 一致",
+      "type": "password",
+      "default": "your_password",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:ADMIN_PASSWORD",
+      "name": "ADMIN_PASSWORD",
+      "label": "ADMIN_PASSWORD",
+      "description": "ADMIN 密码",
+      "type": "password",
+      "default": "admin123",
+      "category": "basic",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:CHECKER_DEFAULT_CONCURRENCY",
+      "name": "CHECKER_DEFAULT_CONCURRENCY",
+      "label": "CHECKER_DEFAULT_CONCURRENCY",
+      "description": "",
+      "type": "string",
+      "default": "5",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:CHECKER_TIMEOUT",
+      "name": "CHECKER_TIMEOUT",
+      "label": "CHECKER_TIMEOUT",
+      "description": "",
+      "type": "string",
+      "default": "30",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:DATABASE_CHARSET",
+      "name": "DATABASE_CHARSET",
+      "label": "DATABASE_CHARSET",
+      "description": "",
+      "type": "string",
+      "default": "utf8mb4",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:DATABASE_DATABASE",
+      "name": "DATABASE_DATABASE",
+      "label": "DATABASE_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "pancheck",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:DATABASE_HOST",
+      "name": "DATABASE_HOST",
+      "label": "DATABASE_HOST",
+      "description": "",
+      "type": "string",
+      "default": "db",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:DATABASE_PASSWORD",
+      "name": "DATABASE_PASSWORD",
+      "label": "DATABASE_PASSWORD",
+      "description": "更换你的数据库密码，保持 一致",
+      "type": "password",
+      "default": "your_password",
+      "category": "basic",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:DATABASE_PORT",
+      "name": "DATABASE_PORT",
+      "label": "DATABASE_PORT",
+      "description": "",
+      "type": "string",
+      "default": "3306",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:DATABASE_TYPE",
+      "name": "DATABASE_TYPE",
+      "label": "DATABASE_TYPE",
+      "description": "",
+      "type": "string",
+      "default": "mysql",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:DATABASE_USER",
+      "name": "DATABASE_USER",
+      "label": "DATABASE_USER",
+      "description": "",
+      "type": "string",
+      "default": "root",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:REDIS_ENABLED",
+      "name": "REDIS_ENABLED",
+      "label": "REDIS_ENABLED",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:REDIS_HOST",
+      "name": "REDIS_HOST",
+      "label": "REDIS_HOST",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:REDIS_INVALID_TTL",
+      "name": "REDIS_INVALID_TTL",
+      "label": "REDIS_INVALID_TTL",
+      "description": "",
+      "type": "string",
+      "default": "168",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:REDIS_PASSWORD",
+      "name": "REDIS_PASSWORD",
+      "label": "REDIS_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:REDIS_PORT",
+      "name": "REDIS_PORT",
+      "label": "REDIS_PORT",
+      "description": "",
+      "type": "string",
+      "default": "6379",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:REDIS_USERNAME",
+      "name": "REDIS_USERNAME",
+      "label": "REDIS_USERNAME",
+      "description": "",
+      "type": "string",
+      "default": "",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:SERVER_CORS_ORIGINS",
+      "name": "SERVER_CORS_ORIGINS",
+      "label": "SERVER_CORS_ORIGINS",
+      "description": "",
+      "type": "string",
+      "default": "*",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:SERVER_MODE",
+      "name": "SERVER_MODE",
+      "label": "SERVER_MODE",
+      "description": "",
+      "type": "string",
+      "default": "release",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pancheck:SERVER_PORT",
+      "name": "SERVER_PORT",
+      "label": "SERVER_PORT",
+      "description": "",
+      "type": "string",
+      "default": "8080",
+      "category": "advanced",
+      "serviceName": "pancheck",
+      "paramType": "env"
     }
   ],
-  "deployment_count": 1,
   "enabled": true
 }

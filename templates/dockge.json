@@ -1,0 +1,235 @@
+{
+  "id": 35,
+  "sort_order": 32,
+  "name": "dockge",
+  "category": "other",
+  "description": "Dockge 是一个易于使用、响应式的 Docker Compose YAML 文件管理工具，由 Uptime Kuma 作者开发。可视化管理 compose 堆栈，支持编辑、启动、停止、查看日志。",
+  "version": "1",
+  "logo": "https://raw.githubusercontent.com/louislam/dockge/master/docker/icon.svg",
+  "website": "https://github.com/louislam/dockge",
+  "tutorial": "访问地址：http://服务器IP:5001\n首次进入需创建管理员账号。\n所有 compose 堆栈需放在 /opt/stacks 目录下，Dockge 才能管理它们。\n需挂载 docker.sock 才能管理宿主机的容器。",
+  "dotenv": "",
+  "compose": "services:\n  dockge:\n    image: louislam/dockge:1\n    restart: unless-stopped\n    ports:\n      - \"5001:5001\"\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock\n      - ./data:/app/data\n      - /opt/stacks:/opt/stacks\n    environment:\n      - DOCKGE_STACKS_DIR=/opt/stacks",
+  "input_metadata": {
+    "bind:dockge:/app/data": {
+      "label": "./data",
+      "description": "应用数据",
+      "group": "basic"
+    },
+    "bind:dockge:/opt/stacks": {
+      "label": "/opt/stacks",
+      "description": "compose 堆栈目录",
+      "group": "basic"
+    },
+    "bind:dockge:/var/run/docker.sock": {
+      "group": "basic"
+    },
+    "port:dockge:5001/tcp": {
+      "label": "5001",
+      "description": "WEB 管理端口",
+      "group": "basic"
+    },
+    "service:dockge:DOCKGE_STACKS_DIR": {
+      "label": "DOCKGE_STACKS_DIR",
+      "description": "堆栈目录",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:d846fad9e1437e81c443a0c39dc0cfc882f07498dbb6d03da1496e98810e437e",
+    "manifest_digest": "sha256:bcfafd4c870a0d2256196b0c380b62f3843696ad65c66c48657ca617e2af2178",
+    "services": [
+      "dockge"
+    ],
+    "inputs": [
+      {
+        "id": "bind:dockge:/app/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "应用数据",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:dockge:/opt/stacks",
+        "key": "/opt/stacks",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/opt/stacks",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "/opt/stacks",
+          "description": "compose 堆栈目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:dockge:/var/run/docker.sock",
+        "key": "/var/run/docker.sock",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/var/run/docker.sock",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:dockge:5001/tcp",
+        "key": "5001",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "5001",
+          "description": "WEB 管理端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:dockge:DOCKGE_STACKS_DIR",
+        "key": "DOCKGE_STACKS_DIR",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/opt/stacks",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DOCKGE_STACKS_DIR",
+          "description": "堆栈目录",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:dockge:DOCKGE_STACKS_DIR",
+        "service": "dockge",
+        "target_kind": "environment",
+        "target_key": "DOCKGE_STACKS_DIR",
+        "yaml_path": "services.dockge.environment[0]",
+        "line": 12,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:dockge:/app/data",
+        "kind": "bind",
+        "service": "dockge",
+        "source": "./data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.dockge.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:dockge:/opt/stacks",
+        "kind": "bind",
+        "service": "dockge",
+        "source": "/opt/stacks",
+        "target": "/opt/stacks",
+        "editable": true,
+        "yaml_path": "services.dockge.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:dockge:/var/run/docker.sock",
+        "kind": "bind",
+        "service": "dockge",
+        "source": "/var/run/docker.sock",
+        "target": "/var/run/docker.sock",
+        "editable": true,
+        "yaml_path": "services.dockge.volumes[0]"
+      },
+      {
+        "id": "port:dockge:5001/tcp",
+        "kind": "port",
+        "service": "dockge",
+        "source": "5001",
+        "target": "5001",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.dockge.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:d846fad9e1437e81c443a0c39dc0cfc882f07498dbb6d03da1496e98810e437e",
+  "manifest_digest": "sha256:bcfafd4c870a0d2256196b0c380b62f3843696ad65c66c48657ca617e2af2178",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:dockge:/app/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "应用数据",
+      "type": "path",
+      "default": "./data",
+      "category": "basic",
+      "serviceName": "dockge",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:dockge:/opt/stacks",
+      "name": "/opt/stacks",
+      "label": "/opt/stacks",
+      "description": "compose 堆栈目录",
+      "type": "path",
+      "default": "/opt/stacks",
+      "category": "basic",
+      "serviceName": "dockge",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:dockge:/var/run/docker.sock",
+      "name": "/var/run/docker.sock",
+      "label": "/var/run/docker.sock",
+      "description": "",
+      "type": "path",
+      "default": "/var/run/docker.sock",
+      "category": "basic",
+      "serviceName": "dockge",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:dockge:5001/tcp",
+      "name": "5001",
+      "label": "5001",
+      "description": "WEB 管理端口",
+      "type": "port",
+      "default": "5001",
+      "category": "basic",
+      "serviceName": "dockge",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:dockge:DOCKGE_STACKS_DIR",
+      "name": "DOCKGE_STACKS_DIR",
+      "label": "DOCKGE_STACKS_DIR",
+      "description": "堆栈目录",
+      "type": "string",
+      "default": "/opt/stacks",
+      "category": "advanced",
+      "serviceName": "dockge",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

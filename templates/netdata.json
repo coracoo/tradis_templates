@@ -1,0 +1,482 @@
+{
+  "id": 38,
+  "sort_order": 35,
+  "name": "netdata",
+  "category": "other",
+  "description": "Netdata 是高分辨率、实时系统监控工具，提供 CPU、内存、磁盘、网络、Docker、数据库等海量指标的实时可视化仪表盘。",
+  "version": "stable",
+  "logo": "https://raw.githubusercontent.com/netdata/netdata/master/docs/img/netdata-logo.svg",
+  "website": "https://github.com/netdata/netdata",
+  "tutorial": "访问地址：http://服务器IP:19999\n需较高权限（cap_add、pid: host）以采集宿主机指标。\n可选接入 Netdata Cloud：设置 NETDATA_CLAIM_TOKEN。",
+  "dotenv": "",
+  "compose": "services:\n  netdata:\n    image: netdata/netdata:stable\n    restart: unless-stopped\n    pid: host\n    cap_add:\n      - SYS_PTRACE\n      - SYS_ADMIN\n    security_opt:\n      - apparmor:unconfined\n    ports:\n      - \"19999:19999\"\n    volumes:\n      - netdataconfig:/etc/netdata\n      - netdatalib:/var/lib/netdata\n      - netdatacache:/var/cache/netdata\n      - /etc/passwd:/host/etc/passwd:ro\n      - /etc/group:/host/etc/group:ro\n      - /etc/os-release:/host/etc/os-release:ro\n      - /proc:/host/proc:ro\n      - /sys:/host/sys:ro\n      - /dev:/host/dev:ro\n      - /var/run/docker.sock:/var/run/docker.sock:ro\n    environment:\n      - NETDATA_CLAIM_TOKEN=\n      - NETDATA_CLAIM_URL=https://app.netdata.cloud\n      - NETDATA_CLAIM_ROOMS=\nvolumes:\n  netdataconfig:\n  netdatalib:\n  netdatacache:",
+  "input_metadata": {
+    "bind:netdata:/host/dev": {
+      "group": "basic"
+    },
+    "bind:netdata:/host/etc/group": {
+      "group": "basic"
+    },
+    "bind:netdata:/host/etc/os-release": {
+      "group": "basic"
+    },
+    "bind:netdata:/host/etc/passwd": {
+      "group": "basic"
+    },
+    "bind:netdata:/host/proc": {
+      "group": "basic"
+    },
+    "bind:netdata:/host/sys": {
+      "group": "basic"
+    },
+    "bind:netdata:/var/run/docker.sock": {
+      "group": "basic"
+    },
+    "port:netdata:19999/tcp": {
+      "label": "19999",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:netdata:NETDATA_CLAIM_ROOMS": {
+      "group": "basic"
+    },
+    "service:netdata:NETDATA_CLAIM_TOKEN": {
+      "label": "NETDATA_CLAIM_TOKEN",
+      "description": "Netdata Cloud Token",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:netdata:NETDATA_CLAIM_URL": {
+      "label": "NETDATA_CLAIM_URL",
+      "description": "Cloud 地址",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:d6ac0a3c0bd7bce336382cab016296d82f32fc384f9cfc732ae52e0058fd3074",
+    "manifest_digest": "sha256:c16b22b0451e71ddc79af03a2936e65d15614eceed7775ced3c075c4671e5286",
+    "services": [
+      "netdata"
+    ],
+    "inputs": [
+      {
+        "id": "bind:netdata:/host/dev",
+        "key": "/dev",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/dev",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:netdata:/host/etc/group",
+        "key": "/etc/group",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/etc/group",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:netdata:/host/etc/os-release",
+        "key": "/etc/os-release",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/etc/os-release",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:netdata:/host/etc/passwd",
+        "key": "/etc/passwd",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/etc/passwd",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:netdata:/host/proc",
+        "key": "/proc",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/proc",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:netdata:/host/sys",
+        "key": "/sys",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/sys",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:netdata:/var/run/docker.sock",
+        "key": "/var/run/docker.sock",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/var/run/docker.sock",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:netdata:19999/tcp",
+        "key": "19999",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "19999",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "19999",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:netdata:NETDATA_CLAIM_ROOMS",
+        "key": "NETDATA_CLAIM_ROOMS",
+        "kind": "env",
+        "scope": "service",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:netdata:NETDATA_CLAIM_TOKEN",
+        "key": "NETDATA_CLAIM_TOKEN",
+        "kind": "env",
+        "scope": "service",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "NETDATA_CLAIM_TOKEN",
+          "description": "Netdata Cloud Token",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:netdata:NETDATA_CLAIM_URL",
+        "key": "NETDATA_CLAIM_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "https://app.netdata.cloud",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NETDATA_CLAIM_URL",
+          "description": "Cloud 地址",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:netdata:NETDATA_CLAIM_ROOMS",
+        "service": "netdata",
+        "target_kind": "environment",
+        "target_key": "NETDATA_CLAIM_ROOMS",
+        "yaml_path": "services.netdata.environment[2]",
+        "line": 27,
+        "column": 9
+      },
+      {
+        "input_id": "service:netdata:NETDATA_CLAIM_TOKEN",
+        "service": "netdata",
+        "target_kind": "environment",
+        "target_key": "NETDATA_CLAIM_TOKEN",
+        "yaml_path": "services.netdata.environment[0]",
+        "line": 25,
+        "column": 9
+      },
+      {
+        "input_id": "service:netdata:NETDATA_CLAIM_URL",
+        "service": "netdata",
+        "target_kind": "environment",
+        "target_key": "NETDATA_CLAIM_URL",
+        "yaml_path": "services.netdata.environment[1]",
+        "line": 26,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:netdata:/host/dev",
+        "kind": "bind",
+        "service": "netdata",
+        "source": "/dev",
+        "target": "/host/dev",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.netdata.volumes[8]",
+        "sequence_index": 8
+      },
+      {
+        "id": "bind:netdata:/host/etc/group",
+        "kind": "bind",
+        "service": "netdata",
+        "source": "/etc/group",
+        "target": "/host/etc/group",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.netdata.volumes[4]",
+        "sequence_index": 4
+      },
+      {
+        "id": "bind:netdata:/host/etc/os-release",
+        "kind": "bind",
+        "service": "netdata",
+        "source": "/etc/os-release",
+        "target": "/host/etc/os-release",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.netdata.volumes[5]",
+        "sequence_index": 5
+      },
+      {
+        "id": "bind:netdata:/host/etc/passwd",
+        "kind": "bind",
+        "service": "netdata",
+        "source": "/etc/passwd",
+        "target": "/host/etc/passwd",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.netdata.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "bind:netdata:/host/proc",
+        "kind": "bind",
+        "service": "netdata",
+        "source": "/proc",
+        "target": "/host/proc",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.netdata.volumes[6]",
+        "sequence_index": 6
+      },
+      {
+        "id": "bind:netdata:/host/sys",
+        "kind": "bind",
+        "service": "netdata",
+        "source": "/sys",
+        "target": "/host/sys",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.netdata.volumes[7]",
+        "sequence_index": 7
+      },
+      {
+        "id": "bind:netdata:/var/run/docker.sock",
+        "kind": "bind",
+        "service": "netdata",
+        "source": "/var/run/docker.sock",
+        "target": "/var/run/docker.sock",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.netdata.volumes[9]",
+        "sequence_index": 9
+      },
+      {
+        "id": "port:netdata:19999/tcp",
+        "kind": "port",
+        "service": "netdata",
+        "source": "19999",
+        "target": "19999",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.netdata.ports[0]"
+      },
+      {
+        "id": "volume:netdata:/etc/netdata",
+        "kind": "volume",
+        "service": "netdata",
+        "source": "netdataconfig",
+        "target": "/etc/netdata",
+        "editable": false,
+        "yaml_path": "services.netdata.volumes[0]"
+      },
+      {
+        "id": "volume:netdata:/var/cache/netdata",
+        "kind": "volume",
+        "service": "netdata",
+        "source": "netdatacache",
+        "target": "/var/cache/netdata",
+        "editable": false,
+        "yaml_path": "services.netdata.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "volume:netdata:/var/lib/netdata",
+        "kind": "volume",
+        "service": "netdata",
+        "source": "netdatalib",
+        "target": "/var/lib/netdata",
+        "editable": false,
+        "yaml_path": "services.netdata.volumes[1]",
+        "sequence_index": 1
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:d6ac0a3c0bd7bce336382cab016296d82f32fc384f9cfc732ae52e0058fd3074",
+  "manifest_digest": "sha256:c16b22b0451e71ddc79af03a2936e65d15614eceed7775ced3c075c4671e5286",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:netdata:/host/dev",
+      "name": "/dev",
+      "label": "/dev",
+      "description": "",
+      "type": "path",
+      "default": "/dev",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:netdata:/host/etc/group",
+      "name": "/etc/group",
+      "label": "/etc/group",
+      "description": "",
+      "type": "path",
+      "default": "/etc/group",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:netdata:/host/etc/os-release",
+      "name": "/etc/os-release",
+      "label": "/etc/os-release",
+      "description": "",
+      "type": "path",
+      "default": "/etc/os-release",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:netdata:/host/etc/passwd",
+      "name": "/etc/passwd",
+      "label": "/etc/passwd",
+      "description": "",
+      "type": "path",
+      "default": "/etc/passwd",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:netdata:/host/proc",
+      "name": "/proc",
+      "label": "/proc",
+      "description": "",
+      "type": "path",
+      "default": "/proc",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:netdata:/host/sys",
+      "name": "/sys",
+      "label": "/sys",
+      "description": "",
+      "type": "path",
+      "default": "/sys",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:netdata:/var/run/docker.sock",
+      "name": "/var/run/docker.sock",
+      "label": "/var/run/docker.sock",
+      "description": "",
+      "type": "path",
+      "default": "/var/run/docker.sock",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:netdata:19999/tcp",
+      "name": "19999",
+      "label": "19999",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "19999",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:netdata:NETDATA_CLAIM_ROOMS",
+      "name": "NETDATA_CLAIM_ROOMS",
+      "label": "NETDATA_CLAIM_ROOMS",
+      "description": "",
+      "type": "string",
+      "default": "",
+      "category": "basic",
+      "serviceName": "netdata",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:netdata:NETDATA_CLAIM_TOKEN",
+      "name": "NETDATA_CLAIM_TOKEN",
+      "label": "NETDATA_CLAIM_TOKEN",
+      "description": "Netdata Cloud Token",
+      "type": "password",
+      "default": "",
+      "category": "advanced",
+      "serviceName": "netdata",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:netdata:NETDATA_CLAIM_URL",
+      "name": "NETDATA_CLAIM_URL",
+      "label": "NETDATA_CLAIM_URL",
+      "description": "Cloud 地址",
+      "type": "string",
+      "default": "https://app.netdata.cloud",
+      "category": "advanced",
+      "serviceName": "netdata",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

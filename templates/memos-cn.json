@@ -1,0 +1,119 @@
+{
+  "id": 47,
+  "sort_order": 44,
+  "name": "memos-cn",
+  "category": "knowledge",
+  "description": "Memos 是一个轻量级、自托管的备忘录/笔记中心，快速记录想法、管理知识，支持 Markdown、标签、分享，界面简洁高效。",
+  "version": "stable",
+  "logo": "https://raw.githubusercontent.com/usememos/memos/main/resources/logo.png",
+  "website": "https://github.com/usememos/memos",
+  "tutorial": "访问地址：http://服务器IP:5230\n内置 SQLite，数据在 ./memos 目录。\n首次访问注册宿主用户即为管理员。",
+  "dotenv": "",
+  "compose": "services:\n  memos:\n    image: neosmemo/memos:stable\n    restart: unless-stopped\n    ports:\n      - \"5230:5230\"\n    volumes:\n      - ./memos:/var/opt/memos",
+  "input_metadata": {
+    "bind:memos:/var/opt/memos": {
+      "label": "./memos",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:memos:5230/tcp": {
+      "label": "5230",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:a1ca326cb13f804420e0435d5c4e2a200e053a9ac1ab8bd524adcb8140c2f2d5",
+    "manifest_digest": "sha256:149f7f4d0e63627b9beb40eac17c61b619ad20c3b69ef868c6356a0b0b65fb9a",
+    "services": [
+      "memos"
+    ],
+    "inputs": [
+      {
+        "id": "bind:memos:/var/opt/memos",
+        "key": "./memos",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./memos",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./memos",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:memos:5230/tcp",
+        "key": "5230",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5230",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "5230",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:memos:/var/opt/memos",
+        "kind": "bind",
+        "service": "memos",
+        "source": "./memos",
+        "target": "/var/opt/memos",
+        "editable": true,
+        "yaml_path": "services.memos.volumes[0]"
+      },
+      {
+        "id": "port:memos:5230/tcp",
+        "kind": "port",
+        "service": "memos",
+        "source": "5230",
+        "target": "5230",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.memos.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:a1ca326cb13f804420e0435d5c4e2a200e053a9ac1ab8bd524adcb8140c2f2d5",
+  "manifest_digest": "sha256:149f7f4d0e63627b9beb40eac17c61b619ad20c3b69ef868c6356a0b0b65fb9a",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:memos:/var/opt/memos",
+      "name": "./memos",
+      "label": "./memos",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./memos",
+      "category": "basic",
+      "serviceName": "memos",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:memos:5230/tcp",
+      "name": "5230",
+      "label": "5230",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "5230",
+      "category": "basic",
+      "serviceName": "memos",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

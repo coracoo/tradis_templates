@@ -1,0 +1,235 @@
+{
+  "id": 39,
+  "sort_order": 36,
+  "name": "homepage",
+  "category": "other",
+  "description": "Homepage 是一个高度可定制的现代仪表盘/导航主页，通过 YAML 配置，支持 Docker 集成、服务监控、书签、200000+ 图标，原生中文支持。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/gethomepage/homepage/main/public/homepage-desktop.png",
+  "website": "https://github.com/gethomepage/homepage",
+  "tutorial": "访问地址：http://服务器IP:3000\n配置文件在 ./config 目录（settings.yaml、services.yaml、bookmarks.yaml、docker.yaml）。\n挂载 docker.sock 可自动发现容器。",
+  "dotenv": "",
+  "compose": "services:\n  homepage:\n    image: ghcr.io/gethomepage/homepage:latest\n    restart: unless-stopped\n    ports:\n      - \"3000:3000\"\n    volumes:\n      - ./config:/app/config\n      - /var/run/docker.sock:/var/run/docker.sock:ro\n    environment:\n      - PUID=1000\n      - PGID=1000",
+  "input_metadata": {
+    "bind:homepage:/app/config": {
+      "label": "./config",
+      "description": "配置目录",
+      "group": "basic"
+    },
+    "bind:homepage:/var/run/docker.sock": {
+      "group": "basic"
+    },
+    "port:homepage:3000/tcp": {
+      "label": "3000",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:homepage:PGID": {
+      "label": "PGID",
+      "description": "组 ID",
+      "group": "advanced"
+    },
+    "service:homepage:PUID": {
+      "label": "PUID",
+      "description": "用户 ID",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:6e07b6602c2f649fe073a2082ee9df68b61fc8a8ebb6417ac469e3e661e48221",
+    "manifest_digest": "sha256:eb57c75d26533025342d82caf19ea764695655e16834c04d289be022dacf6374",
+    "services": [
+      "homepage"
+    ],
+    "inputs": [
+      {
+        "id": "bind:homepage:/app/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "description": "配置目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:homepage:/var/run/docker.sock",
+        "key": "/var/run/docker.sock",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/var/run/docker.sock",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:homepage:3000/tcp",
+        "key": "3000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3000",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:homepage:PGID",
+        "key": "PGID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PGID",
+          "description": "组 ID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:homepage:PUID",
+        "key": "PUID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PUID",
+          "description": "用户 ID",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:homepage:PGID",
+        "service": "homepage",
+        "target_kind": "environment",
+        "target_key": "PGID",
+        "yaml_path": "services.homepage.environment[1]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:homepage:PUID",
+        "service": "homepage",
+        "target_kind": "environment",
+        "target_key": "PUID",
+        "yaml_path": "services.homepage.environment[0]",
+        "line": 11,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:homepage:/app/config",
+        "kind": "bind",
+        "service": "homepage",
+        "source": "./config",
+        "target": "/app/config",
+        "editable": true,
+        "yaml_path": "services.homepage.volumes[0]"
+      },
+      {
+        "id": "bind:homepage:/var/run/docker.sock",
+        "kind": "bind",
+        "service": "homepage",
+        "source": "/var/run/docker.sock",
+        "target": "/var/run/docker.sock",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.homepage.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:homepage:3000/tcp",
+        "kind": "port",
+        "service": "homepage",
+        "source": "3000",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.homepage.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:6e07b6602c2f649fe073a2082ee9df68b61fc8a8ebb6417ac469e3e661e48221",
+  "manifest_digest": "sha256:eb57c75d26533025342d82caf19ea764695655e16834c04d289be022dacf6374",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:homepage:/app/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "配置目录",
+      "type": "path",
+      "default": "./config",
+      "category": "basic",
+      "serviceName": "homepage",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:homepage:/var/run/docker.sock",
+      "name": "/var/run/docker.sock",
+      "label": "/var/run/docker.sock",
+      "description": "",
+      "type": "path",
+      "default": "/var/run/docker.sock",
+      "category": "basic",
+      "serviceName": "homepage",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:homepage:3000/tcp",
+      "name": "3000",
+      "label": "3000",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "3000",
+      "category": "basic",
+      "serviceName": "homepage",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:homepage:PGID",
+      "name": "PGID",
+      "label": "PGID",
+      "description": "组 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "homepage",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:homepage:PUID",
+      "name": "PUID",
+      "label": "PUID",
+      "description": "用户 ID",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "homepage",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

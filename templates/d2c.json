@@ -10,21 +10,232 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n  d2c:\n    image: crpi-xg6dfmt5h2etc7hg.cn-hangzhou.personal.cr.aliyuncs.com/cherry4nas/d2c:latest\n    ports:\n      - \"5000:5000\"\n    environment:\n      - TZ=Asia/Shanghai\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock:ro\n      - ./d2c/compose:/app/compose\n      - ./d2c/logs:/app/logs\n      - ./d2c/config:/app/config",
+  "input_metadata": {
+    "bind:d2c:/app/compose": {
+      "label": "./d2c/compose",
+      "group": "advanced"
+    },
+    "bind:d2c:/app/config": {
+      "label": "./d2c/config",
+      "group": "advanced"
+    },
+    "bind:d2c:/app/logs": {
+      "label": "./d2c/logs",
+      "group": "advanced"
+    },
+    "bind:d2c:/var/run/docker.sock": {
+      "label": "/var/run/docker.sock",
+      "group": "advanced"
+    },
+    "port:d2c:5000/tcp": {
+      "label": "5000",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:d2c:TZ": {
+      "label": "TZ",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:adc81e8a4dbdc39cdb609e481d4975aa3c41f903262936811324f22dfdc9225b",
+    "manifest_digest": "sha256:1cb0141f373fa6cbba1984b4eed8040abf90584d126ea99fc90c4c07b3b11315",
+    "services": [
+      "d2c"
+    ],
+    "inputs": [
+      {
+        "id": "bind:d2c:/app/compose",
+        "key": "./d2c/compose",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./d2c/compose",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./d2c/compose",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:d2c:/app/config",
+        "key": "./d2c/config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./d2c/config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./d2c/config",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:d2c:/app/logs",
+        "key": "./d2c/logs",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./d2c/logs",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./d2c/logs",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:d2c:/var/run/docker.sock",
+        "key": "/var/run/docker.sock",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/var/run/docker.sock",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "/var/run/docker.sock",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:d2c:5000/tcp",
+        "key": "5000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "5000",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:d2c:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:d2c:TZ",
+        "service": "d2c",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.d2c.environment[0]",
+        "line": 7,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:d2c:/app/compose",
+        "kind": "bind",
+        "service": "d2c",
+        "source": "./d2c/compose",
+        "target": "/app/compose",
+        "editable": true,
+        "yaml_path": "services.d2c.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:d2c:/app/config",
+        "kind": "bind",
+        "service": "d2c",
+        "source": "./d2c/config",
+        "target": "/app/config",
+        "editable": true,
+        "yaml_path": "services.d2c.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "bind:d2c:/app/logs",
+        "kind": "bind",
+        "service": "d2c",
+        "source": "./d2c/logs",
+        "target": "/app/logs",
+        "editable": true,
+        "yaml_path": "services.d2c.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:d2c:/var/run/docker.sock",
+        "kind": "bind",
+        "service": "d2c",
+        "source": "/var/run/docker.sock",
+        "target": "/var/run/docker.sock",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.d2c.volumes[0]"
+      },
+      {
+        "id": "port:d2c:5000/tcp",
+        "kind": "port",
+        "service": "d2c",
+        "source": "5000",
+        "target": "5000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.d2c.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:adc81e8a4dbdc39cdb609e481d4975aa3c41f903262936811324f22dfdc9225b",
+  "manifest_digest": "sha256:1cb0141f373fa6cbba1984b4eed8040abf90584d126ea99fc90c4c07b3b11315",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://private-user-images.githubusercontent.com/120569020/462279771-d1b40dd7-408b-4f87-9756-a35ffe74a5da.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjY2MzEwMzgsIm5iZiI6MTc2NjYzMDczOCwicGF0aCI6Ii8xMjA1NjkwMjAvNDYyMjc5NzcxLWQxYjQwZGQ3LTQwOGItNGY4Ny05NzU2LWEzNWZmZTc0YTVkYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMjI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTIyNVQwMjQ1MzhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05YjdiZjIxYjNkOWJhNjZlODg2MGI3NTk5N2E2MmFhNzA3NWM3YTVlYmNiMjMxOTNmOWMzMWZiODY0ZGMxMzA3JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.PLH0tMZegENTKvd69w8YDEAiKLNMzmiZbtbl85gGvLI"
   ],
   "schema": [
     {
-      "name": "5000",
-      "label": "5000",
-      "description": "容器 WEB 端口",
-      "type": "port",
-      "default": "5000",
-      "category": "basic",
+      "inputId": "bind:d2c:/app/compose",
+      "name": "./d2c/compose",
+      "label": "./d2c/compose",
+      "description": "",
+      "type": "path",
+      "default": "./d2c/compose",
+      "category": "advanced",
       "serviceName": "d2c",
-      "paramType": "port"
+      "paramType": "path"
     },
     {
+      "inputId": "bind:d2c:/app/config",
+      "name": "./d2c/config",
+      "label": "./d2c/config",
+      "description": "",
+      "type": "path",
+      "default": "./d2c/config",
+      "category": "advanced",
+      "serviceName": "d2c",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:d2c:/app/logs",
+      "name": "./d2c/logs",
+      "label": "./d2c/logs",
+      "description": "",
+      "type": "path",
+      "default": "./d2c/logs",
+      "category": "advanced",
+      "serviceName": "d2c",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:d2c:/var/run/docker.sock",
       "name": "/var/run/docker.sock",
       "label": "/var/run/docker.sock",
       "description": "",
@@ -35,36 +246,18 @@
       "paramType": "path"
     },
     {
-      "name": "./d2c/compose",
-      "label": "./d2c/compose",
-      "description": "",
-      "type": "path",
-      "default": "/app/compose",
-      "category": "advanced",
+      "inputId": "port:d2c:5000/tcp",
+      "name": "5000",
+      "label": "5000",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "5000",
+      "category": "basic",
       "serviceName": "d2c",
-      "paramType": "path"
+      "paramType": "port"
     },
     {
-      "name": "./d2c/logs",
-      "label": "./d2c/logs",
-      "description": "",
-      "type": "path",
-      "default": "/app/logs",
-      "category": "advanced",
-      "serviceName": "d2c",
-      "paramType": "path"
-    },
-    {
-      "name": "./d2c/config",
-      "label": "./d2c/config",
-      "description": "",
-      "type": "path",
-      "default": "/app/config",
-      "category": "advanced",
-      "serviceName": "d2c",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:d2c:TZ",
       "name": "TZ",
       "label": "TZ",
       "description": "",
@@ -75,6 +268,5 @@
       "paramType": "env"
     }
   ],
-  "deployment_count": 4,
   "enabled": true
 }

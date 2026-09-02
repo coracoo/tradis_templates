@@ -1,0 +1,457 @@
+{
+  "id": 48,
+  "sort_order": 45,
+  "name": "bookstack",
+  "category": "knowledge",
+  "description": "BookStack 是一个简单、自托管的文档/Wiki 平台，提供直观的书籍-章节-页面层级组织，支持 Markdown、WYSIWYG 编辑、权限管理。",
+  "version": "latest",
+  "logo": "https://www.bookstackapp.com/images/logo.png",
+  "website": "https://github.com/solidnerd/docker-bookstack",
+  "tutorial": "访问地址：http://服务器IP:6875\n需搭配 MariaDB 数据库容器。\n首次登录账号 admin@admin.com / password，登录后立即修改密码。",
+  "dotenv": "DB_PASS=\n",
+  "compose": "services:\n  bookstack:\n    image: lscr.io/linuxserver/bookstack:latest\n    restart: unless-stopped\n    depends_on:\n      - bookstack_db\n    ports:\n      - \"6875:80\"\n    volumes:\n      - ./bookstack-data:/config\n    environment:\n      - DB_HOST=bookstack_db\n      - DB_USER=bookstack\n      - DB_PASS=${DB_PASS}\n      - DB_DATABASE=bookstackapp\n      - APP_URL=http://localhost:6875\n\n  bookstack_db:\n    image: lscr.io/linuxserver/mariadb:latest\n    restart: unless-stopped\n    volumes:\n      - ./bookstack-db:/config\n    environment:\n      - MYSQL_ROOT_PASSWORD=${DB_PASS}\n      - MYSQL_DATABASE=bookstackapp\n      - MYSQL_USER=bookstack\n      - MYSQL_PASSWORD=${DB_PASS}",
+  "input_metadata": {
+    "bind:bookstack:/config": {
+      "label": "./bookstack-data",
+      "description": "应用配置",
+      "group": "basic"
+    },
+    "bind:bookstack_db:/config": {
+      "label": "./bookstack-db",
+      "description": "数据库存储",
+      "group": "basic"
+    },
+    "port:bookstack:80/tcp": {
+      "label": "6875",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:DB_PASS": {
+      "label": "DB_PASS",
+      "description": "数据库密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:bookstack:APP_URL": {
+      "label": "APP_URL",
+      "description": "应用地址",
+      "group": "advanced"
+    },
+    "service:bookstack:DB_DATABASE": {
+      "label": "DB_DATABASE",
+      "description": "数据库名",
+      "group": "advanced"
+    },
+    "service:bookstack:DB_HOST": {
+      "label": "DB_HOST",
+      "description": "数据库地址",
+      "group": "advanced"
+    },
+    "service:bookstack:DB_USER": {
+      "label": "DB_USER",
+      "description": "数据库用户",
+      "group": "advanced"
+    },
+    "service:bookstack_db:MYSQL_DATABASE": {
+      "label": "MYSQL_DATABASE",
+      "description": "MariaDB 库名",
+      "group": "advanced"
+    },
+    "service:bookstack_db:MYSQL_USER": {
+      "label": "MYSQL_USER",
+      "description": "MariaDB 用户",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:15144ad5c1bf495c835184f4085e9402ed41dba1c6d6e987d1ffb405ff2cc63f",
+    "manifest_digest": "sha256:747843b801293d5b5c7f4ac27adc58f46b77799f7377246507e318b839f65608",
+    "services": [
+      "bookstack",
+      "bookstack_db"
+    ],
+    "inputs": [
+      {
+        "id": "bind:bookstack:/config",
+        "key": "./bookstack-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./bookstack-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./bookstack-data",
+          "description": "应用配置",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:bookstack_db:/config",
+        "key": "./bookstack-db",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./bookstack-db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./bookstack-db",
+          "description": "数据库存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:bookstack:80/tcp",
+        "key": "6875",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "6875",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "6875",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:DB_PASS",
+        "key": "DB_PASS",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "DB_PASS",
+          "description": "数据库密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:bookstack:APP_URL",
+        "key": "APP_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://localhost:6875",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "APP_URL",
+          "description": "应用地址",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:bookstack:DB_DATABASE",
+        "key": "DB_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "bookstackapp",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_DATABASE",
+          "description": "数据库名",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:bookstack:DB_HOST",
+        "key": "DB_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "bookstack_db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_HOST",
+          "description": "数据库地址",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:bookstack:DB_USER",
+        "key": "DB_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "bookstack",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_USER",
+          "description": "数据库用户",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:bookstack_db:MYSQL_DATABASE",
+        "key": "MYSQL_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "bookstackapp",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MYSQL_DATABASE",
+          "description": "MariaDB 库名",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:bookstack_db:MYSQL_USER",
+        "key": "MYSQL_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "bookstack",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MYSQL_USER",
+          "description": "MariaDB 用户",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:DB_PASS",
+        "service": "bookstack",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${DB_PASS}",
+        "yaml_path": "services.bookstack.environment[2]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASS",
+        "service": "bookstack_db",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${DB_PASS}",
+        "yaml_path": "services.bookstack_db.environment[0]",
+        "line": 24,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASS",
+        "service": "bookstack_db",
+        "target_kind": "interpolation",
+        "target_key": "[3]",
+        "expression": "${DB_PASS}",
+        "yaml_path": "services.bookstack_db.environment[3]",
+        "line": 27,
+        "column": 9
+      },
+      {
+        "input_id": "service:bookstack:APP_URL",
+        "service": "bookstack",
+        "target_kind": "environment",
+        "target_key": "APP_URL",
+        "yaml_path": "services.bookstack.environment[4]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:bookstack:DB_DATABASE",
+        "service": "bookstack",
+        "target_kind": "environment",
+        "target_key": "DB_DATABASE",
+        "yaml_path": "services.bookstack.environment[3]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:bookstack:DB_HOST",
+        "service": "bookstack",
+        "target_kind": "environment",
+        "target_key": "DB_HOST",
+        "yaml_path": "services.bookstack.environment[0]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:bookstack:DB_USER",
+        "service": "bookstack",
+        "target_kind": "environment",
+        "target_key": "DB_USER",
+        "yaml_path": "services.bookstack.environment[1]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:bookstack_db:MYSQL_DATABASE",
+        "service": "bookstack_db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_DATABASE",
+        "yaml_path": "services.bookstack_db.environment[1]",
+        "line": 25,
+        "column": 9
+      },
+      {
+        "input_id": "service:bookstack_db:MYSQL_USER",
+        "service": "bookstack_db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_USER",
+        "yaml_path": "services.bookstack_db.environment[2]",
+        "line": 26,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:bookstack:/config",
+        "kind": "bind",
+        "service": "bookstack",
+        "source": "./bookstack-data",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.bookstack.volumes[0]"
+      },
+      {
+        "id": "bind:bookstack_db:/config",
+        "kind": "bind",
+        "service": "bookstack_db",
+        "source": "./bookstack-db",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.bookstack_db.volumes[0]"
+      },
+      {
+        "id": "port:bookstack:80/tcp",
+        "kind": "port",
+        "service": "bookstack",
+        "source": "6875",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.bookstack.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:15144ad5c1bf495c835184f4085e9402ed41dba1c6d6e987d1ffb405ff2cc63f",
+  "manifest_digest": "sha256:747843b801293d5b5c7f4ac27adc58f46b77799f7377246507e318b839f65608",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:bookstack:/config",
+      "name": "./bookstack-data",
+      "label": "./bookstack-data",
+      "description": "应用配置",
+      "type": "path",
+      "default": "./bookstack-data",
+      "category": "basic",
+      "serviceName": "bookstack",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:bookstack_db:/config",
+      "name": "./bookstack-db",
+      "label": "./bookstack-db",
+      "description": "数据库存储",
+      "type": "path",
+      "default": "./bookstack-db",
+      "category": "basic",
+      "serviceName": "bookstack_db",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:bookstack:80/tcp",
+      "name": "6875",
+      "label": "6875",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "6875",
+      "category": "basic",
+      "serviceName": "bookstack",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:DB_PASS",
+      "name": "DB_PASS",
+      "label": "DB_PASS",
+      "description": "数据库密码",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:bookstack:APP_URL",
+      "name": "APP_URL",
+      "label": "APP_URL",
+      "description": "应用地址",
+      "type": "string",
+      "default": "http://localhost:6875",
+      "category": "advanced",
+      "serviceName": "bookstack",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:bookstack:DB_DATABASE",
+      "name": "DB_DATABASE",
+      "label": "DB_DATABASE",
+      "description": "数据库名",
+      "type": "string",
+      "default": "bookstackapp",
+      "category": "advanced",
+      "serviceName": "bookstack",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:bookstack:DB_HOST",
+      "name": "DB_HOST",
+      "label": "DB_HOST",
+      "description": "数据库地址",
+      "type": "string",
+      "default": "bookstack_db",
+      "category": "advanced",
+      "serviceName": "bookstack",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:bookstack:DB_USER",
+      "name": "DB_USER",
+      "label": "DB_USER",
+      "description": "数据库用户",
+      "type": "string",
+      "default": "bookstack",
+      "category": "advanced",
+      "serviceName": "bookstack",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:bookstack_db:MYSQL_DATABASE",
+      "name": "MYSQL_DATABASE",
+      "label": "MYSQL_DATABASE",
+      "description": "MariaDB 库名",
+      "type": "string",
+      "default": "bookstackapp",
+      "category": "advanced",
+      "serviceName": "bookstack_db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:bookstack_db:MYSQL_USER",
+      "name": "MYSQL_USER",
+      "label": "MYSQL_USER",
+      "description": "MariaDB 用户",
+      "type": "string",
+      "default": "bookstack",
+      "category": "advanced",
+      "serviceName": "bookstack_db",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

@@ -1,0 +1,181 @@
+{
+  "id": 36,
+  "sort_order": 33,
+  "name": "watchtower",
+  "category": "other",
+  "description": "Watchtower 是一个容器自动更新服务，可监控运行中的 Docker 容器镜像，发现新版本时自动拉取并重建容器。",
+  "version": "latest",
+  "logo": "https://containrrr.dev/watchtower/images/logo-450px.png",
+  "website": "https://github.com/containrrr/watchtower",
+  "tutorial": "Watchtower 无 Web 界面，运行后自动按计划（默认每 24 小时）检查镜像更新。\n通过环境变量 WATCHTOWER_SCHEDULE 设置 cron（6 字段，含秒）。\n需挂载 docker.sock。",
+  "dotenv": "",
+  "compose": "services:\n  watchtower:\n    image: containrrr/watchtower:latest\n    restart: unless-stopped\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock\n    environment:\n      - WATCHTOWER_SCHEDULE=0 0 4 * * *\n      - WATCHTOWER_CLEANUP=true\n      - WATCHTOWER_NOTIFICATIONS=shoutrrr",
+  "input_metadata": {
+    "bind:watchtower:/var/run/docker.sock": {
+      "group": "basic"
+    },
+    "service:watchtower:WATCHTOWER_CLEANUP": {
+      "group": "basic"
+    },
+    "service:watchtower:WATCHTOWER_NOTIFICATIONS": {
+      "group": "basic"
+    },
+    "service:watchtower:WATCHTOWER_SCHEDULE": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:3f5467a586a82aac023dc5d9745415229dfc5d6a8a1a1496c7917e587dcb8483",
+    "manifest_digest": "sha256:4ee53917293e6e5058e3d6c7a111c566b619fde9c79c630a60561d0da3b94e1c",
+    "services": [
+      "watchtower"
+    ],
+    "inputs": [
+      {
+        "id": "bind:watchtower:/var/run/docker.sock",
+        "key": "/var/run/docker.sock",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/var/run/docker.sock",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:watchtower:WATCHTOWER_CLEANUP",
+        "key": "WATCHTOWER_CLEANUP",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:watchtower:WATCHTOWER_NOTIFICATIONS",
+        "key": "WATCHTOWER_NOTIFICATIONS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "shoutrrr",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:watchtower:WATCHTOWER_SCHEDULE",
+        "key": "WATCHTOWER_SCHEDULE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "0 0 4 * * *",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:watchtower:WATCHTOWER_CLEANUP",
+        "service": "watchtower",
+        "target_kind": "environment",
+        "target_key": "WATCHTOWER_CLEANUP",
+        "yaml_path": "services.watchtower.environment[1]",
+        "line": 9,
+        "column": 9
+      },
+      {
+        "input_id": "service:watchtower:WATCHTOWER_NOTIFICATIONS",
+        "service": "watchtower",
+        "target_kind": "environment",
+        "target_key": "WATCHTOWER_NOTIFICATIONS",
+        "yaml_path": "services.watchtower.environment[2]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:watchtower:WATCHTOWER_SCHEDULE",
+        "service": "watchtower",
+        "target_kind": "environment",
+        "target_key": "WATCHTOWER_SCHEDULE",
+        "yaml_path": "services.watchtower.environment[0]",
+        "line": 8,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:watchtower:/var/run/docker.sock",
+        "kind": "bind",
+        "service": "watchtower",
+        "source": "/var/run/docker.sock",
+        "target": "/var/run/docker.sock",
+        "editable": true,
+        "yaml_path": "services.watchtower.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:3f5467a586a82aac023dc5d9745415229dfc5d6a8a1a1496c7917e587dcb8483",
+  "manifest_digest": "sha256:4ee53917293e6e5058e3d6c7a111c566b619fde9c79c630a60561d0da3b94e1c",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:watchtower:/var/run/docker.sock",
+      "name": "/var/run/docker.sock",
+      "label": "/var/run/docker.sock",
+      "description": "",
+      "type": "path",
+      "default": "/var/run/docker.sock",
+      "category": "basic",
+      "serviceName": "watchtower",
+      "paramType": "path"
+    },
+    {
+      "inputId": "service:watchtower:WATCHTOWER_CLEANUP",
+      "name": "WATCHTOWER_CLEANUP",
+      "label": "WATCHTOWER_CLEANUP",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "basic",
+      "serviceName": "watchtower",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:watchtower:WATCHTOWER_NOTIFICATIONS",
+      "name": "WATCHTOWER_NOTIFICATIONS",
+      "label": "WATCHTOWER_NOTIFICATIONS",
+      "description": "",
+      "type": "string",
+      "default": "shoutrrr",
+      "category": "basic",
+      "serviceName": "watchtower",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:watchtower:WATCHTOWER_SCHEDULE",
+      "name": "WATCHTOWER_SCHEDULE",
+      "label": "WATCHTOWER_SCHEDULE",
+      "description": "",
+      "type": "string",
+      "default": "0 0 4 * * *",
+      "category": "basic",
+      "serviceName": "watchtower",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

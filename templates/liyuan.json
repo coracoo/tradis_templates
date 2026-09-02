@@ -1,0 +1,159 @@
+{
+  "id": 65,
+  "sort_order": 62,
+  "name": "liyuan",
+  "category": "game",
+  "description": "以 AI Agent 为主体的角色扮演应用：记忆账本、决策卡、自建面板、世界线，兼容角色卡/世界书",
+  "version": "1.0.0",
+  "logo": "",
+  "website": "https://github.com/weidu12123/Liyuan",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  liyuan:\n    image: coracoo/cherry:liyuan_1.0\n    ports:\n      - 50000:7620\n    restart: unless-stopped\n    volumes:\n      - liyuan-agent:/root/.liyuan\n      - liyuan-state:/app/.liyuan-state\n      - liyuan-uploads:/app/.liyuan-uploads\n      - liyuan-media:/app/.liyuan-media\n      - liyuan-audio:/app/.liyuan-audio\n      - liyuan-artifacts:/app/.liyuan-artifacts\n      - liyuan-codex:/app/.liyuan-codex\n      - liyuan-lore:/app/.liyuan-lore\n        \nvolumes:\n  liyuan-agent: null\n  liyuan-artifacts: null\n  liyuan-audio: null\n  liyuan-codex: null\n  liyuan-lore: null\n  liyuan-media: null\n  liyuan-state: null\n  liyuan-uploads: null",
+  "input_metadata": {
+    "port:liyuan:7620/tcp": {
+      "label": "7620",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:c8bbab188b8fe723ecdd694c3f455a9f2093affbf039e78cc8275b21e277c595",
+    "manifest_digest": "sha256:52cc19a2a72e021d4c56078abb2493dd056be1cbfcb56835363ff905a809a1c5",
+    "services": [
+      "liyuan"
+    ],
+    "inputs": [
+      {
+        "id": "port:liyuan:7620/tcp",
+        "key": "50000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "50000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7620",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "port:liyuan:7620/tcp",
+        "kind": "port",
+        "service": "liyuan",
+        "source": "50000",
+        "target": "7620",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.liyuan.ports[0]"
+      },
+      {
+        "id": "volume:liyuan:/app/.liyuan-artifacts",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-artifacts",
+        "target": "/app/.liyuan-artifacts",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[5]",
+        "sequence_index": 5
+      },
+      {
+        "id": "volume:liyuan:/app/.liyuan-audio",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-audio",
+        "target": "/app/.liyuan-audio",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[4]",
+        "sequence_index": 4
+      },
+      {
+        "id": "volume:liyuan:/app/.liyuan-codex",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-codex",
+        "target": "/app/.liyuan-codex",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[6]",
+        "sequence_index": 6
+      },
+      {
+        "id": "volume:liyuan:/app/.liyuan-lore",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-lore",
+        "target": "/app/.liyuan-lore",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[7]",
+        "sequence_index": 7
+      },
+      {
+        "id": "volume:liyuan:/app/.liyuan-media",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-media",
+        "target": "/app/.liyuan-media",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "volume:liyuan:/app/.liyuan-state",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-state",
+        "target": "/app/.liyuan-state",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "volume:liyuan:/app/.liyuan-uploads",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-uploads",
+        "target": "/app/.liyuan-uploads",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "volume:liyuan:/root/.liyuan",
+        "kind": "volume",
+        "service": "liyuan",
+        "source": "liyuan-agent",
+        "target": "/root/.liyuan",
+        "editable": false,
+        "yaml_path": "services.liyuan.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:c8bbab188b8fe723ecdd694c3f455a9f2093affbf039e78cc8275b21e277c595",
+  "manifest_digest": "sha256:52cc19a2a72e021d4c56078abb2493dd056be1cbfcb56835363ff905a809a1c5",
+  "compiler_version": "1.0.1",
+  "screenshots": [
+    "https://github.com/weidu12123/Liyuan/blob/master/docs/images/home.png?raw=true"
+  ],
+  "schema": [
+    {
+      "inputId": "port:liyuan:7620/tcp",
+      "name": "50000",
+      "label": "7620",
+      "description": "",
+      "type": "port",
+      "default": "50000",
+      "category": "basic",
+      "serviceName": "liyuan",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

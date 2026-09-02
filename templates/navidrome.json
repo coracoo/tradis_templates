@@ -1,0 +1,270 @@
+{
+  "id": 42,
+  "sort_order": 39,
+  "name": "navidrome",
+  "category": "entertainment",
+  "description": "Navidrome 是一个开源的 Web 音乐流媒体服务器，兼容 Subsonic API，可整理你的本地音乐库，多平台客户端访问。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png",
+  "website": "https://github.com/navidrome/navidrome",
+  "tutorial": "访问地址：http://服务器IP:4533\n将音乐文件放入挂载的音乐目录（默认只读）。\n内置 SQLite，数据在 ./data。\n首次访问创建管理员账号。\n支持任意 Subsonic 兼容客户端。",
+  "dotenv": "",
+  "compose": "services:\n  navidrome:\n    image: deluan/navidrome:latest\n    restart: unless-stopped\n    ports:\n      - \"4533:4533\"\n    volumes:\n      - ./data:/data\n      - ./music:/music:ro\n    environment:\n      - ND_SCANSCHEDULE=1h\n      - ND_LOGLEVEL=info\n      - ND_SESSIONTIMEOUT=24h",
+  "input_metadata": {
+    "bind:navidrome:/data": {
+      "label": "./data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "bind:navidrome:/music": {
+      "label": "./music",
+      "description": "音乐目录(只读)",
+      "group": "basic"
+    },
+    "port:navidrome:4533/tcp": {
+      "label": "4533",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:navidrome:ND_LOGLEVEL": {
+      "group": "basic"
+    },
+    "service:navidrome:ND_SCANSCHEDULE": {
+      "label": "ND_SCANSCHEDULE",
+      "description": "扫描计划",
+      "group": "advanced"
+    },
+    "service:navidrome:ND_SESSIONTIMEOUT": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:ba1d1d09dc2bf60b9c0870558960ca47045bdd56b91246965107affd6ba5b73e",
+    "manifest_digest": "sha256:1bc6d470ee2804568dbedfa68779fe4f93e80697d6de8e74fa30634ee1346752",
+    "services": [
+      "navidrome"
+    ],
+    "inputs": [
+      {
+        "id": "bind:navidrome:/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:navidrome:/music",
+        "key": "./music",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./music",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./music",
+          "description": "音乐目录(只读)",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:navidrome:4533/tcp",
+        "key": "4533",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "4533",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "4533",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:navidrome:ND_LOGLEVEL",
+        "key": "ND_LOGLEVEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "info",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:navidrome:ND_SCANSCHEDULE",
+        "key": "ND_SCANSCHEDULE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1h",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "ND_SCANSCHEDULE",
+          "description": "扫描计划",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:navidrome:ND_SESSIONTIMEOUT",
+        "key": "ND_SESSIONTIMEOUT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "24h",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:navidrome:ND_LOGLEVEL",
+        "service": "navidrome",
+        "target_kind": "environment",
+        "target_key": "ND_LOGLEVEL",
+        "yaml_path": "services.navidrome.environment[1]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:navidrome:ND_SCANSCHEDULE",
+        "service": "navidrome",
+        "target_kind": "environment",
+        "target_key": "ND_SCANSCHEDULE",
+        "yaml_path": "services.navidrome.environment[0]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:navidrome:ND_SESSIONTIMEOUT",
+        "service": "navidrome",
+        "target_kind": "environment",
+        "target_key": "ND_SESSIONTIMEOUT",
+        "yaml_path": "services.navidrome.environment[2]",
+        "line": 13,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:navidrome:/data",
+        "kind": "bind",
+        "service": "navidrome",
+        "source": "./data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.navidrome.volumes[0]"
+      },
+      {
+        "id": "bind:navidrome:/music",
+        "kind": "bind",
+        "service": "navidrome",
+        "source": "./music",
+        "target": "/music",
+        "mode": "ro",
+        "editable": true,
+        "yaml_path": "services.navidrome.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:navidrome:4533/tcp",
+        "kind": "port",
+        "service": "navidrome",
+        "source": "4533",
+        "target": "4533",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.navidrome.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:ba1d1d09dc2bf60b9c0870558960ca47045bdd56b91246965107affd6ba5b73e",
+  "manifest_digest": "sha256:1bc6d470ee2804568dbedfa68779fe4f93e80697d6de8e74fa30634ee1346752",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:navidrome:/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./data",
+      "category": "basic",
+      "serviceName": "navidrome",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:navidrome:/music",
+      "name": "./music",
+      "label": "./music",
+      "description": "音乐目录(只读)",
+      "type": "path",
+      "default": "./music",
+      "category": "basic",
+      "serviceName": "navidrome",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:navidrome:4533/tcp",
+      "name": "4533",
+      "label": "4533",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "4533",
+      "category": "basic",
+      "serviceName": "navidrome",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:navidrome:ND_LOGLEVEL",
+      "name": "ND_LOGLEVEL",
+      "label": "ND_LOGLEVEL",
+      "description": "",
+      "type": "string",
+      "default": "info",
+      "category": "basic",
+      "serviceName": "navidrome",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:navidrome:ND_SCANSCHEDULE",
+      "name": "ND_SCANSCHEDULE",
+      "label": "ND_SCANSCHEDULE",
+      "description": "扫描计划",
+      "type": "string",
+      "default": "1h",
+      "category": "advanced",
+      "serviceName": "navidrome",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:navidrome:ND_SESSIONTIMEOUT",
+      "name": "ND_SESSIONTIMEOUT",
+      "label": "ND_SESSIONTIMEOUT",
+      "description": "",
+      "type": "string",
+      "default": "24h",
+      "category": "basic",
+      "serviceName": "navidrome",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

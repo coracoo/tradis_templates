@@ -1,0 +1,238 @@
+{
+  "id": 49,
+  "sort_order": 46,
+  "name": "freshrss",
+  "category": "knowledge",
+  "description": "FreshRSS 是一个功能丰富、自托管的 RSS 阅读器，支持订阅、过滤、全文搜索、多用户，兼容 Google Reader / Fever API。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/FreshRSS/FreshRSS/master/docs/img/FreshRSS-logo.png",
+  "website": "https://github.com/FreshRSS/FreshRSS",
+  "tutorial": "访问地址：http://服务器IP:8080\n默认 SQLite 存储，数据在 ./data。\n首次访问按向导完成配置并创建账号。\n兼容 Reeder、FeedMe 等客户端。",
+  "dotenv": "",
+  "compose": "services:\n  freshrss:\n    image: freshrss/freshrss:latest\n    restart: unless-stopped\n    ports:\n      - \"8282:80\"\n    volumes:\n      - ./data:/var/www/FreshRSS/data\n      - ./extensions:/var/www/FreshRSS/extensions\n    environment:\n      - CRON_MIN=*/10\n      - TZ=Asia/Shanghai",
+  "input_metadata": {
+    "bind:freshrss:/var/www/FreshRSS/data": {
+      "label": "./data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "bind:freshrss:/var/www/FreshRSS/extensions": {
+      "label": "./extensions",
+      "description": "扩展目录",
+      "group": "basic"
+    },
+    "port:freshrss:80/tcp": {
+      "label": "8282",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:freshrss:CRON_MIN": {
+      "label": "CRON_MIN",
+      "description": "刷新计划(cron)",
+      "group": "advanced"
+    },
+    "service:freshrss:TZ": {
+      "label": "TZ",
+      "description": "时区",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:3ee04fd0e11d3a781fc56d1491724fa5d33b0e9040898fcaa95045fc6b8e95d2",
+    "manifest_digest": "sha256:ceb5da2c7e5e53840a18a6bd1eeab7f21fa26d0cf6c097e2d9f012a8f77111db",
+    "services": [
+      "freshrss"
+    ],
+    "inputs": [
+      {
+        "id": "bind:freshrss:/var/www/FreshRSS/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:freshrss:/var/www/FreshRSS/extensions",
+        "key": "./extensions",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./extensions",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./extensions",
+          "description": "扩展目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:freshrss:80/tcp",
+        "key": "8282",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8282",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8282",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:freshrss:CRON_MIN",
+        "key": "CRON_MIN",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "*/10",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "CRON_MIN",
+          "description": "刷新计划(cron)",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:freshrss:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "description": "时区",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:freshrss:CRON_MIN",
+        "service": "freshrss",
+        "target_kind": "environment",
+        "target_key": "CRON_MIN",
+        "yaml_path": "services.freshrss.environment[0]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:freshrss:TZ",
+        "service": "freshrss",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.freshrss.environment[1]",
+        "line": 12,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:freshrss:/var/www/FreshRSS/data",
+        "kind": "bind",
+        "service": "freshrss",
+        "source": "./data",
+        "target": "/var/www/FreshRSS/data",
+        "editable": true,
+        "yaml_path": "services.freshrss.volumes[0]"
+      },
+      {
+        "id": "bind:freshrss:/var/www/FreshRSS/extensions",
+        "kind": "bind",
+        "service": "freshrss",
+        "source": "./extensions",
+        "target": "/var/www/FreshRSS/extensions",
+        "editable": true,
+        "yaml_path": "services.freshrss.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:freshrss:80/tcp",
+        "kind": "port",
+        "service": "freshrss",
+        "source": "8282",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.freshrss.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:3ee04fd0e11d3a781fc56d1491724fa5d33b0e9040898fcaa95045fc6b8e95d2",
+  "manifest_digest": "sha256:ceb5da2c7e5e53840a18a6bd1eeab7f21fa26d0cf6c097e2d9f012a8f77111db",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:freshrss:/var/www/FreshRSS/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./data",
+      "category": "basic",
+      "serviceName": "freshrss",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:freshrss:/var/www/FreshRSS/extensions",
+      "name": "./extensions",
+      "label": "./extensions",
+      "description": "扩展目录",
+      "type": "path",
+      "default": "./extensions",
+      "category": "basic",
+      "serviceName": "freshrss",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:freshrss:80/tcp",
+      "name": "8282",
+      "label": "8282",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8282",
+      "category": "basic",
+      "serviceName": "freshrss",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:freshrss:CRON_MIN",
+      "name": "CRON_MIN",
+      "label": "CRON_MIN",
+      "description": "刷新计划(cron)",
+      "type": "string",
+      "default": "*/10",
+      "category": "advanced",
+      "serviceName": "freshrss",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:freshrss:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "时区",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "freshrss",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

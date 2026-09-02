@@ -1,0 +1,449 @@
+{
+  "id": 59,
+  "sort_order": 56,
+  "name": "planka",
+  "category": "productivity",
+  "description": "Planka 是一款开源的实时看板（Kanban）项目管理工具，类似 Trello，支持卡片、清单、标签、成员协作，界面清爽。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/plankanban/planka/main/public/favicon.png",
+  "website": "https://github.com/plankanban/planka",
+  "tutorial": "访问地址：http://服务器IP:1337\n需搭配 PostgreSQL 数据库。\n首次访问创建管理员账号。\nBASE_URL 需与实际访问地址一致。",
+  "dotenv": "SECRET_KEY=\nDB_PASSWORD=\n",
+  "compose": "services:\n  planka:\n    image: ghcr.io/plankanban/planka:latest\n    restart: unless-stopped\n    depends_on: [db]\n    ports:\n      - \"1337:1337\"\n    volumes:\n      - ./user-avatars:/app/public/user-avatars\n      - ./project-background-images:/app/public/project-background-images\n      - ./attachments:/app/private/attachments\n    environment:\n      - BASE_URL=http://localhost:1337\n      - SECRET_KEY=${SECRET_KEY}\n      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@db:5432/planka\n\n  db:\n    image: postgres:16-alpine\n    restart: unless-stopped\n    volumes:\n      - ./db-data:/var/lib/postgresql/data\n    environment:\n      - POSTGRES_DB=planka\n      - POSTGRES_USER=postgres\n      - POSTGRES_PASSWORD=${DB_PASSWORD}",
+  "input_metadata": {
+    "bind:db:/var/lib/postgresql/data": {
+      "label": "./db-data",
+      "description": "数据库存储",
+      "group": "basic"
+    },
+    "bind:planka:/app/private/attachments": {
+      "label": "./attachments",
+      "description": "附件",
+      "group": "basic"
+    },
+    "bind:planka:/app/public/project-background-images": {
+      "group": "basic"
+    },
+    "bind:planka:/app/public/user-avatars": {
+      "label": "./user-avatars",
+      "description": "用户头像",
+      "group": "basic"
+    },
+    "port:planka:1337/tcp": {
+      "label": "1337",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:DB_PASSWORD": {
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:SECRET_KEY": {
+      "label": "SECRET_KEY",
+      "description": "会话密钥",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:db:POSTGRES_DB": {
+      "label": "POSTGRES_DB",
+      "description": "数据库名",
+      "group": "advanced"
+    },
+    "service:db:POSTGRES_USER": {
+      "label": "POSTGRES_USER",
+      "description": "数据库用户",
+      "group": "advanced"
+    },
+    "service:planka:BASE_URL": {
+      "label": "BASE_URL",
+      "description": "访问地址",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:68a2faecdae961d8db855b1ebcb106a4253a445c7387778d87783b94f1e71153",
+    "manifest_digest": "sha256:a5a94c444d3c922c1b7001fae129b64c302818b32a73b97b65db4198c0ebe525",
+    "services": [
+      "db",
+      "planka"
+    ],
+    "inputs": [
+      {
+        "id": "bind:db:/var/lib/postgresql/data",
+        "key": "./db-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./db-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./db-data",
+          "description": "数据库存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:planka:/app/private/attachments",
+        "key": "./attachments",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./attachments",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./attachments",
+          "description": "附件",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:planka:/app/public/project-background-images",
+        "key": "./project-background-images",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./project-background-images",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:planka:/app/public/user-avatars",
+        "key": "./user-avatars",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./user-avatars",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./user-avatars",
+          "description": "用户头像",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:planka:1337/tcp",
+        "key": "1337",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "1337",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "1337",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:DB_PASSWORD",
+        "key": "DB_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "DB_PASSWORD",
+          "description": "数据库密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:SECRET_KEY",
+        "key": "SECRET_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "SECRET_KEY",
+          "description": "会话密钥",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:db:POSTGRES_DB",
+        "key": "POSTGRES_DB",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "planka",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_DB",
+          "description": "数据库名",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:db:POSTGRES_USER",
+        "key": "POSTGRES_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_USER",
+          "description": "数据库用户",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:planka:BASE_URL",
+        "key": "BASE_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://localhost:1337",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "BASE_URL",
+          "description": "访问地址",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "db",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.db.environment[2]",
+        "line": 25,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "planka",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.planka.environment[2]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "project:SECRET_KEY",
+        "service": "planka",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${SECRET_KEY}",
+        "yaml_path": "services.planka.environment[1]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:POSTGRES_DB",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_DB",
+        "yaml_path": "services.db.environment[0]",
+        "line": 23,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:POSTGRES_USER",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_USER",
+        "yaml_path": "services.db.environment[1]",
+        "line": 24,
+        "column": 9
+      },
+      {
+        "input_id": "service:planka:BASE_URL",
+        "service": "planka",
+        "target_kind": "environment",
+        "target_key": "BASE_URL",
+        "yaml_path": "services.planka.environment[0]",
+        "line": 13,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:db:/var/lib/postgresql/data",
+        "kind": "bind",
+        "service": "db",
+        "source": "./db-data",
+        "target": "/var/lib/postgresql/data",
+        "editable": true,
+        "yaml_path": "services.db.volumes[0]"
+      },
+      {
+        "id": "bind:planka:/app/private/attachments",
+        "kind": "bind",
+        "service": "planka",
+        "source": "./attachments",
+        "target": "/app/private/attachments",
+        "editable": true,
+        "yaml_path": "services.planka.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:planka:/app/public/project-background-images",
+        "kind": "bind",
+        "service": "planka",
+        "source": "./project-background-images",
+        "target": "/app/public/project-background-images",
+        "editable": true,
+        "yaml_path": "services.planka.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:planka:/app/public/user-avatars",
+        "kind": "bind",
+        "service": "planka",
+        "source": "./user-avatars",
+        "target": "/app/public/user-avatars",
+        "editable": true,
+        "yaml_path": "services.planka.volumes[0]"
+      },
+      {
+        "id": "port:planka:1337/tcp",
+        "kind": "port",
+        "service": "planka",
+        "source": "1337",
+        "target": "1337",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.planka.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:68a2faecdae961d8db855b1ebcb106a4253a445c7387778d87783b94f1e71153",
+  "manifest_digest": "sha256:a5a94c444d3c922c1b7001fae129b64c302818b32a73b97b65db4198c0ebe525",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:db:/var/lib/postgresql/data",
+      "name": "./db-data",
+      "label": "./db-data",
+      "description": "数据库存储",
+      "type": "path",
+      "default": "./db-data",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:planka:/app/private/attachments",
+      "name": "./attachments",
+      "label": "./attachments",
+      "description": "附件",
+      "type": "path",
+      "default": "./attachments",
+      "category": "basic",
+      "serviceName": "planka",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:planka:/app/public/project-background-images",
+      "name": "./project-background-images",
+      "label": "./project-background-images",
+      "description": "",
+      "type": "path",
+      "default": "./project-background-images",
+      "category": "basic",
+      "serviceName": "planka",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:planka:/app/public/user-avatars",
+      "name": "./user-avatars",
+      "label": "./user-avatars",
+      "description": "用户头像",
+      "type": "path",
+      "default": "./user-avatars",
+      "category": "basic",
+      "serviceName": "planka",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:planka:1337/tcp",
+      "name": "1337",
+      "label": "1337",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "1337",
+      "category": "basic",
+      "serviceName": "planka",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:DB_PASSWORD",
+      "name": "DB_PASSWORD",
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:SECRET_KEY",
+      "name": "SECRET_KEY",
+      "label": "SECRET_KEY",
+      "description": "会话密钥",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:db:POSTGRES_DB",
+      "name": "POSTGRES_DB",
+      "label": "POSTGRES_DB",
+      "description": "数据库名",
+      "type": "string",
+      "default": "planka",
+      "category": "advanced",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:POSTGRES_USER",
+      "name": "POSTGRES_USER",
+      "label": "POSTGRES_USER",
+      "description": "数据库用户",
+      "type": "string",
+      "default": "postgres",
+      "category": "advanced",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:planka:BASE_URL",
+      "name": "BASE_URL",
+      "label": "BASE_URL",
+      "description": "访问地址",
+      "type": "string",
+      "default": "http://localhost:1337",
+      "category": "basic",
+      "serviceName": "planka",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

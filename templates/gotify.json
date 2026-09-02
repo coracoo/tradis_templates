@@ -1,0 +1,119 @@
+{
+  "id": 62,
+  "sort_order": 59,
+  "name": "gotify",
+  "category": "other",
+  "description": "Gotify 是一个自托发的推送通知服务器，通过简单的 HTTP API 发送消息到 Android/桌面客户端，适合自建通知/告警通道。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/gotify/server/master/.github/logo.png",
+  "website": "https://github.com/gotify/server",
+  "tutorial": "访问地址：http://服务器IP:8380\n内置 SQLite，数据在 ./gotify-data。\n首次访问注册首个用户即管理员。\nAndroid 推送需 HTTPS，建议反代。",
+  "dotenv": "",
+  "compose": "services:\n  gotify:\n    image: gotify/server\n    restart: unless-stopped\n    ports:\n      - \"8380:80\"\n    volumes:\n      - ./gotify-data:/app/data",
+  "input_metadata": {
+    "bind:gotify:/app/data": {
+      "label": "./gotify-data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:gotify:80/tcp": {
+      "label": "8380",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:c02f3c987fd33d28b5a22f2729f49922640403f1f6f2b5e92da14a1e52a2f39d",
+    "manifest_digest": "sha256:9477134cc3dd12e58bf3bc7ed53c617136375e670dc6c8047d77fbb2db074271",
+    "services": [
+      "gotify"
+    ],
+    "inputs": [
+      {
+        "id": "bind:gotify:/app/data",
+        "key": "./gotify-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./gotify-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./gotify-data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:gotify:80/tcp",
+        "key": "8380",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8380",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8380",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:gotify:/app/data",
+        "kind": "bind",
+        "service": "gotify",
+        "source": "./gotify-data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.gotify.volumes[0]"
+      },
+      {
+        "id": "port:gotify:80/tcp",
+        "kind": "port",
+        "service": "gotify",
+        "source": "8380",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.gotify.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:c02f3c987fd33d28b5a22f2729f49922640403f1f6f2b5e92da14a1e52a2f39d",
+  "manifest_digest": "sha256:9477134cc3dd12e58bf3bc7ed53c617136375e670dc6c8047d77fbb2db074271",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:gotify:/app/data",
+      "name": "./gotify-data",
+      "label": "./gotify-data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./gotify-data",
+      "category": "basic",
+      "serviceName": "gotify",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:gotify:80/tcp",
+      "name": "8380",
+      "label": "8380",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8380",
+      "category": "basic",
+      "serviceName": "gotify",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

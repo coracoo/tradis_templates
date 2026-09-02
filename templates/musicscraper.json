@@ -10,11 +10,166 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "version: '3'\nservices:\n  music-scraper:\n    image: minzgo/music-scraper:latest\n    container_name: music-scraper\n    ports:\n      - \"7301:7301\"\n    volumes:\n      - ./music:/app/music\n      - ./data:/app/data\n    environment:\n      - TZ=Asia/Shanghai\n    restart: unless-stopped",
+  "input_metadata": {
+    "bind:music-scraper:/app/data": {
+      "label": "./data",
+      "group": "advanced"
+    },
+    "bind:music-scraper:/app/music": {
+      "label": "./music",
+      "description": "自行修改音乐位置",
+      "group": "basic"
+    },
+    "port:music-scraper:7301/tcp": {
+      "label": "7301",
+      "group": "basic"
+    },
+    "service:music-scraper:TZ": {
+      "label": "TZ",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:64d29588b96ccbb5882f122b49021c819c85d46a718ee20be7aa425d7fdc763f",
+    "manifest_digest": "sha256:c7adcbb8dfc8acd89996ea140a9f8144b100f2ca52249e25a99c1580d6089e56",
+    "services": [
+      "music-scraper"
+    ],
+    "inputs": [
+      {
+        "id": "bind:music-scraper:/app/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:music-scraper:/app/music",
+        "key": "./music",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./music",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./music",
+          "description": "自行修改音乐位置",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:music-scraper:7301/tcp",
+        "key": "7301",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7301",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7301",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:music-scraper:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:music-scraper:TZ",
+        "service": "music-scraper",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.music-scraper.environment[0]",
+        "line": 12,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:music-scraper:/app/data",
+        "kind": "bind",
+        "service": "music-scraper",
+        "source": "./data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.music-scraper.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:music-scraper:/app/music",
+        "kind": "bind",
+        "service": "music-scraper",
+        "source": "./music",
+        "target": "/app/music",
+        "editable": true,
+        "yaml_path": "services.music-scraper.volumes[0]"
+      },
+      {
+        "id": "port:music-scraper:7301/tcp",
+        "kind": "port",
+        "service": "music-scraper",
+        "source": "7301",
+        "target": "7301",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.music-scraper.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:64d29588b96ccbb5882f122b49021c819c85d46a718ee20be7aa425d7fdc763f",
+  "manifest_digest": "sha256:c7adcbb8dfc8acd89996ea140a9f8144b100f2ca52249e25a99c1580d6089e56",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/SimonLYU/MusicScraper/raw/main/docs/images/screenshot-progress.png"
   ],
   "schema": [
     {
+      "inputId": "bind:music-scraper:/app/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
+      "serviceName": "music-scraper",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:music-scraper:/app/music",
+      "name": "./music",
+      "label": "./music",
+      "description": "自行修改音乐位置",
+      "type": "path",
+      "default": "./music",
+      "category": "basic",
+      "serviceName": "music-scraper",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:music-scraper:7301/tcp",
       "name": "7301",
       "label": "7301",
       "description": "",
@@ -25,16 +180,7 @@
       "paramType": "port"
     },
     {
-      "name": "./music",
-      "label": "./music",
-      "description": "自行修改音乐位置",
-      "type": "path",
-      "default": "/app/music",
-      "category": "basic",
-      "serviceName": "music-scraper",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:music-scraper:TZ",
       "name": "TZ",
       "label": "TZ",
       "description": "",
@@ -43,18 +189,7 @@
       "category": "advanced",
       "serviceName": "music-scraper",
       "paramType": "env"
-    },
-    {
-      "name": "./data",
-      "label": "./data",
-      "description": "",
-      "type": "path",
-      "default": "/app/data",
-      "category": "advanced",
-      "serviceName": "music-scraper",
-      "paramType": "path"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

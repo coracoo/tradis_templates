@@ -1,0 +1,239 @@
+{
+  "id": 43,
+  "sort_order": 40,
+  "name": "audiobookshelf",
+  "category": "entertainment",
+  "description": "Audiobookshelf 是一个自托管的有声书和播客媒体服务器，支持元数据管理、播放进度同步、用户管理，提供 iOS/Android 客户端。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/advplyr/audiobookshelf/master/static/Logo.svg",
+  "website": "https://github.com/advplyr/audiobookshelf",
+  "tutorial": "访问地址：http://服务器IP:13378\n容器内部端口为 80。\n有声书放入 ./audiobooks，播客放入 ./podcasts。\n配置和元数据分别存于 ./config 和 ./metadata。\n首次访问创建管理员账号。",
+  "dotenv": "",
+  "compose": "services:\n  audiobookshelf:\n    image: ghcr.io/advplyr/audiobookshelf:latest\n    restart: unless-stopped\n    ports:\n      - \"13378:80\"\n    volumes:\n      - ./audiobooks:/audiobooks\n      - ./podcasts:/podcasts\n      - ./metadata:/metadata\n      - ./config:/config",
+  "input_metadata": {
+    "bind:audiobookshelf:/audiobooks": {
+      "label": "./audiobooks",
+      "description": "有声书目录",
+      "group": "basic"
+    },
+    "bind:audiobookshelf:/config": {
+      "label": "./config",
+      "description": "配置",
+      "group": "basic"
+    },
+    "bind:audiobookshelf:/metadata": {
+      "label": "./metadata",
+      "description": "元数据",
+      "group": "basic"
+    },
+    "bind:audiobookshelf:/podcasts": {
+      "label": "./podcasts",
+      "description": "播客目录",
+      "group": "basic"
+    },
+    "port:audiobookshelf:80/tcp": {
+      "label": "13378",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:ac600782a11817a0893735377db2dd31d85f275a6b995dbc341f4a66ba17238e",
+    "manifest_digest": "sha256:43212d6c23e0dc00b537ab736d1590001b8aba9eaca4b739e7971310c7785bf8",
+    "services": [
+      "audiobookshelf"
+    ],
+    "inputs": [
+      {
+        "id": "bind:audiobookshelf:/audiobooks",
+        "key": "./audiobooks",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./audiobooks",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./audiobooks",
+          "description": "有声书目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:audiobookshelf:/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "description": "配置",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:audiobookshelf:/metadata",
+        "key": "./metadata",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./metadata",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./metadata",
+          "description": "元数据",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:audiobookshelf:/podcasts",
+        "key": "./podcasts",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./podcasts",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./podcasts",
+          "description": "播客目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:audiobookshelf:80/tcp",
+        "key": "13378",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "13378",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "13378",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:audiobookshelf:/audiobooks",
+        "kind": "bind",
+        "service": "audiobookshelf",
+        "source": "./audiobooks",
+        "target": "/audiobooks",
+        "editable": true,
+        "yaml_path": "services.audiobookshelf.volumes[0]"
+      },
+      {
+        "id": "bind:audiobookshelf:/config",
+        "kind": "bind",
+        "service": "audiobookshelf",
+        "source": "./config",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.audiobookshelf.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "bind:audiobookshelf:/metadata",
+        "kind": "bind",
+        "service": "audiobookshelf",
+        "source": "./metadata",
+        "target": "/metadata",
+        "editable": true,
+        "yaml_path": "services.audiobookshelf.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:audiobookshelf:/podcasts",
+        "kind": "bind",
+        "service": "audiobookshelf",
+        "source": "./podcasts",
+        "target": "/podcasts",
+        "editable": true,
+        "yaml_path": "services.audiobookshelf.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:audiobookshelf:80/tcp",
+        "kind": "port",
+        "service": "audiobookshelf",
+        "source": "13378",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.audiobookshelf.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:ac600782a11817a0893735377db2dd31d85f275a6b995dbc341f4a66ba17238e",
+  "manifest_digest": "sha256:43212d6c23e0dc00b537ab736d1590001b8aba9eaca4b739e7971310c7785bf8",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:audiobookshelf:/audiobooks",
+      "name": "./audiobooks",
+      "label": "./audiobooks",
+      "description": "有声书目录",
+      "type": "path",
+      "default": "./audiobooks",
+      "category": "basic",
+      "serviceName": "audiobookshelf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:audiobookshelf:/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "配置",
+      "type": "path",
+      "default": "./config",
+      "category": "basic",
+      "serviceName": "audiobookshelf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:audiobookshelf:/metadata",
+      "name": "./metadata",
+      "label": "./metadata",
+      "description": "元数据",
+      "type": "path",
+      "default": "./metadata",
+      "category": "basic",
+      "serviceName": "audiobookshelf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:audiobookshelf:/podcasts",
+      "name": "./podcasts",
+      "label": "./podcasts",
+      "description": "播客目录",
+      "type": "path",
+      "default": "./podcasts",
+      "category": "basic",
+      "serviceName": "audiobookshelf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:audiobookshelf:80/tcp",
+      "name": "13378",
+      "label": "13378",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "13378",
+      "category": "basic",
+      "serviceName": "audiobookshelf",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

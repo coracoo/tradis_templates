@@ -1,0 +1,119 @@
+{
+  "id": 57,
+  "sort_order": 54,
+  "name": "actual-budget",
+  "category": "hobby",
+  "description": "Actual Budget 是一款开源的本地优先个人预算应用，支持预算规划、账户同步、加密同步，提供强大的预算工作流。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/actualbudget/actual/master/packages/desktop-client/public/icons/favicon-512.png",
+  "website": "https://github.com/actualbudget/actual",
+  "tutorial": "访问地址：http://服务器IP:5006\n首次访问创建管理员账号。\n所有预算数据与加密密钥在 ./actual-data，务必备份。\n本地优先架构，服务器只做同步。",
+  "dotenv": "",
+  "compose": "services:\n  actual-server:\n    image: actualbudget/actual-server:latest\n    restart: unless-stopped\n    ports:\n      - \"5006:5006\"\n    volumes:\n      - ./actual-data:/data",
+  "input_metadata": {
+    "bind:actual-server:/data": {
+      "label": "./actual-data",
+      "description": "数据存储(务必备份)",
+      "group": "basic"
+    },
+    "port:actual-server:5006/tcp": {
+      "label": "5006",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:d4ac6e2be989a20a37469ce69ab5e0a59db9ea1d0b3f6659759e1b1c2f34297a",
+    "manifest_digest": "sha256:93ebec200ca75fe84f30e1f6b784c488f1dabf2c9d540831e6b5a2dc5ab93987",
+    "services": [
+      "actual-server"
+    ],
+    "inputs": [
+      {
+        "id": "bind:actual-server:/data",
+        "key": "./actual-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./actual-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./actual-data",
+          "description": "数据存储(务必备份)",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:actual-server:5006/tcp",
+        "key": "5006",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5006",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "5006",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:actual-server:/data",
+        "kind": "bind",
+        "service": "actual-server",
+        "source": "./actual-data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.actual-server.volumes[0]"
+      },
+      {
+        "id": "port:actual-server:5006/tcp",
+        "kind": "port",
+        "service": "actual-server",
+        "source": "5006",
+        "target": "5006",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.actual-server.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:d4ac6e2be989a20a37469ce69ab5e0a59db9ea1d0b3f6659759e1b1c2f34297a",
+  "manifest_digest": "sha256:93ebec200ca75fe84f30e1f6b784c488f1dabf2c9d540831e6b5a2dc5ab93987",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:actual-server:/data",
+      "name": "./actual-data",
+      "label": "./actual-data",
+      "description": "数据存储(务必备份)",
+      "type": "path",
+      "default": "./actual-data",
+      "category": "basic",
+      "serviceName": "actual-server",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:actual-server:5006/tcp",
+      "name": "5006",
+      "label": "5006",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "5006",
+      "category": "basic",
+      "serviceName": "actual-server",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

@@ -1,0 +1,956 @@
+{
+  "id": 53,
+  "sort_order": 50,
+  "name": "dify",
+  "category": "productivity",
+  "description": "Dify 是开源的 LLM 应用开发平台，支持可视化编排工作流、RAG、Agent、模型管理，一键构建 AI 助手、知识库、工作流应用。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/langgenius/dify/main/web/app/components/base/logo/logo-site.svg",
+  "website": "https://github.com/langgenius/dify",
+  "tutorial": "访问地址：http://服务器IP:80\n首次访问创建管理员账号。\n此为简化部署（api+web+worker+nginx+postgres+redis+weaviate）。\n数据库与向量数据持久化在 ./volumes 目录。",
+  "dotenv": "SECRET_KEY=\nDB_PASSWORD=\n",
+  "compose": "services:\n  nginx:\n    image: nginx:latest\n    restart: unless-stopped\n    depends_on: [api, web]\n    ports:\n      - \"80:80\"\n    volumes:\n      - ./volumes/nginx/conf.d:/etc/nginx/conf.d\n\n  api:\n    image: langgenius/dify-api:latest\n    restart: unless-stopped\n    depends_on: [db, redis]\n    volumes:\n      - ./volumes/app/storage:/app/api/storage\n    environment:\n      - SECRET_KEY=${SECRET_KEY}\n      - DB_USERNAME=postgres\n      - DB_PASSWORD=${DB_PASSWORD}\n      - DB_HOST=db\n      - DB_PORT=5432\n      - DB_DATABASE=dify\n      - REDIS_HOST=redis\n      - REDIS_PORT=6379\n      - VECTOR_STORE=weaviate\n      - WEAVIATE_ENDPOINT=http://weaviate:8080\n\n  worker:\n    image: langgenius/dify-api:latest\n    restart: unless-stopped\n    depends_on: [api]\n    command: celery -A app.celery worker -P gevent -c 1\n    environment:\n      - DB_USERNAME=postgres\n      - DB_PASSWORD=${DB_PASSWORD}\n      - DB_HOST=db\n      - DB_DATABASE=dify\n      - REDIS_HOST=redis\n\n  web:\n    image: langgenius/dify-web:latest\n    restart: unless-stopped\n\n  db:\n    image: postgres:15-alpine\n    restart: unless-stopped\n    volumes:\n      - ./volumes/db/data:/var/lib/postgresql/data\n    environment:\n      - POSTGRES_USER=postgres\n      - POSTGRES_PASSWORD=${DB_PASSWORD}\n      - POSTGRES_DB=dify\n\n  redis:\n    image: redis:7-alpine\n    restart: unless-stopped\n    volumes:\n      - ./volumes/redis/data:/data\n\n  weaviate:\n    image: semitechnologies/weaviate:1.24.4\n    restart: unless-stopped\n    volumes:\n      - ./volumes/weaviate:/var/lib/weaviate\n    environment:\n      - PERSISTENCE_DATA_PATH=/var/lib/weaviate\n      - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true",
+  "input_metadata": {
+    "bind:api:/app/api/storage": {
+      "label": "./volumes/app/storage",
+      "description": "应用存储",
+      "group": "basic"
+    },
+    "bind:db:/var/lib/postgresql/data": {
+      "label": "./volumes/db/data",
+      "description": "数据库存储",
+      "group": "basic"
+    },
+    "bind:nginx:/etc/nginx/conf.d": {
+      "group": "basic"
+    },
+    "bind:redis:/data": {
+      "label": "./volumes/redis/data",
+      "description": "Redis 存储",
+      "group": "basic"
+    },
+    "bind:weaviate:/var/lib/weaviate": {
+      "label": "./volumes/weaviate",
+      "description": "向量库存储",
+      "group": "basic"
+    },
+    "port:nginx:80/tcp": {
+      "label": "80",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:DB_PASSWORD": {
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:SECRET_KEY": {
+      "label": "SECRET_KEY",
+      "description": "API 密钥",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:api:DB_DATABASE": {
+      "group": "basic"
+    },
+    "service:api:DB_HOST": {
+      "label": "DB_HOST",
+      "description": "数据库地址",
+      "group": "advanced"
+    },
+    "service:api:DB_PORT": {
+      "group": "basic"
+    },
+    "service:api:DB_USERNAME": {
+      "group": "basic"
+    },
+    "service:api:REDIS_HOST": {
+      "label": "REDIS_HOST",
+      "description": "Redis 地址",
+      "group": "advanced"
+    },
+    "service:api:REDIS_PORT": {
+      "group": "basic"
+    },
+    "service:api:VECTOR_STORE": {
+      "label": "VECTOR_STORE",
+      "description": "向量库类型",
+      "group": "advanced"
+    },
+    "service:api:WEAVIATE_ENDPOINT": {
+      "group": "basic"
+    },
+    "service:db:POSTGRES_DB": {
+      "group": "basic"
+    },
+    "service:db:POSTGRES_USER": {
+      "group": "basic"
+    },
+    "service:weaviate:AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED": {
+      "group": "basic"
+    },
+    "service:weaviate:PERSISTENCE_DATA_PATH": {
+      "group": "basic"
+    },
+    "service:worker:DB_DATABASE": {
+      "group": "basic"
+    },
+    "service:worker:DB_HOST": {
+      "group": "basic"
+    },
+    "service:worker:DB_USERNAME": {
+      "group": "basic"
+    },
+    "service:worker:REDIS_HOST": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:fa58cd11ebfccba6cc1c61171c5ba9d1cf5eb3db6c1099af26d3d4997146378a",
+    "manifest_digest": "sha256:f478d66e4651a389f0d70b76bacd701dd1005093c792ab8f1f0063c2963cf9ae",
+    "services": [
+      "api",
+      "db",
+      "nginx",
+      "redis",
+      "weaviate",
+      "web",
+      "worker"
+    ],
+    "inputs": [
+      {
+        "id": "bind:api:/app/api/storage",
+        "key": "./volumes/app/storage",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./volumes/app/storage",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./volumes/app/storage",
+          "description": "应用存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:db:/var/lib/postgresql/data",
+        "key": "./volumes/db/data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./volumes/db/data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./volumes/db/data",
+          "description": "数据库存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:nginx:/etc/nginx/conf.d",
+        "key": "./volumes/nginx/conf.d",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./volumes/nginx/conf.d",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:redis:/data",
+        "key": "./volumes/redis/data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./volumes/redis/data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./volumes/redis/data",
+          "description": "Redis 存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:weaviate:/var/lib/weaviate",
+        "key": "./volumes/weaviate",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./volumes/weaviate",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./volumes/weaviate",
+          "description": "向量库存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:nginx:80/tcp",
+        "key": "80",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "80",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "80",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:DB_PASSWORD",
+        "key": "DB_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "DB_PASSWORD",
+          "description": "数据库密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:SECRET_KEY",
+        "key": "SECRET_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "SECRET_KEY",
+          "description": "API 密钥",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:api:DB_DATABASE",
+        "key": "DB_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "dify",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:api:DB_HOST",
+        "key": "DB_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DB_HOST",
+          "description": "数据库地址",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:api:DB_PORT",
+        "key": "DB_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "5432",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:api:DB_USERNAME",
+        "key": "DB_USERNAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:api:REDIS_HOST",
+        "key": "REDIS_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "REDIS_HOST",
+          "description": "Redis 地址",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:api:REDIS_PORT",
+        "key": "REDIS_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "6379",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:api:VECTOR_STORE",
+        "key": "VECTOR_STORE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "weaviate",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "VECTOR_STORE",
+          "description": "向量库类型",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:api:WEAVIATE_ENDPOINT",
+        "key": "WEAVIATE_ENDPOINT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://weaviate:8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:POSTGRES_DB",
+        "key": "POSTGRES_DB",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "dify",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:POSTGRES_USER",
+        "key": "POSTGRES_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:weaviate:AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED",
+        "key": "AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:weaviate:PERSISTENCE_DATA_PATH",
+        "key": "PERSISTENCE_DATA_PATH",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/var/lib/weaviate",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:worker:DB_DATABASE",
+        "key": "DB_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "dify",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:worker:DB_HOST",
+        "key": "DB_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:worker:DB_USERNAME",
+        "key": "DB_USERNAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:worker:REDIS_HOST",
+        "key": "REDIS_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.api.environment[2]",
+        "line": 20,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "db",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.db.environment[1]",
+        "line": 52,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "worker",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.worker.environment[1]",
+        "line": 36,
+        "column": 9
+      },
+      {
+        "input_id": "project:SECRET_KEY",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${SECRET_KEY}",
+        "yaml_path": "services.api.environment[0]",
+        "line": 18,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:DB_DATABASE",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "DB_DATABASE",
+        "yaml_path": "services.api.environment[5]",
+        "line": 23,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:DB_HOST",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "DB_HOST",
+        "yaml_path": "services.api.environment[3]",
+        "line": 21,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:DB_PORT",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "DB_PORT",
+        "yaml_path": "services.api.environment[4]",
+        "line": 22,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:DB_USERNAME",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "DB_USERNAME",
+        "yaml_path": "services.api.environment[1]",
+        "line": 19,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:REDIS_HOST",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "REDIS_HOST",
+        "yaml_path": "services.api.environment[6]",
+        "line": 24,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:REDIS_PORT",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "REDIS_PORT",
+        "yaml_path": "services.api.environment[7]",
+        "line": 25,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:VECTOR_STORE",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "VECTOR_STORE",
+        "yaml_path": "services.api.environment[8]",
+        "line": 26,
+        "column": 9
+      },
+      {
+        "input_id": "service:api:WEAVIATE_ENDPOINT",
+        "service": "api",
+        "target_kind": "environment",
+        "target_key": "WEAVIATE_ENDPOINT",
+        "yaml_path": "services.api.environment[9]",
+        "line": 27,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:POSTGRES_DB",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_DB",
+        "yaml_path": "services.db.environment[2]",
+        "line": 53,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:POSTGRES_USER",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_USER",
+        "yaml_path": "services.db.environment[0]",
+        "line": 51,
+        "column": 9
+      },
+      {
+        "input_id": "service:weaviate:AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED",
+        "service": "weaviate",
+        "target_kind": "environment",
+        "target_key": "AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED",
+        "yaml_path": "services.weaviate.environment[1]",
+        "line": 68,
+        "column": 9
+      },
+      {
+        "input_id": "service:weaviate:PERSISTENCE_DATA_PATH",
+        "service": "weaviate",
+        "target_kind": "environment",
+        "target_key": "PERSISTENCE_DATA_PATH",
+        "yaml_path": "services.weaviate.environment[0]",
+        "line": 67,
+        "column": 9
+      },
+      {
+        "input_id": "service:worker:DB_DATABASE",
+        "service": "worker",
+        "target_kind": "environment",
+        "target_key": "DB_DATABASE",
+        "yaml_path": "services.worker.environment[3]",
+        "line": 38,
+        "column": 9
+      },
+      {
+        "input_id": "service:worker:DB_HOST",
+        "service": "worker",
+        "target_kind": "environment",
+        "target_key": "DB_HOST",
+        "yaml_path": "services.worker.environment[2]",
+        "line": 37,
+        "column": 9
+      },
+      {
+        "input_id": "service:worker:DB_USERNAME",
+        "service": "worker",
+        "target_kind": "environment",
+        "target_key": "DB_USERNAME",
+        "yaml_path": "services.worker.environment[0]",
+        "line": 35,
+        "column": 9
+      },
+      {
+        "input_id": "service:worker:REDIS_HOST",
+        "service": "worker",
+        "target_kind": "environment",
+        "target_key": "REDIS_HOST",
+        "yaml_path": "services.worker.environment[4]",
+        "line": 39,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:api:/app/api/storage",
+        "kind": "bind",
+        "service": "api",
+        "source": "./volumes/app/storage",
+        "target": "/app/api/storage",
+        "editable": true,
+        "yaml_path": "services.api.volumes[0]"
+      },
+      {
+        "id": "bind:db:/var/lib/postgresql/data",
+        "kind": "bind",
+        "service": "db",
+        "source": "./volumes/db/data",
+        "target": "/var/lib/postgresql/data",
+        "editable": true,
+        "yaml_path": "services.db.volumes[0]"
+      },
+      {
+        "id": "bind:nginx:/etc/nginx/conf.d",
+        "kind": "bind",
+        "service": "nginx",
+        "source": "./volumes/nginx/conf.d",
+        "target": "/etc/nginx/conf.d",
+        "editable": true,
+        "yaml_path": "services.nginx.volumes[0]"
+      },
+      {
+        "id": "bind:redis:/data",
+        "kind": "bind",
+        "service": "redis",
+        "source": "./volumes/redis/data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.redis.volumes[0]"
+      },
+      {
+        "id": "bind:weaviate:/var/lib/weaviate",
+        "kind": "bind",
+        "service": "weaviate",
+        "source": "./volumes/weaviate",
+        "target": "/var/lib/weaviate",
+        "editable": true,
+        "yaml_path": "services.weaviate.volumes[0]"
+      },
+      {
+        "id": "port:nginx:80/tcp",
+        "kind": "port",
+        "service": "nginx",
+        "source": "80",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.nginx.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:fa58cd11ebfccba6cc1c61171c5ba9d1cf5eb3db6c1099af26d3d4997146378a",
+  "manifest_digest": "sha256:f478d66e4651a389f0d70b76bacd701dd1005093c792ab8f1f0063c2963cf9ae",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:api:/app/api/storage",
+      "name": "./volumes/app/storage",
+      "label": "./volumes/app/storage",
+      "description": "应用存储",
+      "type": "path",
+      "default": "./volumes/app/storage",
+      "category": "basic",
+      "serviceName": "api",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:db:/var/lib/postgresql/data",
+      "name": "./volumes/db/data",
+      "label": "./volumes/db/data",
+      "description": "数据库存储",
+      "type": "path",
+      "default": "./volumes/db/data",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:nginx:/etc/nginx/conf.d",
+      "name": "./volumes/nginx/conf.d",
+      "label": "./volumes/nginx/conf.d",
+      "description": "",
+      "type": "path",
+      "default": "./volumes/nginx/conf.d",
+      "category": "basic",
+      "serviceName": "nginx",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:redis:/data",
+      "name": "./volumes/redis/data",
+      "label": "./volumes/redis/data",
+      "description": "Redis 存储",
+      "type": "path",
+      "default": "./volumes/redis/data",
+      "category": "basic",
+      "serviceName": "redis",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:weaviate:/var/lib/weaviate",
+      "name": "./volumes/weaviate",
+      "label": "./volumes/weaviate",
+      "description": "向量库存储",
+      "type": "path",
+      "default": "./volumes/weaviate",
+      "category": "basic",
+      "serviceName": "weaviate",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:nginx:80/tcp",
+      "name": "80",
+      "label": "80",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "nginx",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:DB_PASSWORD",
+      "name": "DB_PASSWORD",
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:SECRET_KEY",
+      "name": "SECRET_KEY",
+      "label": "SECRET_KEY",
+      "description": "API 密钥",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:api:DB_DATABASE",
+      "name": "DB_DATABASE",
+      "label": "DB_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "dify",
+      "category": "basic",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:api:DB_HOST",
+      "name": "DB_HOST",
+      "label": "DB_HOST",
+      "description": "数据库地址",
+      "type": "string",
+      "default": "db",
+      "category": "advanced",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:api:DB_PORT",
+      "name": "DB_PORT",
+      "label": "DB_PORT",
+      "description": "",
+      "type": "string",
+      "default": "5432",
+      "category": "basic",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:api:DB_USERNAME",
+      "name": "DB_USERNAME",
+      "label": "DB_USERNAME",
+      "description": "",
+      "type": "string",
+      "default": "postgres",
+      "category": "basic",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:api:REDIS_HOST",
+      "name": "REDIS_HOST",
+      "label": "REDIS_HOST",
+      "description": "Redis 地址",
+      "type": "string",
+      "default": "redis",
+      "category": "advanced",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:api:REDIS_PORT",
+      "name": "REDIS_PORT",
+      "label": "REDIS_PORT",
+      "description": "",
+      "type": "string",
+      "default": "6379",
+      "category": "basic",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:api:VECTOR_STORE",
+      "name": "VECTOR_STORE",
+      "label": "VECTOR_STORE",
+      "description": "向量库类型",
+      "type": "string",
+      "default": "weaviate",
+      "category": "advanced",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:api:WEAVIATE_ENDPOINT",
+      "name": "WEAVIATE_ENDPOINT",
+      "label": "WEAVIATE_ENDPOINT",
+      "description": "",
+      "type": "string",
+      "default": "http://weaviate:8080",
+      "category": "basic",
+      "serviceName": "api",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:POSTGRES_DB",
+      "name": "POSTGRES_DB",
+      "label": "POSTGRES_DB",
+      "description": "",
+      "type": "string",
+      "default": "dify",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:POSTGRES_USER",
+      "name": "POSTGRES_USER",
+      "label": "POSTGRES_USER",
+      "description": "",
+      "type": "string",
+      "default": "postgres",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:weaviate:AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED",
+      "name": "AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED",
+      "label": "AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "basic",
+      "serviceName": "weaviate",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:weaviate:PERSISTENCE_DATA_PATH",
+      "name": "PERSISTENCE_DATA_PATH",
+      "label": "PERSISTENCE_DATA_PATH",
+      "description": "",
+      "type": "string",
+      "default": "/var/lib/weaviate",
+      "category": "basic",
+      "serviceName": "weaviate",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:worker:DB_DATABASE",
+      "name": "DB_DATABASE",
+      "label": "DB_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "dify",
+      "category": "basic",
+      "serviceName": "worker",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:worker:DB_HOST",
+      "name": "DB_HOST",
+      "label": "DB_HOST",
+      "description": "",
+      "type": "string",
+      "default": "db",
+      "category": "basic",
+      "serviceName": "worker",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:worker:DB_USERNAME",
+      "name": "DB_USERNAME",
+      "label": "DB_USERNAME",
+      "description": "",
+      "type": "string",
+      "default": "postgres",
+      "category": "basic",
+      "serviceName": "worker",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:worker:REDIS_HOST",
+      "name": "REDIS_HOST",
+      "label": "REDIS_HOST",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "basic",
+      "serviceName": "worker",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

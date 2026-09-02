@@ -1,0 +1,276 @@
+{
+  "id": 40,
+  "sort_order": 37,
+  "name": "vaultwarden",
+  "category": "network",
+  "description": "Vaultwarden 是用 Rust 编写的轻量级 Bitwarden 服务器 API 实现，兼容官方 Bitwarden 客户端，内置 SQLite，资源占用极低。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon.svg",
+  "website": "https://github.com/dani-garcia/vaultwarden",
+  "tutorial": "访问地址：http://服务器IP:80\n强烈建议通过反向代理启用 HTTPS（Bitwarden 客户端要求 TLS）。\n设置 DOMAIN 为你的访问地址，附件/邀请链接才正确。\n首次访问注册账号，建议关闭公开注册 SIGNUPS_ALLOWED=false。",
+  "dotenv": "ADMIN_TOKEN=\n",
+  "compose": "services:\n  vaultwarden:\n    image: vaultwarden/server:latest\n    restart: unless-stopped\n    ports:\n      - \"8080:80\"\n    volumes:\n      - ./vw-data:/data\n    environment:\n      - DOMAIN=https://bw.example.com\n      - SIGNUPS_ALLOWED=true\n      - ADMIN_TOKEN=${ADMIN_TOKEN}\n      - WEBSOCKET_ENABLED=true",
+  "input_metadata": {
+    "bind:vaultwarden:/data": {
+      "label": "./vw-data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:vaultwarden:80/tcp": {
+      "label": "8080",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:ADMIN_TOKEN": {
+      "label": "ADMIN_TOKEN",
+      "description": "管理面板令牌",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:vaultwarden:DOMAIN": {
+      "label": "DOMAIN",
+      "description": "访问域名",
+      "group": "basic"
+    },
+    "service:vaultwarden:SIGNUPS_ALLOWED": {
+      "label": "SIGNUPS_ALLOWED",
+      "description": "允许公开注册",
+      "group": "advanced"
+    },
+    "service:vaultwarden:WEBSOCKET_ENABLED": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:d2d8c9144f0dd31fedd878172ec0d101d988c8bd9ea215b4a20e2ed247a91463",
+    "manifest_digest": "sha256:42735d89f4aa4363588a3aa3a389d1724efecf9988541e57521280144ed0a632",
+    "services": [
+      "vaultwarden"
+    ],
+    "inputs": [
+      {
+        "id": "bind:vaultwarden:/data",
+        "key": "./vw-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./vw-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./vw-data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:vaultwarden:80/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:ADMIN_TOKEN",
+        "key": "ADMIN_TOKEN",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "ADMIN_TOKEN",
+          "description": "管理面板令牌",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:vaultwarden:DOMAIN",
+        "key": "DOMAIN",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "https://bw.example.com",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DOMAIN",
+          "description": "访问域名",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:vaultwarden:SIGNUPS_ALLOWED",
+        "key": "SIGNUPS_ALLOWED",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "SIGNUPS_ALLOWED",
+          "description": "允许公开注册",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:vaultwarden:WEBSOCKET_ENABLED",
+        "key": "WEBSOCKET_ENABLED",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:ADMIN_TOKEN",
+        "service": "vaultwarden",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${ADMIN_TOKEN}",
+        "yaml_path": "services.vaultwarden.environment[2]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:vaultwarden:DOMAIN",
+        "service": "vaultwarden",
+        "target_kind": "environment",
+        "target_key": "DOMAIN",
+        "yaml_path": "services.vaultwarden.environment[0]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:vaultwarden:SIGNUPS_ALLOWED",
+        "service": "vaultwarden",
+        "target_kind": "environment",
+        "target_key": "SIGNUPS_ALLOWED",
+        "yaml_path": "services.vaultwarden.environment[1]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:vaultwarden:WEBSOCKET_ENABLED",
+        "service": "vaultwarden",
+        "target_kind": "environment",
+        "target_key": "WEBSOCKET_ENABLED",
+        "yaml_path": "services.vaultwarden.environment[3]",
+        "line": 13,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:vaultwarden:/data",
+        "kind": "bind",
+        "service": "vaultwarden",
+        "source": "./vw-data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.vaultwarden.volumes[0]"
+      },
+      {
+        "id": "port:vaultwarden:80/tcp",
+        "kind": "port",
+        "service": "vaultwarden",
+        "source": "8080",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.vaultwarden.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:d2d8c9144f0dd31fedd878172ec0d101d988c8bd9ea215b4a20e2ed247a91463",
+  "manifest_digest": "sha256:42735d89f4aa4363588a3aa3a389d1724efecf9988541e57521280144ed0a632",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:vaultwarden:/data",
+      "name": "./vw-data",
+      "label": "./vw-data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./vw-data",
+      "category": "basic",
+      "serviceName": "vaultwarden",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:vaultwarden:80/tcp",
+      "name": "8080",
+      "label": "8080",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8080",
+      "category": "basic",
+      "serviceName": "vaultwarden",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:ADMIN_TOKEN",
+      "name": "ADMIN_TOKEN",
+      "label": "ADMIN_TOKEN",
+      "description": "管理面板令牌",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:vaultwarden:DOMAIN",
+      "name": "DOMAIN",
+      "label": "DOMAIN",
+      "description": "访问域名",
+      "type": "string",
+      "default": "https://bw.example.com",
+      "category": "basic",
+      "serviceName": "vaultwarden",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:vaultwarden:SIGNUPS_ALLOWED",
+      "name": "SIGNUPS_ALLOWED",
+      "label": "SIGNUPS_ALLOWED",
+      "description": "允许公开注册",
+      "type": "string",
+      "default": "true",
+      "category": "advanced",
+      "serviceName": "vaultwarden",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:vaultwarden:WEBSOCKET_ENABLED",
+      "name": "WEBSOCKET_ENABLED",
+      "label": "WEBSOCKET_ENABLED",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "basic",
+      "serviceName": "vaultwarden",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

@@ -10,49 +10,1622 @@
   "tutorial": "",
   "dotenv": "# 时区\nTIMEZONE=Asia/Shanghai\n# 容器网段\nSUBNET_PREFIX=169.254.15\n# 中间件密码\nPOSTGRES_PASSWORD=Cherry!3d\u0026!3\nNATS_PASSWORD=Cherry!3d\u0026!3\nJWT_SECRET=Cherry!3d\u0026!3\nS3_SECRET_KEY=Cherry!3d\u0026!3\nQDRANT_API_KEY=Cherry!3d\u0026!3\nREDIS_PASSWORD=Cherry!3d\u0026!3\n# 管理后台登录密码\nADMIN_PASSWORD=Cherry!3d\u0026!3\n# 管理后台访问端口\nADMIN_PORT=2443\n",
   "compose": "services:\n  caddy:\n    container_name: panda-wiki-caddy\n    restart: always\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-caddy:2.10-alpine\n    cap_add:\n      - NET_ADMIN\n    volumes:\n      - ./data/caddy/caddy_config:/config\n      - ./data/caddy/caddy_data:/data\n      - ./data/caddy/run:/var/run/caddy\n    environment:\n      - CADDY_ADMIN=unix//var/run/caddy/caddy-admin.sock\n    network_mode: host\n  nginx:\n    container_name: panda-wiki-nginx\n    depends_on:\n      - api\n    restart: always\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-nginx:v3.58.0\n    ports:\n      - 8080:8080\n    volumes:\n      - ./data/nginx/ssl:/etc/nginx/ssl\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.111\"\n  app:\n    container_name: panda-wiki-app\n    restart: always\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-app:v3.58.0\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.112\"\n  api:\n    container_name: panda-wiki-api\n    depends_on:\n      - postgres\n      - nats\n      - caddy\n      - raglite\n    restart: always\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-api:v3.58.0\n    volumes:\n      - ./data/caddy/run:/app/run\n      - ./data/nginx/ssl:/app/etc/nginx/ssl\n      - ./data/conf/api:/data\n    environment:\n      - NATS_PASSWORD=${NATS_PASSWORD}\n      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}\n      - REDIS_PASSWORD=${REDIS_PASSWORD}\n      - S3_SECRET_KEY=${S3_SECRET_KEY}\n      - JWT_SECRET=${JWT_SECRET}\n      - ADMIN_PASSWORD=${ADMIN_PASSWORD}\n      - SUBNET_PREFIX=${SUBNET_PREFIX}\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.2\"\n  consumer:\n    container_name: panda-wiki-consumer\n    depends_on:\n      - nats\n      - api\n      - raglite\n    restart: always\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-consumer:v3.58.0\n    environment:\n      - NATS_PASSWORD=${NATS_PASSWORD}\n      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}\n      - REDIS_PASSWORD=${REDIS_PASSWORD}\n      - S3_SECRET_KEY=${S3_SECRET_KEY}\n      - JWT_SECRET=${JWT_SECRET}\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.3\"\n  postgres:\n    container_name: panda-wiki-postgres\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/postgres-zhparser:17.6-bookworm\n    restart: always\n    healthcheck:\n      test: [\"CMD\", \"pg_isready\", \"-U\", \"panda-wiki\", \"-d\", \"panda-wiki\"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n      start_period: 10s\n    environment:\n      - POSTGRES_USER=panda-wiki\n      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}\n      - POSTGRES_DB=panda-wiki\n    volumes:\n      - ./data/postgres:/var/lib/postgresql/data\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.10\"\n  redis:\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-redis:7.4.2-alpine\n    container_name: panda-wiki-redis\n    restart: always\n    command: [\"redis-server\", \"--requirepass\", \"${REDIS_PASSWORD}\", \"--appendonly\", \"yes\", \"--appendfilename\", \"appendonly.aof\", \"--save\", \"900 1\", \"--save\", \"300 10\", \"--save\", \"60 10000\"]\n    volumes:\n      - ./data/redis:/data\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.11\"\n  minio:\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-minio:RELEASE.2025-04-22T22-12-26Z-cpuv1\n    container_name: panda-wiki-minio\n    restart: always\n    command: [\"minio\", \"server\", \"/data\", \"--console-address\", \":9001\"]\n    volumes:\n      - ./data/minio:/data\n    environment:\n      - MINIO_ACCESS_KEY=s3panda-wiki\n      - MINIO_SECRET_KEY=${S3_SECRET_KEY}\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.12\"\n  nats:\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-nats:2.11.3-alpine\n    container_name: panda-wiki-nats\n    restart: always\n    command: [\"nats-server\", \"-c\", \"/etc/nats/nats.conf\", \"--user\", \"panda-wiki\", \"--pass\", \"${NATS_PASSWORD}\"]\n    volumes:\n      - ./data/nats:/data\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.13\"\n  qdrant:\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-qdrant:v1.14.1\n    container_name: panda-wiki-qdrant\n    restart: always\n    volumes:\n      - ./data/qdrant:/qdrant/storage\n    environment:\n      - QDRANT__SERVICE__API_KEY=${QDRANT_API_KEY}\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.14\"\n  crawler:\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/anydoc:v0.7.1\n    container_name: panda-wiki-crawler\n    restart: always\n    init: true\n    environment:\n      - GLOG_GLOBAL_LEVEL=info\n      - NAMESPACE=anydoc\n      - MQ_NATS_URL=nats://panda-wiki-nats:4222\n      - MQ_NATS_USER=panda-wiki\n      - MQ_NATS_PASSWORD=${NATS_PASSWORD}\n      - OSS_MINIO_ACCESS_KEY=s3panda-wiki\n      - OSS_MINIO_SECRET_KEY=${S3_SECRET_KEY}\n      - OSS_MINIO_ENDPOINT=panda-wiki-minio:9000\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.17\"\n  raglite:\n    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/raglite:v2.6.3\n    container_name: panda-wiki-raglite\n    restart: always\n    volumes:\n      - ./data/raglite:/data\n    environment:\n      - GIN_MODE=release\n      - DATABASE_POSTGRESQL_HOST=panda-wiki-postgres\n      - DATABASE_POSTGRESQL_USER=panda-wiki\n      - DATABASE_POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}\n      - DATABASE_QDRANT_HOST=panda-wiki-qdrant\n      - DATABASE_QDRANT_API_KEY=${QDRANT_API_KEY}\n      - STORAGE_MINIO_ENDPOINT=panda-wiki-minio:9000\n      - STORAGE_MINIO_ACCESS_KEY_ID=s3panda-wiki\n      - STORAGE_MINIO_SECRET_ACCESS_KEY=${S3_SECRET_KEY}\n      - NATS_URL=nats://panda-wiki-nats:4222\n      - NATS_USER=panda-wiki\n      - NATS_PASSWORD=${NATS_PASSWORD}\n      - EMBEDDER_RPM=800\n      - LLM_RPM=50\n    depends_on:\n      - postgres\n      - minio\n      - qdrant\n    networks:\n      panda-wiki:\n        ipv4_address: \"${SUBNET_PREFIX:-169.254.15}.18\"\n\nnetworks:\n  panda-wiki:\n    ipam:\n      driver: default\n      config:\n        - subnet: \"${SUBNET_PREFIX:-169.254.15}.0/24\"\n",
+  "input_metadata": {
+    "bind:api:/app/etc/nginx/ssl": {
+      "label": "./data/nginx/ssl",
+      "group": "advanced"
+    },
+    "bind:api:/app/run": {
+      "label": "./data/caddy/run",
+      "group": "advanced"
+    },
+    "bind:api:/data": {
+      "label": "./data/conf/api",
+      "group": "advanced"
+    },
+    "bind:caddy:/config": {
+      "label": "./data/caddy/caddy_config",
+      "group": "advanced"
+    },
+    "bind:caddy:/data": {
+      "label": "./data/caddy/caddy_data",
+      "group": "advanced"
+    },
+    "bind:caddy:/var/run/caddy": {
+      "label": "./data/caddy/run",
+      "group": "advanced"
+    },
+    "bind:minio:/data": {
+      "label": "./data/minio",
+      "group": "advanced"
+    },
+    "bind:nats:/data": {
+      "label": "./data/nats",
+      "group": "advanced"
+    },
+    "bind:nginx:/etc/nginx/ssl": {
+      "label": "./data/nginx/ssl",
+      "group": "advanced"
+    },
+    "bind:postgres:/var/lib/postgresql/data": {
+      "label": "./data/postgres",
+      "group": "advanced"
+    },
+    "bind:qdrant:/qdrant/storage": {
+      "label": "./data/qdrant",
+      "group": "advanced"
+    },
+    "bind:raglite:/data": {
+      "label": "./data/raglite",
+      "group": "advanced"
+    },
+    "bind:redis:/data": {
+      "label": "./data/redis",
+      "group": "advanced"
+    },
+    "port:nginx:8080/tcp": {
+      "label": "8080",
+      "group": "basic"
+    },
+    "project:ADMIN_PASSWORD": {
+      "label": "ADMIN_PASSWORD",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:ADMIN_PORT": {
+      "group": "basic"
+    },
+    "project:JWT_SECRET": {
+      "label": "JWT_SECRET",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:NATS_PASSWORD": {
+      "label": "NATS_PASSWORD",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:POSTGRES_PASSWORD": {
+      "label": "POSTGRES_PASSWORD",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:QDRANT_API_KEY": {
+      "label": "QDRANT_API_KEY",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:REDIS_PASSWORD": {
+      "label": "REDIS_PASSWORD",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:S3_SECRET_KEY": {
+      "label": "S3_SECRET_KEY",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:SUBNET_PREFIX": {
+      "label": "SUBNET_PREFIX",
+      "group": "basic"
+    },
+    "project:TIMEZONE": {
+      "group": "basic"
+    },
+    "service:caddy:CADDY_ADMIN": {
+      "label": "CADDY_ADMIN",
+      "group": "advanced"
+    },
+    "service:crawler:GLOG_GLOBAL_LEVEL": {
+      "label": "GLOG_GLOBAL_LEVEL",
+      "group": "advanced"
+    },
+    "service:crawler:MQ_NATS_URL": {
+      "label": "MQ_NATS_URL",
+      "group": "advanced"
+    },
+    "service:crawler:MQ_NATS_USER": {
+      "label": "MQ_NATS_USER",
+      "group": "advanced"
+    },
+    "service:crawler:NAMESPACE": {
+      "label": "NAMESPACE",
+      "group": "advanced"
+    },
+    "service:crawler:OSS_MINIO_ACCESS_KEY": {
+      "label": "OSS_MINIO_ACCESS_KEY",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:crawler:OSS_MINIO_ENDPOINT": {
+      "label": "OSS_MINIO_ENDPOINT",
+      "group": "advanced"
+    },
+    "service:minio:MINIO_ACCESS_KEY": {
+      "label": "MINIO_ACCESS_KEY",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:postgres:POSTGRES_DB": {
+      "label": "POSTGRES_DB",
+      "group": "advanced"
+    },
+    "service:postgres:POSTGRES_USER": {
+      "label": "POSTGRES_USER",
+      "group": "advanced"
+    },
+    "service:raglite:DATABASE_POSTGRESQL_HOST": {
+      "label": "DATABASE_POSTGRESQL_HOST",
+      "group": "advanced"
+    },
+    "service:raglite:DATABASE_POSTGRESQL_USER": {
+      "label": "DATABASE_POSTGRESQL_USER",
+      "group": "advanced"
+    },
+    "service:raglite:DATABASE_QDRANT_HOST": {
+      "label": "DATABASE_QDRANT_HOST",
+      "group": "advanced"
+    },
+    "service:raglite:EMBEDDER_RPM": {
+      "label": "EMBEDDER_RPM",
+      "group": "advanced"
+    },
+    "service:raglite:GIN_MODE": {
+      "label": "GIN_MODE",
+      "group": "advanced"
+    },
+    "service:raglite:LLM_RPM": {
+      "label": "LLM_RPM",
+      "group": "advanced"
+    },
+    "service:raglite:NATS_URL": {
+      "label": "NATS_URL",
+      "group": "advanced"
+    },
+    "service:raglite:NATS_USER": {
+      "label": "NATS_USER",
+      "group": "advanced"
+    },
+    "service:raglite:STORAGE_MINIO_ACCESS_KEY_ID": {
+      "label": "STORAGE_MINIO_ACCESS_KEY_ID",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:raglite:STORAGE_MINIO_ENDPOINT": {
+      "label": "STORAGE_MINIO_ENDPOINT",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:5d1d86b082948d6532df3a486a0ced27e982f7da0f512dab745a8c9f6e0b93db",
+    "manifest_digest": "sha256:b2bf577ebd42e35ac2f2105a2641404291759727a13cd2f9bb5593cbb4112abb",
+    "services": [
+      "api",
+      "app",
+      "caddy",
+      "consumer",
+      "crawler",
+      "minio",
+      "nats",
+      "nginx",
+      "postgres",
+      "qdrant",
+      "raglite",
+      "redis"
+    ],
+    "inputs": [
+      {
+        "id": "bind:api:/app/etc/nginx/ssl",
+        "key": "./data/nginx/ssl",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/nginx/ssl",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/nginx/ssl",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:api:/app/run",
+        "key": "./data/caddy/run",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/caddy/run",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/caddy/run",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:api:/data",
+        "key": "./data/conf/api",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/conf/api",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/conf/api",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:caddy:/config",
+        "key": "./data/caddy/caddy_config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/caddy/caddy_config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/caddy/caddy_config",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:caddy:/data",
+        "key": "./data/caddy/caddy_data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/caddy/caddy_data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/caddy/caddy_data",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:caddy:/var/run/caddy",
+        "key": "./data/caddy/run",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/caddy/run",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/caddy/run",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:minio:/data",
+        "key": "./data/minio",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/minio",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/minio",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:nats:/data",
+        "key": "./data/nats",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/nats",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/nats",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:nginx:/etc/nginx/ssl",
+        "key": "./data/nginx/ssl",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/nginx/ssl",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/nginx/ssl",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:postgres:/var/lib/postgresql/data",
+        "key": "./data/postgres",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/postgres",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:qdrant:/qdrant/storage",
+        "key": "./data/qdrant",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/qdrant",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/qdrant",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:raglite:/data",
+        "key": "./data/raglite",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/raglite",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/raglite",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:redis:/data",
+        "key": "./data/redis",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/redis",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:nginx:8080/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:ADMIN_PASSWORD",
+        "key": "ADMIN_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Cherry!3d\u0026!3",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "ADMIN_PASSWORD",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:ADMIN_PORT",
+        "key": "ADMIN_PORT",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "2443",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:JWT_SECRET",
+        "key": "JWT_SECRET",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Cherry!3d\u0026!3",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "JWT_SECRET",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:NATS_PASSWORD",
+        "key": "NATS_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Cherry!3d\u0026!3",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "NATS_PASSWORD",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:POSTGRES_PASSWORD",
+        "key": "POSTGRES_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Cherry!3d\u0026!3",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "POSTGRES_PASSWORD",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:QDRANT_API_KEY",
+        "key": "QDRANT_API_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Cherry!3d\u0026!3",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "QDRANT_API_KEY",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:REDIS_PASSWORD",
+        "key": "REDIS_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Cherry!3d\u0026!3",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "REDIS_PASSWORD",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:S3_SECRET_KEY",
+        "key": "S3_SECRET_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Cherry!3d\u0026!3",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "S3_SECRET_KEY",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:SUBNET_PREFIX",
+        "key": "SUBNET_PREFIX",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "169.254.15",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "SUBNET_PREFIX",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:TIMEZONE",
+        "key": "TIMEZONE",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:caddy:CADDY_ADMIN",
+        "key": "CADDY_ADMIN",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "unix//var/run/caddy/caddy-admin.sock",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "CADDY_ADMIN",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:crawler:GLOG_GLOBAL_LEVEL",
+        "key": "GLOG_GLOBAL_LEVEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "info",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "GLOG_GLOBAL_LEVEL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:crawler:MQ_NATS_URL",
+        "key": "MQ_NATS_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nats://panda-wiki-nats:4222",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MQ_NATS_URL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:crawler:MQ_NATS_USER",
+        "key": "MQ_NATS_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "MQ_NATS_USER",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:crawler:NAMESPACE",
+        "key": "NAMESPACE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "anydoc",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NAMESPACE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:crawler:OSS_MINIO_ACCESS_KEY",
+        "key": "OSS_MINIO_ACCESS_KEY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "s3panda-wiki",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "OSS_MINIO_ACCESS_KEY",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:crawler:OSS_MINIO_ENDPOINT",
+        "key": "OSS_MINIO_ENDPOINT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki-minio:9000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "OSS_MINIO_ENDPOINT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:minio:MINIO_ACCESS_KEY",
+        "key": "MINIO_ACCESS_KEY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "s3panda-wiki",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "MINIO_ACCESS_KEY",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:postgres:POSTGRES_DB",
+        "key": "POSTGRES_DB",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_DB",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:postgres:POSTGRES_USER",
+        "key": "POSTGRES_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_USER",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:DATABASE_POSTGRESQL_HOST",
+        "key": "DATABASE_POSTGRESQL_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki-postgres",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_POSTGRESQL_HOST",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:DATABASE_POSTGRESQL_USER",
+        "key": "DATABASE_POSTGRESQL_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_POSTGRESQL_USER",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:DATABASE_QDRANT_HOST",
+        "key": "DATABASE_QDRANT_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki-qdrant",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_QDRANT_HOST",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:EMBEDDER_RPM",
+        "key": "EMBEDDER_RPM",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "800",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "EMBEDDER_RPM",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:GIN_MODE",
+        "key": "GIN_MODE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "release",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "GIN_MODE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:LLM_RPM",
+        "key": "LLM_RPM",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "50",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LLM_RPM",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:NATS_URL",
+        "key": "NATS_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nats://panda-wiki-nats:4222",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NATS_URL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:NATS_USER",
+        "key": "NATS_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NATS_USER",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:raglite:STORAGE_MINIO_ACCESS_KEY_ID",
+        "key": "STORAGE_MINIO_ACCESS_KEY_ID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "s3panda-wiki",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "STORAGE_MINIO_ACCESS_KEY_ID",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:raglite:STORAGE_MINIO_ENDPOINT",
+        "key": "STORAGE_MINIO_ENDPOINT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "panda-wiki-minio:9000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "STORAGE_MINIO_ENDPOINT",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:ADMIN_PASSWORD",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[5]",
+        "expression": "${ADMIN_PASSWORD}",
+        "yaml_path": "services.api.environment[5]",
+        "line": 54,
+        "column": 9
+      },
+      {
+        "input_id": "project:JWT_SECRET",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[4]",
+        "expression": "${JWT_SECRET}",
+        "yaml_path": "services.api.environment[4]",
+        "line": 53,
+        "column": 9
+      },
+      {
+        "input_id": "project:JWT_SECRET",
+        "service": "consumer",
+        "target_kind": "interpolation",
+        "target_key": "[4]",
+        "expression": "${JWT_SECRET}",
+        "yaml_path": "services.consumer.environment[4]",
+        "line": 72,
+        "column": 9
+      },
+      {
+        "input_id": "project:NATS_PASSWORD",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${NATS_PASSWORD}",
+        "yaml_path": "services.api.environment[0]",
+        "line": 49,
+        "column": 9
+      },
+      {
+        "input_id": "project:NATS_PASSWORD",
+        "service": "consumer",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${NATS_PASSWORD}",
+        "yaml_path": "services.consumer.environment[0]",
+        "line": 68,
+        "column": 9
+      },
+      {
+        "input_id": "project:NATS_PASSWORD",
+        "service": "crawler",
+        "target_kind": "interpolation",
+        "target_key": "[4]",
+        "expression": "${NATS_PASSWORD}",
+        "yaml_path": "services.crawler.environment[4]",
+        "line": 149,
+        "column": 9
+      },
+      {
+        "input_id": "project:NATS_PASSWORD",
+        "service": "nats",
+        "target_kind": "interpolation",
+        "target_key": "[6]",
+        "expression": "${NATS_PASSWORD}",
+        "yaml_path": "services.nats.command[6]",
+        "line": 122,
+        "column": 93
+      },
+      {
+        "input_id": "project:NATS_PASSWORD",
+        "service": "raglite",
+        "target_kind": "interpolation",
+        "target_key": "[11]",
+        "expression": "${NATS_PASSWORD}",
+        "yaml_path": "services.raglite.environment[11]",
+        "line": 174,
+        "column": 9
+      },
+      {
+        "input_id": "project:POSTGRES_PASSWORD",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${POSTGRES_PASSWORD}",
+        "yaml_path": "services.api.environment[1]",
+        "line": 50,
+        "column": 9
+      },
+      {
+        "input_id": "project:POSTGRES_PASSWORD",
+        "service": "consumer",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${POSTGRES_PASSWORD}",
+        "yaml_path": "services.consumer.environment[1]",
+        "line": 69,
+        "column": 9
+      },
+      {
+        "input_id": "project:POSTGRES_PASSWORD",
+        "service": "postgres",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${POSTGRES_PASSWORD}",
+        "yaml_path": "services.postgres.environment[1]",
+        "line": 88,
+        "column": 9
+      },
+      {
+        "input_id": "project:POSTGRES_PASSWORD",
+        "service": "raglite",
+        "target_kind": "interpolation",
+        "target_key": "[3]",
+        "expression": "${POSTGRES_PASSWORD}",
+        "yaml_path": "services.raglite.environment[3]",
+        "line": 166,
+        "column": 9
+      },
+      {
+        "input_id": "project:QDRANT_API_KEY",
+        "service": "qdrant",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${QDRANT_API_KEY}",
+        "yaml_path": "services.qdrant.environment[0]",
+        "line": 135,
+        "column": 9
+      },
+      {
+        "input_id": "project:QDRANT_API_KEY",
+        "service": "raglite",
+        "target_kind": "interpolation",
+        "target_key": "[5]",
+        "expression": "${QDRANT_API_KEY}",
+        "yaml_path": "services.raglite.environment[5]",
+        "line": 168,
+        "column": 9
+      },
+      {
+        "input_id": "project:REDIS_PASSWORD",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${REDIS_PASSWORD}",
+        "yaml_path": "services.api.environment[2]",
+        "line": 51,
+        "column": 9
+      },
+      {
+        "input_id": "project:REDIS_PASSWORD",
+        "service": "consumer",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${REDIS_PASSWORD}",
+        "yaml_path": "services.consumer.environment[2]",
+        "line": 70,
+        "column": 9
+      },
+      {
+        "input_id": "project:REDIS_PASSWORD",
+        "service": "redis",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${REDIS_PASSWORD}",
+        "yaml_path": "services.redis.command[2]",
+        "line": 99,
+        "column": 48
+      },
+      {
+        "input_id": "project:S3_SECRET_KEY",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[3]",
+        "expression": "${S3_SECRET_KEY}",
+        "yaml_path": "services.api.environment[3]",
+        "line": 52,
+        "column": 9
+      },
+      {
+        "input_id": "project:S3_SECRET_KEY",
+        "service": "consumer",
+        "target_kind": "interpolation",
+        "target_key": "[3]",
+        "expression": "${S3_SECRET_KEY}",
+        "yaml_path": "services.consumer.environment[3]",
+        "line": 71,
+        "column": 9
+      },
+      {
+        "input_id": "project:S3_SECRET_KEY",
+        "service": "crawler",
+        "target_kind": "interpolation",
+        "target_key": "[6]",
+        "expression": "${S3_SECRET_KEY}",
+        "yaml_path": "services.crawler.environment[6]",
+        "line": 151,
+        "column": 9
+      },
+      {
+        "input_id": "project:S3_SECRET_KEY",
+        "service": "minio",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${S3_SECRET_KEY}",
+        "yaml_path": "services.minio.environment[1]",
+        "line": 114,
+        "column": 9
+      },
+      {
+        "input_id": "project:S3_SECRET_KEY",
+        "service": "raglite",
+        "target_kind": "interpolation",
+        "target_key": "[8]",
+        "expression": "${S3_SECRET_KEY}",
+        "yaml_path": "services.raglite.environment[8]",
+        "line": 171,
+        "column": 9
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "target_kind": "interpolation",
+        "target_key": "subnet",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "networks.panda-wiki.ipam.config[0].subnet",
+        "line": 190,
+        "column": 19
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "[6]",
+        "expression": "${SUBNET_PREFIX}",
+        "yaml_path": "services.api.environment[6]",
+        "line": 55,
+        "column": 9
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "api",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.api.networks.panda-wiki.ipv4_address",
+        "line": 58,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "app",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.app.networks.panda-wiki.ipv4_address",
+        "line": 34,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "consumer",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.consumer.networks.panda-wiki.ipv4_address",
+        "line": 75,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "crawler",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.crawler.networks.panda-wiki.ipv4_address",
+        "line": 155,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "minio",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.minio.networks.panda-wiki.ipv4_address",
+        "line": 117,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "nats",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.nats.networks.panda-wiki.ipv4_address",
+        "line": 127,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "nginx",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.nginx.networks.panda-wiki.ipv4_address",
+        "line": 27,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "postgres",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.postgres.networks.panda-wiki.ipv4_address",
+        "line": 94,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "qdrant",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.qdrant.networks.panda-wiki.ipv4_address",
+        "line": 138,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "raglite",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.raglite.networks.panda-wiki.ipv4_address",
+        "line": 183,
+        "column": 23
+      },
+      {
+        "input_id": "project:SUBNET_PREFIX",
+        "service": "redis",
+        "target_kind": "interpolation",
+        "target_key": "ipv4_address",
+        "expression": "${SUBNET_PREFIX:-169.254.15}",
+        "yaml_path": "services.redis.networks.panda-wiki.ipv4_address",
+        "line": 104,
+        "column": 23
+      },
+      {
+        "input_id": "service:caddy:CADDY_ADMIN",
+        "service": "caddy",
+        "target_kind": "environment",
+        "target_key": "CADDY_ADMIN",
+        "yaml_path": "services.caddy.environment[0]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:crawler:GLOG_GLOBAL_LEVEL",
+        "service": "crawler",
+        "target_kind": "environment",
+        "target_key": "GLOG_GLOBAL_LEVEL",
+        "yaml_path": "services.crawler.environment[0]",
+        "line": 145,
+        "column": 9
+      },
+      {
+        "input_id": "service:crawler:MQ_NATS_URL",
+        "service": "crawler",
+        "target_kind": "environment",
+        "target_key": "MQ_NATS_URL",
+        "yaml_path": "services.crawler.environment[2]",
+        "line": 147,
+        "column": 9
+      },
+      {
+        "input_id": "service:crawler:MQ_NATS_USER",
+        "service": "crawler",
+        "target_kind": "environment",
+        "target_key": "MQ_NATS_USER",
+        "yaml_path": "services.crawler.environment[3]",
+        "line": 148,
+        "column": 9
+      },
+      {
+        "input_id": "service:crawler:NAMESPACE",
+        "service": "crawler",
+        "target_kind": "environment",
+        "target_key": "NAMESPACE",
+        "yaml_path": "services.crawler.environment[1]",
+        "line": 146,
+        "column": 9
+      },
+      {
+        "input_id": "service:crawler:OSS_MINIO_ACCESS_KEY",
+        "service": "crawler",
+        "target_kind": "environment",
+        "target_key": "OSS_MINIO_ACCESS_KEY",
+        "yaml_path": "services.crawler.environment[5]",
+        "line": 150,
+        "column": 9
+      },
+      {
+        "input_id": "service:crawler:OSS_MINIO_ENDPOINT",
+        "service": "crawler",
+        "target_kind": "environment",
+        "target_key": "OSS_MINIO_ENDPOINT",
+        "yaml_path": "services.crawler.environment[7]",
+        "line": 152,
+        "column": 9
+      },
+      {
+        "input_id": "service:minio:MINIO_ACCESS_KEY",
+        "service": "minio",
+        "target_kind": "environment",
+        "target_key": "MINIO_ACCESS_KEY",
+        "yaml_path": "services.minio.environment[0]",
+        "line": 113,
+        "column": 9
+      },
+      {
+        "input_id": "service:postgres:POSTGRES_DB",
+        "service": "postgres",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_DB",
+        "yaml_path": "services.postgres.environment[2]",
+        "line": 89,
+        "column": 9
+      },
+      {
+        "input_id": "service:postgres:POSTGRES_USER",
+        "service": "postgres",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_USER",
+        "yaml_path": "services.postgres.environment[0]",
+        "line": 87,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:DATABASE_POSTGRESQL_HOST",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "DATABASE_POSTGRESQL_HOST",
+        "yaml_path": "services.raglite.environment[1]",
+        "line": 164,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:DATABASE_POSTGRESQL_USER",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "DATABASE_POSTGRESQL_USER",
+        "yaml_path": "services.raglite.environment[2]",
+        "line": 165,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:DATABASE_QDRANT_HOST",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "DATABASE_QDRANT_HOST",
+        "yaml_path": "services.raglite.environment[4]",
+        "line": 167,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:EMBEDDER_RPM",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "EMBEDDER_RPM",
+        "yaml_path": "services.raglite.environment[12]",
+        "line": 175,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:GIN_MODE",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "GIN_MODE",
+        "yaml_path": "services.raglite.environment[0]",
+        "line": 163,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:LLM_RPM",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "LLM_RPM",
+        "yaml_path": "services.raglite.environment[13]",
+        "line": 176,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:NATS_URL",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "NATS_URL",
+        "yaml_path": "services.raglite.environment[9]",
+        "line": 172,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:NATS_USER",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "NATS_USER",
+        "yaml_path": "services.raglite.environment[10]",
+        "line": 173,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:STORAGE_MINIO_ACCESS_KEY_ID",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "STORAGE_MINIO_ACCESS_KEY_ID",
+        "yaml_path": "services.raglite.environment[7]",
+        "line": 170,
+        "column": 9
+      },
+      {
+        "input_id": "service:raglite:STORAGE_MINIO_ENDPOINT",
+        "service": "raglite",
+        "target_kind": "environment",
+        "target_key": "STORAGE_MINIO_ENDPOINT",
+        "yaml_path": "services.raglite.environment[6]",
+        "line": 169,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:api:/app/etc/nginx/ssl",
+        "kind": "bind",
+        "service": "api",
+        "source": "./data/nginx/ssl",
+        "target": "/app/etc/nginx/ssl",
+        "editable": true,
+        "yaml_path": "services.api.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:api:/app/run",
+        "kind": "bind",
+        "service": "api",
+        "source": "./data/caddy/run",
+        "target": "/app/run",
+        "editable": true,
+        "yaml_path": "services.api.volumes[0]"
+      },
+      {
+        "id": "bind:api:/data",
+        "kind": "bind",
+        "service": "api",
+        "source": "./data/conf/api",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.api.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:caddy:/config",
+        "kind": "bind",
+        "service": "caddy",
+        "source": "./data/caddy/caddy_config",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.caddy.volumes[0]"
+      },
+      {
+        "id": "bind:caddy:/data",
+        "kind": "bind",
+        "service": "caddy",
+        "source": "./data/caddy/caddy_data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.caddy.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:caddy:/var/run/caddy",
+        "kind": "bind",
+        "service": "caddy",
+        "source": "./data/caddy/run",
+        "target": "/var/run/caddy",
+        "editable": true,
+        "yaml_path": "services.caddy.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:minio:/data",
+        "kind": "bind",
+        "service": "minio",
+        "source": "./data/minio",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.minio.volumes[0]"
+      },
+      {
+        "id": "bind:nats:/data",
+        "kind": "bind",
+        "service": "nats",
+        "source": "./data/nats",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.nats.volumes[0]"
+      },
+      {
+        "id": "bind:nginx:/etc/nginx/ssl",
+        "kind": "bind",
+        "service": "nginx",
+        "source": "./data/nginx/ssl",
+        "target": "/etc/nginx/ssl",
+        "editable": true,
+        "yaml_path": "services.nginx.volumes[0]"
+      },
+      {
+        "id": "bind:postgres:/var/lib/postgresql/data",
+        "kind": "bind",
+        "service": "postgres",
+        "source": "./data/postgres",
+        "target": "/var/lib/postgresql/data",
+        "editable": true,
+        "yaml_path": "services.postgres.volumes[0]"
+      },
+      {
+        "id": "bind:qdrant:/qdrant/storage",
+        "kind": "bind",
+        "service": "qdrant",
+        "source": "./data/qdrant",
+        "target": "/qdrant/storage",
+        "editable": true,
+        "yaml_path": "services.qdrant.volumes[0]"
+      },
+      {
+        "id": "bind:raglite:/data",
+        "kind": "bind",
+        "service": "raglite",
+        "source": "./data/raglite",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.raglite.volumes[0]"
+      },
+      {
+        "id": "bind:redis:/data",
+        "kind": "bind",
+        "service": "redis",
+        "source": "./data/redis",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.redis.volumes[0]"
+      },
+      {
+        "id": "port:nginx:8080/tcp",
+        "kind": "port",
+        "service": "nginx",
+        "source": "8080",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.nginx.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:5d1d86b082948d6532df3a486a0ced27e982f7da0f512dab745a8c9f6e0b93db",
+  "manifest_digest": "sha256:b2bf577ebd42e35ac2f2105a2641404291759727a13cd2f9bb5593cbb4112abb",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
-      "name": "./data/caddy/caddy_config",
-      "label": "./data/caddy/caddy_config",
+      "inputId": "bind:api:/app/etc/nginx/ssl",
+      "name": "./data/nginx/ssl",
+      "label": "./data/nginx/ssl",
       "description": "",
       "type": "path",
-      "default": "/config",
+      "default": "./data/nginx/ssl",
       "category": "advanced",
-      "serviceName": "caddy",
+      "serviceName": "api",
       "paramType": "path"
     },
     {
-      "name": "./data/caddy/caddy_data",
-      "label": "./data/caddy/caddy_data",
-      "description": "",
-      "type": "path",
-      "default": "/data",
-      "category": "advanced",
-      "serviceName": "caddy",
-      "paramType": "path"
-    },
-    {
+      "inputId": "bind:api:/app/run",
       "name": "./data/caddy/run",
       "label": "./data/caddy/run",
       "description": "",
       "type": "path",
-      "default": "/var/run/caddy",
+      "default": "./data/caddy/run",
+      "category": "advanced",
+      "serviceName": "api",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:api:/data",
+      "name": "./data/conf/api",
+      "label": "./data/conf/api",
+      "description": "",
+      "type": "path",
+      "default": "./data/conf/api",
+      "category": "advanced",
+      "serviceName": "api",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:caddy:/config",
+      "name": "./data/caddy/caddy_config",
+      "label": "./data/caddy/caddy_config",
+      "description": "",
+      "type": "path",
+      "default": "./data/caddy/caddy_config",
       "category": "advanced",
       "serviceName": "caddy",
       "paramType": "path"
     },
     {
-      "name": "CADDY_ADMIN",
-      "label": "CADDY_ADMIN",
+      "inputId": "bind:caddy:/data",
+      "name": "./data/caddy/caddy_data",
+      "label": "./data/caddy/caddy_data",
       "description": "",
-      "type": "string",
-      "default": "unix//var/run/caddy/caddy-admin.sock",
+      "type": "path",
+      "default": "./data/caddy/caddy_data",
       "category": "advanced",
       "serviceName": "caddy",
-      "paramType": "env"
+      "paramType": "path"
     },
     {
+      "inputId": "bind:caddy:/var/run/caddy",
+      "name": "./data/caddy/run",
+      "label": "./data/caddy/run",
+      "description": "",
+      "type": "path",
+      "default": "./data/caddy/run",
+      "category": "advanced",
+      "serviceName": "caddy",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:minio:/data",
+      "name": "./data/minio",
+      "label": "./data/minio",
+      "description": "",
+      "type": "path",
+      "default": "./data/minio",
+      "category": "advanced",
+      "serviceName": "minio",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:nats:/data",
+      "name": "./data/nats",
+      "label": "./data/nats",
+      "description": "",
+      "type": "path",
+      "default": "./data/nats",
+      "category": "advanced",
+      "serviceName": "nats",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:nginx:/etc/nginx/ssl",
+      "name": "./data/nginx/ssl",
+      "label": "./data/nginx/ssl",
+      "description": "",
+      "type": "path",
+      "default": "./data/nginx/ssl",
+      "category": "advanced",
+      "serviceName": "nginx",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:postgres:/var/lib/postgresql/data",
+      "name": "./data/postgres",
+      "label": "./data/postgres",
+      "description": "",
+      "type": "path",
+      "default": "./data/postgres",
+      "category": "advanced",
+      "serviceName": "postgres",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:qdrant:/qdrant/storage",
+      "name": "./data/qdrant",
+      "label": "./data/qdrant",
+      "description": "",
+      "type": "path",
+      "default": "./data/qdrant",
+      "category": "advanced",
+      "serviceName": "qdrant",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:raglite:/data",
+      "name": "./data/raglite",
+      "label": "./data/raglite",
+      "description": "",
+      "type": "path",
+      "default": "./data/raglite",
+      "category": "advanced",
+      "serviceName": "raglite",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:redis:/data",
+      "name": "./data/redis",
+      "label": "./data/redis",
+      "description": "",
+      "type": "path",
+      "default": "./data/redis",
+      "category": "advanced",
+      "serviceName": "redis",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:nginx:8080/tcp",
       "name": "8080",
       "label": "8080",
       "description": "",
@@ -63,276 +1636,138 @@
       "paramType": "port"
     },
     {
-      "name": "./data/nginx/ssl",
-      "label": "./data/nginx/ssl",
-      "description": "",
-      "type": "path",
-      "default": "/etc/nginx/ssl",
-      "category": "advanced",
-      "serviceName": "nginx",
-      "paramType": "path"
-    },
-    {
-      "name": "./data/caddy/run",
-      "label": "./data/caddy/run",
-      "description": "",
-      "type": "path",
-      "default": "/app/run",
-      "category": "advanced",
-      "serviceName": "api",
-      "paramType": "path"
-    },
-    {
-      "name": "./data/nginx/ssl",
-      "label": "./data/nginx/ssl",
-      "description": "",
-      "type": "path",
-      "default": "/app/etc/nginx/ssl",
-      "category": "advanced",
-      "serviceName": "api",
-      "paramType": "path"
-    },
-    {
-      "name": "./data/conf/api",
-      "label": "./data/conf/api",
-      "description": "",
-      "type": "path",
-      "default": "/data",
-      "category": "advanced",
-      "serviceName": "api",
-      "paramType": "path"
-    },
-    {
-      "name": "NATS_PASSWORD",
-      "label": "NATS_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${NATS_PASSWORD}",
-      "category": "basic",
-      "serviceName": "api",
-      "paramType": "env"
-    },
-    {
-      "name": "POSTGRES_PASSWORD",
-      "label": "POSTGRES_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${POSTGRES_PASSWORD}",
-      "category": "basic",
-      "serviceName": "api",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_PASSWORD",
-      "label": "REDIS_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${REDIS_PASSWORD}",
-      "category": "basic",
-      "serviceName": "api",
-      "paramType": "env"
-    },
-    {
-      "name": "S3_SECRET_KEY",
-      "label": "S3_SECRET_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${S3_SECRET_KEY}",
-      "category": "basic",
-      "serviceName": "api",
-      "paramType": "env"
-    },
-    {
-      "name": "JWT_SECRET",
-      "label": "JWT_SECRET",
-      "description": "",
-      "type": "password",
-      "default": "${JWT_SECRET}",
-      "category": "basic",
-      "serviceName": "api",
-      "paramType": "env"
-    },
-    {
+      "inputId": "project:ADMIN_PASSWORD",
       "name": "ADMIN_PASSWORD",
       "label": "ADMIN_PASSWORD",
       "description": "",
       "type": "password",
-      "default": "${ADMIN_PASSWORD}",
+      "default": "Cherry!3d\u0026!3",
       "category": "basic",
-      "serviceName": "api",
-      "paramType": "env"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "SUBNET_PREFIX",
-      "label": "SUBNET_PREFIX",
+      "inputId": "project:ADMIN_PORT",
+      "name": "ADMIN_PORT",
+      "label": "ADMIN_PORT",
       "description": "",
       "type": "string",
-      "default": "${SUBNET_PREFIX}",
+      "default": "2443",
       "category": "basic",
-      "serviceName": "api",
-      "paramType": "env"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "NATS_PASSWORD",
-      "label": "NATS_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${NATS_PASSWORD}",
-      "category": "basic",
-      "serviceName": "consumer",
-      "paramType": "env"
-    },
-    {
-      "name": "POSTGRES_PASSWORD",
-      "label": "POSTGRES_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${POSTGRES_PASSWORD}",
-      "category": "basic",
-      "serviceName": "consumer",
-      "paramType": "env"
-    },
-    {
-      "name": "REDIS_PASSWORD",
-      "label": "REDIS_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${REDIS_PASSWORD}",
-      "category": "basic",
-      "serviceName": "consumer",
-      "paramType": "env"
-    },
-    {
-      "name": "S3_SECRET_KEY",
-      "label": "S3_SECRET_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${S3_SECRET_KEY}",
-      "category": "basic",
-      "serviceName": "consumer",
-      "paramType": "env"
-    },
-    {
+      "inputId": "project:JWT_SECRET",
       "name": "JWT_SECRET",
       "label": "JWT_SECRET",
       "description": "",
       "type": "password",
-      "default": "${JWT_SECRET}",
+      "default": "Cherry!3d\u0026!3",
       "category": "basic",
-      "serviceName": "consumer",
-      "paramType": "env"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "./data/postgres",
-      "label": "./data/postgres",
+      "inputId": "project:NATS_PASSWORD",
+      "name": "NATS_PASSWORD",
+      "label": "NATS_PASSWORD",
       "description": "",
-      "type": "path",
-      "default": "/var/lib/postgresql/data",
-      "category": "advanced",
-      "serviceName": "postgres",
-      "paramType": "path"
+      "type": "password",
+      "default": "Cherry!3d\u0026!3",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "POSTGRES_USER",
-      "label": "POSTGRES_USER",
-      "description": "",
-      "type": "string",
-      "default": "panda-wiki",
-      "category": "advanced",
-      "serviceName": "postgres",
-      "paramType": "env"
-    },
-    {
+      "inputId": "project:POSTGRES_PASSWORD",
       "name": "POSTGRES_PASSWORD",
       "label": "POSTGRES_PASSWORD",
       "description": "",
       "type": "password",
-      "default": "${POSTGRES_PASSWORD}",
+      "default": "Cherry!3d\u0026!3",
       "category": "basic",
-      "serviceName": "postgres",
-      "paramType": "env"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "POSTGRES_DB",
-      "label": "POSTGRES_DB",
+      "inputId": "project:QDRANT_API_KEY",
+      "name": "QDRANT_API_KEY",
+      "label": "QDRANT_API_KEY",
+      "description": "",
+      "type": "password",
+      "default": "Cherry!3d\u0026!3",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:REDIS_PASSWORD",
+      "name": "REDIS_PASSWORD",
+      "label": "REDIS_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "Cherry!3d\u0026!3",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:S3_SECRET_KEY",
+      "name": "S3_SECRET_KEY",
+      "label": "S3_SECRET_KEY",
+      "description": "",
+      "type": "password",
+      "default": "Cherry!3d\u0026!3",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:SUBNET_PREFIX",
+      "name": "SUBNET_PREFIX",
+      "label": "SUBNET_PREFIX",
       "description": "",
       "type": "string",
-      "default": "panda-wiki",
-      "category": "advanced",
-      "serviceName": "postgres",
-      "paramType": "env"
-    },
-    {
-      "name": "./data/redis",
-      "label": "./data/redis",
-      "description": "",
-      "type": "path",
-      "default": "/data",
-      "category": "advanced",
-      "serviceName": "redis",
-      "paramType": "path"
-    },
-    {
-      "name": "./data/minio",
-      "label": "./data/minio",
-      "description": "",
-      "type": "path",
-      "default": "/data",
-      "category": "advanced",
-      "serviceName": "minio",
-      "paramType": "path"
-    },
-    {
-      "name": "MINIO_ACCESS_KEY",
-      "label": "MINIO_ACCESS_KEY",
-      "description": "",
-      "type": "password",
-      "default": "s3panda-wiki",
-      "category": "advanced",
-      "serviceName": "minio",
-      "paramType": "env"
-    },
-    {
-      "name": "MINIO_SECRET_KEY",
-      "label": "MINIO_SECRET_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${S3_SECRET_KEY}",
+      "default": "169.254.15",
       "category": "basic",
-      "serviceName": "minio",
-      "paramType": "env"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
-      "name": "./data/nats",
-      "label": "./data/nats",
+      "inputId": "project:TIMEZONE",
+      "name": "TIMEZONE",
+      "label": "TIMEZONE",
       "description": "",
-      "type": "path",
-      "default": "/data",
-      "category": "advanced",
-      "serviceName": "nats",
-      "paramType": "path"
-    },
-    {
-      "name": "./data/qdrant",
-      "label": "./data/qdrant",
-      "description": "",
-      "type": "path",
-      "default": "/qdrant/storage",
-      "category": "advanced",
-      "serviceName": "qdrant",
-      "paramType": "path"
-    },
-    {
-      "name": "QDRANT__SERVICE__API_KEY",
-      "label": "QDRANT__SERVICE__API_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${QDRANT_API_KEY}",
+      "type": "string",
+      "default": "Asia/Shanghai",
       "category": "basic",
-      "serviceName": "qdrant",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:caddy:CADDY_ADMIN",
+      "name": "CADDY_ADMIN",
+      "label": "CADDY_ADMIN",
+      "description": "",
+      "type": "string",
+      "default": "unix//var/run/caddy/caddy-admin.sock",
+      "category": "advanced",
+      "serviceName": "caddy",
       "paramType": "env"
     },
     {
+      "inputId": "service:crawler:GLOG_GLOBAL_LEVEL",
       "name": "GLOG_GLOBAL_LEVEL",
       "label": "GLOG_GLOBAL_LEVEL",
       "description": "",
@@ -343,16 +1778,7 @@
       "paramType": "env"
     },
     {
-      "name": "NAMESPACE",
-      "label": "NAMESPACE",
-      "description": "",
-      "type": "string",
-      "default": "anydoc",
-      "category": "advanced",
-      "serviceName": "crawler",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:crawler:MQ_NATS_URL",
       "name": "MQ_NATS_URL",
       "label": "MQ_NATS_URL",
       "description": "",
@@ -363,6 +1789,7 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:crawler:MQ_NATS_USER",
       "name": "MQ_NATS_USER",
       "label": "MQ_NATS_USER",
       "description": "",
@@ -373,16 +1800,18 @@
       "paramType": "env"
     },
     {
-      "name": "MQ_NATS_PASSWORD",
-      "label": "MQ_NATS_PASSWORD",
+      "inputId": "service:crawler:NAMESPACE",
+      "name": "NAMESPACE",
+      "label": "NAMESPACE",
       "description": "",
-      "type": "password",
-      "default": "${NATS_PASSWORD}",
-      "category": "basic",
+      "type": "string",
+      "default": "anydoc",
+      "category": "advanced",
       "serviceName": "crawler",
       "paramType": "env"
     },
     {
+      "inputId": "service:crawler:OSS_MINIO_ACCESS_KEY",
       "name": "OSS_MINIO_ACCESS_KEY",
       "label": "OSS_MINIO_ACCESS_KEY",
       "description": "",
@@ -393,16 +1822,7 @@
       "paramType": "env"
     },
     {
-      "name": "OSS_MINIO_SECRET_KEY",
-      "label": "OSS_MINIO_SECRET_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${S3_SECRET_KEY}",
-      "category": "basic",
-      "serviceName": "crawler",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:crawler:OSS_MINIO_ENDPOINT",
       "name": "OSS_MINIO_ENDPOINT",
       "label": "OSS_MINIO_ENDPOINT",
       "description": "",
@@ -413,26 +1833,40 @@
       "paramType": "env"
     },
     {
-      "name": "./data/raglite",
-      "label": "./data/raglite",
+      "inputId": "service:minio:MINIO_ACCESS_KEY",
+      "name": "MINIO_ACCESS_KEY",
+      "label": "MINIO_ACCESS_KEY",
       "description": "",
-      "type": "path",
-      "default": "/data",
+      "type": "password",
+      "default": "s3panda-wiki",
       "category": "advanced",
-      "serviceName": "raglite",
-      "paramType": "path"
-    },
-    {
-      "name": "GIN_MODE",
-      "label": "GIN_MODE",
-      "description": "",
-      "type": "string",
-      "default": "release",
-      "category": "advanced",
-      "serviceName": "raglite",
+      "serviceName": "minio",
       "paramType": "env"
     },
     {
+      "inputId": "service:postgres:POSTGRES_DB",
+      "name": "POSTGRES_DB",
+      "label": "POSTGRES_DB",
+      "description": "",
+      "type": "string",
+      "default": "panda-wiki",
+      "category": "advanced",
+      "serviceName": "postgres",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:postgres:POSTGRES_USER",
+      "name": "POSTGRES_USER",
+      "label": "POSTGRES_USER",
+      "description": "",
+      "type": "string",
+      "default": "panda-wiki",
+      "category": "advanced",
+      "serviceName": "postgres",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:raglite:DATABASE_POSTGRESQL_HOST",
       "name": "DATABASE_POSTGRESQL_HOST",
       "label": "DATABASE_POSTGRESQL_HOST",
       "description": "",
@@ -443,6 +1877,7 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:raglite:DATABASE_POSTGRESQL_USER",
       "name": "DATABASE_POSTGRESQL_USER",
       "label": "DATABASE_POSTGRESQL_USER",
       "description": "",
@@ -453,16 +1888,7 @@
       "paramType": "env"
     },
     {
-      "name": "DATABASE_POSTGRESQL_PASSWORD",
-      "label": "DATABASE_POSTGRESQL_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${POSTGRES_PASSWORD}",
-      "category": "basic",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:raglite:DATABASE_QDRANT_HOST",
       "name": "DATABASE_QDRANT_HOST",
       "label": "DATABASE_QDRANT_HOST",
       "description": "",
@@ -473,76 +1899,7 @@
       "paramType": "env"
     },
     {
-      "name": "DATABASE_QDRANT_API_KEY",
-      "label": "DATABASE_QDRANT_API_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${QDRANT_API_KEY}",
-      "category": "basic",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
-      "name": "STORAGE_MINIO_ENDPOINT",
-      "label": "STORAGE_MINIO_ENDPOINT",
-      "description": "",
-      "type": "string",
-      "default": "panda-wiki-minio:9000",
-      "category": "advanced",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
-      "name": "STORAGE_MINIO_ACCESS_KEY_ID",
-      "label": "STORAGE_MINIO_ACCESS_KEY_ID",
-      "description": "",
-      "type": "password",
-      "default": "s3panda-wiki",
-      "category": "advanced",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
-      "name": "STORAGE_MINIO_SECRET_ACCESS_KEY",
-      "label": "STORAGE_MINIO_SECRET_ACCESS_KEY",
-      "description": "",
-      "type": "password",
-      "default": "${S3_SECRET_KEY}",
-      "category": "basic",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
-      "name": "NATS_URL",
-      "label": "NATS_URL",
-      "description": "",
-      "type": "string",
-      "default": "nats://panda-wiki-nats:4222",
-      "category": "advanced",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
-      "name": "NATS_USER",
-      "label": "NATS_USER",
-      "description": "",
-      "type": "string",
-      "default": "panda-wiki",
-      "category": "advanced",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
-      "name": "NATS_PASSWORD",
-      "label": "NATS_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "${NATS_PASSWORD}",
-      "category": "basic",
-      "serviceName": "raglite",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:raglite:EMBEDDER_RPM",
       "name": "EMBEDDER_RPM",
       "label": "EMBEDDER_RPM",
       "description": "",
@@ -553,6 +1910,18 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:raglite:GIN_MODE",
+      "name": "GIN_MODE",
+      "label": "GIN_MODE",
+      "description": "",
+      "type": "string",
+      "default": "release",
+      "category": "advanced",
+      "serviceName": "raglite",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:raglite:LLM_RPM",
       "name": "LLM_RPM",
       "label": "LLM_RPM",
       "description": "",
@@ -563,86 +1932,49 @@
       "paramType": "env"
     },
     {
-      "name": "SUBNET_PREFIX",
-      "label": "SUBNET_PREFIX",
+      "inputId": "service:raglite:NATS_URL",
+      "name": "NATS_URL",
+      "label": "NATS_URL",
       "description": "",
       "type": "string",
-      "default": "169.254.15",
-      "category": "basic",
-      "serviceName": "Global",
+      "default": "nats://panda-wiki-nats:4222",
+      "category": "advanced",
+      "serviceName": "raglite",
       "paramType": "env"
     },
     {
-      "name": "NATS_PASSWORD",
-      "label": "NATS_PASSWORD",
+      "inputId": "service:raglite:NATS_USER",
+      "name": "NATS_USER",
+      "label": "NATS_USER",
       "description": "",
-      "type": "password",
-      "default": "Cherry!3d\u0026!2",
-      "category": "basic",
-      "serviceName": "Global",
+      "type": "string",
+      "default": "panda-wiki",
+      "category": "advanced",
+      "serviceName": "raglite",
       "paramType": "env"
     },
     {
-      "name": "POSTGRES_PASSWORD",
-      "label": "POSTGRES_PASSWORD",
+      "inputId": "service:raglite:STORAGE_MINIO_ACCESS_KEY_ID",
+      "name": "STORAGE_MINIO_ACCESS_KEY_ID",
+      "label": "STORAGE_MINIO_ACCESS_KEY_ID",
       "description": "",
       "type": "password",
-      "default": "Cherry!3d\u0026!2",
-      "category": "basic",
-      "serviceName": "Global",
+      "default": "s3panda-wiki",
+      "category": "advanced",
+      "serviceName": "raglite",
       "paramType": "env"
     },
     {
-      "name": "REDIS_PASSWORD",
-      "label": "REDIS_PASSWORD",
+      "inputId": "service:raglite:STORAGE_MINIO_ENDPOINT",
+      "name": "STORAGE_MINIO_ENDPOINT",
+      "label": "STORAGE_MINIO_ENDPOINT",
       "description": "",
-      "type": "password",
-      "default": "Cherry!3d\u0026!2",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "S3_SECRET_KEY",
-      "label": "S3_SECRET_KEY",
-      "description": "",
-      "type": "password",
-      "default": "Cherry!3d\u0026!2",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "JWT_SECRET",
-      "label": "JWT_SECRET",
-      "description": "",
-      "type": "password",
-      "default": "Cherry!3d\u0026!2",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "ADMIN_PASSWORD",
-      "label": "ADMIN_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "Cherry!3d\u0026!2",
-      "category": "basic",
-      "serviceName": "Global",
-      "paramType": "env"
-    },
-    {
-      "name": "QDRANT_API_KEY",
-      "label": "QDRANT_API_KEY",
-      "description": "",
-      "type": "password",
-      "default": "Cherry!3d\u0026!2",
-      "category": "basic",
-      "serviceName": "Global",
+      "type": "string",
+      "default": "panda-wiki-minio:9000",
+      "category": "advanced",
+      "serviceName": "raglite",
       "paramType": "env"
     }
   ],
-  "deployment_count": 2,
   "enabled": true
 }

@@ -1,0 +1,311 @@
+{
+  "id": 41,
+  "sort_order": 38,
+  "name": "2fauth",
+  "category": "network",
+  "description": "2FAuth 是一个基于 Web 的双因素认证（2FA）管理器，用于管理、生成、验证 TOTP/HOTP 验证码，自托管保护你的账户安全。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/Bubka/2FAuth/main/public/images/logo.png",
+  "website": "https://github.com/Bubka/2FAuth",
+  "tutorial": "访问地址：http://服务器IP:8000\n内置 SQLite，数据在 ./2fauth 目录。\nAPPLICATION_KEY 必须保持不变（Laravel APP_KEY），否则会话失效。\n首次访问注册管理员账号。",
+  "dotenv": "APPLICATION_KEY=\n",
+  "compose": "services:\n  2fauth:\n    image: 2fauth/2fauth:latest\n    restart: unless-stopped\n    ports:\n      - \"8000:8000\"\n    volumes:\n      - ./2fauth:/2fauth\n    environment:\n      - APP_URL=http://localhost:8000\n      - APPLICATION_KEY=${APPLICATION_KEY}\n      - SITE_NAME=2FAuth\n      - AUTHENTICATION_GUARD=web-guard\n      - DB_DATABASE=/2fauth/database/database.sqlite",
+  "input_metadata": {
+    "bind:2fauth:/2fauth": {
+      "label": "./2fauth",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:2fauth:8000/tcp": {
+      "label": "8000",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:APPLICATION_KEY": {
+      "label": "APPLICATION_KEY",
+      "description": "应用密钥",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:2fauth:APP_URL": {
+      "label": "APP_URL",
+      "description": "应用地址",
+      "group": "basic"
+    },
+    "service:2fauth:AUTHENTICATION_GUARD": {
+      "group": "basic"
+    },
+    "service:2fauth:DB_DATABASE": {
+      "group": "basic"
+    },
+    "service:2fauth:SITE_NAME": {
+      "label": "SITE_NAME",
+      "description": "站点名称",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:cd0d6a52b29467d785274a4dda7e31aed5dc37307bf4621ad322e9972deff1c2",
+    "manifest_digest": "sha256:cb41036db401b10400de6470142ebec4e7de1a5086a16d8190c0536ef09a5106",
+    "services": [
+      "2fauth"
+    ],
+    "inputs": [
+      {
+        "id": "bind:2fauth:/2fauth",
+        "key": "./2fauth",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./2fauth",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./2fauth",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:2fauth:8000/tcp",
+        "key": "8000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8000",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:APPLICATION_KEY",
+        "key": "APPLICATION_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "APPLICATION_KEY",
+          "description": "应用密钥",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:2fauth:APP_URL",
+        "key": "APP_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://localhost:8000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "APP_URL",
+          "description": "应用地址",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:2fauth:AUTHENTICATION_GUARD",
+        "key": "AUTHENTICATION_GUARD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "web-guard",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:2fauth:DB_DATABASE",
+        "key": "DB_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/2fauth/database/database.sqlite",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:2fauth:SITE_NAME",
+        "key": "SITE_NAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "2FAuth",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "SITE_NAME",
+          "description": "站点名称",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:APPLICATION_KEY",
+        "service": "2fauth",
+        "target_kind": "interpolation",
+        "target_key": "[1]",
+        "expression": "${APPLICATION_KEY}",
+        "yaml_path": "services.2fauth.environment[1]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:2fauth:APP_URL",
+        "service": "2fauth",
+        "target_kind": "environment",
+        "target_key": "APP_URL",
+        "yaml_path": "services.2fauth.environment[0]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:2fauth:AUTHENTICATION_GUARD",
+        "service": "2fauth",
+        "target_kind": "environment",
+        "target_key": "AUTHENTICATION_GUARD",
+        "yaml_path": "services.2fauth.environment[3]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:2fauth:DB_DATABASE",
+        "service": "2fauth",
+        "target_kind": "environment",
+        "target_key": "DB_DATABASE",
+        "yaml_path": "services.2fauth.environment[4]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:2fauth:SITE_NAME",
+        "service": "2fauth",
+        "target_kind": "environment",
+        "target_key": "SITE_NAME",
+        "yaml_path": "services.2fauth.environment[2]",
+        "line": 12,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:2fauth:/2fauth",
+        "kind": "bind",
+        "service": "2fauth",
+        "source": "./2fauth",
+        "target": "/2fauth",
+        "editable": true,
+        "yaml_path": "services.2fauth.volumes[0]"
+      },
+      {
+        "id": "port:2fauth:8000/tcp",
+        "kind": "port",
+        "service": "2fauth",
+        "source": "8000",
+        "target": "8000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.2fauth.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:cd0d6a52b29467d785274a4dda7e31aed5dc37307bf4621ad322e9972deff1c2",
+  "manifest_digest": "sha256:cb41036db401b10400de6470142ebec4e7de1a5086a16d8190c0536ef09a5106",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:2fauth:/2fauth",
+      "name": "./2fauth",
+      "label": "./2fauth",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./2fauth",
+      "category": "basic",
+      "serviceName": "2fauth",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:2fauth:8000/tcp",
+      "name": "8000",
+      "label": "8000",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8000",
+      "category": "basic",
+      "serviceName": "2fauth",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:APPLICATION_KEY",
+      "name": "APPLICATION_KEY",
+      "label": "APPLICATION_KEY",
+      "description": "应用密钥",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:2fauth:APP_URL",
+      "name": "APP_URL",
+      "label": "APP_URL",
+      "description": "应用地址",
+      "type": "string",
+      "default": "http://localhost:8000",
+      "category": "basic",
+      "serviceName": "2fauth",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:2fauth:AUTHENTICATION_GUARD",
+      "name": "AUTHENTICATION_GUARD",
+      "label": "AUTHENTICATION_GUARD",
+      "description": "",
+      "type": "string",
+      "default": "web-guard",
+      "category": "basic",
+      "serviceName": "2fauth",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:2fauth:DB_DATABASE",
+      "name": "DB_DATABASE",
+      "label": "DB_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "/2fauth/database/database.sqlite",
+      "category": "basic",
+      "serviceName": "2fauth",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:2fauth:SITE_NAME",
+      "name": "SITE_NAME",
+      "label": "SITE_NAME",
+      "description": "站点名称",
+      "type": "string",
+      "default": "2FAuth",
+      "category": "advanced",
+      "serviceName": "2fauth",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

@@ -10,31 +10,193 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n  n8n:\n    ports:\n      - 35678:5678\n    volumes:\n      - n8n_data:/home/node/.n8n\n    environment:\n      - N8N_SECURE_COOKIE=false\n      - GENERIC_TIMEZONE=Asia/Shanghai\n      - HTTP_PROXY=http://192.168.0.1:7890\n      - HTTPS_PROXY=http://192.168.0.1:7890\n    image: docker.n8n.io/n8nio/n8n\nvolumes:\n    n8n_data:",
+  "input_metadata": {
+    "port:n8n:5678/tcp": {
+      "label": "35678",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:n8n:GENERIC_TIMEZONE": {
+      "label": "GENERIC_TIMEZONE",
+      "group": "advanced"
+    },
+    "service:n8n:HTTPS_PROXY": {
+      "label": "HTTPS_PROXY",
+      "description": "自行挂代理，不用则删除",
+      "group": "basic"
+    },
+    "service:n8n:HTTP_PROXY": {
+      "label": "HTTP_PROXY",
+      "description": "自行挂代理，不用则删除",
+      "group": "basic"
+    },
+    "service:n8n:N8N_SECURE_COOKIE": {
+      "label": "N8N_SECURE_COOKIE",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:9c36ae745d262b0a48bc958deaea3f5a90b6b06b3246eb319460fe211c851f10",
+    "manifest_digest": "sha256:dce1cac6e83c836ae439cf380b0a91b3480933e2ec8d3b8220ec6f6fc445f29f",
+    "services": [
+      "n8n"
+    ],
+    "inputs": [
+      {
+        "id": "port:n8n:5678/tcp",
+        "key": "35678",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "35678",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "35678",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:n8n:GENERIC_TIMEZONE",
+        "key": "GENERIC_TIMEZONE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "GENERIC_TIMEZONE",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:n8n:HTTPS_PROXY",
+        "key": "HTTPS_PROXY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://192.168.0.1:7890",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "HTTPS_PROXY",
+          "description": "自行挂代理，不用则删除",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:n8n:HTTP_PROXY",
+        "key": "HTTP_PROXY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://192.168.0.1:7890",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "HTTP_PROXY",
+          "description": "自行挂代理，不用则删除",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:n8n:N8N_SECURE_COOKIE",
+        "key": "N8N_SECURE_COOKIE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "N8N_SECURE_COOKIE",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:n8n:GENERIC_TIMEZONE",
+        "service": "n8n",
+        "target_kind": "environment",
+        "target_key": "GENERIC_TIMEZONE",
+        "yaml_path": "services.n8n.environment[1]",
+        "line": 9,
+        "column": 9
+      },
+      {
+        "input_id": "service:n8n:HTTPS_PROXY",
+        "service": "n8n",
+        "target_kind": "environment",
+        "target_key": "HTTPS_PROXY",
+        "yaml_path": "services.n8n.environment[3]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:n8n:HTTP_PROXY",
+        "service": "n8n",
+        "target_kind": "environment",
+        "target_key": "HTTP_PROXY",
+        "yaml_path": "services.n8n.environment[2]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:n8n:N8N_SECURE_COOKIE",
+        "service": "n8n",
+        "target_kind": "environment",
+        "target_key": "N8N_SECURE_COOKIE",
+        "yaml_path": "services.n8n.environment[0]",
+        "line": 8,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:n8n:5678/tcp",
+        "kind": "port",
+        "service": "n8n",
+        "source": "35678",
+        "target": "5678",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.n8n.ports[0]"
+      },
+      {
+        "id": "volume:n8n:/home/node/.n8n",
+        "kind": "volume",
+        "service": "n8n",
+        "source": "n8n_data",
+        "target": "/home/node/.n8n",
+        "editable": false,
+        "yaml_path": "services.n8n.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:9c36ae745d262b0a48bc958deaea3f5a90b6b06b3246eb319460fe211c851f10",
+  "manifest_digest": "sha256:dce1cac6e83c836ae439cf380b0a91b3480933e2ec8d3b8220ec6f6fc445f29f",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://raw.githubusercontent.com/n8n-io/n8n/master/assets/n8n-screenshot-readme.png"
   ],
   "schema": [
     {
+      "inputId": "port:n8n:5678/tcp",
       "name": "35678",
       "label": "35678",
       "description": "容器 WEB 端口",
       "type": "port",
-      "default": "5678",
+      "default": "35678",
       "category": "basic",
       "serviceName": "n8n",
       "paramType": "port"
     },
     {
-      "name": "N8N_SECURE_COOKIE",
-      "label": "N8N_SECURE_COOKIE",
-      "description": "",
-      "type": "string",
-      "default": "false",
-      "category": "advanced",
-      "serviceName": "n8n",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:n8n:GENERIC_TIMEZONE",
       "name": "GENERIC_TIMEZONE",
       "label": "GENERIC_TIMEZONE",
       "description": "",
@@ -45,6 +207,18 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:n8n:HTTPS_PROXY",
+      "name": "HTTPS_PROXY",
+      "label": "HTTPS_PROXY",
+      "description": "自行挂代理，不用则删除",
+      "type": "string",
+      "default": "http://192.168.0.1:7890",
+      "category": "basic",
+      "serviceName": "n8n",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:n8n:HTTP_PROXY",
       "name": "HTTP_PROXY",
       "label": "HTTP_PROXY",
       "description": "自行挂代理，不用则删除",
@@ -55,16 +229,16 @@
       "paramType": "env"
     },
     {
-      "name": "HTTPS_PROXY",
-      "label": "HTTPS_PROXY",
-      "description": "自行挂代理，不用则删除",
+      "inputId": "service:n8n:N8N_SECURE_COOKIE",
+      "name": "N8N_SECURE_COOKIE",
+      "label": "N8N_SECURE_COOKIE",
+      "description": "",
       "type": "string",
-      "default": "http://192.168.0.1:7890",
-      "category": "basic",
+      "default": "false",
+      "category": "advanced",
       "serviceName": "n8n",
       "paramType": "env"
     }
   ],
-  "deployment_count": 1,
   "enabled": true
 }

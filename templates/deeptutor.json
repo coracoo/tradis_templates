@@ -5,26 +5,623 @@
   "category": "hobby",
   "description": "香港大学开源的 AI 驱动的个性化学习助手",
   "version": "latest",
-  "logo": "https://github.com/HKUDS/DeepTutor/raw/main/assets/logo-ver2.png",
+  "logo": "https://deeptutor.info/logo.png",
   "website": "https://github.com/HKUDS/DeepTutor",
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n  deeptutor:\n    image: ghcr.io/hkuds/deeptutor:latest\n    container_name: deeptutor1\n    restart: unless-stopped\n    ports:\n      - 28001:28001\n      - 23782:23782\n    environment:\n      - LLM_BINDING=openai\n      - LLM_MODEL=deepseek/deepseek-r1-0528-qwen3-8b\n      - LLM_API_KEY=ollama\n      - LLM_HOST=https://api.deepseek.com/v1 \n      - DISABLE_SSL_VERIFY=false\n      - EMBEDDING_MODEL=text-embedding-bge-m3\n      - EMBEDDING_API_KEY=sk-sadjadkljas   \n      - EMBEDDING_HOST=https://api.siliconflow.cn/v1\n      - EMBEDDING_DIM=3072\n      - EMBEDDING_MAX_TOKENS=8192\n      - RAG_TOOL_MODULE_LOG_LEVEL=INFO\n      - BACKEND_PORT=28001\n      - FRONTEND_PORT=23782\n      - NEXT_PUBLIC_API_BASE_EXTERNAL=http://你的域名:28001\n      - NEXT_PUBLIC_API_BASE=http://NAS IP:28001\n    volumes:\n      - ./config:/app/config\n      - ./data/user:/app/data/user\n      - ./data/knowledge_bases:/app/data/knowledge_bases",
-  "screenshots": [
-    "https://github.com/HKUDS/DeepTutor/raw/main/assets/gifs/guided-learning.gif"
-  ],
-  "schema": [
-    {
-      "name": "28001",
+  "input_metadata": {
+    "bind:deeptutor:/app/config": {
+      "label": "./config",
+      "group": "advanced"
+    },
+    "bind:deeptutor:/app/data/knowledge_bases": {
+      "label": "./data/knowledge_bases",
+      "group": "advanced"
+    },
+    "bind:deeptutor:/app/data/user": {
+      "label": "./data/user",
+      "group": "advanced"
+    },
+    "port:deeptutor:23782/tcp": {
+      "label": "23782",
+      "group": "advanced"
+    },
+    "port:deeptutor:28001/tcp": {
       "label": "28001",
       "description": "容器前端页面",
-      "type": "port",
-      "default": "28001",
-      "category": "basic",
+      "group": "basic"
+    },
+    "service:deeptutor:BACKEND_PORT": {
+      "label": "BACKEND_PORT",
+      "group": "advanced"
+    },
+    "service:deeptutor:DISABLE_SSL_VERIFY": {
+      "label": "DISABLE_SSL_VERIFY",
+      "group": "advanced"
+    },
+    "service:deeptutor:EMBEDDING_API_KEY": {
+      "label": "EMBEDDING_API_KEY",
+      "description": "向量模型 API",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:deeptutor:EMBEDDING_DIM": {
+      "label": "EMBEDDING_DIM",
+      "group": "advanced"
+    },
+    "service:deeptutor:EMBEDDING_HOST": {
+      "label": "EMBEDDING_HOST",
+      "description": "向量模型 Base URL",
+      "group": "basic"
+    },
+    "service:deeptutor:EMBEDDING_MAX_TOKENS": {
+      "label": "EMBEDDING_MAX_TOKENS",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:deeptutor:EMBEDDING_MODEL": {
+      "label": "EMBEDDING_MODEL",
+      "description": "向量模型名称",
+      "group": "basic"
+    },
+    "service:deeptutor:FRONTEND_PORT": {
+      "label": "FRONTEND_PORT",
+      "group": "advanced"
+    },
+    "service:deeptutor:LLM_API_KEY": {
+      "label": "LLM_API_KEY",
+      "description": "LLMs API Key",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:deeptutor:LLM_BINDING": {
+      "label": "LLM_BINDING",
+      "description": "LLMs 模型类型",
+      "group": "basic"
+    },
+    "service:deeptutor:LLM_HOST": {
+      "label": "LLM_HOST",
+      "description": "LLMs Base URL",
+      "group": "basic"
+    },
+    "service:deeptutor:LLM_MODEL": {
+      "label": "LLM_MODEL",
+      "description": "LLMs 模型名称",
+      "group": "basic"
+    },
+    "service:deeptutor:NEXT_PUBLIC_API_BASE": {
+      "label": "NEXT_PUBLIC_API_BASE",
+      "description": "局域网访问填写",
+      "group": "basic"
+    },
+    "service:deeptutor:NEXT_PUBLIC_API_BASE_EXTERNAL": {
+      "label": "NEXT_PUBLIC_API_BASE_EXTERNAL",
+      "description": "外网访问填写",
+      "group": "basic"
+    },
+    "service:deeptutor:RAG_TOOL_MODULE_LOG_LEVEL": {
+      "label": "RAG_TOOL_MODULE_LOG_LEVEL",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:0618abb6f3f78cbe0378f6bb3229efee5a6fad3910f00b664649a643ef03ed27",
+    "manifest_digest": "sha256:504ad2aaff2664e22e24085cadfd59c5d41a4443100cbd6bba3e66292b67abba",
+    "services": [
+      "deeptutor"
+    ],
+    "inputs": [
+      {
+        "id": "bind:deeptutor:/app/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:deeptutor:/app/data/knowledge_bases",
+        "key": "./data/knowledge_bases",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/knowledge_bases",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/knowledge_bases",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:deeptutor:/app/data/user",
+        "key": "./data/user",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data/user",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data/user",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:deeptutor:23782/tcp",
+        "key": "23782",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "23782",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "23782",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:deeptutor:28001/tcp",
+        "key": "28001",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "28001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "28001",
+          "description": "容器前端页面",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:BACKEND_PORT",
+        "key": "BACKEND_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "28001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "BACKEND_PORT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:deeptutor:DISABLE_SSL_VERIFY",
+        "key": "DISABLE_SSL_VERIFY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DISABLE_SSL_VERIFY",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:deeptutor:EMBEDDING_API_KEY",
+        "key": "EMBEDDING_API_KEY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "sk-sadjadkljas",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "EMBEDDING_API_KEY",
+          "description": "向量模型 API",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:deeptutor:EMBEDDING_DIM",
+        "key": "EMBEDDING_DIM",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "3072",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "EMBEDDING_DIM",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:deeptutor:EMBEDDING_HOST",
+        "key": "EMBEDDING_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "https://api.siliconflow.cn/v1",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "EMBEDDING_HOST",
+          "description": "向量模型 Base URL",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:EMBEDDING_MAX_TOKENS",
+        "key": "EMBEDDING_MAX_TOKENS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "8192",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "EMBEDDING_MAX_TOKENS",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:deeptutor:EMBEDDING_MODEL",
+        "key": "EMBEDDING_MODEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "text-embedding-bge-m3",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "EMBEDDING_MODEL",
+          "description": "向量模型名称",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:FRONTEND_PORT",
+        "key": "FRONTEND_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "23782",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "FRONTEND_PORT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:deeptutor:LLM_API_KEY",
+        "key": "LLM_API_KEY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "ollama",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "LLM_API_KEY",
+          "description": "LLMs API Key",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:deeptutor:LLM_BINDING",
+        "key": "LLM_BINDING",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "openai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LLM_BINDING",
+          "description": "LLMs 模型类型",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:LLM_HOST",
+        "key": "LLM_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "https://api.deepseek.com/v1",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LLM_HOST",
+          "description": "LLMs Base URL",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:LLM_MODEL",
+        "key": "LLM_MODEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "deepseek/deepseek-r1-0528-qwen3-8b",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LLM_MODEL",
+          "description": "LLMs 模型名称",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:NEXT_PUBLIC_API_BASE",
+        "key": "NEXT_PUBLIC_API_BASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://NAS IP:28001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NEXT_PUBLIC_API_BASE",
+          "description": "局域网访问填写",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:NEXT_PUBLIC_API_BASE_EXTERNAL",
+        "key": "NEXT_PUBLIC_API_BASE_EXTERNAL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://你的域名:28001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NEXT_PUBLIC_API_BASE_EXTERNAL",
+          "description": "外网访问填写",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:deeptutor:RAG_TOOL_MODULE_LOG_LEVEL",
+        "key": "RAG_TOOL_MODULE_LOG_LEVEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "INFO",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "RAG_TOOL_MODULE_LOG_LEVEL",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:deeptutor:BACKEND_PORT",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "BACKEND_PORT",
+        "yaml_path": "services.deeptutor.environment[11]",
+        "line": 21,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:DISABLE_SSL_VERIFY",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "DISABLE_SSL_VERIFY",
+        "yaml_path": "services.deeptutor.environment[4]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:EMBEDDING_API_KEY",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "EMBEDDING_API_KEY",
+        "yaml_path": "services.deeptutor.environment[6]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:EMBEDDING_DIM",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "EMBEDDING_DIM",
+        "yaml_path": "services.deeptutor.environment[8]",
+        "line": 18,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:EMBEDDING_HOST",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "EMBEDDING_HOST",
+        "yaml_path": "services.deeptutor.environment[7]",
+        "line": 17,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:EMBEDDING_MAX_TOKENS",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "EMBEDDING_MAX_TOKENS",
+        "yaml_path": "services.deeptutor.environment[9]",
+        "line": 19,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:EMBEDDING_MODEL",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "EMBEDDING_MODEL",
+        "yaml_path": "services.deeptutor.environment[5]",
+        "line": 15,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:FRONTEND_PORT",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "FRONTEND_PORT",
+        "yaml_path": "services.deeptutor.environment[12]",
+        "line": 22,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:LLM_API_KEY",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "LLM_API_KEY",
+        "yaml_path": "services.deeptutor.environment[2]",
+        "line": 12,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:LLM_BINDING",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "LLM_BINDING",
+        "yaml_path": "services.deeptutor.environment[0]",
+        "line": 10,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:LLM_HOST",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "LLM_HOST",
+        "yaml_path": "services.deeptutor.environment[3]",
+        "line": 13,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:LLM_MODEL",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "LLM_MODEL",
+        "yaml_path": "services.deeptutor.environment[1]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:NEXT_PUBLIC_API_BASE",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "NEXT_PUBLIC_API_BASE",
+        "yaml_path": "services.deeptutor.environment[14]",
+        "line": 24,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:NEXT_PUBLIC_API_BASE_EXTERNAL",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "NEXT_PUBLIC_API_BASE_EXTERNAL",
+        "yaml_path": "services.deeptutor.environment[13]",
+        "line": 23,
+        "column": 9
+      },
+      {
+        "input_id": "service:deeptutor:RAG_TOOL_MODULE_LOG_LEVEL",
+        "service": "deeptutor",
+        "target_kind": "environment",
+        "target_key": "RAG_TOOL_MODULE_LOG_LEVEL",
+        "yaml_path": "services.deeptutor.environment[10]",
+        "line": 20,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:deeptutor:/app/config",
+        "kind": "bind",
+        "service": "deeptutor",
+        "source": "./config",
+        "target": "/app/config",
+        "editable": true,
+        "yaml_path": "services.deeptutor.volumes[0]"
+      },
+      {
+        "id": "bind:deeptutor:/app/data/knowledge_bases",
+        "kind": "bind",
+        "service": "deeptutor",
+        "source": "./data/knowledge_bases",
+        "target": "/app/data/knowledge_bases",
+        "editable": true,
+        "yaml_path": "services.deeptutor.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:deeptutor:/app/data/user",
+        "kind": "bind",
+        "service": "deeptutor",
+        "source": "./data/user",
+        "target": "/app/data/user",
+        "editable": true,
+        "yaml_path": "services.deeptutor.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:deeptutor:23782/tcp",
+        "kind": "port",
+        "service": "deeptutor",
+        "source": "23782",
+        "target": "23782",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.deeptutor.ports[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:deeptutor:28001/tcp",
+        "kind": "port",
+        "service": "deeptutor",
+        "source": "28001",
+        "target": "28001",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.deeptutor.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:0618abb6f3f78cbe0378f6bb3229efee5a6fad3910f00b664649a643ef03ed27",
+  "manifest_digest": "sha256:504ad2aaff2664e22e24085cadfd59c5d41a4443100cbd6bba3e66292b67abba",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:deeptutor:/app/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "",
+      "type": "path",
+      "default": "./config",
+      "category": "advanced",
       "serviceName": "deeptutor",
-      "paramType": "port"
+      "paramType": "path"
     },
     {
+      "inputId": "bind:deeptutor:/app/data/knowledge_bases",
+      "name": "./data/knowledge_bases",
+      "label": "./data/knowledge_bases",
+      "description": "",
+      "type": "path",
+      "default": "./data/knowledge_bases",
+      "category": "advanced",
+      "serviceName": "deeptutor",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:deeptutor:/app/data/user",
+      "name": "./data/user",
+      "label": "./data/user",
+      "description": "",
+      "type": "path",
+      "default": "./data/user",
+      "category": "advanced",
+      "serviceName": "deeptutor",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:deeptutor:23782/tcp",
       "name": "23782",
       "label": "23782",
       "description": "",
@@ -35,146 +632,18 @@
       "paramType": "port"
     },
     {
-      "name": "./config",
-      "label": "./config",
-      "description": "",
-      "type": "path",
-      "default": "/app/config",
-      "category": "advanced",
-      "serviceName": "deeptutor",
-      "paramType": "path"
-    },
-    {
-      "name": "./data/user",
-      "label": "./data/user",
-      "description": "",
-      "type": "path",
-      "default": "/app/data/user",
-      "category": "advanced",
-      "serviceName": "deeptutor",
-      "paramType": "path"
-    },
-    {
-      "name": "./data/knowledge_bases",
-      "label": "./data/knowledge_bases",
-      "description": "",
-      "type": "path",
-      "default": "/app/data/knowledge_bases",
-      "category": "advanced",
-      "serviceName": "deeptutor",
-      "paramType": "path"
-    },
-    {
-      "name": "LLM_BINDING",
-      "label": "LLM_BINDING",
-      "description": "LLMs 模型类型",
-      "type": "string",
-      "default": "openai",
+      "inputId": "port:deeptutor:28001/tcp",
+      "name": "28001",
+      "label": "28001",
+      "description": "容器前端页面",
+      "type": "port",
+      "default": "28001",
       "category": "basic",
       "serviceName": "deeptutor",
-      "paramType": "env"
+      "paramType": "port"
     },
     {
-      "name": "LLM_MODEL",
-      "label": "LLM_MODEL",
-      "description": "LLMs 模型名称",
-      "type": "string",
-      "default": "deepseek/deepseek-r1-0528-qwen3-8b",
-      "category": "basic",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "LLM_API_KEY",
-      "label": "LLM_API_KEY",
-      "description": "LLMs API Key",
-      "type": "password",
-      "default": "ollama",
-      "category": "basic",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "LLM_HOST",
-      "label": "LLM_HOST",
-      "description": "LLMs Base URL",
-      "type": "string",
-      "default": "https://api.deepseek.com/v1",
-      "category": "basic",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "DISABLE_SSL_VERIFY",
-      "label": "DISABLE_SSL_VERIFY",
-      "description": "",
-      "type": "string",
-      "default": "false",
-      "category": "advanced",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "EMBEDDING_MODEL",
-      "label": "EMBEDDING_MODEL",
-      "description": "向量模型名称",
-      "type": "string",
-      "default": "text-embedding-bge-m3",
-      "category": "basic",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "EMBEDDING_API_KEY",
-      "label": "EMBEDDING_API_KEY",
-      "description": "向量模型 API",
-      "type": "password",
-      "default": "sk-sadjadkljas",
-      "category": "basic",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "EMBEDDING_HOST",
-      "label": "EMBEDDING_HOST",
-      "description": "向量模型 Base URL",
-      "type": "string",
-      "default": "https://api.siliconflow.cn/v1",
-      "category": "basic",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "EMBEDDING_DIM",
-      "label": "EMBEDDING_DIM",
-      "description": "",
-      "type": "string",
-      "default": "3072",
-      "category": "advanced",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "EMBEDDING_MAX_TOKENS",
-      "label": "EMBEDDING_MAX_TOKENS",
-      "description": "",
-      "type": "password",
-      "default": "8192",
-      "category": "advanced",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
-      "name": "RAG_TOOL_MODULE_LOG_LEVEL",
-      "label": "RAG_TOOL_MODULE_LOG_LEVEL",
-      "description": "",
-      "type": "string",
-      "default": "INFO",
-      "category": "advanced",
-      "serviceName": "deeptutor",
-      "paramType": "env"
-    },
-    {
+      "inputId": "service:deeptutor:BACKEND_PORT",
       "name": "BACKEND_PORT",
       "label": "BACKEND_PORT",
       "description": "",
@@ -185,6 +654,73 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:deeptutor:DISABLE_SSL_VERIFY",
+      "name": "DISABLE_SSL_VERIFY",
+      "label": "DISABLE_SSL_VERIFY",
+      "description": "",
+      "type": "string",
+      "default": "false",
+      "category": "advanced",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:EMBEDDING_API_KEY",
+      "name": "EMBEDDING_API_KEY",
+      "label": "EMBEDDING_API_KEY",
+      "description": "向量模型 API",
+      "type": "password",
+      "default": "sk-sadjadkljas",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:EMBEDDING_DIM",
+      "name": "EMBEDDING_DIM",
+      "label": "EMBEDDING_DIM",
+      "description": "",
+      "type": "string",
+      "default": "3072",
+      "category": "advanced",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:EMBEDDING_HOST",
+      "name": "EMBEDDING_HOST",
+      "label": "EMBEDDING_HOST",
+      "description": "向量模型 Base URL",
+      "type": "string",
+      "default": "https://api.siliconflow.cn/v1",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:EMBEDDING_MAX_TOKENS",
+      "name": "EMBEDDING_MAX_TOKENS",
+      "label": "EMBEDDING_MAX_TOKENS",
+      "description": "",
+      "type": "password",
+      "default": "8192",
+      "category": "advanced",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:EMBEDDING_MODEL",
+      "name": "EMBEDDING_MODEL",
+      "label": "EMBEDDING_MODEL",
+      "description": "向量模型名称",
+      "type": "string",
+      "default": "text-embedding-bge-m3",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:FRONTEND_PORT",
       "name": "FRONTEND_PORT",
       "label": "FRONTEND_PORT",
       "description": "",
@@ -195,6 +731,62 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:deeptutor:LLM_API_KEY",
+      "name": "LLM_API_KEY",
+      "label": "LLM_API_KEY",
+      "description": "LLMs API Key",
+      "type": "password",
+      "default": "ollama",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:LLM_BINDING",
+      "name": "LLM_BINDING",
+      "label": "LLM_BINDING",
+      "description": "LLMs 模型类型",
+      "type": "string",
+      "default": "openai",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:LLM_HOST",
+      "name": "LLM_HOST",
+      "label": "LLM_HOST",
+      "description": "LLMs Base URL",
+      "type": "string",
+      "default": "https://api.deepseek.com/v1",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:LLM_MODEL",
+      "name": "LLM_MODEL",
+      "label": "LLM_MODEL",
+      "description": "LLMs 模型名称",
+      "type": "string",
+      "default": "deepseek/deepseek-r1-0528-qwen3-8b",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:NEXT_PUBLIC_API_BASE",
+      "name": "NEXT_PUBLIC_API_BASE",
+      "label": "NEXT_PUBLIC_API_BASE",
+      "description": "局域网访问填写",
+      "type": "string",
+      "default": "http://NAS IP:28001",
+      "category": "basic",
+      "serviceName": "deeptutor",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:deeptutor:NEXT_PUBLIC_API_BASE_EXTERNAL",
       "name": "NEXT_PUBLIC_API_BASE_EXTERNAL",
       "label": "NEXT_PUBLIC_API_BASE_EXTERNAL",
       "description": "外网访问填写",
@@ -205,16 +797,16 @@
       "paramType": "env"
     },
     {
-      "name": "NEXT_PUBLIC_API_BASE",
-      "label": "NEXT_PUBLIC_API_BASE",
-      "description": "局域网访问填写",
+      "inputId": "service:deeptutor:RAG_TOOL_MODULE_LOG_LEVEL",
+      "name": "RAG_TOOL_MODULE_LOG_LEVEL",
+      "label": "RAG_TOOL_MODULE_LOG_LEVEL",
+      "description": "",
       "type": "string",
-      "default": "http://NAS IP:28001",
-      "category": "basic",
+      "default": "INFO",
+      "category": "advanced",
       "serviceName": "deeptutor",
       "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

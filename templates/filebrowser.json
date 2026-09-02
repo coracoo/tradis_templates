@@ -1,0 +1,159 @@
+{
+  "id": 51,
+  "sort_order": 48,
+  "name": "filebrowser",
+  "category": "file",
+  "description": "File Browser 是一个基于 Web 的文件管理器，提供类似云盘的界面，可浏览、上传、下载、预览、分享指定目录下的文件。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/filebrowser/filebrowser/master/frontend/public/img/logo.svg",
+  "website": "https://github.com/filebrowser/filebrowser",
+  "tutorial": "访问地址：http://服务器IP:8080\n默认账号 admin / admin，登录后立即修改密码。\n./srv 为根目录，可挂载宿主机目录到此。\n./filebrowser.db 存储用户与配置。",
+  "dotenv": "",
+  "compose": "services:\n  filebrowser:\n    image: filebrowser/filebrowser:latest\n    restart: unless-stopped\n    ports:\n      - \"8083:80\"\n    volumes:\n      - ./srv:/srv\n      - ./filebrowser.db:/database/filebrowser.db",
+  "input_metadata": {
+    "bind:filebrowser:/database/filebrowser.db": {
+      "label": "./filebrowser.db",
+      "description": "数据库文件",
+      "group": "basic"
+    },
+    "bind:filebrowser:/srv": {
+      "label": "./srv",
+      "description": "文件根目录",
+      "group": "basic"
+    },
+    "port:filebrowser:80/tcp": {
+      "label": "8083",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:6957433ecf528136a4d3ad2e49a5165bfb941c4b27c4a02cc13a24dd706f199c",
+    "manifest_digest": "sha256:fd994b9eb643402e9b63368e2859c152dc6ae8dfc62698e75e0283a248d08799",
+    "services": [
+      "filebrowser"
+    ],
+    "inputs": [
+      {
+        "id": "bind:filebrowser:/database/filebrowser.db",
+        "key": "./filebrowser.db",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./filebrowser.db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./filebrowser.db",
+          "description": "数据库文件",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:filebrowser:/srv",
+        "key": "./srv",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./srv",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./srv",
+          "description": "文件根目录",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:filebrowser:80/tcp",
+        "key": "8083",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8083",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8083",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:filebrowser:/database/filebrowser.db",
+        "kind": "bind",
+        "service": "filebrowser",
+        "source": "./filebrowser.db",
+        "target": "/database/filebrowser.db",
+        "editable": true,
+        "yaml_path": "services.filebrowser.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:filebrowser:/srv",
+        "kind": "bind",
+        "service": "filebrowser",
+        "source": "./srv",
+        "target": "/srv",
+        "editable": true,
+        "yaml_path": "services.filebrowser.volumes[0]"
+      },
+      {
+        "id": "port:filebrowser:80/tcp",
+        "kind": "port",
+        "service": "filebrowser",
+        "source": "8083",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.filebrowser.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:6957433ecf528136a4d3ad2e49a5165bfb941c4b27c4a02cc13a24dd706f199c",
+  "manifest_digest": "sha256:fd994b9eb643402e9b63368e2859c152dc6ae8dfc62698e75e0283a248d08799",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:filebrowser:/database/filebrowser.db",
+      "name": "./filebrowser.db",
+      "label": "./filebrowser.db",
+      "description": "数据库文件",
+      "type": "path",
+      "default": "./filebrowser.db",
+      "category": "basic",
+      "serviceName": "filebrowser",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:filebrowser:/srv",
+      "name": "./srv",
+      "label": "./srv",
+      "description": "文件根目录",
+      "type": "path",
+      "default": "./srv",
+      "category": "basic",
+      "serviceName": "filebrowser",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:filebrowser:80/tcp",
+      "name": "8083",
+      "label": "8083",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8083",
+      "category": "basic",
+      "serviceName": "filebrowser",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

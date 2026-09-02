@@ -10,21 +10,158 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n  dailyhot:\n    ports:\n      - \"8080:80\"\n    environment:\n      - APP_ICP=京备ICP12345\n      - APP_COPYRIGHT=Example\n      - APP_COPYRIGHT_URL=http://www.example.org\n    image: rehiy/dailyhot",
+  "input_metadata": {
+    "port:dailyhot:80/tcp": {
+      "label": "8080",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:dailyhot:APP_COPYRIGHT": {
+      "label": "APP_COPYRIGHT",
+      "group": "advanced"
+    },
+    "service:dailyhot:APP_COPYRIGHT_URL": {
+      "label": "APP_COPYRIGHT_URL",
+      "description": "域名",
+      "group": "advanced"
+    },
+    "service:dailyhot:APP_ICP": {
+      "label": "APP_ICP",
+      "description": "备案号",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:68a56b891e7277a20087d0f37aae23b97aff84ee319f1ef23b0220ed8eb336e3",
+    "manifest_digest": "sha256:814bf3944648e3664ac81ae845755fcc3f4f4ff53bb4ecf1da270078c42d734c",
+    "services": [
+      "dailyhot"
+    ],
+    "inputs": [
+      {
+        "id": "port:dailyhot:80/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:dailyhot:APP_COPYRIGHT",
+        "key": "APP_COPYRIGHT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Example",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "APP_COPYRIGHT",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:dailyhot:APP_COPYRIGHT_URL",
+        "key": "APP_COPYRIGHT_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://www.example.org",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "APP_COPYRIGHT_URL",
+          "description": "域名",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:dailyhot:APP_ICP",
+        "key": "APP_ICP",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "京备ICP12345",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "APP_ICP",
+          "description": "备案号",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:dailyhot:APP_COPYRIGHT",
+        "service": "dailyhot",
+        "target_kind": "environment",
+        "target_key": "APP_COPYRIGHT",
+        "yaml_path": "services.dailyhot.environment[1]",
+        "line": 7,
+        "column": 9
+      },
+      {
+        "input_id": "service:dailyhot:APP_COPYRIGHT_URL",
+        "service": "dailyhot",
+        "target_kind": "environment",
+        "target_key": "APP_COPYRIGHT_URL",
+        "yaml_path": "services.dailyhot.environment[2]",
+        "line": 8,
+        "column": 9
+      },
+      {
+        "input_id": "service:dailyhot:APP_ICP",
+        "service": "dailyhot",
+        "target_kind": "environment",
+        "target_key": "APP_ICP",
+        "yaml_path": "services.dailyhot.environment[0]",
+        "line": 6,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:dailyhot:80/tcp",
+        "kind": "port",
+        "service": "dailyhot",
+        "source": "8080",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.dailyhot.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:68a56b891e7277a20087d0f37aae23b97aff84ee319f1ef23b0220ed8eb336e3",
+  "manifest_digest": "sha256:814bf3944648e3664ac81ae845755fcc3f4f4ff53bb4ecf1da270078c42d734c",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/imsyy/DailyHot/raw/master/screenshots/main.jpg"
   ],
   "schema": [
     {
-      "name": "APP_ICP",
-      "label": "APP_ICP",
-      "description": "备案号",
-      "type": "string",
-      "default": "京备ICP12345",
-      "category": "advanced",
+      "inputId": "port:dailyhot:80/tcp",
+      "name": "8080",
+      "label": "8080",
+      "description": "容器 WEB 端口",
+      "type": "port",
+      "default": "8080",
+      "category": "basic",
       "serviceName": "dailyhot",
-      "paramType": "env"
+      "paramType": "port"
     },
     {
+      "inputId": "service:dailyhot:APP_COPYRIGHT",
       "name": "APP_COPYRIGHT",
       "label": "APP_COPYRIGHT",
       "description": "",
@@ -35,6 +172,7 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:dailyhot:APP_COPYRIGHT_URL",
       "name": "APP_COPYRIGHT_URL",
       "label": "APP_COPYRIGHT_URL",
       "description": "域名",
@@ -45,16 +183,16 @@
       "paramType": "env"
     },
     {
-      "name": "8080",
-      "label": "8080",
-      "description": "容器 WEB 端口",
-      "type": "port",
-      "default": "80",
-      "category": "basic",
+      "inputId": "service:dailyhot:APP_ICP",
+      "name": "APP_ICP",
+      "label": "APP_ICP",
+      "description": "备案号",
+      "type": "string",
+      "default": "京备ICP12345",
+      "category": "advanced",
       "serviceName": "dailyhot",
-      "paramType": "port"
+      "paramType": "env"
     }
   ],
-  "deployment_count": 2,
   "enabled": true
 }

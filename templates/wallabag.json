@@ -1,0 +1,234 @@
+{
+  "id": 50,
+  "sort_order": 47,
+  "name": "wallabag",
+  "category": "knowledge",
+  "description": "Wallabag 是一个自托管的「稍后阅读」应用，可保存网页文章正文、去除广告，支持离线阅读、标签、过滤、多客户端同步。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/wallabag/wallabag/master/web/images/logo-icon.svg",
+  "website": "https://github.com/wallabag/wallabag",
+  "tutorial": "访问地址：http://服务器IP:8284\n默认账号 wallabag:wallabag，登录后立即修改。\n内置 SQLite（数据在 ./data），也可配 MariaDB/PostgreSQL。",
+  "dotenv": "",
+  "compose": "services:\n  wallabag:\n    image: wallabag/wallabag:latest\n    restart: unless-stopped\n    ports:\n      - \"8284:80\"\n    volumes:\n      - ./data:/var/www/wallabag/data\n      - ./images:/var/www/wallabag/web/assets/images\n    environment:\n      - SYMFONY__ENV__DOMAIN_NAME=http://localhost:8284\n      - SYMFONY__ENV__SERVER_NAME=Your Wallabag",
+  "input_metadata": {
+    "bind:wallabag:/var/www/wallabag/data": {
+      "label": "./data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "bind:wallabag:/var/www/wallabag/web/assets/images": {
+      "label": "./images",
+      "description": "图片存储",
+      "group": "basic"
+    },
+    "port:wallabag:80/tcp": {
+      "label": "8284",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "service:wallabag:SYMFONY__ENV__DOMAIN_NAME": {
+      "label": "SYMFONY__ENV__DOMAIN_NAME",
+      "description": "访问域名",
+      "group": "basic"
+    },
+    "service:wallabag:SYMFONY__ENV__SERVER_NAME": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:f5243538bee00f46da0e4526a5ae8594ea5eaa75adfa2bb13eea02abc194bb63",
+    "manifest_digest": "sha256:692de4a201688846d98a36d4db21594bc20e620583a561e4073361637130e3ab",
+    "services": [
+      "wallabag"
+    ],
+    "inputs": [
+      {
+        "id": "bind:wallabag:/var/www/wallabag/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:wallabag:/var/www/wallabag/web/assets/images",
+        "key": "./images",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./images",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./images",
+          "description": "图片存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:wallabag:80/tcp",
+        "key": "8284",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8284",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8284",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:wallabag:SYMFONY__ENV__DOMAIN_NAME",
+        "key": "SYMFONY__ENV__DOMAIN_NAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://localhost:8284",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "SYMFONY__ENV__DOMAIN_NAME",
+          "description": "访问域名",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:wallabag:SYMFONY__ENV__SERVER_NAME",
+        "key": "SYMFONY__ENV__SERVER_NAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Your Wallabag",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:wallabag:SYMFONY__ENV__DOMAIN_NAME",
+        "service": "wallabag",
+        "target_kind": "environment",
+        "target_key": "SYMFONY__ENV__DOMAIN_NAME",
+        "yaml_path": "services.wallabag.environment[0]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "service:wallabag:SYMFONY__ENV__SERVER_NAME",
+        "service": "wallabag",
+        "target_kind": "environment",
+        "target_key": "SYMFONY__ENV__SERVER_NAME",
+        "yaml_path": "services.wallabag.environment[1]",
+        "line": 12,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:wallabag:/var/www/wallabag/data",
+        "kind": "bind",
+        "service": "wallabag",
+        "source": "./data",
+        "target": "/var/www/wallabag/data",
+        "editable": true,
+        "yaml_path": "services.wallabag.volumes[0]"
+      },
+      {
+        "id": "bind:wallabag:/var/www/wallabag/web/assets/images",
+        "kind": "bind",
+        "service": "wallabag",
+        "source": "./images",
+        "target": "/var/www/wallabag/web/assets/images",
+        "editable": true,
+        "yaml_path": "services.wallabag.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:wallabag:80/tcp",
+        "kind": "port",
+        "service": "wallabag",
+        "source": "8284",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.wallabag.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:f5243538bee00f46da0e4526a5ae8594ea5eaa75adfa2bb13eea02abc194bb63",
+  "manifest_digest": "sha256:692de4a201688846d98a36d4db21594bc20e620583a561e4073361637130e3ab",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:wallabag:/var/www/wallabag/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./data",
+      "category": "basic",
+      "serviceName": "wallabag",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:wallabag:/var/www/wallabag/web/assets/images",
+      "name": "./images",
+      "label": "./images",
+      "description": "图片存储",
+      "type": "path",
+      "default": "./images",
+      "category": "basic",
+      "serviceName": "wallabag",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:wallabag:80/tcp",
+      "name": "8284",
+      "label": "8284",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8284",
+      "category": "basic",
+      "serviceName": "wallabag",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:wallabag:SYMFONY__ENV__DOMAIN_NAME",
+      "name": "SYMFONY__ENV__DOMAIN_NAME",
+      "label": "SYMFONY__ENV__DOMAIN_NAME",
+      "description": "访问域名",
+      "type": "string",
+      "default": "http://localhost:8284",
+      "category": "basic",
+      "serviceName": "wallabag",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:wallabag:SYMFONY__ENV__SERVER_NAME",
+      "name": "SYMFONY__ENV__SERVER_NAME",
+      "label": "SYMFONY__ENV__SERVER_NAME",
+      "description": "",
+      "type": "string",
+      "default": "Your Wallabag",
+      "category": "basic",
+      "serviceName": "wallabag",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

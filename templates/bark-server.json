@@ -1,0 +1,119 @@
+{
+  "id": 63,
+  "sort_order": 60,
+  "name": "bark-server",
+  "category": "other",
+  "description": "Bark Server 是 iOS 端 Bark 推送应用的自建后端，通过 HTTP 接收消息并经由 APNS 推送到 iPhone，轻量易部署。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/Finb/bark-server/master/README/bark.png",
+  "website": "https://github.com/Finb/bark-server",
+  "tutorial": "访问地址：http://服务器IP:8080\n数据（设备 token）在 ./data。\niOS 推送需服务器可被公网以 HTTPS 访问（APNS 回调）。\n需自行配置 APNS Key。",
+  "dotenv": "",
+  "compose": "services:\n  bark-server:\n    image: finab/bark-server\n    restart: always\n    ports:\n      - \"8080:8080\"\n    volumes:\n      - ./data:/data",
+  "input_metadata": {
+    "bind:bark-server:/data": {
+      "label": "./data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:bark-server:8080/tcp": {
+      "label": "8080",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:1743ede2705ecbe245b900a4dfd09d298e3f5f8b82b54775ea35b2250d075368",
+    "manifest_digest": "sha256:c5b5c7d48f7d8d870e2124b5abf6b6b9cfb06a30860dd89cf13f9fd984d71534",
+    "services": [
+      "bark-server"
+    ],
+    "inputs": [
+      {
+        "id": "bind:bark-server:/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:bark-server:8080/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:bark-server:/data",
+        "kind": "bind",
+        "service": "bark-server",
+        "source": "./data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.bark-server.volumes[0]"
+      },
+      {
+        "id": "port:bark-server:8080/tcp",
+        "kind": "port",
+        "service": "bark-server",
+        "source": "8080",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.bark-server.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:1743ede2705ecbe245b900a4dfd09d298e3f5f8b82b54775ea35b2250d075368",
+  "manifest_digest": "sha256:c5b5c7d48f7d8d870e2124b5abf6b6b9cfb06a30860dd89cf13f9fd984d71534",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:bark-server:/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./data",
+      "category": "basic",
+      "serviceName": "bark-server",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:bark-server:8080/tcp",
+      "name": "8080",
+      "label": "8080",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8080",
+      "category": "basic",
+      "serviceName": "bark-server",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

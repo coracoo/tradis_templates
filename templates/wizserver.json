@@ -10,29 +10,147 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n    wizserver:\n        restart: unless-stopped\n        stdin_open: true\n        tty: true\n        volumes:\n            - ./wizdata:/wiz/storage\n            - /etc/localtime:/etc/localtime\n        ports:\n            - 6666:80\n            - 9269:9269/udp\n        image: wiznote/wizserver",
+  "input_metadata": {
+    "bind:wizserver:/etc/localtime": {
+      "label": "/etc/localtime",
+      "description": "时区",
+      "group": "basic"
+    },
+    "bind:wizserver:/wiz/storage": {
+      "label": "./wizdata",
+      "description": "数据存储路径",
+      "group": "basic"
+    },
+    "port:wizserver:80/tcp": {
+      "label": "6666",
+      "group": "basic"
+    },
+    "port:wizserver:9269/udp": {
+      "label": "9269",
+      "description": "UDP 端口",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:39b831d9dad262fa42a3704a948acf7321495b396ad0907030293f8b47422a7f",
+    "manifest_digest": "sha256:860395dae305c1f25a3c717796ddef60563b38ed5ab95fccc2060603b3741b7a",
+    "services": [
+      "wizserver"
+    ],
+    "inputs": [
+      {
+        "id": "bind:wizserver:/etc/localtime",
+        "key": "/etc/localtime",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/etc/localtime",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "/etc/localtime",
+          "description": "时区",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:wizserver:/wiz/storage",
+        "key": "./wizdata",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./wizdata",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./wizdata",
+          "description": "数据存储路径",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:wizserver:80/tcp",
+        "key": "6666",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "6666",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "6666",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:wizserver:9269/udp",
+        "key": "9269",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "9269",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "9269",
+          "description": "UDP 端口",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:wizserver:/etc/localtime",
+        "kind": "bind",
+        "service": "wizserver",
+        "source": "/etc/localtime",
+        "target": "/etc/localtime",
+        "editable": true,
+        "yaml_path": "services.wizserver.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:wizserver:/wiz/storage",
+        "kind": "bind",
+        "service": "wizserver",
+        "source": "./wizdata",
+        "target": "/wiz/storage",
+        "editable": true,
+        "yaml_path": "services.wizserver.volumes[0]"
+      },
+      {
+        "id": "port:wizserver:80/tcp",
+        "kind": "port",
+        "service": "wizserver",
+        "source": "6666",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.wizserver.ports[0]"
+      },
+      {
+        "id": "port:wizserver:9269/udp",
+        "kind": "port",
+        "service": "wizserver",
+        "source": "9269",
+        "target": "9269",
+        "protocol": "udp",
+        "editable": true,
+        "yaml_path": "services.wizserver.ports[1]",
+        "sequence_index": 1
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:39b831d9dad262fa42a3704a948acf7321495b396ad0907030293f8b47422a7f",
+  "manifest_digest": "sha256:860395dae305c1f25a3c717796ddef60563b38ed5ab95fccc2060603b3741b7a",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
-      "name": "80",
-      "label": "6666",
-      "description": "容器 WEB 端口",
-      "type": "port",
-      "default": "80",
-      "category": "basic",
-      "serviceName": "wizserver",
-      "paramType": "port"
-    },
-    {
-      "name": "9269",
-      "label": "9269",
-      "description": "UDP 端口",
-      "type": "port",
-      "default": "9269",
-      "category": "advanced",
-      "serviceName": "wizserver",
-      "paramType": "port"
-    },
-    {
+      "inputId": "bind:wizserver:/etc/localtime",
       "name": "/etc/localtime",
       "label": "/etc/localtime",
       "description": "时区",
@@ -43,26 +161,38 @@
       "paramType": "path"
     },
     {
+      "inputId": "bind:wizserver:/wiz/storage",
       "name": "./wizdata",
       "label": "./wizdata",
       "description": "数据存储路径",
       "type": "path",
-      "default": "/wiz/storage",
+      "default": "./wizdata",
       "category": "basic",
       "serviceName": "wizserver",
       "paramType": "path"
     },
     {
+      "inputId": "port:wizserver:80/tcp",
       "name": "6666",
       "label": "6666",
       "description": "",
       "type": "port",
-      "default": "80",
+      "default": "6666",
       "category": "basic",
+      "serviceName": "wizserver",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:wizserver:9269/udp",
+      "name": "9269",
+      "label": "9269",
+      "description": "UDP 端口",
+      "type": "port",
+      "default": "9269",
+      "category": "advanced",
       "serviceName": "wizserver",
       "paramType": "port"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

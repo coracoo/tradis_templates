@@ -10,11 +10,103 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "version: '3.4'\nservices:\n  musicn:\n    image: ghcr.io/wy580477/musicn-container:latest\n    container_name: musicn\n    restart: unless-stopped\n    entrypoint: [\"/sbin/tini\", \"--\", \"msc\", \"-q\"]\n    ports:\n      - \"7478:7478\"\n    volumes:\n      - ./musicn:/data",
+  "input_metadata": {
+    "bind:musicn:/data": {
+      "label": "./musicn",
+      "description": "修改为你的音乐路径",
+      "group": "basic"
+    },
+    "port:musicn:7478/tcp": {
+      "label": "7478",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:66f216480a2d30d4179f0eab3cc993edde895bed54f06604e1bca116b59091b0",
+    "manifest_digest": "sha256:89e9310dfda4a4988ca10863717484e43c20152299353654ee28bca37c242c18",
+    "services": [
+      "musicn"
+    ],
+    "inputs": [
+      {
+        "id": "bind:musicn:/data",
+        "key": "./musicn",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./musicn",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./musicn",
+          "description": "修改为你的音乐路径",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:musicn:7478/tcp",
+        "key": "7478",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7478",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7478",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:musicn:/data",
+        "kind": "bind",
+        "service": "musicn",
+        "source": "./musicn",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.musicn.volumes[0]"
+      },
+      {
+        "id": "port:musicn:7478/tcp",
+        "kind": "port",
+        "service": "musicn",
+        "source": "7478",
+        "target": "7478",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.musicn.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:66f216480a2d30d4179f0eab3cc993edde895bed54f06604e1bca116b59091b0",
+  "manifest_digest": "sha256:89e9310dfda4a4988ca10863717484e43c20152299353654ee28bca37c242c18",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://private-user-images.githubusercontent.com/44596995/249805741-f673ad83-f867-41c5-84c9-9e0c531ecce6.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjY1NDM2OTksIm5iZiI6MTc2NjU0MzM5OSwicGF0aCI6Ii80NDU5Njk5NS8yNDk4MDU3NDEtZjY3M2FkODMtZjg2Ny00MWM1LTg0YzktOWUwYzUzMWVjY2U2LmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjI0VDAyMjk1OVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTBiMTgwN2QxZDdiMjVjMjEwMDU0YzljZTdkYTJiZDM1MDdkZmYzYjVkM2E2YmMwODBkMmI2MDk1YzMwNzg1MjImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.ZOHw0ucETK6dU5RFZER3YMklQk2nm8dHx2Xo8cwHHLU"
   ],
   "schema": [
     {
+      "inputId": "bind:musicn:/data",
+      "name": "./musicn",
+      "label": "./musicn",
+      "description": "修改为你的音乐路径",
+      "type": "path",
+      "default": "./musicn",
+      "category": "basic",
+      "serviceName": "musicn",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:musicn:7478/tcp",
       "name": "7478",
       "label": "7478",
       "description": "容器 WEB 端口",
@@ -23,18 +115,7 @@
       "category": "basic",
       "serviceName": "musicn",
       "paramType": "port"
-    },
-    {
-      "name": "./musicn",
-      "label": "./musicn",
-      "description": "修改为你的音乐路径",
-      "type": "path",
-      "default": "/data",
-      "category": "basic",
-      "serviceName": "musicn",
-      "paramType": "path"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

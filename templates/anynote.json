@@ -10,11 +10,134 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n    anynote:\n        ports:\n            - 8080:8080\n        environment:\n            - secret=yourpassword\n        volumes:\n            - ./data:/data\n        image: anynoteofficial/anynote:latest",
+  "input_metadata": {
+    "bind:anynote:/data": {
+      "label": "./data",
+      "description": "容器持久化路径",
+      "group": "advanced"
+    },
+    "port:anynote:8080/tcp": {
+      "label": "8080",
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:anynote:secret": {
+      "label": "secret",
+      "description": "修改为你的登录密码",
+      "group": "basic",
+      "sensitive": true
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:9f0b71dee95f2b5958adcd469c49cc193bb624b15ea6d741d904a1f0e85653e1",
+    "manifest_digest": "sha256:53f0bba04f33809bb49174c03d0b5740e6a79606048c492321c93f4b9768df79",
+    "services": [
+      "anynote"
+    ],
+    "inputs": [
+      {
+        "id": "bind:anynote:/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "description": "容器持久化路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:anynote:8080/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8080",
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:anynote:secret",
+        "key": "secret",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "yourpassword",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "secret",
+          "description": "修改为你的登录密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:anynote:secret",
+        "service": "anynote",
+        "target_kind": "environment",
+        "target_key": "secret",
+        "yaml_path": "services.anynote.environment[0]",
+        "line": 6,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:anynote:/data",
+        "kind": "bind",
+        "service": "anynote",
+        "source": "./data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.anynote.volumes[0]"
+      },
+      {
+        "id": "port:anynote:8080/tcp",
+        "kind": "port",
+        "service": "anynote",
+        "source": "8080",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.anynote.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:9f0b71dee95f2b5958adcd469c49cc193bb624b15ea6d741d904a1f0e85653e1",
+  "manifest_digest": "sha256:53f0bba04f33809bb49174c03d0b5740e6a79606048c492321c93f4b9768df79",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://anynote.online/screenshot/loginpage.png"
   ],
   "schema": [
     {
+      "inputId": "bind:anynote:/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "容器持久化路径",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
+      "serviceName": "anynote",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:anynote:8080/tcp",
       "name": "8080",
       "label": "8080",
       "description": "容器 WEB 端口",
@@ -25,16 +148,7 @@
       "paramType": "port"
     },
     {
-      "name": "./data",
-      "label": "./data",
-      "description": "容器持久化路径",
-      "type": "path",
-      "default": "/data",
-      "category": "advanced",
-      "serviceName": "anynote",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:anynote:secret",
       "name": "secret",
       "label": "secret",
       "description": "修改为你的登录密码",
@@ -45,6 +159,5 @@
       "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

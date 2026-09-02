@@ -1,0 +1,119 @@
+{
+  "id": 56,
+  "sort_order": 53,
+  "name": "beszel",
+  "category": "other",
+  "description": "Beszel 是一款轻量级的服务器/NAS 监控工具，提供 CPU、内存、磁盘、网络、Docker 容器等指标的实时仪表盘，基于 PocketBase。",
+  "version": "latest",
+  "logo": "https://raw.githubusercontent.com/henrygd/beszel/main/.github/images/logo.svg",
+  "website": "https://github.com/henrygd/beszel",
+  "tutorial": "访问地址：http://服务器IP:8090\n首次访问创建管理员账号。\n数据（SQLite）在 ./beszel_data。\n要监控其它主机，在被监控机部署 beszel-agent（端口 45876）。",
+  "dotenv": "",
+  "compose": "services:\n  beszel:\n    image: henrygd/beszel\n    restart: unless-stopped\n    network_mode: bridge\n    ports:\n      - \"8090:8090\"\n    volumes:\n      - ./beszel_data:/beszel_data",
+  "input_metadata": {
+    "bind:beszel:/beszel_data": {
+      "label": "./beszel_data",
+      "description": "数据存储",
+      "group": "basic"
+    },
+    "port:beszel:8090/tcp": {
+      "label": "8090",
+      "description": "WEB 端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:d9af277f4f9142ce1601d64776fb8c4fef3bfe437a7bd07790f5486891dd5cad",
+    "manifest_digest": "sha256:20420b701a3bbc9a3599268df24027238593426dc4e138d9104c9176ffa0a3c1",
+    "services": [
+      "beszel"
+    ],
+    "inputs": [
+      {
+        "id": "bind:beszel:/beszel_data",
+        "key": "./beszel_data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./beszel_data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./beszel_data",
+          "description": "数据存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:beszel:8090/tcp",
+        "key": "8090",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8090",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8090",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:beszel:/beszel_data",
+        "kind": "bind",
+        "service": "beszel",
+        "source": "./beszel_data",
+        "target": "/beszel_data",
+        "editable": true,
+        "yaml_path": "services.beszel.volumes[0]"
+      },
+      {
+        "id": "port:beszel:8090/tcp",
+        "kind": "port",
+        "service": "beszel",
+        "source": "8090",
+        "target": "8090",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.beszel.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:d9af277f4f9142ce1601d64776fb8c4fef3bfe437a7bd07790f5486891dd5cad",
+  "manifest_digest": "sha256:20420b701a3bbc9a3599268df24027238593426dc4e138d9104c9176ffa0a3c1",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:beszel:/beszel_data",
+      "name": "./beszel_data",
+      "label": "./beszel_data",
+      "description": "数据存储",
+      "type": "path",
+      "default": "./beszel_data",
+      "category": "basic",
+      "serviceName": "beszel",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:beszel:8090/tcp",
+      "name": "8090",
+      "label": "8090",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "8090",
+      "category": "basic",
+      "serviceName": "beszel",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

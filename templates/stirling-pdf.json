@@ -10,13 +10,298 @@
   "tutorial": "无论您在何处工作 ——桌面客户端、浏览器用户界面以及带有私有 API 的自托管服务器。\n\n50 多种 PDF 工具 - 编辑、合并、拆分、签名、编辑、转换、OCR、压缩等等。\n\n自动化和工作流程 - 无代码管道直接在 UI 中使用 API 处理数百万个 PDF 文件。\n\n企业级 - 单点登录、审计和灵活的本地部署。\n\n开发者平台 - 提供 REST API，几乎所有工具都可以集成到您现有的系统中。\n\n全球通用用户界面 - 界面支持 40 多种语言。",
   "dotenv": "",
   "compose": "version: '3.3'\nservices:\n  stirling-pdf:\n    image: stirlingtools/stirling-pdf:latest\n    ports:\n      - '8080:8080'\n    volumes:\n      - ./tessdata:/usr/share/tessdata\n      - ./extraConfigs:/configs\n      - ./customFiles:/customFiles/\n      - ./logs:/logs/\n      - ./pipeline:/pipeline/\n    environment:\n      - DOCKER_ENABLE_SECURITY=false\n      - LANGS=zh_CN",
+  "input_metadata": {
+    "bind:stirling-pdf:/configs": {
+      "description": "配置文件路径",
+      "group": "advanced"
+    },
+    "bind:stirling-pdf:/customFiles/": {
+      "group": "advanced"
+    },
+    "bind:stirling-pdf:/logs/": {
+      "group": "advanced"
+    },
+    "bind:stirling-pdf:/pipeline/": {
+      "group": "advanced"
+    },
+    "bind:stirling-pdf:/usr/share/tessdata": {
+      "description": "OCR 文件路径",
+      "group": "advanced"
+    },
+    "port:stirling-pdf:8080/tcp": {
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:stirling-pdf:DOCKER_ENABLE_SECURITY": {
+      "group": "advanced"
+    },
+    "service:stirling-pdf:LANGS": {
+      "description": "语言包",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:a811835b1d02911627b2017058dbd8fadb30ce6354c277e2d71a38d67156a3b6",
+    "manifest_digest": "sha256:42fd33b899f58290df665bc286bf6b5ba3eeb36ac649e76e4c8a13b4feb6d16e",
+    "services": [
+      "stirling-pdf"
+    ],
+    "inputs": [
+      {
+        "id": "bind:stirling-pdf:/configs",
+        "key": "./extraConfigs",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./extraConfigs",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "配置文件路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:stirling-pdf:/customFiles/",
+        "key": "./customFiles",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./customFiles",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:stirling-pdf:/logs/",
+        "key": "./logs",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./logs",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:stirling-pdf:/pipeline/",
+        "key": "./pipeline",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./pipeline",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:stirling-pdf:/usr/share/tessdata",
+        "key": "./tessdata",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./tessdata",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "OCR 文件路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:stirling-pdf:8080/tcp",
+        "key": "8080",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8080",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:stirling-pdf:DOCKER_ENABLE_SECURITY",
+        "key": "DOCKER_ENABLE_SECURITY",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:stirling-pdf:LANGS",
+        "key": "LANGS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "zh_CN",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "语言包",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:stirling-pdf:DOCKER_ENABLE_SECURITY",
+        "service": "stirling-pdf",
+        "target_kind": "environment",
+        "target_key": "DOCKER_ENABLE_SECURITY",
+        "yaml_path": "services.stirling-pdf.environment[0]",
+        "line": 14,
+        "column": 9
+      },
+      {
+        "input_id": "service:stirling-pdf:LANGS",
+        "service": "stirling-pdf",
+        "target_kind": "environment",
+        "target_key": "LANGS",
+        "yaml_path": "services.stirling-pdf.environment[1]",
+        "line": 15,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:stirling-pdf:/configs",
+        "kind": "bind",
+        "service": "stirling-pdf",
+        "source": "./extraConfigs",
+        "target": "/configs",
+        "editable": true,
+        "yaml_path": "services.stirling-pdf.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:stirling-pdf:/customFiles/",
+        "kind": "bind",
+        "service": "stirling-pdf",
+        "source": "./customFiles",
+        "target": "/customFiles/",
+        "editable": true,
+        "yaml_path": "services.stirling-pdf.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:stirling-pdf:/logs/",
+        "kind": "bind",
+        "service": "stirling-pdf",
+        "source": "./logs",
+        "target": "/logs/",
+        "editable": true,
+        "yaml_path": "services.stirling-pdf.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "bind:stirling-pdf:/pipeline/",
+        "kind": "bind",
+        "service": "stirling-pdf",
+        "source": "./pipeline",
+        "target": "/pipeline/",
+        "editable": true,
+        "yaml_path": "services.stirling-pdf.volumes[4]",
+        "sequence_index": 4
+      },
+      {
+        "id": "bind:stirling-pdf:/usr/share/tessdata",
+        "kind": "bind",
+        "service": "stirling-pdf",
+        "source": "./tessdata",
+        "target": "/usr/share/tessdata",
+        "editable": true,
+        "yaml_path": "services.stirling-pdf.volumes[0]"
+      },
+      {
+        "id": "port:stirling-pdf:8080/tcp",
+        "kind": "port",
+        "service": "stirling-pdf",
+        "source": "8080",
+        "target": "8080",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.stirling-pdf.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:a811835b1d02911627b2017058dbd8fadb30ce6354c277e2d71a38d67156a3b6",
+  "manifest_digest": "sha256:42fd33b899f58290df665bc286bf6b5ba3eeb36ac649e76e4c8a13b4feb6d16e",
+  "compiler_version": "1.0.1",
   "screenshots": [
     "https://github.com/Stirling-Tools/Stirling-PDF/raw/main/images/home-light.png"
   ],
   "schema": [
     {
+      "inputId": "bind:stirling-pdf:/configs",
+      "name": "./extraConfigs",
+      "label": "./extraConfigs",
+      "description": "配置文件路径",
+      "type": "path",
+      "default": "./extraConfigs",
+      "category": "advanced",
+      "serviceName": "stirling-pdf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:stirling-pdf:/customFiles/",
+      "name": "./customFiles",
+      "label": "./customFiles",
+      "description": "",
+      "type": "path",
+      "default": "./customFiles",
+      "category": "advanced",
+      "serviceName": "stirling-pdf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:stirling-pdf:/logs/",
+      "name": "./logs",
+      "label": "./logs",
+      "description": "",
+      "type": "path",
+      "default": "./logs",
+      "category": "advanced",
+      "serviceName": "stirling-pdf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:stirling-pdf:/pipeline/",
+      "name": "./pipeline",
+      "label": "./pipeline",
+      "description": "",
+      "type": "path",
+      "default": "./pipeline",
+      "category": "advanced",
+      "serviceName": "stirling-pdf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:stirling-pdf:/usr/share/tessdata",
+      "name": "./tessdata",
+      "label": "./tessdata",
+      "description": "OCR 文件路径",
+      "type": "path",
+      "default": "./tessdata",
+      "category": "advanced",
+      "serviceName": "stirling-pdf",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:stirling-pdf:8080/tcp",
       "name": "8080",
-      "label": "",
+      "label": "8080",
       "description": "容器 WEB 端口",
       "type": "port",
       "default": "8080",
@@ -25,58 +310,9 @@
       "paramType": "port"
     },
     {
-      "name": "./tessdata",
-      "label": "",
-      "description": "OCR 文件路径",
-      "type": "path",
-      "default": "/usr/share/tessdata",
-      "category": "advanced",
-      "serviceName": "stirling-pdf",
-      "paramType": "path"
-    },
-    {
-      "name": "./extraConfigs",
-      "label": "",
-      "description": "配置文件路径",
-      "type": "path",
-      "default": "/configs",
-      "category": "advanced",
-      "serviceName": "stirling-pdf",
-      "paramType": "path"
-    },
-    {
-      "name": "./customFiles",
-      "label": "",
-      "description": "",
-      "type": "path",
-      "default": "/customFiles/",
-      "category": "advanced",
-      "serviceName": "stirling-pdf",
-      "paramType": "path"
-    },
-    {
-      "name": "./logs",
-      "label": "",
-      "description": "",
-      "type": "path",
-      "default": "/logs/",
-      "category": "advanced",
-      "serviceName": "stirling-pdf",
-      "paramType": "path"
-    },
-    {
-      "name": "./pipeline",
-      "label": "",
-      "description": "",
-      "type": "path",
-      "default": "/pipeline/",
-      "category": "advanced",
-      "serviceName": "stirling-pdf",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:stirling-pdf:DOCKER_ENABLE_SECURITY",
       "name": "DOCKER_ENABLE_SECURITY",
-      "label": "",
+      "label": "DOCKER_ENABLE_SECURITY",
       "description": "",
       "type": "string",
       "default": "false",
@@ -85,8 +321,9 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:stirling-pdf:LANGS",
       "name": "LANGS",
-      "label": "",
+      "label": "LANGS",
       "description": "语言包",
       "type": "string",
       "default": "zh_CN",
@@ -95,6 +332,5 @@
       "paramType": "env"
     }
   ],
-  "deployment_count": 1,
   "enabled": true
 }

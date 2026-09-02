@@ -1,0 +1,330 @@
+{
+  "id": 61,
+  "sort_order": 58,
+  "name": "umami",
+  "category": "other",
+  "description": "Umami 是一个开源、隐私友好的网站分析工具，是 Google Analytics 的轻量替代，提供页面浏览、访客、事件、来源等统计。",
+  "version": "postgresql-latest",
+  "logo": "https://raw.githubusercontent.com/umami-software/umami/master/public/favicon.ico",
+  "website": "https://github.com/umami-software/umami",
+  "tutorial": "访问地址：http://服务器IP:3001\n需搭配 PostgreSQL 数据库。\n默认账号 admin / umami，登录后立即修改密码。\n分析数据全部存在数据库中。",
+  "dotenv": "APP_SECRET=\nDB_PASSWORD=\n",
+  "compose": "services:\n  umami:\n    image: ghcr.io/umami-software/umami:postgresql-latest\n    restart: unless-stopped\n    depends_on: [db]\n    ports:\n      - \"3001:3000\"\n    environment:\n      - DATABASE_URL=postgresql://umami:${DB_PASSWORD}@db:5432/umami\n      - DATABASE_TYPE=postgresql\n      - APP_SECRET=${APP_SECRET}\n\n  db:\n    image: postgres:15-alpine\n    restart: unless-stopped\n    volumes:\n      - ./umami-db:/var/lib/postgresql/data\n    environment:\n      - POSTGRES_DB=umami\n      - POSTGRES_USER=umami\n      - POSTGRES_PASSWORD=${DB_PASSWORD}",
+  "input_metadata": {
+    "bind:db:/var/lib/postgresql/data": {
+      "label": "./umami-db",
+      "description": "数据库存储",
+      "group": "basic"
+    },
+    "port:umami:3000/tcp": {
+      "label": "3001",
+      "description": "WEB 端口",
+      "group": "basic"
+    },
+    "project:APP_SECRET": {
+      "label": "APP_SECRET",
+      "description": "会话密钥",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:DB_PASSWORD": {
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "service:db:POSTGRES_DB": {
+      "label": "POSTGRES_DB",
+      "description": "数据库名",
+      "group": "advanced"
+    },
+    "service:db:POSTGRES_USER": {
+      "label": "POSTGRES_USER",
+      "description": "数据库用户",
+      "group": "advanced"
+    },
+    "service:umami:DATABASE_TYPE": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:12a6acbda05fe144abe1859e1b5fd1651fe997fef267ad8f6e76028e21cb88b6",
+    "manifest_digest": "sha256:a7bef056599fec99fecb059736e51491ec697ed1cb9b4c9aa2c4a68f857e6e26",
+    "services": [
+      "db",
+      "umami"
+    ],
+    "inputs": [
+      {
+        "id": "bind:db:/var/lib/postgresql/data",
+        "key": "./umami-db",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./umami-db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./umami-db",
+          "description": "数据库存储",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:umami:3000/tcp",
+        "key": "3001",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3001",
+          "description": "WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:APP_SECRET",
+        "key": "APP_SECRET",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "APP_SECRET",
+          "description": "会话密钥",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:DB_PASSWORD",
+        "key": "DB_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "DB_PASSWORD",
+          "description": "数据库密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:db:POSTGRES_DB",
+        "key": "POSTGRES_DB",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "umami",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_DB",
+          "description": "数据库名",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:db:POSTGRES_USER",
+        "key": "POSTGRES_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "umami",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "POSTGRES_USER",
+          "description": "数据库用户",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:umami:DATABASE_TYPE",
+        "key": "DATABASE_TYPE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "postgresql",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:APP_SECRET",
+        "service": "umami",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${APP_SECRET}",
+        "yaml_path": "services.umami.environment[2]",
+        "line": 11,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "db",
+        "target_kind": "interpolation",
+        "target_key": "[2]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.db.environment[2]",
+        "line": 21,
+        "column": 9
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "umami",
+        "target_kind": "interpolation",
+        "target_key": "[0]",
+        "expression": "${DB_PASSWORD}",
+        "yaml_path": "services.umami.environment[0]",
+        "line": 9,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:POSTGRES_DB",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_DB",
+        "yaml_path": "services.db.environment[0]",
+        "line": 19,
+        "column": 9
+      },
+      {
+        "input_id": "service:db:POSTGRES_USER",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "POSTGRES_USER",
+        "yaml_path": "services.db.environment[1]",
+        "line": 20,
+        "column": 9
+      },
+      {
+        "input_id": "service:umami:DATABASE_TYPE",
+        "service": "umami",
+        "target_kind": "environment",
+        "target_key": "DATABASE_TYPE",
+        "yaml_path": "services.umami.environment[1]",
+        "line": 10,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:db:/var/lib/postgresql/data",
+        "kind": "bind",
+        "service": "db",
+        "source": "./umami-db",
+        "target": "/var/lib/postgresql/data",
+        "editable": true,
+        "yaml_path": "services.db.volumes[0]"
+      },
+      {
+        "id": "port:umami:3000/tcp",
+        "kind": "port",
+        "service": "umami",
+        "source": "3001",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.umami.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:12a6acbda05fe144abe1859e1b5fd1651fe997fef267ad8f6e76028e21cb88b6",
+  "manifest_digest": "sha256:a7bef056599fec99fecb059736e51491ec697ed1cb9b4c9aa2c4a68f857e6e26",
+  "compiler_version": "1.0.1",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:db:/var/lib/postgresql/data",
+      "name": "./umami-db",
+      "label": "./umami-db",
+      "description": "数据库存储",
+      "type": "path",
+      "default": "./umami-db",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:umami:3000/tcp",
+      "name": "3001",
+      "label": "3001",
+      "description": "WEB 端口",
+      "type": "port",
+      "default": "3001",
+      "category": "basic",
+      "serviceName": "umami",
+      "paramType": "port"
+    },
+    {
+      "inputId": "project:APP_SECRET",
+      "name": "APP_SECRET",
+      "label": "APP_SECRET",
+      "description": "会话密钥",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:DB_PASSWORD",
+      "name": "DB_PASSWORD",
+      "label": "DB_PASSWORD",
+      "description": "数据库密码",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "service:db:POSTGRES_DB",
+      "name": "POSTGRES_DB",
+      "label": "POSTGRES_DB",
+      "description": "数据库名",
+      "type": "string",
+      "default": "umami",
+      "category": "advanced",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:POSTGRES_USER",
+      "name": "POSTGRES_USER",
+      "label": "POSTGRES_USER",
+      "description": "数据库用户",
+      "type": "string",
+      "default": "umami",
+      "category": "advanced",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:umami:DATABASE_TYPE",
+      "name": "DATABASE_TYPE",
+      "label": "DATABASE_TYPE",
+      "description": "",
+      "type": "string",
+      "default": "postgresql",
+      "category": "basic",
+      "serviceName": "umami",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

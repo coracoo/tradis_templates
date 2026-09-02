@@ -10,11 +10,299 @@
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n   omnibox:\n      image: lampon/omnibox:latest\n      restart: unless-stopped\n      ports:\n         - \"7023:7023\"\n      volumes:\n         - ./omnibox:/app/data\n      environment:\n         - TZ= Asia/Shanghai\n   pansou-web:\n      image: ghcr.io/fish2018/pansou-web:latest\n      restart: unless-stopped\n      ports:\n        - \"8888:8888\"\n      environment:\n        - DOMAIN=localhost\n        - PANSOU_HOST=127.0.0.1     \n        - PANSOU_PORT=8888\n      volumes:\n        - ./pansou/data:/app/data\n        - ./pansou/logs:/app/logs",
+  "input_metadata": {
+    "bind:omnibox:/app/data": {
+      "description": "容器持久化路径",
+      "group": "advanced"
+    },
+    "bind:pansou-web:/app/data": {
+      "description": "容器持久化路径",
+      "group": "advanced"
+    },
+    "bind:pansou-web:/app/logs": {
+      "description": "容器日志持久化路径",
+      "group": "advanced"
+    },
+    "port:omnibox:7023/tcp": {
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "port:pansou-web:8888/tcp": {
+      "description": "容器 WEB 端口",
+      "group": "basic"
+    },
+    "service:omnibox:TZ": {
+      "group": "basic"
+    },
+    "service:pansou-web:DOMAIN": {
+      "group": "advanced"
+    },
+    "service:pansou-web:PANSOU_HOST": {
+      "group": "advanced"
+    },
+    "service:pansou-web:PANSOU_PORT": {
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:8ed21298914af7572693c2eb6e0fff8716c20222461e7331dd0d8c813609b134",
+    "manifest_digest": "sha256:e62fa0bb0e245f44fc0eb03eebd7de5f9837053834c9446bcfc6a7144e2c2793",
+    "services": [
+      "omnibox",
+      "pansou-web"
+    ],
+    "inputs": [
+      {
+        "id": "bind:omnibox:/app/data",
+        "key": "./omnibox",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./omnibox",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器持久化路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:pansou-web:/app/data",
+        "key": "./pansou/data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./pansou/data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器持久化路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:pansou-web:/app/logs",
+        "key": "./pansou/logs",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./pansou/logs",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器日志持久化路径",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:omnibox:7023/tcp",
+        "key": "7023",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7023",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:pansou-web:8888/tcp",
+        "key": "8888",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8888",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "description": "容器 WEB 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:omnibox:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": " Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pansou-web:DOMAIN",
+        "key": "DOMAIN",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "localhost",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou-web:PANSOU_HOST",
+        "key": "PANSOU_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "127.0.0.1",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:pansou-web:PANSOU_PORT",
+        "key": "PANSOU_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "8888",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:omnibox:TZ",
+        "service": "omnibox",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.omnibox.environment[0]",
+        "line": 10,
+        "column": 12
+      },
+      {
+        "input_id": "service:pansou-web:DOMAIN",
+        "service": "pansou-web",
+        "target_kind": "environment",
+        "target_key": "DOMAIN",
+        "yaml_path": "services.pansou-web.environment[0]",
+        "line": 17,
+        "column": 11
+      },
+      {
+        "input_id": "service:pansou-web:PANSOU_HOST",
+        "service": "pansou-web",
+        "target_kind": "environment",
+        "target_key": "PANSOU_HOST",
+        "yaml_path": "services.pansou-web.environment[1]",
+        "line": 18,
+        "column": 11
+      },
+      {
+        "input_id": "service:pansou-web:PANSOU_PORT",
+        "service": "pansou-web",
+        "target_kind": "environment",
+        "target_key": "PANSOU_PORT",
+        "yaml_path": "services.pansou-web.environment[2]",
+        "line": 19,
+        "column": 11
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:omnibox:/app/data",
+        "kind": "bind",
+        "service": "omnibox",
+        "source": "./omnibox",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.omnibox.volumes[0]"
+      },
+      {
+        "id": "bind:pansou-web:/app/data",
+        "kind": "bind",
+        "service": "pansou-web",
+        "source": "./pansou/data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.pansou-web.volumes[0]"
+      },
+      {
+        "id": "bind:pansou-web:/app/logs",
+        "kind": "bind",
+        "service": "pansou-web",
+        "source": "./pansou/logs",
+        "target": "/app/logs",
+        "editable": true,
+        "yaml_path": "services.pansou-web.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:omnibox:7023/tcp",
+        "kind": "port",
+        "service": "omnibox",
+        "source": "7023",
+        "target": "7023",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.omnibox.ports[0]"
+      },
+      {
+        "id": "port:pansou-web:8888/tcp",
+        "kind": "port",
+        "service": "pansou-web",
+        "source": "8888",
+        "target": "8888",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.pansou-web.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:8ed21298914af7572693c2eb6e0fff8716c20222461e7331dd0d8c813609b134",
+  "manifest_digest": "sha256:e62fa0bb0e245f44fc0eb03eebd7de5f9837053834c9446bcfc6a7144e2c2793",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
+      "inputId": "bind:omnibox:/app/data",
+      "name": "./omnibox",
+      "label": "./omnibox",
+      "description": "容器持久化路径",
+      "type": "path",
+      "default": "./omnibox",
+      "category": "advanced",
+      "serviceName": "omnibox",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:pansou-web:/app/data",
+      "name": "./pansou/data",
+      "label": "./pansou/data",
+      "description": "容器持久化路径",
+      "type": "path",
+      "default": "./pansou/data",
+      "category": "advanced",
+      "serviceName": "pansou-web",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:pansou-web:/app/logs",
+      "name": "./pansou/logs",
+      "label": "./pansou/logs",
+      "description": "容器日志持久化路径",
+      "type": "path",
+      "default": "./pansou/logs",
+      "category": "advanced",
+      "serviceName": "pansou-web",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:omnibox:7023/tcp",
       "name": "7023",
-      "label": "",
+      "label": "7023",
       "description": "容器 WEB 端口",
       "type": "port",
       "default": "7023",
@@ -23,18 +311,9 @@
       "paramType": "port"
     },
     {
-      "name": "./omnibox",
-      "label": "",
-      "description": "容器持久化路径",
-      "type": "path",
-      "default": "/app/data",
-      "category": "advanced",
-      "serviceName": "omnibox",
-      "paramType": "path"
-    },
-    {
+      "inputId": "port:pansou-web:8888/tcp",
       "name": "8888",
-      "label": "",
+      "label": "8888",
       "description": "容器 WEB 端口",
       "type": "port",
       "default": "8888",
@@ -43,28 +322,20 @@
       "paramType": "port"
     },
     {
-      "name": "./pansou/data",
-      "label": "",
-      "description": "容器持久化路径",
-      "type": "path",
-      "default": "/app/data",
-      "category": "advanced",
-      "serviceName": "pansou-web",
-      "paramType": "path"
+      "inputId": "service:omnibox:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": " Asia/Shanghai",
+      "category": "basic",
+      "serviceName": "omnibox",
+      "paramType": "env"
     },
     {
-      "name": "./pansou/logs",
-      "label": "",
-      "description": "容器日志持久化路径",
-      "type": "path",
-      "default": "/app/logs",
-      "category": "advanced",
-      "serviceName": "pansou-web",
-      "paramType": "path"
-    },
-    {
+      "inputId": "service:pansou-web:DOMAIN",
       "name": "DOMAIN",
-      "label": "",
+      "label": "DOMAIN",
       "description": "",
       "type": "string",
       "default": "localhost",
@@ -73,8 +344,9 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:pansou-web:PANSOU_HOST",
       "name": "PANSOU_HOST",
-      "label": "",
+      "label": "PANSOU_HOST",
       "description": "",
       "type": "string",
       "default": "127.0.0.1",
@@ -83,8 +355,9 @@
       "paramType": "env"
     },
     {
+      "inputId": "service:pansou-web:PANSOU_PORT",
       "name": "PANSOU_PORT",
-      "label": "",
+      "label": "PANSOU_PORT",
       "description": "",
       "type": "string",
       "default": "8888",
@@ -93,6 +366,5 @@
       "paramType": "env"
     }
   ],
-  "deployment_count": 0,
   "enabled": true
 }

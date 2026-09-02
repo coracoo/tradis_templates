@@ -10,19 +10,360 @@
   "tutorial": "客户端下载地址：https://github.com/BeiDouMS/BeiDou-Server/releases/tag/1.9",
   "dotenv": "NASIP=\"修改成你NAS IP\"\n",
   "compose": "version: '3.4'\n\nservices:\n  beidou-server:\n    container_name: beidou-server\n    image: ghcr.io/beidoums/beidou-server:nightly\n    environment:\n      - TZ=Asia/Shanghai\n    ports:\n      - \"8484:8484\"\n      - \"7575:7575\"\n      - \"7576:7576\"\n      - \"7577:7577\"\n    volumes:\n      - ./beidou-server-nightly:/opt/server\n    command:\n      - --mybatis-flex.datasource.mysql.url=jdbc:mysql://beidou-db:3306/beidou?useUnicode=true\u0026characterEncoding=utf-8\u0026useSSL=false\u0026serverTimezone=Asia/Shanghai\n      - --mybatis-flex.datasource.mysql.username=root\n      - --mybatis-flex.datasource.mysql.password=root_password\n      - --gms.service.wan-host=${NASIP}\n      - --gms.service.lan-host=${NASIP}\n      - --gms.service.localhost=${NASIP}\n    healthcheck:\n      test: [\"CMD\", \"sh\", \"-c\", \"netstat -tunlp | grep 0.0.0.0:8484 || exit 1\"]\n      interval: 10s\n      timeout: 5s\n      retries: 10\n    depends_on:\n      beidou-db:\n        condition: service_healthy\n    networks:\n      - beidou-network\n\n  beidou-ui:\n    container_name: beidou-ui\n    image: ghcr.io/beidoums/beidou-ui:nightly\n    ports:\n      - \"8686:8686\"\n    depends_on:\n      - beidou-server\n    networks:\n      - beidou-network\n\n  beidou-db:\n    container_name: beidou-db\n    image: mysql:8.4.0\n    environment:\n      - MYSQL_ROOT_PASSWORD=root_password\n    volumes:\n      - ./docker-db-data:/var/lib/mysql\n    healthcheck:\n      test: [\"CMD\", \"mysqladmin\", \"ping\", \"-h\", \"localhost\", \"-uroot\", \"-proot\"]\n      interval: 10s\n      timeout: 5s\n      retries: 10\n      start_period: 10s\n    networks:\n      - beidou-network\n\nnetworks:\n  beidou-network:\n    driver: bridge",
+  "input_metadata": {
+    "bind:beidou-db:/var/lib/mysql": {
+      "label": "./docker-db-data",
+      "group": "advanced"
+    },
+    "bind:beidou-server:/opt/server": {
+      "label": "./beidou-server-nightly",
+      "group": "advanced"
+    },
+    "port:beidou-server:7575/tcp": {
+      "label": "7575",
+      "description": "不要修改",
+      "group": "advanced"
+    },
+    "port:beidou-server:7576/tcp": {
+      "label": "7576",
+      "description": "不要修改",
+      "group": "advanced"
+    },
+    "port:beidou-server:7577/tcp": {
+      "label": "7577",
+      "description": "不要修改",
+      "group": "advanced"
+    },
+    "port:beidou-server:8484/tcp": {
+      "label": "8484",
+      "description": "服务器配置端口",
+      "group": "basic"
+    },
+    "port:beidou-ui:8686/tcp": {
+      "label": "8686",
+      "description": "GM 管理面板",
+      "group": "basic"
+    },
+    "project:NASIP": {
+      "label": "NASIP",
+      "group": "basic"
+    },
+    "service:beidou-db:MYSQL_ROOT_PASSWORD": {
+      "label": "MYSQL_ROOT_PASSWORD",
+      "group": "advanced",
+      "sensitive": true
+    },
+    "service:beidou-server:TZ": {
+      "label": "TZ",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.1",
+    "source_digest": "sha256:0600da9472e10c7999aef991b079ac83e0771764279a763d277ec3aacedceb68",
+    "manifest_digest": "sha256:0011e64fdc2783cea4b4cc533e9bf1829722b082f18ff7c35e83143b6d60b1ef",
+    "services": [
+      "beidou-db",
+      "beidou-server",
+      "beidou-ui"
+    ],
+    "inputs": [
+      {
+        "id": "bind:beidou-db:/var/lib/mysql",
+        "key": "./docker-db-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./docker-db-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./docker-db-data",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "bind:beidou-server:/opt/server",
+        "key": "./beidou-server-nightly",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./beidou-server-nightly",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./beidou-server-nightly",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:beidou-server:7575/tcp",
+        "key": "7575",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7575",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7575",
+          "description": "不要修改",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:beidou-server:7576/tcp",
+        "key": "7576",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7576",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7576",
+          "description": "不要修改",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:beidou-server:7577/tcp",
+        "key": "7577",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7577",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7577",
+          "description": "不要修改",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "port:beidou-server:8484/tcp",
+        "key": "8484",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8484",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8484",
+          "description": "服务器配置端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:beidou-ui:8686/tcp",
+        "key": "8686",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8686",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "8686",
+          "description": "GM 管理面板",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "project:NASIP",
+        "key": "NASIP",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "default_value": "修改成你NAS IP",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NASIP",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:beidou-db:MYSQL_ROOT_PASSWORD",
+        "key": "MYSQL_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "root_password",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "label": "MYSQL_ROOT_PASSWORD",
+          "group": "advanced",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "service:beidou-server:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "project:NASIP",
+        "service": "beidou-server",
+        "target_kind": "interpolation",
+        "target_key": "[3]",
+        "expression": "${NASIP}",
+        "yaml_path": "services.beidou-server.command[3]",
+        "line": 20,
+        "column": 9
+      },
+      {
+        "input_id": "project:NASIP",
+        "service": "beidou-server",
+        "target_kind": "interpolation",
+        "target_key": "[4]",
+        "expression": "${NASIP}",
+        "yaml_path": "services.beidou-server.command[4]",
+        "line": 21,
+        "column": 9
+      },
+      {
+        "input_id": "project:NASIP",
+        "service": "beidou-server",
+        "target_kind": "interpolation",
+        "target_key": "[5]",
+        "expression": "${NASIP}",
+        "yaml_path": "services.beidou-server.command[5]",
+        "line": 22,
+        "column": 9
+      },
+      {
+        "input_id": "service:beidou-db:MYSQL_ROOT_PASSWORD",
+        "service": "beidou-db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_ROOT_PASSWORD",
+        "yaml_path": "services.beidou-db.environment[0]",
+        "line": 48,
+        "column": 9
+      },
+      {
+        "input_id": "service:beidou-server:TZ",
+        "service": "beidou-server",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.beidou-server.environment[0]",
+        "line": 8,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:beidou-db:/var/lib/mysql",
+        "kind": "bind",
+        "service": "beidou-db",
+        "source": "./docker-db-data",
+        "target": "/var/lib/mysql",
+        "editable": true,
+        "yaml_path": "services.beidou-db.volumes[0]"
+      },
+      {
+        "id": "bind:beidou-server:/opt/server",
+        "kind": "bind",
+        "service": "beidou-server",
+        "source": "./beidou-server-nightly",
+        "target": "/opt/server",
+        "editable": true,
+        "yaml_path": "services.beidou-server.volumes[0]"
+      },
+      {
+        "id": "port:beidou-server:7575/tcp",
+        "kind": "port",
+        "service": "beidou-server",
+        "source": "7575",
+        "target": "7575",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.beidou-server.ports[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:beidou-server:7576/tcp",
+        "kind": "port",
+        "service": "beidou-server",
+        "source": "7576",
+        "target": "7576",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.beidou-server.ports[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "port:beidou-server:7577/tcp",
+        "kind": "port",
+        "service": "beidou-server",
+        "source": "7577",
+        "target": "7577",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.beidou-server.ports[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "port:beidou-server:8484/tcp",
+        "kind": "port",
+        "service": "beidou-server",
+        "source": "8484",
+        "target": "8484",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.beidou-server.ports[0]"
+      },
+      {
+        "id": "port:beidou-ui:8686/tcp",
+        "kind": "port",
+        "service": "beidou-ui",
+        "source": "8686",
+        "target": "8686",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.beidou-ui.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:0600da9472e10c7999aef991b079ac83e0771764279a763d277ec3aacedceb68",
+  "manifest_digest": "sha256:0011e64fdc2783cea4b4cc533e9bf1829722b082f18ff7c35e83143b6d60b1ef",
+  "compiler_version": "1.0.1",
   "screenshots": [],
   "schema": [
     {
-      "name": "8484",
-      "label": "8484",
-      "description": "服务器配置端口",
-      "type": "port",
-      "default": "8484",
-      "category": "basic",
-      "serviceName": "beidou-server",
-      "paramType": "port"
+      "inputId": "bind:beidou-db:/var/lib/mysql",
+      "name": "./docker-db-data",
+      "label": "./docker-db-data",
+      "description": "",
+      "type": "path",
+      "default": "./docker-db-data",
+      "category": "advanced",
+      "serviceName": "beidou-db",
+      "paramType": "path"
     },
     {
+      "inputId": "bind:beidou-server:/opt/server",
+      "name": "./beidou-server-nightly",
+      "label": "./beidou-server-nightly",
+      "description": "",
+      "type": "path",
+      "default": "./beidou-server-nightly",
+      "category": "advanced",
+      "serviceName": "beidou-server",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:beidou-server:7575/tcp",
       "name": "7575",
       "label": "7575",
       "description": "不要修改",
@@ -33,6 +374,7 @@
       "paramType": "port"
     },
     {
+      "inputId": "port:beidou-server:7576/tcp",
       "name": "7576",
       "label": "7576",
       "description": "不要修改",
@@ -43,6 +385,7 @@
       "paramType": "port"
     },
     {
+      "inputId": "port:beidou-server:7577/tcp",
       "name": "7577",
       "label": "7577",
       "description": "不要修改",
@@ -53,26 +396,18 @@
       "paramType": "port"
     },
     {
-      "name": "./beidou-server-nightly",
-      "label": "./beidou-server-nightly",
-      "description": "",
-      "type": "path",
-      "default": "/opt/server",
-      "category": "advanced",
+      "inputId": "port:beidou-server:8484/tcp",
+      "name": "8484",
+      "label": "8484",
+      "description": "服务器配置端口",
+      "type": "port",
+      "default": "8484",
+      "category": "basic",
       "serviceName": "beidou-server",
-      "paramType": "path"
+      "paramType": "port"
     },
     {
-      "name": "TZ",
-      "label": "TZ",
-      "description": "",
-      "type": "string",
-      "default": "Asia/Shanghai",
-      "category": "advanced",
-      "serviceName": "beidou-server",
-      "paramType": "env"
-    },
-    {
+      "inputId": "port:beidou-ui:8686/tcp",
       "name": "8686",
       "label": "8686",
       "description": "GM 管理面板",
@@ -83,16 +418,19 @@
       "paramType": "port"
     },
     {
-      "name": "./docker-db-data",
-      "label": "./docker-db-data",
+      "inputId": "project:NASIP",
+      "name": "NASIP",
+      "label": "NASIP",
       "description": "",
-      "type": "path",
-      "default": "/var/lib/mysql",
-      "category": "advanced",
-      "serviceName": "beidou-db",
-      "paramType": "path"
+      "type": "string",
+      "default": "修改成你NAS IP",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     },
     {
+      "inputId": "service:beidou-db:MYSQL_ROOT_PASSWORD",
       "name": "MYSQL_ROOT_PASSWORD",
       "label": "MYSQL_ROOT_PASSWORD",
       "description": "",
@@ -103,16 +441,16 @@
       "paramType": "env"
     },
     {
-      "name": "NASIP",
-      "label": "NASIP",
+      "inputId": "service:beidou-server:TZ",
+      "name": "TZ",
+      "label": "TZ",
       "description": "",
       "type": "string",
-      "default": "",
-      "category": "basic",
-      "serviceName": "Global",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "beidou-server",
       "paramType": "env"
     }
   ],
-  "deployment_count": 7,
   "enabled": true
 }
