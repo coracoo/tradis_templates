@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-11 22:14:31，更新项目1个",
-  "templates_note": "累计项目64个",
-  "generated_at": "2026-11-11T22:14:31+08:00",
+  "note": "2026-11-11 22:52:19，更新项目1个",
+  "templates_note": "累计项目65个",
+  "generated_at": "2026-11-11T22:52:19+08:00",
   "templates": [
     {
       "id": 1,
@@ -786,6 +786,22 @@
       "website": "https://github.com/movieclaw/MovieClaw",
       "content_hash": "sha256:8510583bbb02b219492b4d14f62dd13f86dac046288a06166dd17057df3c7976",
       "file": "templates/movieclaw.json"
+    },
+    {
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "id": 251,
+      "sort_order": 65,
+      "name": "nowen_reader",
+      "category": "entertainment",
+      "description": "为漫画爱好者打造私域、可控、高效的个人漫画图书馆。",
+      "version": "latest",
+      "logo": "",
+      "website": "https://github.com/cropflre/nowen-reader",
+      "content_hash": "sha256:80fc198ba599b65d2b45ca2912fa91116b8dbf2ffd3503c94e0a6b7f7a866696",
+      "file": "templates/nowen_reader.json"
     }
   ]
 }

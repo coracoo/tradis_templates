@@ -1,0 +1,521 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "id": 251,
+  "sort_order": 65,
+  "name": "nowen_reader",
+  "category": "entertainment",
+  "description": "为漫画爱好者打造私域、可控、高效的个人漫画图书馆。",
+  "version": "latest",
+  "logo": "",
+  "website": "https://github.com/cropflre/nowen-reader",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  nowen-reader:\n    image: cropflre/nowen-reader:latest\n    container_name: nowen-reader\n    restart: unless-stopped\n    ports:\n      - \"6680:3000\"\n    privileged: true\n    volumes:\n      - ./data:/data\n      - ./cache:/app/.cache        \n      # NAS 的漫画文件目录\n      - /volume1/comics:/app/comics\n      - /volume1/novels:/app/novels\n    environment:\n      - GIN_MODE=release\n      - DATABASE_URL=/data/nowen-reader.db\n      - COMICS_DIR=/app/comics\n      - NOVELS_DIR=/app/novels\n      - DATA_DIR=/app/.cache\n      - PORT=3000\n      - TZ=Asia/Shanghai",
+  "input_metadata": {
+    "bind:nowen-reader:/app/.cache": {
+      "label": "/share/Container/nowenreader/cache",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "bind:nowen-reader:/app/comics": {
+      "label": "/share/Public/comics",
+      "description": "NAS 漫画目录",
+      "group": "basic",
+      "sensitive": false
+    },
+    "bind:nowen-reader:/app/novels": {
+      "label": "/share/Public/novels",
+      "description": "NAS 小说目录",
+      "group": "basic",
+      "sensitive": false
+    },
+    "bind:nowen-reader:/data": {
+      "label": "/share/Container/nowenreader/data",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "port:nowen-reader:3000/tcp": {
+      "label": "6680",
+      "group": "basic",
+      "sensitive": false
+    },
+    "service:nowen-reader:COMICS_DIR": {
+      "label": "COMICS_DIR",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:nowen-reader:DATABASE_URL": {
+      "label": "DATABASE_URL",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:nowen-reader:DATA_DIR": {
+      "label": "DATA_DIR",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:nowen-reader:GIN_MODE": {
+      "label": "GIN_MODE",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:nowen-reader:NOVELS_DIR": {
+      "label": "NOVELS_DIR",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:nowen-reader:PORT": {
+      "label": "PORT",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:nowen-reader:TZ": {
+      "label": "TZ",
+      "group": "advanced",
+      "sensitive": false
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:d2d40cdc80104cfdae8e42db534b5266aa87883bcd4b5df25fe039fe9b538c8b",
+    "manifest_digest": "sha256:339295b61070d0828d0ad69047d2f2ff6b3f24d9ed8b28171dad667dcf96c714",
+    "services": [
+      "nowen-reader"
+    ],
+    "inputs": [
+      {
+        "id": "bind:nowen-reader:/app/.cache",
+        "key": "./cache",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./cache",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "/share/Container/nowenreader/cache",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "bind:nowen-reader:/app/comics",
+        "key": "/volume1/comics",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/volume1/comics",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "/share/Public/comics",
+          "description": "NAS 漫画目录",
+          "group": "basic",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "bind:nowen-reader:/app/novels",
+        "key": "/volume1/novels",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "/volume1/novels",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "/share/Public/novels",
+          "description": "NAS 小说目录",
+          "group": "basic",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "bind:nowen-reader:/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "/share/Container/nowenreader/data",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "port:nowen-reader:3000/tcp",
+        "key": "6680",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "6680",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "6680",
+          "group": "basic",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:nowen-reader:COMICS_DIR",
+        "key": "COMICS_DIR",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/comics",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "COMICS_DIR",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:nowen-reader:DATABASE_URL",
+        "key": "DATABASE_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/data/nowen-reader.db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATABASE_URL",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:nowen-reader:DATA_DIR",
+        "key": "DATA_DIR",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/.cache",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "DATA_DIR",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:nowen-reader:GIN_MODE",
+        "key": "GIN_MODE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "release",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "GIN_MODE",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:nowen-reader:NOVELS_DIR",
+        "key": "NOVELS_DIR",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/novels",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "NOVELS_DIR",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:nowen-reader:PORT",
+        "key": "PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "3000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PORT",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:nowen-reader:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "group": "advanced",
+          "sensitive": false
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:nowen-reader:COMICS_DIR",
+        "service": "nowen-reader",
+        "target_kind": "environment",
+        "target_key": "COMICS_DIR",
+        "yaml_path": "services.nowen-reader.environment[2]",
+        "line": 18,
+        "column": 9
+      },
+      {
+        "input_id": "service:nowen-reader:DATABASE_URL",
+        "service": "nowen-reader",
+        "target_kind": "environment",
+        "target_key": "DATABASE_URL",
+        "yaml_path": "services.nowen-reader.environment[1]",
+        "line": 17,
+        "column": 9
+      },
+      {
+        "input_id": "service:nowen-reader:DATA_DIR",
+        "service": "nowen-reader",
+        "target_kind": "environment",
+        "target_key": "DATA_DIR",
+        "yaml_path": "services.nowen-reader.environment[4]",
+        "line": 20,
+        "column": 9
+      },
+      {
+        "input_id": "service:nowen-reader:GIN_MODE",
+        "service": "nowen-reader",
+        "target_kind": "environment",
+        "target_key": "GIN_MODE",
+        "yaml_path": "services.nowen-reader.environment[0]",
+        "line": 16,
+        "column": 9
+      },
+      {
+        "input_id": "service:nowen-reader:NOVELS_DIR",
+        "service": "nowen-reader",
+        "target_kind": "environment",
+        "target_key": "NOVELS_DIR",
+        "yaml_path": "services.nowen-reader.environment[3]",
+        "line": 19,
+        "column": 9
+      },
+      {
+        "input_id": "service:nowen-reader:PORT",
+        "service": "nowen-reader",
+        "target_kind": "environment",
+        "target_key": "PORT",
+        "yaml_path": "services.nowen-reader.environment[5]",
+        "line": 21,
+        "column": 9
+      },
+      {
+        "input_id": "service:nowen-reader:TZ",
+        "service": "nowen-reader",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.nowen-reader.environment[6]",
+        "line": 22,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:nowen-reader:/app/.cache",
+        "kind": "bind",
+        "service": "nowen-reader",
+        "source": "./cache",
+        "target": "/app/.cache",
+        "editable": true,
+        "yaml_path": "services.nowen-reader.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "bind:nowen-reader:/app/comics",
+        "kind": "bind",
+        "service": "nowen-reader",
+        "source": "/volume1/comics",
+        "target": "/app/comics",
+        "editable": true,
+        "yaml_path": "services.nowen-reader.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:nowen-reader:/app/novels",
+        "kind": "bind",
+        "service": "nowen-reader",
+        "source": "/volume1/novels",
+        "target": "/app/novels",
+        "editable": true,
+        "yaml_path": "services.nowen-reader.volumes[3]",
+        "sequence_index": 3
+      },
+      {
+        "id": "bind:nowen-reader:/data",
+        "kind": "bind",
+        "service": "nowen-reader",
+        "source": "./data",
+        "target": "/data",
+        "editable": true,
+        "yaml_path": "services.nowen-reader.volumes[0]"
+      },
+      {
+        "id": "port:nowen-reader:3000/tcp",
+        "kind": "port",
+        "service": "nowen-reader",
+        "source": "6680",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.nowen-reader.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:d2d40cdc80104cfdae8e42db534b5266aa87883bcd4b5df25fe039fe9b538c8b",
+  "manifest_digest": "sha256:339295b61070d0828d0ad69047d2f2ff6b3f24d9ed8b28171dad667dcf96c714",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:nowen-reader:/app/.cache",
+      "name": "./cache",
+      "label": "/share/Container/nowenreader/cache",
+      "description": "",
+      "type": "path",
+      "default": "./cache",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:nowen-reader:/app/comics",
+      "name": "/volume1/comics",
+      "label": "/share/Public/comics",
+      "description": "NAS 漫画目录",
+      "type": "path",
+      "default": "/volume1/comics",
+      "category": "basic",
+      "serviceName": "nowen-reader",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:nowen-reader:/app/novels",
+      "name": "/volume1/novels",
+      "label": "/share/Public/novels",
+      "description": "NAS 小说目录",
+      "type": "path",
+      "default": "/volume1/novels",
+      "category": "basic",
+      "serviceName": "nowen-reader",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:nowen-reader:/data",
+      "name": "./data",
+      "label": "/share/Container/nowenreader/data",
+      "description": "",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:nowen-reader:3000/tcp",
+      "name": "6680",
+      "label": "6680",
+      "description": "",
+      "type": "port",
+      "default": "6680",
+      "category": "basic",
+      "serviceName": "nowen-reader",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:nowen-reader:COMICS_DIR",
+      "name": "COMICS_DIR",
+      "label": "COMICS_DIR",
+      "description": "",
+      "type": "string",
+      "default": "/app/comics",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nowen-reader:DATABASE_URL",
+      "name": "DATABASE_URL",
+      "label": "DATABASE_URL",
+      "description": "",
+      "type": "string",
+      "default": "/data/nowen-reader.db",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nowen-reader:DATA_DIR",
+      "name": "DATA_DIR",
+      "label": "DATA_DIR",
+      "description": "",
+      "type": "string",
+      "default": "/app/.cache",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nowen-reader:GIN_MODE",
+      "name": "GIN_MODE",
+      "label": "GIN_MODE",
+      "description": "",
+      "type": "string",
+      "default": "release",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nowen-reader:NOVELS_DIR",
+      "name": "NOVELS_DIR",
+      "label": "NOVELS_DIR",
+      "description": "",
+      "type": "string",
+      "default": "/app/novels",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nowen-reader:PORT",
+      "name": "PORT",
+      "label": "PORT",
+      "description": "",
+      "type": "string",
+      "default": "3000",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nowen-reader:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "nowen-reader",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
