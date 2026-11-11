@@ -1,0 +1,288 @@
+{
+  "architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "id": 250,
+  "sort_order": 64,
+  "name": "movieclaw",
+  "category": "entertainment",
+  "description": "https://movieclaw.io/zh",
+  "version": "latest",
+  "logo": "https://avatars.githubusercontent.com/u/322778398?s=60\u0026v=4",
+  "website": "https://github.com/movieclaw/MovieClaw",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  movieclaw:\n    image: movieclaw/movieclaw:latest\n    container_name: movieclaw\n    init: true\n    ports:\n      - \"31200:3000\"\n      - \"7359:7359/udp\"\n    volumes:\n      - ./data:/app/data\n      # 媒体盘挂载示例（按实际情况修改/增删）：\n      - ./movie:/media\n      # 下载器的保存目录也要以相同路径挂进来，movieclaw 才能对下载完成的文件做入库整理：\n      - .download:/downloads\n    environment:\n      - TZ=Asia/Shanghai\n      # - TMDB_API_KEY=你自己的key\n    restart: unless-stopped",
+  "input_metadata": {
+    "bind:movieclaw:/app/data": {
+      "label": "./data",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "bind:movieclaw:/downloads": {
+      "label": ".download",
+      "description": "填写 NAS 下载地址",
+      "group": "basic",
+      "sensitive": false
+    },
+    "bind:movieclaw:/media": {
+      "label": "./movie",
+      "description": "填写 NAS 媒体库地址",
+      "group": "basic",
+      "sensitive": false
+    },
+    "port:movieclaw:3000/tcp": {
+      "label": "31200",
+      "group": "basic",
+      "sensitive": false
+    },
+    "port:movieclaw:7359/udp": {
+      "label": "7359",
+      "group": "advanced",
+      "sensitive": false
+    },
+    "service:movieclaw:TZ": {
+      "label": "TZ",
+      "group": "advanced",
+      "sensitive": false
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:a6acff3220d81642c672b8b6c9a1e657467427bb758095efbc223e75c4b1c09b",
+    "manifest_digest": "sha256:16aea91e3acfcecb951bb20ae05ba530a8eb7556e59cd7864ff29b45735377be",
+    "services": [
+      "movieclaw"
+    ],
+    "inputs": [
+      {
+        "id": "bind:movieclaw:/app/data",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./data",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "bind:movieclaw:/downloads",
+        "key": ".download",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": ".download",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": ".download",
+          "description": "填写 NAS 下载地址",
+          "group": "basic",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "bind:movieclaw:/media",
+        "key": "./movie",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./movie",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./movie",
+          "description": "填写 NAS 媒体库地址",
+          "group": "basic",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "port:movieclaw:3000/tcp",
+        "key": "31200",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "31200",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "31200",
+          "group": "basic",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "port:movieclaw:7359/udp",
+        "key": "7359",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "7359",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "7359",
+          "group": "advanced",
+          "sensitive": false
+        }
+      },
+      {
+        "id": "service:movieclaw:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "group": "advanced",
+          "sensitive": false
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:movieclaw:TZ",
+        "service": "movieclaw",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.movieclaw.environment[0]",
+        "line": 16,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:movieclaw:/app/data",
+        "kind": "bind",
+        "service": "movieclaw",
+        "source": "./data",
+        "target": "/app/data",
+        "editable": true,
+        "yaml_path": "services.movieclaw.volumes[0]"
+      },
+      {
+        "id": "bind:movieclaw:/downloads",
+        "kind": "bind",
+        "service": "movieclaw",
+        "source": ".download",
+        "target": "/downloads",
+        "editable": true,
+        "yaml_path": "services.movieclaw.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:movieclaw:/media",
+        "kind": "bind",
+        "service": "movieclaw",
+        "source": "./movie",
+        "target": "/media",
+        "editable": true,
+        "yaml_path": "services.movieclaw.volumes[1]",
+        "sequence_index": 1
+      },
+      {
+        "id": "port:movieclaw:3000/tcp",
+        "kind": "port",
+        "service": "movieclaw",
+        "source": "31200",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.movieclaw.ports[0]"
+      },
+      {
+        "id": "port:movieclaw:7359/udp",
+        "kind": "port",
+        "service": "movieclaw",
+        "source": "7359",
+        "target": "7359",
+        "protocol": "udp",
+        "editable": true,
+        "yaml_path": "services.movieclaw.ports[1]",
+        "sequence_index": 1
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:a6acff3220d81642c672b8b6c9a1e657467427bb758095efbc223e75c4b1c09b",
+  "manifest_digest": "sha256:16aea91e3acfcecb951bb20ae05ba530a8eb7556e59cd7864ff29b45735377be",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:movieclaw:/app/data",
+      "name": "./data",
+      "label": "./data",
+      "description": "",
+      "type": "path",
+      "default": "./data",
+      "category": "advanced",
+      "serviceName": "movieclaw",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:movieclaw:/downloads",
+      "name": ".download",
+      "label": ".download",
+      "description": "填写 NAS 下载地址",
+      "type": "path",
+      "default": ".download",
+      "category": "basic",
+      "serviceName": "movieclaw",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:movieclaw:/media",
+      "name": "./movie",
+      "label": "./movie",
+      "description": "填写 NAS 媒体库地址",
+      "type": "path",
+      "default": "./movie",
+      "category": "basic",
+      "serviceName": "movieclaw",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:movieclaw:3000/tcp",
+      "name": "31200",
+      "label": "31200",
+      "description": "",
+      "type": "port",
+      "default": "31200",
+      "category": "basic",
+      "serviceName": "movieclaw",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:movieclaw:7359/udp",
+      "name": "7359",
+      "label": "7359",
+      "description": "",
+      "type": "port",
+      "default": "7359",
+      "category": "advanced",
+      "serviceName": "movieclaw",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:movieclaw:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "movieclaw",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

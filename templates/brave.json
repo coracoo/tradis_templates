@@ -1,0 +1,311 @@
+{
+  "id": 16,
+  "sort_order": 16,
+  "name": "brave",
+  "category": "other",
+  "description": "Brave 浏览器 NAS 版本",
+  "version": "latest",
+  "logo": "https://avatars.githubusercontent.com/u/12301619?s=48\u0026v=4",
+  "website": "https://github.com/brave/brave-browser",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  brave:\n    image: lscr.io/linuxserver/brave:latest\n    environment:\n      - PUID=1000\n      - PGID=1000\n      - TZ=Asia/Shanghai\n      - LC_ALL=zh_CN.UTF-8\n    volumes:\n      - ./config:/config\n    ports:\n      - 3000:3000\n      - 3001:3001\n    shm_size: \"1gb\"\n    restart: unless-stopped",
+  "input_metadata": {
+    "bind:brave:/config": {
+      "label": "./config",
+      "description": "容器持久化路径",
+      "group": "basic"
+    },
+    "port:brave:3000/tcp": {
+      "label": "3000",
+      "description": "容器 HTTP 端口",
+      "group": "basic"
+    },
+    "port:brave:3001/tcp": {
+      "label": "3001",
+      "description": "容器 HTTPS 端口",
+      "group": "basic"
+    },
+    "service:brave:LC_ALL": {
+      "label": "LC_ALL",
+      "group": "advanced"
+    },
+    "service:brave:PGID": {
+      "label": "PGID",
+      "group": "advanced"
+    },
+    "service:brave:PUID": {
+      "label": "PUID",
+      "group": "advanced"
+    },
+    "service:brave:TZ": {
+      "label": "TZ",
+      "group": "advanced"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:14eaa23b2d97d257cff6abfb9fbd64679313c69a5c64495ba71d8283c2d5cb20",
+    "manifest_digest": "sha256:9a21ab1822534687f78808054c9c4750dab3604c4bba4b60863c707aa41c6798",
+    "services": [
+      "brave"
+    ],
+    "inputs": [
+      {
+        "id": "bind:brave:/config",
+        "key": "./config",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./config",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./config",
+          "description": "容器持久化路径",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:brave:3000/tcp",
+        "key": "3000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3000",
+          "description": "容器 HTTP 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:brave:3001/tcp",
+        "key": "3001",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3001",
+          "description": "容器 HTTPS 端口",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:brave:LC_ALL",
+        "key": "LC_ALL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "zh_CN.UTF-8",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "LC_ALL",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:brave:PGID",
+        "key": "PGID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PGID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:brave:PUID",
+        "key": "PUID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "PUID",
+          "group": "advanced"
+        }
+      },
+      {
+        "id": "service:brave:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Asia/Shanghai",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "TZ",
+          "group": "advanced"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:brave:LC_ALL",
+        "service": "brave",
+        "target_kind": "environment",
+        "target_key": "LC_ALL",
+        "yaml_path": "services.brave.environment[3]",
+        "line": 8,
+        "column": 9
+      },
+      {
+        "input_id": "service:brave:PGID",
+        "service": "brave",
+        "target_kind": "environment",
+        "target_key": "PGID",
+        "yaml_path": "services.brave.environment[1]",
+        "line": 6,
+        "column": 9
+      },
+      {
+        "input_id": "service:brave:PUID",
+        "service": "brave",
+        "target_kind": "environment",
+        "target_key": "PUID",
+        "yaml_path": "services.brave.environment[0]",
+        "line": 5,
+        "column": 9
+      },
+      {
+        "input_id": "service:brave:TZ",
+        "service": "brave",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.brave.environment[2]",
+        "line": 7,
+        "column": 9
+      }
+    ],
+    "mappings": [
+      {
+        "id": "bind:brave:/config",
+        "kind": "bind",
+        "service": "brave",
+        "source": "./config",
+        "target": "/config",
+        "editable": true,
+        "yaml_path": "services.brave.volumes[0]"
+      },
+      {
+        "id": "port:brave:3000/tcp",
+        "kind": "port",
+        "service": "brave",
+        "source": "3000",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.brave.ports[0]"
+      },
+      {
+        "id": "port:brave:3001/tcp",
+        "kind": "port",
+        "service": "brave",
+        "source": "3001",
+        "target": "3001",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.brave.ports[1]",
+        "sequence_index": 1
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:14eaa23b2d97d257cff6abfb9fbd64679313c69a5c64495ba71d8283c2d5cb20",
+  "manifest_digest": "sha256:9a21ab1822534687f78808054c9c4750dab3604c4bba4b60863c707aa41c6798",
+  "compiler_version": "1.0.2",
+  "screenshots": [
+    "https://github.com/brave/brave-browser/raw/master/docs/source/_static/Brave.svg"
+  ],
+  "schema": [
+    {
+      "inputId": "bind:brave:/config",
+      "name": "./config",
+      "label": "./config",
+      "description": "容器持久化路径",
+      "type": "path",
+      "default": "./config",
+      "category": "basic",
+      "serviceName": "brave",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:brave:3000/tcp",
+      "name": "3000",
+      "label": "3000",
+      "description": "容器 HTTP 端口",
+      "type": "port",
+      "default": "3000",
+      "category": "basic",
+      "serviceName": "brave",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:brave:3001/tcp",
+      "name": "3001",
+      "label": "3001",
+      "description": "容器 HTTPS 端口",
+      "type": "port",
+      "default": "3001",
+      "category": "basic",
+      "serviceName": "brave",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:brave:LC_ALL",
+      "name": "LC_ALL",
+      "label": "LC_ALL",
+      "description": "",
+      "type": "string",
+      "default": "zh_CN.UTF-8",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:brave:PGID",
+      "name": "PGID",
+      "label": "PGID",
+      "description": "",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:brave:PUID",
+      "name": "PUID",
+      "label": "PUID",
+      "description": "",
+      "type": "string",
+      "default": "1000",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:brave:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Asia/Shanghai",
+      "category": "advanced",
+      "serviceName": "brave",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
