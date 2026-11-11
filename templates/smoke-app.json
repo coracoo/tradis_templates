@@ -1,0 +1,35 @@
+{
+  "id": 1,
+  "sort_order": 1,
+  "name": "smoke-app",
+  "category": "",
+  "description": "",
+  "version": "",
+  "logo": "",
+  "website": "",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n  app:\n    image: example/app:1\n",
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:c94a198176dac2f7e22e322722c429f2751dbbe5589d3d7c588ab53ef07f26ed",
+    "manifest_digest": "sha256:86f04a8c4a81c1dff7f07be79179e6f6f08fea40588967250f6c56673f186f26",
+    "services": [
+      "app"
+    ],
+    "inputs": [],
+    "bindings": [],
+    "mappings": [],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:c94a198176dac2f7e22e322722c429f2751dbbe5589d3d7c588ab53ef07f26ed",
+  "manifest_digest": "sha256:86f04a8c4a81c1dff7f07be79179e6f6f08fea40588967250f6c56673f186f26",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [],
+  "enabled": true
+}

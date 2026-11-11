@@ -1,19 +1,19 @@
 {
-  "note": "2026-11-11 21:17:47，更新项目63个",
+  "note": "2026-11-11 21:18:03，更新项目2个",
   "templates_note": "累计项目1个",
-  "generated_at": "2026-11-11T21:17:47+08:00",
+  "generated_at": "2026-11-11T21:18:03+08:00",
   "templates": [
     {
       "id": 1,
       "sort_order": 1,
-      "name": "nginx",
+      "name": "smoke-app",
       "category": "",
       "description": "",
       "version": "",
       "logo": "",
       "website": "",
-      "content_hash": "sha256:b2d07c061959f96600042ebd9509ca8d4dc207a6b12b357349eafbdc4fb3cce0",
-      "file": "templates/nginx.json"
+      "content_hash": "sha256:f30efa8c11ea3a3f21b92a2c96280df822847ab8d3c4ff1ae48150f529e1c1cc",
+      "file": "templates/smoke-app.json"
     }
   ]
 }
