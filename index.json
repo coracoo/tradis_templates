@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-11 22:13:07，更新项目65个",
+  "note": "2026-11-11 22:14:31，更新项目1个",
   "templates_note": "累计项目64个",
-  "generated_at": "2026-11-11T22:13:07+08:00",
+  "generated_at": "2026-11-11T22:14:31+08:00",
   "templates": [
     {
       "id": 1,
@@ -780,7 +780,7 @@
       "sort_order": 64,
       "name": "movieclaw",
       "category": "entertainment",
-      "description": "https://movieclaw.io/zh",
+      "description": "下一代智能影音服务器。一个 MovieClaw，替代一整套影音工具。自带网页和手机、平板、电视、电脑原生 App，个人和家庭免费。",
       "version": "latest",
       "logo": "https://avatars.githubusercontent.com/u/322778398?s=60\u0026v=4",
       "website": "https://github.com/movieclaw/MovieClaw",
