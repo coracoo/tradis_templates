@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-11 22:52:19，更新项目1个",
+  "note": "2026-11-11 22:53:38，更新项目1个",
   "templates_note": "累计项目65个",
-  "generated_at": "2026-11-11T22:52:19+08:00",
+  "generated_at": "2026-11-11T22:53:38+08:00",
   "templates": [
     {
       "id": 1,
@@ -798,7 +798,7 @@
       "category": "entertainment",
       "description": "为漫画爱好者打造私域、可控、高效的个人漫画图书馆。",
       "version": "latest",
-      "logo": "",
+      "logo": "/uploads/nowen_reader_icon.png",
       "website": "https://github.com/cropflre/nowen-reader",
       "content_hash": "sha256:80fc198ba599b65d2b45ca2912fa91116b8dbf2ffd3503c94e0a6b7f7a866696",
       "file": "templates/nowen_reader.json"

@@ -9,7 +9,7 @@
   "category": "entertainment",
   "description": "为漫画爱好者打造私域、可控、高效的个人漫画图书馆。",
   "version": "latest",
-  "logo": "",
+  "logo": "/uploads/nowen_reader_icon.png",
   "website": "https://github.com/cropflre/nowen-reader",
   "tutorial": "",
   "dotenv": "",
