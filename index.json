@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 07:12:51，更新项目1个",
-  "templates_note": "累计项目83个",
-  "generated_at": "2026-11-22T07:12:51+08:00",
+  "note": "2026-11-22 07:20:42，更新项目1个",
+  "templates_note": "累计项目84个",
+  "generated_at": "2026-11-22T07:20:42+08:00",
   "templates": [
     {
       "id": 1,
@@ -1066,6 +1066,21 @@
       "website": "https://github.com/louislam/dockge",
       "content_hash": "sha256:706d77803b09e8f21ba330d35ebd967da3caf27c09542dfe6597ac70d49aab1e",
       "file": "templates/mariadb.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 268,
+      "sort_order": 84,
+      "name": "local-npm",
+      "category": "Stack Architecture",
+      "description": "Multi-platform open source analytics and interactive visualization web application.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/grafana/grafana",
+      "content_hash": "sha256:45b64e6bc1f057644d0d187f4dbb0441a96bb87672cd7ea5aca4dd6f87cd3244",
+      "file": "templates/local-npm.json"
     }
   ]
 }
