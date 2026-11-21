@@ -1,0 +1,228 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 271,
+  "sort_order": 87,
+  "name": "zeroclaw",
+  "category": "🤖 AI",
+  "description": "Release",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/zeroclaw-labs/zeroclaw",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    zeroclaw:\n        deploy:\n            resources:\n                limits:\n                    cpus: \"2\"\n                    memory: 512M\n                reservations:\n                    cpus: \"0.5\"\n                    memory: 32M\n        environment:\n            - ZEROCLAW_providers__models__openrouter__default__api_key=\n            - ZEROCLAW_gateway__host=0.0.0.0\n            - ZEROCLAW_gateway__allow_public_bind=true\n            - ZEROCLAW_gateway__port=42617\n        healthcheck:\n            interval: 60s\n            retries: 3\n            start_period: 10s\n            test:\n                - CMD\n                - zeroclaw\n                - status\n                - --format=exit-code\n            timeout: 10s\n        image: ghcr.io/zeroclaw-labs/zeroclaw:latest\n        ports:\n            - 127.0.0.1:42617:42617\n        restart: unless-stopped\n        volumes:\n            - source: zeroclaw-data\n              target: /zeroclaw-data\n              type: volume\nvolumes:\n    zeroclaw-data: null\n",
+  "input_metadata": {
+    "port:zeroclaw:42617/tcp": {
+      "group": "basic"
+    },
+    "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind": {
+      "group": "basic"
+    },
+    "service:zeroclaw:ZEROCLAW_gateway__host": {
+      "group": "basic"
+    },
+    "service:zeroclaw:ZEROCLAW_gateway__port": {
+      "group": "basic"
+    },
+    "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:2aba8051b1038bc15062c749f8701365d7b7b61608369314e65d3770344a787c",
+    "manifest_digest": "sha256:562f48883078f9378ebcfaca0f7acefb6bc40022aa561a2f8085444392fdb412",
+    "services": [
+      "zeroclaw"
+    ],
+    "inputs": [
+      {
+        "id": "port:zeroclaw:42617/tcp",
+        "key": "42617",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "42617",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind",
+        "key": "ZEROCLAW_gateway__allow_public_bind",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:zeroclaw:ZEROCLAW_gateway__host",
+        "key": "ZEROCLAW_gateway__host",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "0.0.0.0",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:zeroclaw:ZEROCLAW_gateway__port",
+        "key": "ZEROCLAW_gateway__port",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "42617",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key",
+        "key": "ZEROCLAW_providers__models__openrouter__default__api_key",
+        "kind": "env",
+        "scope": "service",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind",
+        "service": "zeroclaw",
+        "target_kind": "environment",
+        "target_key": "ZEROCLAW_gateway__allow_public_bind",
+        "yaml_path": "services.zeroclaw.environment[2]",
+        "line": 14,
+        "column": 15
+      },
+      {
+        "input_id": "service:zeroclaw:ZEROCLAW_gateway__host",
+        "service": "zeroclaw",
+        "target_kind": "environment",
+        "target_key": "ZEROCLAW_gateway__host",
+        "yaml_path": "services.zeroclaw.environment[1]",
+        "line": 13,
+        "column": 15
+      },
+      {
+        "input_id": "service:zeroclaw:ZEROCLAW_gateway__port",
+        "service": "zeroclaw",
+        "target_kind": "environment",
+        "target_key": "ZEROCLAW_gateway__port",
+        "yaml_path": "services.zeroclaw.environment[3]",
+        "line": 15,
+        "column": 15
+      },
+      {
+        "input_id": "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key",
+        "service": "zeroclaw",
+        "target_kind": "environment",
+        "target_key": "ZEROCLAW_providers__models__openrouter__default__api_key",
+        "yaml_path": "services.zeroclaw.environment[0]",
+        "line": 12,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:zeroclaw:42617/tcp",
+        "kind": "port",
+        "service": "zeroclaw",
+        "source": "42617",
+        "target": "42617",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.zeroclaw.ports[0]"
+      },
+      {
+        "id": "volume:zeroclaw:/zeroclaw-data",
+        "kind": "volume",
+        "service": "zeroclaw",
+        "source": "zeroclaw-data",
+        "target": "/zeroclaw-data",
+        "editable": false,
+        "yaml_path": "services.zeroclaw.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:2aba8051b1038bc15062c749f8701365d7b7b61608369314e65d3770344a787c",
+  "manifest_digest": "sha256:562f48883078f9378ebcfaca0f7acefb6bc40022aa561a2f8085444392fdb412",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:zeroclaw:42617/tcp",
+      "name": "42617",
+      "label": "42617",
+      "description": "",
+      "type": "port",
+      "default": "42617",
+      "category": "basic",
+      "serviceName": "zeroclaw",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind",
+      "name": "ZEROCLAW_gateway__allow_public_bind",
+      "label": "ZEROCLAW_gateway__allow_public_bind",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "basic",
+      "serviceName": "zeroclaw",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:zeroclaw:ZEROCLAW_gateway__host",
+      "name": "ZEROCLAW_gateway__host",
+      "label": "ZEROCLAW_gateway__host",
+      "description": "",
+      "type": "string",
+      "default": "0.0.0.0",
+      "category": "basic",
+      "serviceName": "zeroclaw",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:zeroclaw:ZEROCLAW_gateway__port",
+      "name": "ZEROCLAW_gateway__port",
+      "label": "ZEROCLAW_gateway__port",
+      "description": "",
+      "type": "string",
+      "default": "42617",
+      "category": "basic",
+      "serviceName": "zeroclaw",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key",
+      "name": "ZEROCLAW_providers__models__openrouter__default__api_key",
+      "label": "ZEROCLAW_providers__models__openrouter__default__api_key",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "zeroclaw",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

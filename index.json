@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 07:42:21，更新项目1个",
-  "templates_note": "累计项目86个",
-  "generated_at": "2026-11-22T07:42:21+08:00",
+  "note": "2026-11-22 07:48:54，更新项目1个",
+  "templates_note": "累计项目87个",
+  "generated_at": "2026-11-22T07:48:54+08:00",
   "templates": [
     {
       "id": 1,
@@ -1111,6 +1111,21 @@
       "website": "https://github.com/agentscope-ai/QwenPaw",
       "content_hash": "sha256:ab2778f3a69d276a5914966823b94b809306b381ae39ac21e7fee2748661d65b",
       "file": "templates/qwenpaw.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 271,
+      "sort_order": 87,
+      "name": "zeroclaw",
+      "category": "🤖 AI",
+      "description": "Release",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/zeroclaw-labs/zeroclaw",
+      "content_hash": "sha256:f2c98709081badc110a6044aa4bcafe3414a723a37584895b43338153eaa98ad",
+      "file": "templates/zeroclaw.json"
     }
   ]
 }
