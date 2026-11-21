@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 05:58:00，更新项目1个",
-  "templates_note": "累计项目78个",
-  "generated_at": "2026-11-22T05:58:00+08:00",
+  "note": "2026-11-22 06:19:51，更新项目1个",
+  "templates_note": "累计项目79个",
+  "generated_at": "2026-11-22T06:19:51+08:00",
   "templates": [
     {
       "id": 1,
@@ -991,6 +991,21 @@
       "website": "https://github.com/carteakey/server-compose",
       "content_hash": "sha256:2d6342b7cc17edb5cc13d3d82507160206b817b9519bd29f40dd696f41fe37c9",
       "file": "templates/changedetection-io.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 263,
+      "sort_order": 79,
+      "name": "nextcloud-redis-mariadb",
+      "category": "工具",
+      "description": "Awesome Docker Compose samples",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/docker/awesome-compose",
+      "content_hash": "sha256:413acb13635ce95f747f1869db2adfd276d17849d213a73353cf26a7e014a67c",
+      "file": "templates/nextcloud-redis-mariadb.json"
     }
   ]
 }

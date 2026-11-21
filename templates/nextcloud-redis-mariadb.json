@@ -1,0 +1,415 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 263,
+  "sort_order": 79,
+  "name": "nextcloud-redis-mariadb",
+  "category": "工具",
+  "description": "Awesome Docker Compose samples",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/docker/awesome-compose",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "networks:\n    dbnet: null\n    redisnet: null\nservices:\n    db:\n        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW\n        environment:\n            - MYSQL_DATABASE=nextcloud\n            - MYSQL_USER=nextcloud\n            - MYSQL_ROOT_PASSWORD=nextcloud\n            - MYSQL_PASSWORD=nextcloud\n        expose:\n            - 3306\n        image: mariadb:10.5\n        networks:\n            - dbnet\n        restart: always\n        volumes:\n            - source: db_data\n              target: /var/lib/mysql\n              type: volume\n    nc:\n        environment:\n            - REDIS_HOST=redis\n            - MYSQL_HOST=db\n            - MYSQL_DATABASE=nextcloud\n            - MYSQL_USER=nextcloud\n            - MYSQL_PASSWORD=nextcloud\n        image: nextcloud:apache\n        networks:\n            - redisnet\n            - dbnet\n        ports:\n            - 80:80\n        restart: always\n        volumes:\n            - source: nc_data\n              target: /var/www/html\n              type: volume\n    redis:\n        expose:\n            - 6379\n        image: redis:alpine\n        networks:\n            - redisnet\n        restart: always\nvolumes:\n    db_data: null\n    nc_data: null\n",
+  "input_metadata": {
+    "port:nc:80/tcp": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_DATABASE": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_PASSWORD": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_ROOT_PASSWORD": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_USER": {
+      "group": "basic"
+    },
+    "service:nc:MYSQL_DATABASE": {
+      "group": "basic"
+    },
+    "service:nc:MYSQL_HOST": {
+      "group": "basic"
+    },
+    "service:nc:MYSQL_PASSWORD": {
+      "group": "basic"
+    },
+    "service:nc:MYSQL_USER": {
+      "group": "basic"
+    },
+    "service:nc:REDIS_HOST": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:4debe9f94eca7cadf65311b9f7d02766f39fddd37a2e6ede3e83879abf581faa",
+    "manifest_digest": "sha256:d6faacf2c09ac434d8d53a56a85d3727ab534ef7ccebb581267c36a36c20ecd4",
+    "services": [
+      "db",
+      "nc",
+      "redis"
+    ],
+    "inputs": [
+      {
+        "id": "port:nc:80/tcp",
+        "key": "80",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "80",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_DATABASE",
+        "key": "MYSQL_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nextcloud",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_PASSWORD",
+        "key": "MYSQL_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nextcloud",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_ROOT_PASSWORD",
+        "key": "MYSQL_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nextcloud",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_USER",
+        "key": "MYSQL_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nextcloud",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:nc:MYSQL_DATABASE",
+        "key": "MYSQL_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nextcloud",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:nc:MYSQL_HOST",
+        "key": "MYSQL_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:nc:MYSQL_PASSWORD",
+        "key": "MYSQL_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nextcloud",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:nc:MYSQL_USER",
+        "key": "MYSQL_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "nextcloud",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:nc:REDIS_HOST",
+        "key": "REDIS_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:db:MYSQL_DATABASE",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_DATABASE",
+        "yaml_path": "services.db.environment[0]",
+        "line": 8,
+        "column": 15
+      },
+      {
+        "input_id": "service:db:MYSQL_PASSWORD",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_PASSWORD",
+        "yaml_path": "services.db.environment[3]",
+        "line": 11,
+        "column": 15
+      },
+      {
+        "input_id": "service:db:MYSQL_ROOT_PASSWORD",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_ROOT_PASSWORD",
+        "yaml_path": "services.db.environment[2]",
+        "line": 10,
+        "column": 15
+      },
+      {
+        "input_id": "service:db:MYSQL_USER",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_USER",
+        "yaml_path": "services.db.environment[1]",
+        "line": 9,
+        "column": 15
+      },
+      {
+        "input_id": "service:nc:MYSQL_DATABASE",
+        "service": "nc",
+        "target_kind": "environment",
+        "target_key": "MYSQL_DATABASE",
+        "yaml_path": "services.nc.environment[2]",
+        "line": 26,
+        "column": 15
+      },
+      {
+        "input_id": "service:nc:MYSQL_HOST",
+        "service": "nc",
+        "target_kind": "environment",
+        "target_key": "MYSQL_HOST",
+        "yaml_path": "services.nc.environment[1]",
+        "line": 25,
+        "column": 15
+      },
+      {
+        "input_id": "service:nc:MYSQL_PASSWORD",
+        "service": "nc",
+        "target_kind": "environment",
+        "target_key": "MYSQL_PASSWORD",
+        "yaml_path": "services.nc.environment[4]",
+        "line": 28,
+        "column": 15
+      },
+      {
+        "input_id": "service:nc:MYSQL_USER",
+        "service": "nc",
+        "target_kind": "environment",
+        "target_key": "MYSQL_USER",
+        "yaml_path": "services.nc.environment[3]",
+        "line": 27,
+        "column": 15
+      },
+      {
+        "input_id": "service:nc:REDIS_HOST",
+        "service": "nc",
+        "target_kind": "environment",
+        "target_key": "REDIS_HOST",
+        "yaml_path": "services.nc.environment[0]",
+        "line": 24,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:nc:80/tcp",
+        "kind": "port",
+        "service": "nc",
+        "source": "80",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.nc.ports[0]"
+      },
+      {
+        "id": "volume:db:/var/lib/mysql",
+        "kind": "volume",
+        "service": "db",
+        "source": "db_data",
+        "target": "/var/lib/mysql",
+        "editable": false,
+        "yaml_path": "services.db.volumes[0]"
+      },
+      {
+        "id": "volume:nc:/var/www/html",
+        "kind": "volume",
+        "service": "nc",
+        "source": "nc_data",
+        "target": "/var/www/html",
+        "editable": false,
+        "yaml_path": "services.nc.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:4debe9f94eca7cadf65311b9f7d02766f39fddd37a2e6ede3e83879abf581faa",
+  "manifest_digest": "sha256:d6faacf2c09ac434d8d53a56a85d3727ab534ef7ccebb581267c36a36c20ecd4",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:nc:80/tcp",
+      "name": "80",
+      "label": "80",
+      "description": "",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "nc",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:db:MYSQL_DATABASE",
+      "name": "MYSQL_DATABASE",
+      "label": "MYSQL_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "nextcloud",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_PASSWORD",
+      "name": "MYSQL_PASSWORD",
+      "label": "MYSQL_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "nextcloud",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_ROOT_PASSWORD",
+      "name": "MYSQL_ROOT_PASSWORD",
+      "label": "MYSQL_ROOT_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "nextcloud",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_USER",
+      "name": "MYSQL_USER",
+      "label": "MYSQL_USER",
+      "description": "",
+      "type": "string",
+      "default": "nextcloud",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nc:MYSQL_DATABASE",
+      "name": "MYSQL_DATABASE",
+      "label": "MYSQL_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "nextcloud",
+      "category": "basic",
+      "serviceName": "nc",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nc:MYSQL_HOST",
+      "name": "MYSQL_HOST",
+      "label": "MYSQL_HOST",
+      "description": "",
+      "type": "string",
+      "default": "db",
+      "category": "basic",
+      "serviceName": "nc",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nc:MYSQL_PASSWORD",
+      "name": "MYSQL_PASSWORD",
+      "label": "MYSQL_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "nextcloud",
+      "category": "basic",
+      "serviceName": "nc",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nc:MYSQL_USER",
+      "name": "MYSQL_USER",
+      "label": "MYSQL_USER",
+      "description": "",
+      "type": "string",
+      "default": "nextcloud",
+      "category": "basic",
+      "serviceName": "nc",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:nc:REDIS_HOST",
+      "name": "REDIS_HOST",
+      "label": "REDIS_HOST",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "basic",
+      "serviceName": "nc",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
