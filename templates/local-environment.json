@@ -1,0 +1,199 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 265,
+  "sort_order": 81,
+  "name": "local-environment",
+  "category": "Proxy",
+  "description": "~~ - A reverse proxy that provides authentication with Google, Azure, OpenID Connect and many more identity providers.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/oauth2-proxy/oauth2-proxy",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "networks:\n    dex: {}\n    httpbin: {}\nservices:\n    dex:\n        command: dex serve /dex.yaml\n        hostname: dex\n        image: ghcr.io/dexidp/dex:v2.46.1\n        networks:\n            dex:\n                aliases:\n                    - dex.localtest.me\n        ports:\n            - 5556:5556/tcp\n        restart: unless-stopped\n        tmpfs:\n            - /tmp:mode=1777\n        volumes:\n            - source: ./dex.yaml\n              target: /dex.yaml\n              type: bind\n    httpbin:\n        image: kennethreitz/httpbin\n        networks:\n            httpbin: {}\n        ports: []\n    oauth2-proxy:\n        command: --config /oauth2-proxy.cfg\n        depends_on:\n            - dex\n            - httpbin\n        hostname: oauth2-proxy\n        image: quay.io/oauth2-proxy/oauth2-proxy:v7.15.6\n        networks:\n            dex: {}\n            httpbin: {}\n        ports:\n            - 4180:4180/tcp\n        restart: unless-stopped\n        volumes:\n            - source: ./oauth2-proxy.cfg\n              target: /oauth2-proxy.cfg\n              type: bind\n",
+  "source_files": [
+    {
+      "path": "dex.yaml",
+      "content": "# This configuration is intended to be used with the docker-compose testing\n# environment.\n# This should configure Dex to run on port 5556 and provides a static login\nissuer: http://dex.localtest.me:5556/dex\nstorage:\n  type: memory\nweb:\n  http: 0.0.0.0:5556\noauth2:\n  skipApprovalScreen: true\nexpiry:\n  signingKeys: \"4h\"\n  idTokens: \"1h\"\nstaticClients:\n  - id: oauth2-proxy\n    redirectURIs:\n      # These redirect URIs point to the `--redirect-url` for OAuth2 proxy.\n      - \"http://oauth2-proxy.localtest.me:4180/oauth2/callback\" # For basic proxy example.\n      - \"http://oauth2-proxy.localtest.me:8080/oauth2/callback\" # For nginx example.\n    name: \"OAuth2 Proxy\"\n    secret: b2F1dGgyLXByb3h5LWNsaWVudC1zZWNyZXQK\nenablePasswordDB: true\nstaticPasswords:\n  - email: \"admin@example.com\"\n    # bcrypt hash of the string \"password\"\n    hash: \"$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W\"\n    username: \"admin\"\n    userID: \"08a8684b-db88-4b73-90a9-3cd1661f5466\"\n",
+      "mode": 420
+    },
+    {
+      "path": "oauth2-proxy.cfg",
+      "content": "http_address=\"0.0.0.0:4180\"\ncookie_secret=\"OQINaROshtE9TcZkNAm-5Zs2Pv3xaWytBmc5W7sPX7w=\"\nemail_domains=\"example.com\"\ncookie_secure=\"false\"\nupstreams=\"http://httpbin\"\ncookie_domains=[\".localtest.me\"] # Required so cookie can be read on all subdomains.\nwhitelist_domains=[\".localtest.me\"] # Required to allow redirection back to original requested target.\n\n# dex provider\nclient_secret=\"b2F1dGgyLXByb3h5LWNsaWVudC1zZWNyZXQK\"\nclient_id=\"oauth2-proxy\"\nredirect_url=\"http://oauth2-proxy.localtest.me:4180/oauth2/callback\"\n\noidc_issuer_url=\"http://dex.localtest.me:5556/dex\"\nprovider=\"oidc\"\nprovider_display_name=\"Dex\"\n",
+      "mode": 420
+    }
+  ],
+  "input_metadata": {
+    "bind:dex:/dex.yaml": {
+      "group": "basic"
+    },
+    "bind:oauth2-proxy:/oauth2-proxy.cfg": {
+      "group": "basic"
+    },
+    "port:dex:5556/tcp": {
+      "group": "basic"
+    },
+    "port:oauth2-proxy:4180/tcp": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:5563eaf82667070c4a716b971b77df54d6758e6ce92e923f3ea9aa7574aac21d",
+    "manifest_digest": "sha256:a0f4a2db7b024574ee90ae2cbbc898d0f0d4bc4e97e4aaa7c979c47ba5734441",
+    "services": [
+      "dex",
+      "httpbin",
+      "oauth2-proxy"
+    ],
+    "inputs": [
+      {
+        "id": "bind:dex:/dex.yaml",
+        "key": "./dex.yaml",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./dex.yaml",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:oauth2-proxy:/oauth2-proxy.cfg",
+        "key": "./oauth2-proxy.cfg",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./oauth2-proxy.cfg",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:dex:5556/tcp",
+        "key": "5556",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5556",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:oauth2-proxy:4180/tcp",
+        "key": "4180",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "4180",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:dex:/dex.yaml",
+        "kind": "bind",
+        "service": "dex",
+        "source": "./dex.yaml",
+        "target": "/dex.yaml",
+        "editable": true,
+        "yaml_path": "services.dex.volumes[0]"
+      },
+      {
+        "id": "bind:oauth2-proxy:/oauth2-proxy.cfg",
+        "kind": "bind",
+        "service": "oauth2-proxy",
+        "source": "./oauth2-proxy.cfg",
+        "target": "/oauth2-proxy.cfg",
+        "editable": true,
+        "yaml_path": "services.oauth2-proxy.volumes[0]"
+      },
+      {
+        "id": "port:dex:5556/tcp",
+        "kind": "port",
+        "service": "dex",
+        "source": "5556",
+        "target": "5556",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.dex.ports[0]"
+      },
+      {
+        "id": "port:oauth2-proxy:4180/tcp",
+        "kind": "port",
+        "service": "oauth2-proxy",
+        "source": "4180",
+        "target": "4180",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.oauth2-proxy.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:5563eaf82667070c4a716b971b77df54d6758e6ce92e923f3ea9aa7574aac21d",
+  "manifest_digest": "sha256:a0f4a2db7b024574ee90ae2cbbc898d0f0d4bc4e97e4aaa7c979c47ba5734441",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:dex:/dex.yaml",
+      "name": "./dex.yaml",
+      "label": "./dex.yaml",
+      "description": "",
+      "type": "path",
+      "default": "./dex.yaml",
+      "category": "basic",
+      "serviceName": "dex",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:oauth2-proxy:/oauth2-proxy.cfg",
+      "name": "./oauth2-proxy.cfg",
+      "label": "./oauth2-proxy.cfg",
+      "description": "",
+      "type": "path",
+      "default": "./oauth2-proxy.cfg",
+      "category": "basic",
+      "serviceName": "oauth2-proxy",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:dex:5556/tcp",
+      "name": "5556",
+      "label": "5556",
+      "description": "",
+      "type": "port",
+      "default": "5556",
+      "category": "basic",
+      "serviceName": "dex",
+      "paramType": "port"
+    },
+    {
+      "inputId": "port:oauth2-proxy:4180/tcp",
+      "name": "4180",
+      "label": "4180",
+      "description": "",
+      "type": "port",
+      "default": "4180",
+      "category": "basic",
+      "serviceName": "oauth2-proxy",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

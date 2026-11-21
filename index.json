@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 06:31:36，更新项目1个",
-  "templates_note": "累计项目80个",
-  "generated_at": "2026-11-22T06:31:36+08:00",
+  "note": "2026-11-22 06:50:40，更新项目1个",
+  "templates_note": "累计项目81个",
+  "generated_at": "2026-11-22T06:50:40+08:00",
   "templates": [
     {
       "id": 1,
@@ -1021,6 +1021,21 @@
       "website": "https://github.com/docker/awesome-compose",
       "content_hash": "sha256:71b1f18e8e7c90bd003e6a47a73cd03655d1eb2b13b78aeefb94714a9eb08251",
       "file": "templates/wordpress-mysql.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 265,
+      "sort_order": 81,
+      "name": "local-environment",
+      "category": "Proxy",
+      "description": "~~ - A reverse proxy that provides authentication with Google, Azure, OpenID Connect and many more identity providers.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/oauth2-proxy/oauth2-proxy",
+      "content_hash": "sha256:102e7a31140400de569e9f50d6d286bff324226b440b5e6c505334c4aec99474",
+      "file": "templates/local-environment.json"
     }
   ]
 }
