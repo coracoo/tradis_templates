@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 03:59:03，更新项目1个",
-  "templates_note": "累计项目70个",
-  "generated_at": "2026-11-22T03:59:03+08:00",
+  "note": "2026-11-22 04:26:36，更新项目1个",
+  "templates_note": "累计项目71个",
+  "generated_at": "2026-11-22T04:26:36+08:00",
   "templates": [
     {
       "id": 1,
@@ -871,6 +871,21 @@
       "website": "https://github.com/Haxxnet/Compose-Examples",
       "content_hash": "sha256:56276862225149a2b80339eaf55a2b8076eabcd905e35da9e662ffa81ece7386",
       "file": "templates/flaresolverr.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 255,
+      "sort_order": 71,
+      "name": "monkeytype",
+      "category": "工具",
+      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "content_hash": "sha256:64a454259e61ac5742f04ea8f6de055d6f01236f3aa0d05758d296d08aef682d",
+      "file": "templates/monkeytype.json"
     }
   ]
 }
