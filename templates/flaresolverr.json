@@ -1,0 +1,220 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 254,
+  "sort_order": 70,
+  "name": "flaresolverr",
+  "category": "工具",
+  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    flaresolverr:\n        environment:\n            - LOG_LEVEL=info\n            - LOG_HTML=false\n            - CAPTCHA_SOLVER=none\n            - TZ=Europe/Berlin\n        expose:\n            - 8191\n        image: ghcr.io/flaresolverr/flaresolverr:latest\n        ports:\n            - 8191:8191/tcp\n        restart: unless-stopped\n",
+  "input_metadata": {
+    "port:flaresolverr:8191/tcp": {
+      "group": "basic"
+    },
+    "service:flaresolverr:CAPTCHA_SOLVER": {
+      "group": "basic"
+    },
+    "service:flaresolverr:LOG_HTML": {
+      "group": "basic"
+    },
+    "service:flaresolverr:LOG_LEVEL": {
+      "group": "basic"
+    },
+    "service:flaresolverr:TZ": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:4c19409871ae30ed4a3bfa80685700520b4efa87481948cd91f38992a64516f1",
+    "manifest_digest": "sha256:e3e106cc4adb3a84423e246ff39b137e9f0b5ae0a662b1355bb228a34631b905",
+    "services": [
+      "flaresolverr"
+    ],
+    "inputs": [
+      {
+        "id": "port:flaresolverr:8191/tcp",
+        "key": "8191",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8191",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:flaresolverr:CAPTCHA_SOLVER",
+        "key": "CAPTCHA_SOLVER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "none",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:flaresolverr:LOG_HTML",
+        "key": "LOG_HTML",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:flaresolverr:LOG_LEVEL",
+        "key": "LOG_LEVEL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "info",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:flaresolverr:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Europe/Berlin",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:flaresolverr:CAPTCHA_SOLVER",
+        "service": "flaresolverr",
+        "target_kind": "environment",
+        "target_key": "CAPTCHA_SOLVER",
+        "yaml_path": "services.flaresolverr.environment[2]",
+        "line": 6,
+        "column": 15
+      },
+      {
+        "input_id": "service:flaresolverr:LOG_HTML",
+        "service": "flaresolverr",
+        "target_kind": "environment",
+        "target_key": "LOG_HTML",
+        "yaml_path": "services.flaresolverr.environment[1]",
+        "line": 5,
+        "column": 15
+      },
+      {
+        "input_id": "service:flaresolverr:LOG_LEVEL",
+        "service": "flaresolverr",
+        "target_kind": "environment",
+        "target_key": "LOG_LEVEL",
+        "yaml_path": "services.flaresolverr.environment[0]",
+        "line": 4,
+        "column": 15
+      },
+      {
+        "input_id": "service:flaresolverr:TZ",
+        "service": "flaresolverr",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.flaresolverr.environment[3]",
+        "line": 7,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:flaresolverr:8191/tcp",
+        "kind": "port",
+        "service": "flaresolverr",
+        "source": "8191",
+        "target": "8191",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.flaresolverr.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:4c19409871ae30ed4a3bfa80685700520b4efa87481948cd91f38992a64516f1",
+  "manifest_digest": "sha256:e3e106cc4adb3a84423e246ff39b137e9f0b5ae0a662b1355bb228a34631b905",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:flaresolverr:8191/tcp",
+      "name": "8191",
+      "label": "8191",
+      "description": "",
+      "type": "port",
+      "default": "8191",
+      "category": "basic",
+      "serviceName": "flaresolverr",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:flaresolverr:CAPTCHA_SOLVER",
+      "name": "CAPTCHA_SOLVER",
+      "label": "CAPTCHA_SOLVER",
+      "description": "",
+      "type": "string",
+      "default": "none",
+      "category": "basic",
+      "serviceName": "flaresolverr",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:flaresolverr:LOG_HTML",
+      "name": "LOG_HTML",
+      "label": "LOG_HTML",
+      "description": "",
+      "type": "string",
+      "default": "false",
+      "category": "basic",
+      "serviceName": "flaresolverr",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:flaresolverr:LOG_LEVEL",
+      "name": "LOG_LEVEL",
+      "label": "LOG_LEVEL",
+      "description": "",
+      "type": "string",
+      "default": "info",
+      "category": "basic",
+      "serviceName": "flaresolverr",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:flaresolverr:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Europe/Berlin",
+      "category": "basic",
+      "serviceName": "flaresolverr",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
