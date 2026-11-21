@@ -1,6 +1,6 @@
 {
   "id": 201,
-  "sort_order": 64,
+  "sort_order": 65,
   "name": "grafana",
   "category": "platform",
   "description": "Grafana 是适用于各种数据库的开源分析与监控解决方案。",
