@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 06:59:42，更新项目1个",
-  "templates_note": "累计项目82个",
-  "generated_at": "2026-11-22T06:59:42+08:00",
+  "note": "2026-11-22 07:12:51，更新项目1个",
+  "templates_note": "累计项目83个",
+  "generated_at": "2026-11-22T07:12:51+08:00",
   "templates": [
     {
       "id": 1,
@@ -1051,6 +1051,21 @@
       "website": "https://github.com/goauthentik/authentik",
       "content_hash": "sha256:94b29cccfb78c13a4628ef67d29e0038512597eba893d145faf662f09c270696",
       "file": "templates/tests.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 267,
+      "sort_order": 83,
+      "name": "mariadb",
+      "category": "Stack Architecture",
+      "description": "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/louislam/dockge",
+      "content_hash": "sha256:706d77803b09e8f21ba330d35ebd967da3caf27c09542dfe6597ac70d49aab1e",
+      "file": "templates/mariadb.json"
     }
   ]
 }

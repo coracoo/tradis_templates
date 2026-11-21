@@ -1,0 +1,115 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 267,
+  "sort_order": 83,
+  "name": "mariadb",
+  "category": "Stack Architecture",
+  "description": "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/louislam/dockge",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    mariadb:\n        environment:\n            - MARIADB_ROOT_PASSWORD=123456\n        image: mariadb:latest\n        ports:\n            - 3306:3306\n        restart: unless-stopped\n",
+  "input_metadata": {
+    "port:mariadb:3306/tcp": {
+      "group": "basic"
+    },
+    "service:mariadb:MARIADB_ROOT_PASSWORD": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:66aeb49ae21251791b18a6881aef22108cf026a35a71577d8e1fc461f030972f",
+    "manifest_digest": "sha256:b055ea869fd5d7a6e02bf866ba9724a23932107dfa8bce8b231b0c90bd7af5d8",
+    "services": [
+      "mariadb"
+    ],
+    "inputs": [
+      {
+        "id": "port:mariadb:3306/tcp",
+        "key": "3306",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3306",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:mariadb:MARIADB_ROOT_PASSWORD",
+        "key": "MARIADB_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "123456",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:mariadb:MARIADB_ROOT_PASSWORD",
+        "service": "mariadb",
+        "target_kind": "environment",
+        "target_key": "MARIADB_ROOT_PASSWORD",
+        "yaml_path": "services.mariadb.environment[0]",
+        "line": 4,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:mariadb:3306/tcp",
+        "kind": "port",
+        "service": "mariadb",
+        "source": "3306",
+        "target": "3306",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.mariadb.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:66aeb49ae21251791b18a6881aef22108cf026a35a71577d8e1fc461f030972f",
+  "manifest_digest": "sha256:b055ea869fd5d7a6e02bf866ba9724a23932107dfa8bce8b231b0c90bd7af5d8",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:mariadb:3306/tcp",
+      "name": "3306",
+      "label": "3306",
+      "description": "",
+      "type": "port",
+      "default": "3306",
+      "category": "basic",
+      "serviceName": "mariadb",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:mariadb:MARIADB_ROOT_PASSWORD",
+      "name": "MARIADB_ROOT_PASSWORD",
+      "label": "MARIADB_ROOT_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "123456",
+      "category": "basic",
+      "serviceName": "mariadb",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
