@@ -1,0 +1,117 @@
+{
+  "id": 201,
+  "sort_order": 64,
+  "name": "grafana",
+  "category": "platform",
+  "description": "Grafana 是适用于各种数据库的开源分析与监控解决方案。",
+  "version": "latest",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Grafana_logo.png?20170804201233",
+  "website": "https://hub.docker.com/r/grafana/grafana",
+  "tutorial": "【包含服务】\n  · grafana — grafana/grafana:latest\n\n【目录映射】宿主机路径 → 容器内路径\n  /portainer/Files/AppData/Config/grafana → /var/lib/grafana\n\n【端口映射】宿主机:容器\n  3023 → 3000/tcp（grafana）\n\n【访问地址】\n  http://\u003c主机IP\u003e:3023（grafana）\n\n【提示】\n  部署前请确认上述目录在宿主机上已有读写权限；端口与目录映射均可在部署向导中按需调整。",
+  "dotenv": "",
+  "compose": "services:\n  grafana:\n      image: grafana/grafana:latest\n      ports:\n        - 3023:3000 ##changed from 3000 to 3023 to decrease possibility of conflict on a system that 3000 is already occupied\n      restart: unless-stopped\n      volumes:\n        - ./grafana:/var/lib/grafana\n      user: \"0\"\n##With this one we install Latest Grafana which in December 13th 2022 is 9.3.1\n",
+  "input_metadata": {
+    "bind:grafana:/var/lib/grafana": {
+      "label": "./grafana",
+      "group": "basic"
+    },
+    "port:grafana:3000/tcp": {
+      "label": "3000",
+      "description": "容器对外端口，部署向导中可修改宿主机侧端口",
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:ef260edc6c62a0fb3c1149cb693ff31d458b773cf0df671a745429473ce66a07",
+    "manifest_digest": "sha256:ab8643e0aebebeec3f1d7b4ab4a593a8c9ac4e26e55bff4064b8e61c8a87a809",
+    "services": [
+      "grafana"
+    ],
+    "inputs": [
+      {
+        "id": "bind:grafana:/var/lib/grafana",
+        "key": "./grafana",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./grafana",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "./grafana",
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:grafana:3000/tcp",
+        "key": "3023",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3023",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "3000",
+          "description": "容器对外端口，部署向导中可修改宿主机侧端口",
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:grafana:/var/lib/grafana",
+        "kind": "bind",
+        "service": "grafana",
+        "source": "./grafana",
+        "target": "/var/lib/grafana",
+        "editable": true,
+        "yaml_path": "services.grafana.volumes[0]"
+      },
+      {
+        "id": "port:grafana:3000/tcp",
+        "kind": "port",
+        "service": "grafana",
+        "source": "3023",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.grafana.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:ef260edc6c62a0fb3c1149cb693ff31d458b773cf0df671a745429473ce66a07",
+  "manifest_digest": "sha256:ab8643e0aebebeec3f1d7b4ab4a593a8c9ac4e26e55bff4064b8e61c8a87a809",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:grafana:/var/lib/grafana",
+      "name": "./grafana",
+      "label": "./grafana",
+      "description": "",
+      "type": "path",
+      "default": "./grafana",
+      "category": "basic",
+      "serviceName": "grafana",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:grafana:3000/tcp",
+      "name": "3023",
+      "label": "3000",
+      "description": "容器对外端口，部署向导中可修改宿主机侧端口",
+      "type": "port",
+      "default": "3023",
+      "category": "basic",
+      "serviceName": "grafana",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

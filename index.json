@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-11 22:53:38，更新项目1个",
-  "templates_note": "累计项目65个",
-  "generated_at": "2026-11-11T22:53:38+08:00",
+  "note": "2026-11-22 00:08:40，更新项目3个",
+  "templates_note": "累计项目66个",
+  "generated_at": "2026-11-22T00:08:40+08:00",
   "templates": [
     {
       "id": 1,
@@ -772,12 +772,24 @@
       "file": "templates/sonovel.json"
     },
     {
+      "id": 201,
+      "sort_order": 64,
+      "name": "grafana",
+      "category": "platform",
+      "description": "Grafana 是适用于各种数据库的开源分析与监控解决方案。",
+      "version": "latest",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Grafana_logo.png?20170804201233",
+      "website": "https://hub.docker.com/r/grafana/grafana",
+      "content_hash": "sha256:a8230701c3d2458c292ad31cf20bbf8cf595c8b2edab7411b2056fa22cf4195a",
+      "file": "templates/grafana.json"
+    },
+    {
       "architectures": [
         "arm64",
         "amd64"
       ],
       "id": 250,
-      "sort_order": 64,
+      "sort_order": 65,
       "name": "movieclaw",
       "category": "entertainment",
       "description": "下一代智能影音服务器。一个 MovieClaw，替代一整套影音工具。自带网页和手机、平板、电视、电脑原生 App，个人和家庭免费。",
@@ -793,7 +805,7 @@
         "arm64"
       ],
       "id": 251,
-      "sort_order": 65,
+      "sort_order": 66,
       "name": "nowen_reader",
       "category": "entertainment",
       "description": "为漫画爱好者打造私域、可控、高效的个人漫画图书馆。",
