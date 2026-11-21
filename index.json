@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 07:20:42，更新项目1个",
-  "templates_note": "累计项目84个",
-  "generated_at": "2026-11-22T07:20:42+08:00",
+  "note": "2026-11-22 07:26:48，更新项目1个",
+  "templates_note": "累计项目85个",
+  "generated_at": "2026-11-22T07:26:48+08:00",
   "templates": [
     {
       "id": 1,
@@ -1081,6 +1081,21 @@
       "website": "https://github.com/grafana/grafana",
       "content_hash": "sha256:45b64e6bc1f057644d0d187f4dbb0441a96bb87672cd7ea5aca4dd6f87cd3244",
       "file": "templates/local-npm.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 269,
+      "sort_order": 85,
+      "name": "manual-test-radius-tls",
+      "category": "Stack Architecture",
+      "description": "Lightweight and fancy self-hosted monitoring tool.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/louislam/uptime-kuma",
+      "content_hash": "sha256:e112295f52278038d45dd5e109306891bce86eb1606b57f190a26627590da5ad",
+      "file": "templates/manual-test-radius-tls.json"
     }
   ]
 }

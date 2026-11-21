@@ -1,0 +1,126 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 269,
+  "sort_order": 85,
+  "name": "manual-test-radius-tls",
+  "category": "Stack Architecture",
+  "description": "Lightweight and fancy self-hosted monitoring tool.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/louislam/uptime-kuma",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    redis:\n        command: |\n            redis-server --tls-port 6380 --port 0 --tls-cert-file /certs/redis.crt --tls-key-file /certs/redis.key --tls-auth-clients no\n        image: redis:latest\n        ports:\n            - 6380:6380\n        volumes:\n            - source: ./certs\n              target: /certs\n              type: bind\n",
+  "source_files": [
+    {
+      "path": "certs/redis.crt",
+      "content": "-----BEGIN CERTIFICATE-----\nMIIDCTCCAfGgAwIBAgIUF6AMqH3K5nlbnWuHAMu12MUjqCUwDQYJKoZIhvcNAQEL\nBQAwFDESMBAGA1UEAwwJbG9jYWxob3N0MB4XDTI1MTExNTIwMTk0OFoXDTI2MTEx\nNTIwMTk0OFowFDESMBAGA1UEAwwJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEF\nAAOCAQ8AMIIBCgKCAQEAtRVPm2BOFyaRoFVP3g+OO8YYvUUzVnMlp8T+FkQUWQ3g\nXzk3k059ca67uPhfujRQ0S+e4FTPyHPrbCh73aTtFfpg1BTlEcuOAXUpxrtSpXbY\nD4XvO5OZK3QmFIkUOfOMoJoi0Iv75CgVlcGnQOxPY5A12+uyzMNGPFWBX42qgeW9\nhuijfqE3jwN2gM05ryA6EBk1TIewUTMycTFI3t3YLJyZdNMG4kmphIJ/Ie6Na4u3\nYaKXp9o+VCN8t5bd/IYhFW8PznlXbv2NU83ARjmfk7Vc0OrvTUsr9+NTPOdFFoCp\nsAbxogO/hZpv3UtX9lzk22MpzcBbpzPodXAikNZeswIDAQABo1MwUTAdBgNVHQ4E\nFgQU9PhfZPxI1PB50DdRrI82U1cRPvkwHwYDVR0jBBgwFoAU9PhfZPxI1PB50DdR\nrI82U1cRPvkwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAclr4\nM5PjA1nqTZfbdaerA5uvyPnIdjc6Ms6ZvP75h6kHxvUJj9kcoSbg/2nqyCY6UJod\noOPTJZppB+xfHD6ahPLO30IPw1HPr+OfTaiwBoZMnjGn08p5dAjyG0hAyHciDClY\nUAxQld+5NNI82QEx5BJ3mcpO5Mi36SW7Kck2TnCza6JxjOmtFi4BLMFsnRD9Vepu\nvIvu3DrCxnpYdCV6zUT55414NKCPsut7YHqkDc4gOUHcQ0QOQSRwhaGpLnkfwihe\nDkHgJvcBlBOMcr2UCQvXPwPPP1dJ4Y9OQrjGxCnSeDy89cu5/6z/ZBy2ygGHehGZ\nzx5PrQLiqgdChdwb6w==\n-----END CERTIFICATE-----\n",
+      "mode": 420
+    },
+    {
+      "path": "certs/redis.key",
+      "content": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1FU+bYE4XJpGg\nVU/eD447xhi9RTNWcyWnxP4WRBRZDeBfOTeTTn1xrru4+F+6NFDRL57gVM/Ic+ts\nKHvdpO0V+mDUFOURy44BdSnGu1KldtgPhe87k5krdCYUiRQ584ygmiLQi/vkKBWV\nwadA7E9jkDXb67LMw0Y8VYFfjaqB5b2G6KN+oTePA3aAzTmvIDoQGTVMh7BRMzJx\nMUje3dgsnJl00wbiSamEgn8h7o1ri7dhopen2j5UI3y3lt38hiEVbw/OeVdu/Y1T\nzcBGOZ+TtVzQ6u9NSyv341M850UWgKmwBvGiA7+Fmm/dS1f2XOTbYynNwFunM+h1\ncCKQ1l6zAgMBAAECggEAcfZ4hEOmwcEfMzWdrxZBIHM6jJtphMWw9BXxBthPqgAm\nricXR9jE7+/U6sM9k7VrC0uaBHq7zd7OUeJkmgg6wXMyzyZbR8jAlUBES3MGv2W8\n8oALIIZyhjtx38ipdxNE9KossOz4WQ21D+uxNBXEnNdcXgzHGUDoCf6SDi3dGiQI\nkloSkoyuHv3HiJdmUCII0EWVoDW0YnhKs4xpYwt0xlQ3IFA1FeqhYN3GwDb7hnp4\nHmefiydHW+rWPgXPzI3tIo6LgN+nMBPAAa95u9XfswRmBcZIhTxzlg7HaJJ1yP2B\nHmyJBG20HX1RY0IHAgAQy2jA2HPIRdpQNU2FJGi34QKBgQDvMDRqr6qQjLSq8dkG\nH7olc10gZHHTyY25aQG+m54SXMEdmU5zhbMoShnfQ/HVtWCAd3b5kwUBSjXacQiL\nkMBV6S5+FQ+27nfgx8szqUJJi09iU43xcBDYSyJCohkM/HrHSElN3c1Y9//SneqJ\nZjeg+80+p7LvsgMM4MOKad0DowKBgQDBz5o9m9FZ+nHC1eXwUYVYNXA9wter9Erd\nWosPWKnhGTJ2mNebn0aSVlagiZtyMUMps4IyWEvBHMIt0wJz2T5v+SDx9VN0si7q\nJy1i1uDO56tSHDZaN+QT/WDeaHTpzl3I28K7lqM6PDx1KQ/kqlTnWHD3wnXQ2Hfh\nxXYgdeNpsQKBgQDaT+w3yBhtERBByrZkIYc8cXx5eVRvktJ5fX9rIwx3BBP7WRdC\n17B7QI82ugQ8I+1ttBxylR8HW12mAG9lO3xhrZCS4dRTCnt+Pb2ZbI6lI7MUMuEm\nkju9v24I1Xz53mSOCctmd+DaqJjl+t68BAEYPVvLKTNoFdk04t13M0LX8wKBgQCU\n7+/M5oA0UES6AFxKmKsLRU2y+Jd6miop/tmcentZ814XS49tFTJLZLP/fKALWhYN\n5tfnzniwt2P1iRF6a3kS3XVW2zs+E2wAHwk+ynhKKDg8yldub0MDpZSaddVak274\n2wDD3ZgkOYQQWPTQuaCzhACUNUkKrD88Ld2ARnfzkQKBgGTEOwN+aaOn/bU9Dm+y\nXg1tezMmxFcnewZVak+91xU6K+PS9B3GbszAs5MMYXo3UQXCUlXUI71XI7WG50LJ\nNmwClF05ZcH/qYpp1mK/w6i+7VnqN0RAkD0hA3AyivmF5VCI/hzZanxLnPDvMbxS\nwpjLPuBRTukoNvxJGT16z8L+\n-----END PRIVATE KEY-----\n",
+      "mode": 420
+    }
+  ],
+  "input_metadata": {
+    "bind:redis:/certs": {
+      "group": "basic"
+    },
+    "port:redis:6380/tcp": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:c093d0b01e06ae01cc9bc57b974e8384700171235a46dd4e3c59d023d9f97541",
+    "manifest_digest": "sha256:3c6ae74d8d3a68b43e7fcb48728e458b2f97a30e0e12ceaf460e1e5c1014fc54",
+    "services": [
+      "redis"
+    ],
+    "inputs": [
+      {
+        "id": "bind:redis:/certs",
+        "key": "./certs",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./certs",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "port:redis:6380/tcp",
+        "key": "6380",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "6380",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "bind:redis:/certs",
+        "kind": "bind",
+        "service": "redis",
+        "source": "./certs",
+        "target": "/certs",
+        "editable": true,
+        "yaml_path": "services.redis.volumes[0]"
+      },
+      {
+        "id": "port:redis:6380/tcp",
+        "kind": "port",
+        "service": "redis",
+        "source": "6380",
+        "target": "6380",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.redis.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:c093d0b01e06ae01cc9bc57b974e8384700171235a46dd4e3c59d023d9f97541",
+  "manifest_digest": "sha256:3c6ae74d8d3a68b43e7fcb48728e458b2f97a30e0e12ceaf460e1e5c1014fc54",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "bind:redis:/certs",
+      "name": "./certs",
+      "label": "./certs",
+      "description": "",
+      "type": "path",
+      "default": "./certs",
+      "category": "basic",
+      "serviceName": "redis",
+      "paramType": "path"
+    },
+    {
+      "inputId": "port:redis:6380/tcp",
+      "name": "6380",
+      "label": "6380",
+      "description": "",
+      "type": "port",
+      "default": "6380",
+      "category": "basic",
+      "serviceName": "redis",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}
