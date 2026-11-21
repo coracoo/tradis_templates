@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 05:34:00，更新项目1个",
-  "templates_note": "累计项目76个",
-  "generated_at": "2026-11-22T05:34:00+08:00",
+  "note": "2026-11-22 05:42:45，更新项目1个",
+  "templates_note": "累计项目77个",
+  "generated_at": "2026-11-22T05:42:45+08:00",
   "templates": [
     {
       "id": 1,
@@ -961,6 +961,21 @@
       "website": "https://github.com/Haxxnet/Compose-Examples",
       "content_hash": "sha256:0131905995ee3e38d3b53380cb79174cdf27c9511c95ae9f73f18951cfd9ab71",
       "file": "templates/transfer-zip.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 261,
+      "sort_order": 77,
+      "name": "webhook-site",
+      "category": "工具",
+      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "content_hash": "sha256:9af08180b64f595e82bf95c889d0c8da786e9026f13079a0a6561b1a9e12c66f",
+      "file": "templates/webhook-site.json"
     }
   ]
 }

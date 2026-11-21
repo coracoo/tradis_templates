@@ -1,0 +1,782 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 261,
+  "sort_order": 77,
+  "name": "webhook-site",
+  "category": "工具",
+  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    laravel-echo-server:\n        environment:\n            - LARAVEL_ECHO_SERVER_AUTH_HOST=http://webhook\n            - LARAVEL_ECHO_SERVER_HOST=0.0.0.0\n            - LARAVEL_ECHO_SERVER_PORT=6001\n            - ECHO_REDIS_PORT=6379\n            - ECHO_REDIS_HOSTNAME=redis\n            - ECHO_PROTOCOL=http\n            - ECHO_ALLOW_CORS=true\n            - ECHO_ALLOW_ORIGIN=*\n            - ECHO_ALLOW_METHODS=*\n            - ECHO_ALLOW_HEADERS=*\n        image: webhooksite/laravel-echo-server\n        restart: unless-stopped\n    redis:\n        image: redis:alpine\n        restart: unless-stopped\n    webhook:\n        command: php artisan queue:work --daemon --tries=3 --timeout=10\n        depends_on:\n            - redis\n        environment:\n            - APP_ENV=dev\n            - APP_DEBUG=true\n            - APP_URL=http://localhost:8084\n            - APP_LOG=errorlog\n            - DB_CONNECTION=sqlite\n            - REDIS_HOST=redis\n            - BROADCAST_DRIVER=redis\n            - CACHE_DRIVER=redis\n            - QUEUE_DRIVER=redis\n            - ECHO_HOST_MODE=path\n        expose:\n            - 80\n        image: webhooksite/webhook.site\n        ports:\n            - 8084:80\n        restart: unless-stopped\n",
+  "input_metadata": {
+    "port:webhook:80/tcp": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:ECHO_ALLOW_CORS": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:ECHO_ALLOW_HEADERS": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:ECHO_ALLOW_METHODS": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:ECHO_ALLOW_ORIGIN": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:ECHO_PROTOCOL": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:ECHO_REDIS_HOSTNAME": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:ECHO_REDIS_PORT": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:LARAVEL_ECHO_SERVER_AUTH_HOST": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:LARAVEL_ECHO_SERVER_HOST": {
+      "group": "basic"
+    },
+    "service:laravel-echo-server:LARAVEL_ECHO_SERVER_PORT": {
+      "group": "basic"
+    },
+    "service:webhook:APP_DEBUG": {
+      "group": "basic"
+    },
+    "service:webhook:APP_ENV": {
+      "group": "basic"
+    },
+    "service:webhook:APP_LOG": {
+      "group": "basic"
+    },
+    "service:webhook:APP_URL": {
+      "group": "basic"
+    },
+    "service:webhook:BROADCAST_DRIVER": {
+      "group": "basic"
+    },
+    "service:webhook:CACHE_DRIVER": {
+      "group": "basic"
+    },
+    "service:webhook:DB_CONNECTION": {
+      "group": "basic"
+    },
+    "service:webhook:ECHO_HOST_MODE": {
+      "group": "basic"
+    },
+    "service:webhook:QUEUE_DRIVER": {
+      "group": "basic"
+    },
+    "service:webhook:REDIS_HOST": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:6b03d53a30aa68de58a59d36f328fec7aebfdb24ec283bfe16ed935dba171839",
+    "manifest_digest": "sha256:6f5a1a7acd08cc02592061bddf895009bb23881c226dcfdee723a6e9d6374095",
+    "services": [
+      "laravel-echo-server",
+      "redis",
+      "webhook"
+    ],
+    "inputs": [
+      {
+        "id": "port:webhook:80/tcp",
+        "key": "8084",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8084",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:ECHO_ALLOW_CORS",
+        "key": "ECHO_ALLOW_CORS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:ECHO_ALLOW_HEADERS",
+        "key": "ECHO_ALLOW_HEADERS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "*",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:ECHO_ALLOW_METHODS",
+        "key": "ECHO_ALLOW_METHODS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "*",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:ECHO_ALLOW_ORIGIN",
+        "key": "ECHO_ALLOW_ORIGIN",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "*",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:ECHO_PROTOCOL",
+        "key": "ECHO_PROTOCOL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:ECHO_REDIS_HOSTNAME",
+        "key": "ECHO_REDIS_HOSTNAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:ECHO_REDIS_PORT",
+        "key": "ECHO_REDIS_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "6379",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_AUTH_HOST",
+        "key": "LARAVEL_ECHO_SERVER_AUTH_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://webhook",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_HOST",
+        "key": "LARAVEL_ECHO_SERVER_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "0.0.0.0",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_PORT",
+        "key": "LARAVEL_ECHO_SERVER_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "6001",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:APP_DEBUG",
+        "key": "APP_DEBUG",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "true",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:APP_ENV",
+        "key": "APP_ENV",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "dev",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:APP_LOG",
+        "key": "APP_LOG",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "errorlog",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:APP_URL",
+        "key": "APP_URL",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "http://localhost:8084",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:BROADCAST_DRIVER",
+        "key": "BROADCAST_DRIVER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:CACHE_DRIVER",
+        "key": "CACHE_DRIVER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:DB_CONNECTION",
+        "key": "DB_CONNECTION",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "sqlite",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:ECHO_HOST_MODE",
+        "key": "ECHO_HOST_MODE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "path",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:QUEUE_DRIVER",
+        "key": "QUEUE_DRIVER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:webhook:REDIS_HOST",
+        "key": "REDIS_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "redis",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:laravel-echo-server:ECHO_ALLOW_CORS",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "ECHO_ALLOW_CORS",
+        "yaml_path": "services.laravel-echo-server.environment[6]",
+        "line": 10,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:ECHO_ALLOW_HEADERS",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "ECHO_ALLOW_HEADERS",
+        "yaml_path": "services.laravel-echo-server.environment[9]",
+        "line": 13,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:ECHO_ALLOW_METHODS",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "ECHO_ALLOW_METHODS",
+        "yaml_path": "services.laravel-echo-server.environment[8]",
+        "line": 12,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:ECHO_ALLOW_ORIGIN",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "ECHO_ALLOW_ORIGIN",
+        "yaml_path": "services.laravel-echo-server.environment[7]",
+        "line": 11,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:ECHO_PROTOCOL",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "ECHO_PROTOCOL",
+        "yaml_path": "services.laravel-echo-server.environment[5]",
+        "line": 9,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:ECHO_REDIS_HOSTNAME",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "ECHO_REDIS_HOSTNAME",
+        "yaml_path": "services.laravel-echo-server.environment[4]",
+        "line": 8,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:ECHO_REDIS_PORT",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "ECHO_REDIS_PORT",
+        "yaml_path": "services.laravel-echo-server.environment[3]",
+        "line": 7,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_AUTH_HOST",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "LARAVEL_ECHO_SERVER_AUTH_HOST",
+        "yaml_path": "services.laravel-echo-server.environment[0]",
+        "line": 4,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_HOST",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "LARAVEL_ECHO_SERVER_HOST",
+        "yaml_path": "services.laravel-echo-server.environment[1]",
+        "line": 5,
+        "column": 15
+      },
+      {
+        "input_id": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_PORT",
+        "service": "laravel-echo-server",
+        "target_kind": "environment",
+        "target_key": "LARAVEL_ECHO_SERVER_PORT",
+        "yaml_path": "services.laravel-echo-server.environment[2]",
+        "line": 6,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:APP_DEBUG",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "APP_DEBUG",
+        "yaml_path": "services.webhook.environment[1]",
+        "line": 25,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:APP_ENV",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "APP_ENV",
+        "yaml_path": "services.webhook.environment[0]",
+        "line": 24,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:APP_LOG",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "APP_LOG",
+        "yaml_path": "services.webhook.environment[3]",
+        "line": 27,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:APP_URL",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "APP_URL",
+        "yaml_path": "services.webhook.environment[2]",
+        "line": 26,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:BROADCAST_DRIVER",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "BROADCAST_DRIVER",
+        "yaml_path": "services.webhook.environment[6]",
+        "line": 30,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:CACHE_DRIVER",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "CACHE_DRIVER",
+        "yaml_path": "services.webhook.environment[7]",
+        "line": 31,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:DB_CONNECTION",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "DB_CONNECTION",
+        "yaml_path": "services.webhook.environment[4]",
+        "line": 28,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:ECHO_HOST_MODE",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "ECHO_HOST_MODE",
+        "yaml_path": "services.webhook.environment[9]",
+        "line": 33,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:QUEUE_DRIVER",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "QUEUE_DRIVER",
+        "yaml_path": "services.webhook.environment[8]",
+        "line": 32,
+        "column": 15
+      },
+      {
+        "input_id": "service:webhook:REDIS_HOST",
+        "service": "webhook",
+        "target_kind": "environment",
+        "target_key": "REDIS_HOST",
+        "yaml_path": "services.webhook.environment[5]",
+        "line": 29,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:webhook:80/tcp",
+        "kind": "port",
+        "service": "webhook",
+        "source": "8084",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.webhook.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:6b03d53a30aa68de58a59d36f328fec7aebfdb24ec283bfe16ed935dba171839",
+  "manifest_digest": "sha256:6f5a1a7acd08cc02592061bddf895009bb23881c226dcfdee723a6e9d6374095",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:webhook:80/tcp",
+      "name": "8084",
+      "label": "8084",
+      "description": "",
+      "type": "port",
+      "default": "8084",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:laravel-echo-server:ECHO_ALLOW_CORS",
+      "name": "ECHO_ALLOW_CORS",
+      "label": "ECHO_ALLOW_CORS",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:ECHO_ALLOW_HEADERS",
+      "name": "ECHO_ALLOW_HEADERS",
+      "label": "ECHO_ALLOW_HEADERS",
+      "description": "",
+      "type": "string",
+      "default": "*",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:ECHO_ALLOW_METHODS",
+      "name": "ECHO_ALLOW_METHODS",
+      "label": "ECHO_ALLOW_METHODS",
+      "description": "",
+      "type": "string",
+      "default": "*",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:ECHO_ALLOW_ORIGIN",
+      "name": "ECHO_ALLOW_ORIGIN",
+      "label": "ECHO_ALLOW_ORIGIN",
+      "description": "",
+      "type": "string",
+      "default": "*",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:ECHO_PROTOCOL",
+      "name": "ECHO_PROTOCOL",
+      "label": "ECHO_PROTOCOL",
+      "description": "",
+      "type": "string",
+      "default": "http",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:ECHO_REDIS_HOSTNAME",
+      "name": "ECHO_REDIS_HOSTNAME",
+      "label": "ECHO_REDIS_HOSTNAME",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:ECHO_REDIS_PORT",
+      "name": "ECHO_REDIS_PORT",
+      "label": "ECHO_REDIS_PORT",
+      "description": "",
+      "type": "string",
+      "default": "6379",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_AUTH_HOST",
+      "name": "LARAVEL_ECHO_SERVER_AUTH_HOST",
+      "label": "LARAVEL_ECHO_SERVER_AUTH_HOST",
+      "description": "",
+      "type": "string",
+      "default": "http://webhook",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_HOST",
+      "name": "LARAVEL_ECHO_SERVER_HOST",
+      "label": "LARAVEL_ECHO_SERVER_HOST",
+      "description": "",
+      "type": "string",
+      "default": "0.0.0.0",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:laravel-echo-server:LARAVEL_ECHO_SERVER_PORT",
+      "name": "LARAVEL_ECHO_SERVER_PORT",
+      "label": "LARAVEL_ECHO_SERVER_PORT",
+      "description": "",
+      "type": "string",
+      "default": "6001",
+      "category": "basic",
+      "serviceName": "laravel-echo-server",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:APP_DEBUG",
+      "name": "APP_DEBUG",
+      "label": "APP_DEBUG",
+      "description": "",
+      "type": "string",
+      "default": "true",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:APP_ENV",
+      "name": "APP_ENV",
+      "label": "APP_ENV",
+      "description": "",
+      "type": "string",
+      "default": "dev",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:APP_LOG",
+      "name": "APP_LOG",
+      "label": "APP_LOG",
+      "description": "",
+      "type": "string",
+      "default": "errorlog",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:APP_URL",
+      "name": "APP_URL",
+      "label": "APP_URL",
+      "description": "",
+      "type": "string",
+      "default": "http://localhost:8084",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:BROADCAST_DRIVER",
+      "name": "BROADCAST_DRIVER",
+      "label": "BROADCAST_DRIVER",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:CACHE_DRIVER",
+      "name": "CACHE_DRIVER",
+      "label": "CACHE_DRIVER",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:DB_CONNECTION",
+      "name": "DB_CONNECTION",
+      "label": "DB_CONNECTION",
+      "description": "",
+      "type": "string",
+      "default": "sqlite",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:ECHO_HOST_MODE",
+      "name": "ECHO_HOST_MODE",
+      "label": "ECHO_HOST_MODE",
+      "description": "",
+      "type": "string",
+      "default": "path",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:QUEUE_DRIVER",
+      "name": "QUEUE_DRIVER",
+      "label": "QUEUE_DRIVER",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:webhook:REDIS_HOST",
+      "name": "REDIS_HOST",
+      "label": "REDIS_HOST",
+      "description": "",
+      "type": "string",
+      "default": "redis",
+      "category": "basic",
+      "serviceName": "webhook",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
