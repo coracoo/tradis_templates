@@ -1,0 +1,113 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 256,
+  "sort_order": 72,
+  "name": "network-multitool",
+  "category": "工具",
+  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    network-multitool:\n        environment:\n            - HTTP_PORT=9988\n            - HTTPS_PORT=9989\n        image: wbitt/network-multitool:alpine-extra\n        restart: unless-stopped\n",
+  "input_metadata": {
+    "service:network-multitool:HTTPS_PORT": {
+      "group": "basic"
+    },
+    "service:network-multitool:HTTP_PORT": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:f4b67256e2ddc2b8b284dc3bca9cef3bc5cffec4c6316fe2febb3f1069bf8889",
+    "manifest_digest": "sha256:1da67e33fd867f30fafb3968c331f8d35c5ae22d116b6086d4003a203696a34c",
+    "services": [
+      "network-multitool"
+    ],
+    "inputs": [
+      {
+        "id": "service:network-multitool:HTTPS_PORT",
+        "key": "HTTPS_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "9989",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:network-multitool:HTTP_PORT",
+        "key": "HTTP_PORT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "9988",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:network-multitool:HTTPS_PORT",
+        "service": "network-multitool",
+        "target_kind": "environment",
+        "target_key": "HTTPS_PORT",
+        "yaml_path": "services.network-multitool.environment[1]",
+        "line": 5,
+        "column": 15
+      },
+      {
+        "input_id": "service:network-multitool:HTTP_PORT",
+        "service": "network-multitool",
+        "target_kind": "environment",
+        "target_key": "HTTP_PORT",
+        "yaml_path": "services.network-multitool.environment[0]",
+        "line": 4,
+        "column": 15
+      }
+    ],
+    "mappings": [],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:f4b67256e2ddc2b8b284dc3bca9cef3bc5cffec4c6316fe2febb3f1069bf8889",
+  "manifest_digest": "sha256:1da67e33fd867f30fafb3968c331f8d35c5ae22d116b6086d4003a203696a34c",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "service:network-multitool:HTTPS_PORT",
+      "name": "HTTPS_PORT",
+      "label": "HTTPS_PORT",
+      "description": "",
+      "type": "string",
+      "default": "9989",
+      "category": "basic",
+      "serviceName": "network-multitool",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:network-multitool:HTTP_PORT",
+      "name": "HTTP_PORT",
+      "label": "HTTP_PORT",
+      "description": "",
+      "type": "string",
+      "default": "9988",
+      "category": "basic",
+      "serviceName": "network-multitool",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
