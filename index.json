@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 00:14:25，更新项目4个",
-  "templates_note": "累计项目67个",
-  "generated_at": "2026-11-22T00:14:25+08:00",
+  "note": "2026-11-22 03:32:28，更新项目1个",
+  "templates_note": "累计项目68个",
+  "generated_at": "2026-11-22T03:32:28+08:00",
   "templates": [
     {
       "id": 1,
@@ -826,6 +826,21 @@
       "website": "https://github.com/cropflre/nowen-reader",
       "content_hash": "sha256:80fc198ba599b65d2b45ca2912fa91116b8dbf2ffd3503c94e0a6b7f7a866696",
       "file": "templates/nowen_reader.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 252,
+      "sort_order": 68,
+      "name": "chevereto",
+      "category": "工具",
+      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "content_hash": "sha256:f03c0af649a03f9f52eca818380f529647385b900c61918ff948c6935bc319be",
+      "file": "templates/chevereto.json"
     }
   ]
 }
