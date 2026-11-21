@@ -1,0 +1,108 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 270,
+  "sort_order": 86,
+  "name": "qwenpaw",
+  "category": "🤖 AI",
+  "description": "Release",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/agentscope-ai/QwenPaw",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    qwenpaw:\n        image: agentscope/qwenpaw:latest\n        init: true\n        ports:\n            - 127.0.0.1:8088:8088\n        restart: always\n        volumes:\n            - source: qwenpaw-data\n              target: /app/working\n              type: volume\n            - source: qwenpaw-secrets\n              target: /app/working.secret\n              type: volume\n            - source: qwenpaw-backups\n              target: /app/working.backups\n              type: volume\nvolumes:\n    qwenpaw-backups: {}\n    qwenpaw-data: {}\n    qwenpaw-secrets: {}\n",
+  "input_metadata": {
+    "port:qwenpaw:8088/tcp": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:4c0af56298bf8c447c001c7cf8f8b4f7e4e4260c37e7f5d58a982255d5d24f7f",
+    "manifest_digest": "sha256:e2bb8748eecc8afe60aa6995faee2804040b91710d70d551656cbd60897007b0",
+    "services": [
+      "qwenpaw"
+    ],
+    "inputs": [
+      {
+        "id": "port:qwenpaw:8088/tcp",
+        "key": "8088",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "8088",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "port:qwenpaw:8088/tcp",
+        "kind": "port",
+        "service": "qwenpaw",
+        "source": "8088",
+        "target": "8088",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.qwenpaw.ports[0]"
+      },
+      {
+        "id": "volume:qwenpaw:/app/working",
+        "kind": "volume",
+        "service": "qwenpaw",
+        "source": "qwenpaw-data",
+        "target": "/app/working",
+        "editable": false,
+        "yaml_path": "services.qwenpaw.volumes[0]"
+      },
+      {
+        "id": "volume:qwenpaw:/app/working.backups",
+        "kind": "volume",
+        "service": "qwenpaw",
+        "source": "qwenpaw-backups",
+        "target": "/app/working.backups",
+        "editable": false,
+        "yaml_path": "services.qwenpaw.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "volume:qwenpaw:/app/working.secret",
+        "kind": "volume",
+        "service": "qwenpaw",
+        "source": "qwenpaw-secrets",
+        "target": "/app/working.secret",
+        "editable": false,
+        "yaml_path": "services.qwenpaw.volumes[1]",
+        "sequence_index": 1
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:4c0af56298bf8c447c001c7cf8f8b4f7e4e4260c37e7f5d58a982255d5d24f7f",
+  "manifest_digest": "sha256:e2bb8748eecc8afe60aa6995faee2804040b91710d70d551656cbd60897007b0",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:qwenpaw:8088/tcp",
+      "name": "8088",
+      "label": "8088",
+      "description": "",
+      "type": "port",
+      "default": "8088",
+      "category": "basic",
+      "serviceName": "qwenpaw",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

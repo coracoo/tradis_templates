@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 07:26:48，更新项目1个",
-  "templates_note": "累计项目85个",
-  "generated_at": "2026-11-22T07:26:48+08:00",
+  "note": "2026-11-22 07:42:21，更新项目1个",
+  "templates_note": "累计项目86个",
+  "generated_at": "2026-11-22T07:42:21+08:00",
   "templates": [
     {
       "id": 1,
@@ -1096,6 +1096,21 @@
       "website": "https://github.com/louislam/uptime-kuma",
       "content_hash": "sha256:e112295f52278038d45dd5e109306891bce86eb1606b57f190a26627590da5ad",
       "file": "templates/manual-test-radius-tls.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 270,
+      "sort_order": 86,
+      "name": "qwenpaw",
+      "category": "🤖 AI",
+      "description": "Release",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/agentscope-ai/QwenPaw",
+      "content_hash": "sha256:ab2778f3a69d276a5914966823b94b809306b381ae39ac21e7fee2748661d65b",
+      "file": "templates/qwenpaw.json"
     }
   ]
 }
