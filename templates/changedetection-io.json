@@ -1,0 +1,88 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 262,
+  "sort_order": 78,
+  "name": "changedetection-io",
+  "category": "工具",
+  "description": "A collection of sample docker compose files for self-hosted applications.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/carteakey/server-compose",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    changedetection:\n        hostname: changedetection\n        image: ghcr.io/dgtlmoon/changedetection.io\n        ports:\n            - 127.0.0.1:5000:5000\n        restart: unless-stopped\n        volumes:\n            - source: changedetection-data\n              target: /datastore\n              type: volume\nvolumes:\n    changedetection-data: null\n",
+  "input_metadata": {
+    "port:changedetection:5000/tcp": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:4a4bbb68308f3917a31a10c5ae9fefe026602c2a911af16e68b118c7fb0e4efd",
+    "manifest_digest": "sha256:9b6b8de6b03f85c4026c214e6112748de04db86697e63abbc93d058cbd474568",
+    "services": [
+      "changedetection"
+    ],
+    "inputs": [
+      {
+        "id": "port:changedetection:5000/tcp",
+        "key": "5000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [],
+    "mappings": [
+      {
+        "id": "port:changedetection:5000/tcp",
+        "kind": "port",
+        "service": "changedetection",
+        "source": "5000",
+        "target": "5000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.changedetection.ports[0]"
+      },
+      {
+        "id": "volume:changedetection:/datastore",
+        "kind": "volume",
+        "service": "changedetection",
+        "source": "changedetection-data",
+        "target": "/datastore",
+        "editable": false,
+        "yaml_path": "services.changedetection.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:4a4bbb68308f3917a31a10c5ae9fefe026602c2a911af16e68b118c7fb0e4efd",
+  "manifest_digest": "sha256:9b6b8de6b03f85c4026c214e6112748de04db86697e63abbc93d058cbd474568",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:changedetection:5000/tcp",
+      "name": "5000",
+      "label": "5000",
+      "description": "",
+      "type": "port",
+      "default": "5000",
+      "category": "basic",
+      "serviceName": "changedetection",
+      "paramType": "port"
+    }
+  ],
+  "enabled": true
+}

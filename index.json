@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 05:42:45，更新项目1个",
-  "templates_note": "累计项目77个",
-  "generated_at": "2026-11-22T05:42:45+08:00",
+  "note": "2026-11-22 05:58:00，更新项目1个",
+  "templates_note": "累计项目78个",
+  "generated_at": "2026-11-22T05:58:00+08:00",
   "templates": [
     {
       "id": 1,
@@ -976,6 +976,21 @@
       "website": "https://github.com/Haxxnet/Compose-Examples",
       "content_hash": "sha256:9af08180b64f595e82bf95c889d0c8da786e9026f13079a0a6561b1a9e12c66f",
       "file": "templates/webhook-site.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 262,
+      "sort_order": 78,
+      "name": "changedetection-io",
+      "category": "工具",
+      "description": "A collection of sample docker compose files for self-hosted applications.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/carteakey/server-compose",
+      "content_hash": "sha256:2d6342b7cc17edb5cc13d3d82507160206b817b9519bd29f40dd696f41fe37c9",
+      "file": "templates/changedetection-io.json"
     }
   ]
 }
