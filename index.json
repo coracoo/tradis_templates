@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 04:34:03，更新项目1个",
-  "templates_note": "累计项目72个",
-  "generated_at": "2026-11-22T04:34:03+08:00",
+  "note": "2026-11-22 04:58:58，更新项目1个",
+  "templates_note": "累计项目73个",
+  "generated_at": "2026-11-22T04:58:58+08:00",
   "templates": [
     {
       "id": 1,
@@ -901,6 +901,21 @@
       "website": "https://github.com/Haxxnet/Compose-Examples",
       "content_hash": "sha256:2adb017a16cac0cad80ab223a431780337a27e7d48e80c5d5bf58d3041384f76",
       "file": "templates/network-multitool.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 257,
+      "sort_order": 73,
+      "name": "pairdrop",
+      "category": "工具",
+      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "content_hash": "sha256:22c53ba58b00cce9344b0a8a27aebbfe2a3d2fd4eaf4632a94e4e134a888de15",
+      "file": "templates/pairdrop.json"
     }
   ]
 }

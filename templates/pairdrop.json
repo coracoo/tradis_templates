@@ -1,0 +1,255 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 257,
+  "sort_order": 73,
+  "name": "pairdrop",
+  "category": "工具",
+  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    pairdrop:\n        environment:\n            - PUID=1000\n            - PGID=1000\n            - TZ=Europe/Berlin\n            - RATE_LIMIT=false\n            - WS_FALLBACK=false\n        expose:\n            - 3000\n        hostname: pairdrop\n        image: linuxserver/pairdrop:latest\n        ports:\n            - 3215:3000\n        restart: unless-stopped\n",
+  "input_metadata": {
+    "port:pairdrop:3000/tcp": {
+      "group": "basic"
+    },
+    "service:pairdrop:PGID": {
+      "group": "basic"
+    },
+    "service:pairdrop:PUID": {
+      "group": "basic"
+    },
+    "service:pairdrop:RATE_LIMIT": {
+      "group": "basic"
+    },
+    "service:pairdrop:TZ": {
+      "group": "basic"
+    },
+    "service:pairdrop:WS_FALLBACK": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:2a8a6d2e73743b7c51a4aaeb6d363f8b639b74098eea56b686ccbbfc82e2ddc1",
+    "manifest_digest": "sha256:b509135f3486ca2af306219b63958b4f282f923236fff52d1726c7e478d97765",
+    "services": [
+      "pairdrop"
+    ],
+    "inputs": [
+      {
+        "id": "port:pairdrop:3000/tcp",
+        "key": "3215",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "3215",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pairdrop:PGID",
+        "key": "PGID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pairdrop:PUID",
+        "key": "PUID",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "1000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pairdrop:RATE_LIMIT",
+        "key": "RATE_LIMIT",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pairdrop:TZ",
+        "key": "TZ",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "Europe/Berlin",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:pairdrop:WS_FALLBACK",
+        "key": "WS_FALLBACK",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "false",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:pairdrop:PGID",
+        "service": "pairdrop",
+        "target_kind": "environment",
+        "target_key": "PGID",
+        "yaml_path": "services.pairdrop.environment[1]",
+        "line": 5,
+        "column": 15
+      },
+      {
+        "input_id": "service:pairdrop:PUID",
+        "service": "pairdrop",
+        "target_kind": "environment",
+        "target_key": "PUID",
+        "yaml_path": "services.pairdrop.environment[0]",
+        "line": 4,
+        "column": 15
+      },
+      {
+        "input_id": "service:pairdrop:RATE_LIMIT",
+        "service": "pairdrop",
+        "target_kind": "environment",
+        "target_key": "RATE_LIMIT",
+        "yaml_path": "services.pairdrop.environment[3]",
+        "line": 7,
+        "column": 15
+      },
+      {
+        "input_id": "service:pairdrop:TZ",
+        "service": "pairdrop",
+        "target_kind": "environment",
+        "target_key": "TZ",
+        "yaml_path": "services.pairdrop.environment[2]",
+        "line": 6,
+        "column": 15
+      },
+      {
+        "input_id": "service:pairdrop:WS_FALLBACK",
+        "service": "pairdrop",
+        "target_kind": "environment",
+        "target_key": "WS_FALLBACK",
+        "yaml_path": "services.pairdrop.environment[4]",
+        "line": 8,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:pairdrop:3000/tcp",
+        "kind": "port",
+        "service": "pairdrop",
+        "source": "3215",
+        "target": "3000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.pairdrop.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:2a8a6d2e73743b7c51a4aaeb6d363f8b639b74098eea56b686ccbbfc82e2ddc1",
+  "manifest_digest": "sha256:b509135f3486ca2af306219b63958b4f282f923236fff52d1726c7e478d97765",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:pairdrop:3000/tcp",
+      "name": "3215",
+      "label": "3215",
+      "description": "",
+      "type": "port",
+      "default": "3215",
+      "category": "basic",
+      "serviceName": "pairdrop",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:pairdrop:PGID",
+      "name": "PGID",
+      "label": "PGID",
+      "description": "",
+      "type": "string",
+      "default": "1000",
+      "category": "basic",
+      "serviceName": "pairdrop",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pairdrop:PUID",
+      "name": "PUID",
+      "label": "PUID",
+      "description": "",
+      "type": "string",
+      "default": "1000",
+      "category": "basic",
+      "serviceName": "pairdrop",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pairdrop:RATE_LIMIT",
+      "name": "RATE_LIMIT",
+      "label": "RATE_LIMIT",
+      "description": "",
+      "type": "string",
+      "default": "false",
+      "category": "basic",
+      "serviceName": "pairdrop",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pairdrop:TZ",
+      "name": "TZ",
+      "label": "TZ",
+      "description": "",
+      "type": "string",
+      "default": "Europe/Berlin",
+      "category": "basic",
+      "serviceName": "pairdrop",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:pairdrop:WS_FALLBACK",
+      "name": "WS_FALLBACK",
+      "label": "WS_FALLBACK",
+      "description": "",
+      "type": "string",
+      "default": "false",
+      "category": "basic",
+      "serviceName": "pairdrop",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}
