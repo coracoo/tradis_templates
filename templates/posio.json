@@ -1,0 +1,150 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 258,
+  "sort_order": 74,
+  "name": "posio",
+  "category": "工具",
+  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    posio:\n        environment:\n            - POSIO_SETTINGS=/app/posio/config.py\n            - FLASK_APP=/app/posio/game_master.py\n        expose:\n            - 5000/tcp\n        image: l4rm4nd/posio:latest\n        ports:\n            - 5000:5000/tcp\n        restart: unless-stopped\n",
+  "input_metadata": {
+    "port:posio:5000/tcp": {
+      "group": "basic"
+    },
+    "service:posio:FLASK_APP": {
+      "group": "basic"
+    },
+    "service:posio:POSIO_SETTINGS": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:a3e6697384715baa2ead51930181d9cd2da7dbe0a0b1a55ffe7805df496051b8",
+    "manifest_digest": "sha256:07123839e66a74ae03c3dce3ab9f772aad19a7903b493b99e3bb9f54c57ccd6a",
+    "services": [
+      "posio"
+    ],
+    "inputs": [
+      {
+        "id": "port:posio:5000/tcp",
+        "key": "5000",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "5000",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:posio:FLASK_APP",
+        "key": "FLASK_APP",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/posio/game_master.py",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:posio:POSIO_SETTINGS",
+        "key": "POSIO_SETTINGS",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "/app/posio/config.py",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:posio:FLASK_APP",
+        "service": "posio",
+        "target_kind": "environment",
+        "target_key": "FLASK_APP",
+        "yaml_path": "services.posio.environment[1]",
+        "line": 5,
+        "column": 15
+      },
+      {
+        "input_id": "service:posio:POSIO_SETTINGS",
+        "service": "posio",
+        "target_kind": "environment",
+        "target_key": "POSIO_SETTINGS",
+        "yaml_path": "services.posio.environment[0]",
+        "line": 4,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:posio:5000/tcp",
+        "kind": "port",
+        "service": "posio",
+        "source": "5000",
+        "target": "5000",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.posio.ports[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:a3e6697384715baa2ead51930181d9cd2da7dbe0a0b1a55ffe7805df496051b8",
+  "manifest_digest": "sha256:07123839e66a74ae03c3dce3ab9f772aad19a7903b493b99e3bb9f54c57ccd6a",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:posio:5000/tcp",
+      "name": "5000",
+      "label": "5000",
+      "description": "",
+      "type": "port",
+      "default": "5000",
+      "category": "basic",
+      "serviceName": "posio",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:posio:FLASK_APP",
+      "name": "FLASK_APP",
+      "label": "FLASK_APP",
+      "description": "",
+      "type": "string",
+      "default": "/app/posio/game_master.py",
+      "category": "basic",
+      "serviceName": "posio",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:posio:POSIO_SETTINGS",
+      "name": "POSIO_SETTINGS",
+      "label": "POSIO_SETTINGS",
+      "description": "",
+      "type": "string",
+      "default": "/app/posio/config.py",
+      "category": "basic",
+      "serviceName": "posio",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

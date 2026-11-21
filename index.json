@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 04:58:58，更新项目1个",
-  "templates_note": "累计项目73个",
-  "generated_at": "2026-11-22T04:58:58+08:00",
+  "note": "2026-11-22 05:10:19，更新项目1个",
+  "templates_note": "累计项目74个",
+  "generated_at": "2026-11-22T05:10:19+08:00",
   "templates": [
     {
       "id": 1,
@@ -916,6 +916,21 @@
       "website": "https://github.com/Haxxnet/Compose-Examples",
       "content_hash": "sha256:22c53ba58b00cce9344b0a8a27aebbfe2a3d2fd4eaf4632a94e4e134a888de15",
       "file": "templates/pairdrop.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 258,
+      "sort_order": 74,
+      "name": "posio",
+      "category": "工具",
+      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "content_hash": "sha256:e86b7e0160f81679894a0fa6b532de051762bcc2d8f802f8dc1661bf41d107af",
+      "file": "templates/posio.json"
     }
   ]
 }
