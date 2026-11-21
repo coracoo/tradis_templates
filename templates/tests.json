@@ -1,0 +1,38 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 266,
+  "sort_order": 82,
+  "name": "tests",
+  "category": "Stack Architecture",
+  "description": "Identity provider with SSO, LDAP, SAML, and OIDC support.",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/goauthentik/authentik",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    traefik:\n        image: docker.io/library/traefik:v3.7\n",
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:097c84919d59fa86cea2dcfa8743444dcefe8df6a49809c4ec3fcf392bda88cc",
+    "manifest_digest": "sha256:6aa917853f75dc065b8930a22d245962585428984199712877de445bb3e20c35",
+    "services": [
+      "traefik"
+    ],
+    "inputs": [],
+    "bindings": [],
+    "mappings": [],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:097c84919d59fa86cea2dcfa8743444dcefe8df6a49809c4ec3fcf392bda88cc",
+  "manifest_digest": "sha256:6aa917853f75dc065b8930a22d245962585428984199712877de445bb3e20c35",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [],
+  "enabled": true
+}
