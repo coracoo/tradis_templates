@@ -1,0 +1,370 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "id": 264,
+  "sort_order": 80,
+  "name": "wordpress-mysql",
+  "category": "工具",
+  "description": "Awesome Docker Compose samples",
+  "version": "",
+  "logo": "",
+  "website": "https://github.com/docker/awesome-compose",
+  "tutorial": "",
+  "dotenv": "",
+  "compose": "services:\n    db:\n        command: --default-authentication-plugin=mysql_native_password\n        environment:\n            - MYSQL_ROOT_PASSWORD=somewordpress\n            - MYSQL_DATABASE=wordpress\n            - MYSQL_USER=wordpress\n            - MYSQL_PASSWORD=wordpress\n        expose:\n            - 3306\n            - 33060\n        image: mariadb:10.6.4-focal\n        restart: always\n        volumes:\n            - source: db_data\n              target: /var/lib/mysql\n              type: volume\n    wordpress:\n        environment:\n            - WORDPRESS_DB_HOST=db\n            - WORDPRESS_DB_USER=wordpress\n            - WORDPRESS_DB_PASSWORD=wordpress\n            - WORDPRESS_DB_NAME=wordpress\n        image: wordpress:latest\n        ports:\n            - 80:80\n        restart: always\nvolumes:\n    db_data: null\n",
+  "input_metadata": {
+    "port:wordpress:80/tcp": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_DATABASE": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_PASSWORD": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_ROOT_PASSWORD": {
+      "group": "basic"
+    },
+    "service:db:MYSQL_USER": {
+      "group": "basic"
+    },
+    "service:wordpress:WORDPRESS_DB_HOST": {
+      "group": "basic"
+    },
+    "service:wordpress:WORDPRESS_DB_NAME": {
+      "group": "basic"
+    },
+    "service:wordpress:WORDPRESS_DB_PASSWORD": {
+      "group": "basic"
+    },
+    "service:wordpress:WORDPRESS_DB_USER": {
+      "group": "basic"
+    }
+  },
+  "manifest": {
+    "manifest_version": 1,
+    "compiler_version": "1.0.2",
+    "source_digest": "sha256:daa15635490ad4c1768130e09eb2d768e974c07add7ac653427d7b76e2652990",
+    "manifest_digest": "sha256:99095f4c951bf9a32237a1148471131c65a5ec4114d72988ab22696dd7424d8a",
+    "services": [
+      "db",
+      "wordpress"
+    ],
+    "inputs": [
+      {
+        "id": "port:wordpress:80/tcp",
+        "key": "80",
+        "kind": "port",
+        "scope": "service",
+        "default_value": "80",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_DATABASE",
+        "key": "MYSQL_DATABASE",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "wordpress",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_PASSWORD",
+        "key": "MYSQL_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "wordpress",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_ROOT_PASSWORD",
+        "key": "MYSQL_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "somewordpress",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:db:MYSQL_USER",
+        "key": "MYSQL_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "wordpress",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:wordpress:WORDPRESS_DB_HOST",
+        "key": "WORDPRESS_DB_HOST",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "db",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:wordpress:WORDPRESS_DB_NAME",
+        "key": "WORDPRESS_DB_NAME",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "wordpress",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:wordpress:WORDPRESS_DB_PASSWORD",
+        "key": "WORDPRESS_DB_PASSWORD",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "wordpress",
+        "required": false,
+        "sensitive": true,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "service:wordpress:WORDPRESS_DB_USER",
+        "key": "WORDPRESS_DB_USER",
+        "kind": "env",
+        "scope": "service",
+        "default_value": "wordpress",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      }
+    ],
+    "bindings": [
+      {
+        "input_id": "service:db:MYSQL_DATABASE",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_DATABASE",
+        "yaml_path": "services.db.environment[1]",
+        "line": 6,
+        "column": 15
+      },
+      {
+        "input_id": "service:db:MYSQL_PASSWORD",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_PASSWORD",
+        "yaml_path": "services.db.environment[3]",
+        "line": 8,
+        "column": 15
+      },
+      {
+        "input_id": "service:db:MYSQL_ROOT_PASSWORD",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_ROOT_PASSWORD",
+        "yaml_path": "services.db.environment[0]",
+        "line": 5,
+        "column": 15
+      },
+      {
+        "input_id": "service:db:MYSQL_USER",
+        "service": "db",
+        "target_kind": "environment",
+        "target_key": "MYSQL_USER",
+        "yaml_path": "services.db.environment[2]",
+        "line": 7,
+        "column": 15
+      },
+      {
+        "input_id": "service:wordpress:WORDPRESS_DB_HOST",
+        "service": "wordpress",
+        "target_kind": "environment",
+        "target_key": "WORDPRESS_DB_HOST",
+        "yaml_path": "services.wordpress.environment[0]",
+        "line": 20,
+        "column": 15
+      },
+      {
+        "input_id": "service:wordpress:WORDPRESS_DB_NAME",
+        "service": "wordpress",
+        "target_kind": "environment",
+        "target_key": "WORDPRESS_DB_NAME",
+        "yaml_path": "services.wordpress.environment[3]",
+        "line": 23,
+        "column": 15
+      },
+      {
+        "input_id": "service:wordpress:WORDPRESS_DB_PASSWORD",
+        "service": "wordpress",
+        "target_kind": "environment",
+        "target_key": "WORDPRESS_DB_PASSWORD",
+        "yaml_path": "services.wordpress.environment[2]",
+        "line": 22,
+        "column": 15
+      },
+      {
+        "input_id": "service:wordpress:WORDPRESS_DB_USER",
+        "service": "wordpress",
+        "target_kind": "environment",
+        "target_key": "WORDPRESS_DB_USER",
+        "yaml_path": "services.wordpress.environment[1]",
+        "line": 21,
+        "column": 15
+      }
+    ],
+    "mappings": [
+      {
+        "id": "port:wordpress:80/tcp",
+        "kind": "port",
+        "service": "wordpress",
+        "source": "80",
+        "target": "80",
+        "protocol": "tcp",
+        "editable": true,
+        "yaml_path": "services.wordpress.ports[0]"
+      },
+      {
+        "id": "volume:db:/var/lib/mysql",
+        "kind": "volume",
+        "service": "db",
+        "source": "db_data",
+        "target": "/var/lib/mysql",
+        "editable": false,
+        "yaml_path": "services.db.volumes[0]"
+      }
+    ],
+    "fixed_values": [],
+    "opaque_nodes": [],
+    "diagnostics": [],
+    "complete": true
+  },
+  "source_digest": "sha256:daa15635490ad4c1768130e09eb2d768e974c07add7ac653427d7b76e2652990",
+  "manifest_digest": "sha256:99095f4c951bf9a32237a1148471131c65a5ec4114d72988ab22696dd7424d8a",
+  "compiler_version": "1.0.2",
+  "screenshots": [],
+  "schema": [
+    {
+      "inputId": "port:wordpress:80/tcp",
+      "name": "80",
+      "label": "80",
+      "description": "",
+      "type": "port",
+      "default": "80",
+      "category": "basic",
+      "serviceName": "wordpress",
+      "paramType": "port"
+    },
+    {
+      "inputId": "service:db:MYSQL_DATABASE",
+      "name": "MYSQL_DATABASE",
+      "label": "MYSQL_DATABASE",
+      "description": "",
+      "type": "string",
+      "default": "wordpress",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_PASSWORD",
+      "name": "MYSQL_PASSWORD",
+      "label": "MYSQL_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "wordpress",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_ROOT_PASSWORD",
+      "name": "MYSQL_ROOT_PASSWORD",
+      "label": "MYSQL_ROOT_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "somewordpress",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:db:MYSQL_USER",
+      "name": "MYSQL_USER",
+      "label": "MYSQL_USER",
+      "description": "",
+      "type": "string",
+      "default": "wordpress",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:wordpress:WORDPRESS_DB_HOST",
+      "name": "WORDPRESS_DB_HOST",
+      "label": "WORDPRESS_DB_HOST",
+      "description": "",
+      "type": "string",
+      "default": "db",
+      "category": "basic",
+      "serviceName": "wordpress",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:wordpress:WORDPRESS_DB_NAME",
+      "name": "WORDPRESS_DB_NAME",
+      "label": "WORDPRESS_DB_NAME",
+      "description": "",
+      "type": "string",
+      "default": "wordpress",
+      "category": "basic",
+      "serviceName": "wordpress",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:wordpress:WORDPRESS_DB_PASSWORD",
+      "name": "WORDPRESS_DB_PASSWORD",
+      "label": "WORDPRESS_DB_PASSWORD",
+      "description": "",
+      "type": "password",
+      "default": "wordpress",
+      "category": "basic",
+      "serviceName": "wordpress",
+      "paramType": "env"
+    },
+    {
+      "inputId": "service:wordpress:WORDPRESS_DB_USER",
+      "name": "WORDPRESS_DB_USER",
+      "label": "WORDPRESS_DB_USER",
+      "description": "",
+      "type": "string",
+      "default": "wordpress",
+      "category": "basic",
+      "serviceName": "wordpress",
+      "paramType": "env"
+    }
+  ],
+  "enabled": true
+}

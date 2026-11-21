@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 06:19:51，更新项目1个",
-  "templates_note": "累计项目79个",
-  "generated_at": "2026-11-22T06:19:51+08:00",
+  "note": "2026-11-22 06:31:36，更新项目1个",
+  "templates_note": "累计项目80个",
+  "generated_at": "2026-11-22T06:31:36+08:00",
   "templates": [
     {
       "id": 1,
@@ -1006,6 +1006,21 @@
       "website": "https://github.com/docker/awesome-compose",
       "content_hash": "sha256:413acb13635ce95f747f1869db2adfd276d17849d213a73353cf26a7e014a67c",
       "file": "templates/nextcloud-redis-mariadb.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 264,
+      "sort_order": 80,
+      "name": "wordpress-mysql",
+      "category": "工具",
+      "description": "Awesome Docker Compose samples",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/docker/awesome-compose",
+      "content_hash": "sha256:71b1f18e8e7c90bd003e6a47a73cd03655d1eb2b13b78aeefb94714a9eb08251",
+      "file": "templates/wordpress-mysql.json"
     }
   ]
 }
