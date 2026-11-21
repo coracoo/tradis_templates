@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 03:32:28，更新项目1个",
-  "templates_note": "累计项目68个",
-  "generated_at": "2026-11-22T03:32:28+08:00",
+  "note": "2026-11-22 03:45:27，更新项目1个",
+  "templates_note": "累计项目69个",
+  "generated_at": "2026-11-22T03:45:27+08:00",
   "templates": [
     {
       "id": 1,
@@ -841,6 +841,21 @@
       "website": "https://github.com/Haxxnet/Compose-Examples",
       "content_hash": "sha256:f03c0af649a03f9f52eca818380f529647385b900c61918ff948c6935bc319be",
       "file": "templates/chevereto.json"
+    },
+    {
+      "architectures": [
+        "amd64"
+      ],
+      "id": 253,
+      "sort_order": 69,
+      "name": "cs2-dedicated-server",
+      "category": "工具",
+      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "version": "",
+      "logo": "",
+      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "content_hash": "sha256:9994fa9ca11f1a67b6111b9cdf3027c6e887db8b44f7ce52510f822ad94c1b52",
+      "file": "templates/cs2-dedicated-server.json"
     }
   ]
 }
