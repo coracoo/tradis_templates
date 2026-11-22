@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 268,
-  "sort_order": 84,
+  "sort_order": 83,
   "name": "local-npm",
   "category": "Stack Architecture",
   "description": "Multi-platform open source analytics and interactive visualization web application.",

@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 267,
-  "sort_order": 83,
+  "sort_order": 82,
   "name": "mariadb",
   "category": "Stack Architecture",
   "description": "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager.",

@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 07:48:54，更新项目1个",
-  "templates_note": "累计项目87个",
-  "generated_at": "2026-11-22T07:48:54+08:00",
+  "note": "2026-11-22 09:06:42，更新项目6个",
+  "templates_note": "累计项目86个",
+  "generated_at": "2026-11-22T09:06:42+08:00",
   "templates": [
     {
       "id": 1,
@@ -1041,23 +1041,8 @@
       "architectures": [
         "amd64"
       ],
-      "id": 266,
-      "sort_order": 82,
-      "name": "tests",
-      "category": "Stack Architecture",
-      "description": "Identity provider with SSO, LDAP, SAML, and OIDC support.",
-      "version": "",
-      "logo": "",
-      "website": "https://github.com/goauthentik/authentik",
-      "content_hash": "sha256:94b29cccfb78c13a4628ef67d29e0038512597eba893d145faf662f09c270696",
-      "file": "templates/tests.json"
-    },
-    {
-      "architectures": [
-        "amd64"
-      ],
       "id": 267,
-      "sort_order": 83,
+      "sort_order": 82,
       "name": "mariadb",
       "category": "Stack Architecture",
       "description": "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager.",
@@ -1072,7 +1057,7 @@
         "amd64"
       ],
       "id": 268,
-      "sort_order": 84,
+      "sort_order": 83,
       "name": "local-npm",
       "category": "Stack Architecture",
       "description": "Multi-platform open source analytics and interactive visualization web application.",
@@ -1087,7 +1072,7 @@
         "amd64"
       ],
       "id": 269,
-      "sort_order": 85,
+      "sort_order": 84,
       "name": "manual-test-radius-tls",
       "category": "Stack Architecture",
       "description": "Lightweight and fancy self-hosted monitoring tool.",
@@ -1102,7 +1087,7 @@
         "amd64"
       ],
       "id": 270,
-      "sort_order": 86,
+      "sort_order": 85,
       "name": "qwenpaw",
       "category": "🤖 AI",
       "description": "Release",
@@ -1117,7 +1102,7 @@
         "amd64"
       ],
       "id": 271,
-      "sort_order": 87,
+      "sort_order": 86,
       "name": "zeroclaw",
       "category": "🤖 AI",
       "description": "Release",
