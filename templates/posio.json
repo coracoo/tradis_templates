@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 258,
-  "sort_order": 73,
+  "sort_order": 72,
   "name": "posio",
   "category": "工具",
   "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",

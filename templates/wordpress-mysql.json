@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 264,
-  "sort_order": 79,
+  "sort_order": 76,
   "name": "wordpress-mysql",
   "category": "工具",
   "description": "Awesome Docker Compose samples",

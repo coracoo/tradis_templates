@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 262,
-  "sort_order": 77,
+  "sort_order": 74,
   "name": "changedetection-io",
   "category": "工具",
   "description": "A collection of sample docker compose files for self-hosted applications.",

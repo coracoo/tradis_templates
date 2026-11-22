@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 267,
-  "sort_order": 81,
+  "sort_order": 77,
   "name": "mariadb",
   "category": "Stack Architecture",
   "description": "MariaDB 是兼容 MySQL 的开源关系型数据库，适合网站、服务和自建应用存储结构化数据。",
