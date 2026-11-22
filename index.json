@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 09:27:18，更新项目15个",
+  "note": "2026-11-22 09:29:28，更新项目1个",
   "templates_note": "累计项目79个",
-  "generated_at": "2026-11-22T09:27:18+08:00",
+  "generated_at": "2026-11-22T09:29:28+08:00",
   "templates": [
     {
       "id": 1,
@@ -835,11 +835,11 @@
       "sort_order": 68,
       "name": "chevereto",
       "category": "工具",
-      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "description": "Chevereto 是自托管图床，支持管理图片、创建相册并生成分享链接。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/Haxxnet/Compose-Examples",
-      "content_hash": "sha256:f03c0af649a03f9f52eca818380f529647385b900c61918ff948c6935bc319be",
+      "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/chevereto.svg",
+      "website": "https://github.com/chevereto/chevereto",
+      "content_hash": "sha256:f8526c7a377fa1e1a2b36d708fd556702bdc094ccab5ea70a701ac825410e227",
       "file": "templates/chevereto.json"
     },
     {

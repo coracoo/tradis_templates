@@ -6,64 +6,95 @@
   "sort_order": 68,
   "name": "chevereto",
   "category": "工具",
-  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "description": "Chevereto 是自托管图床，支持管理图片、创建相册并生成分享链接。",
   "version": "",
-  "logo": "",
-  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/chevereto.svg",
+  "website": "https://github.com/chevereto/chevereto",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n    chevereto:\n        environment:\n            CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/images/_assets\n            CHEVERETO_ASSET_STORAGE_TYPE: local\n            CHEVERETO_ASSET_STORAGE_URL: /images/_assets\n            CHEVERETO_DB_HOST: mariadb\n            CHEVERETO_DB_NAME: chevereto\n            CHEVERETO_DB_PASS: chevereto\n            CHEVERETO_DB_PORT: 3306\n            CHEVERETO_DB_USER: chevereto\n        expose:\n            - 80\n        image: ghcr.io/chevereto/chevereto:4.4\n        init: true\n        ports:\n            - 8999:80\n        restart: unless-stopped\n        volumes:\n            - source: chevereto\n              target: /var/www/html/images\n              type: volume\n    mariadb:\n        environment:\n            MARIADB_ROOT_PASSWORD: chevereto\n            MYSQL_DATABASE: chevereto\n            MYSQL_PASSWORD: chevereto\n            MYSQL_USER: chevereto\n        expose:\n            - 3306\n        image: mariadb\n        init: true\n        restart: unless-stopped\n        volumes:\n            - source: chevereto_mariadb\n              target: /var/lib/mysql\n              type: volume\nvolumes:\n    chevereto: {}\n    chevereto_mariadb: {}\n",
+  "compose": "services:\n  chevereto:\n    environment:\n      CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/images/_assets\n      CHEVERETO_ASSET_STORAGE_TYPE: local\n      CHEVERETO_ASSET_STORAGE_URL: /images/_assets\n      CHEVERETO_DB_HOST: mariadb\n      CHEVERETO_DB_NAME: chevereto\n      CHEVERETO_DB_PASS: ${DB_PASSWORD:?请填写应用数据库密码}\n      CHEVERETO_DB_PORT: 3306\n      CHEVERETO_DB_USER: chevereto\n    expose:\n    - 80\n    image: ghcr.io/chevereto/chevereto:4.4\n    init: true\n    ports:\n    - 8999:80\n    restart: unless-stopped\n    volumes:\n    - ./chevereto:/var/www/html/images\n  mariadb:\n    environment:\n      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?请填写数据库管理员密码}\n      MYSQL_DATABASE: chevereto\n      MYSQL_PASSWORD: ${DB_PASSWORD:?请填写应用数据库密码}\n      MYSQL_USER: chevereto\n    expose:\n    - 3306\n    image: mariadb\n    init: true\n    restart: unless-stopped\n    volumes:\n    - ./chevereto_mariadb:/var/lib/mysql\n",
   "input_metadata": {
+    "bind:chevereto:/var/www/html/images": {
+      "group": "basic"
+    },
+    "bind:mariadb:/var/lib/mysql": {
+      "group": "basic"
+    },
     "port:chevereto:80/tcp": {
       "group": "basic"
     },
+    "project:DB_PASSWORD": {
+      "label": "应用数据库密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:DB_ROOT_PASSWORD": {
+      "label": "数据库管理员密码",
+      "group": "basic",
+      "sensitive": true
+    },
     "service:chevereto:CHEVERETO_ASSET_STORAGE_BUCKET": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:chevereto:CHEVERETO_ASSET_STORAGE_TYPE": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:chevereto:CHEVERETO_ASSET_STORAGE_URL": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:chevereto:CHEVERETO_DB_HOST": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:chevereto:CHEVERETO_DB_NAME": {
-      "group": "basic"
-    },
-    "service:chevereto:CHEVERETO_DB_PASS": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:chevereto:CHEVERETO_DB_PORT": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:chevereto:CHEVERETO_DB_USER": {
-      "group": "basic"
-    },
-    "service:mariadb:MARIADB_ROOT_PASSWORD": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:mariadb:MYSQL_DATABASE": {
-      "group": "basic"
-    },
-    "service:mariadb:MYSQL_PASSWORD": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:mariadb:MYSQL_USER": {
-      "group": "basic"
+      "group": "advanced"
     }
   },
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:6db59b170cc295e252c759b30fb90ee0dddbd0bb7d28291adbd551a1ec2f3b36",
-    "manifest_digest": "sha256:25b9de5163001f82852cf76c1ee8fb30b7ac9896203b1ef54ed8857070283ece",
+    "source_digest": "sha256:260c78e41ef1c82934e5f905d6719e2160e7d337fba67375a689254993e6dc34",
+    "manifest_digest": "sha256:76b1cfe8b675ef9837144f7047f72520f54c1aa8c771bf2203044a3a30e3d13b",
     "services": [
       "chevereto",
       "mariadb"
     ],
     "inputs": [
+      {
+        "id": "bind:chevereto:/var/www/html/images",
+        "key": "./chevereto",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./chevereto",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:mariadb:/var/lib/mysql",
+        "key": "./chevereto_mariadb",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./chevereto_mariadb",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
       {
         "id": "port:chevereto:80/tcp",
         "key": "8999",
@@ -77,6 +108,34 @@
         }
       },
       {
+        "id": "project:DB_PASSWORD",
+        "key": "DB_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "应用数据库密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:DB_ROOT_PASSWORD",
+        "key": "DB_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "数据库管理员密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
         "id": "service:chevereto:CHEVERETO_ASSET_STORAGE_BUCKET",
         "key": "CHEVERETO_ASSET_STORAGE_BUCKET",
         "kind": "env",
@@ -85,7 +144,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -97,7 +156,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -109,7 +168,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -121,7 +180,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -133,19 +192,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
-        }
-      },
-      {
-        "id": "service:chevereto:CHEVERETO_DB_PASS",
-        "key": "CHEVERETO_DB_PASS",
-        "kind": "env",
-        "scope": "service",
-        "default_value": "chevereto",
-        "required": false,
-        "sensitive": false,
-        "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -157,7 +204,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -169,19 +216,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
-        }
-      },
-      {
-        "id": "service:mariadb:MARIADB_ROOT_PASSWORD",
-        "key": "MARIADB_ROOT_PASSWORD",
-        "kind": "env",
-        "scope": "service",
-        "default_value": "chevereto",
-        "required": false,
-        "sensitive": true,
-        "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -193,19 +228,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
-        }
-      },
-      {
-        "id": "service:mariadb:MYSQL_PASSWORD",
-        "key": "MYSQL_PASSWORD",
-        "kind": "env",
-        "scope": "service",
-        "default_value": "chevereto",
-        "required": false,
-        "sensitive": true,
-        "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -217,11 +240,41 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       }
     ],
     "bindings": [
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "chevereto",
+        "target_kind": "interpolation",
+        "target_key": "CHEVERETO_DB_PASS",
+        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "yaml_path": "services.chevereto.environment.CHEVERETO_DB_PASS",
+        "line": 9,
+        "column": 26
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "mariadb",
+        "target_kind": "interpolation",
+        "target_key": "MYSQL_PASSWORD",
+        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "yaml_path": "services.mariadb.environment.MYSQL_PASSWORD",
+        "line": 25,
+        "column": 23
+      },
+      {
+        "input_id": "project:DB_ROOT_PASSWORD",
+        "service": "mariadb",
+        "target_kind": "interpolation",
+        "target_key": "MARIADB_ROOT_PASSWORD",
+        "expression": "${DB_ROOT_PASSWORD:?请填写数据库管理员密码}",
+        "yaml_path": "services.mariadb.environment.MARIADB_ROOT_PASSWORD",
+        "line": 23,
+        "column": 30
+      },
       {
         "input_id": "service:chevereto:CHEVERETO_ASSET_STORAGE_BUCKET",
         "service": "chevereto",
@@ -229,7 +282,7 @@
         "target_key": "CHEVERETO_ASSET_STORAGE_BUCKET",
         "yaml_path": "services.chevereto.environment.CHEVERETO_ASSET_STORAGE_BUCKET",
         "line": 4,
-        "column": 45
+        "column": 39
       },
       {
         "input_id": "service:chevereto:CHEVERETO_ASSET_STORAGE_TYPE",
@@ -238,7 +291,7 @@
         "target_key": "CHEVERETO_ASSET_STORAGE_TYPE",
         "yaml_path": "services.chevereto.environment.CHEVERETO_ASSET_STORAGE_TYPE",
         "line": 5,
-        "column": 43
+        "column": 37
       },
       {
         "input_id": "service:chevereto:CHEVERETO_ASSET_STORAGE_URL",
@@ -247,7 +300,7 @@
         "target_key": "CHEVERETO_ASSET_STORAGE_URL",
         "yaml_path": "services.chevereto.environment.CHEVERETO_ASSET_STORAGE_URL",
         "line": 6,
-        "column": 42
+        "column": 36
       },
       {
         "input_id": "service:chevereto:CHEVERETO_DB_HOST",
@@ -256,7 +309,7 @@
         "target_key": "CHEVERETO_DB_HOST",
         "yaml_path": "services.chevereto.environment.CHEVERETO_DB_HOST",
         "line": 7,
-        "column": 32
+        "column": 26
       },
       {
         "input_id": "service:chevereto:CHEVERETO_DB_NAME",
@@ -265,16 +318,7 @@
         "target_key": "CHEVERETO_DB_NAME",
         "yaml_path": "services.chevereto.environment.CHEVERETO_DB_NAME",
         "line": 8,
-        "column": 32
-      },
-      {
-        "input_id": "service:chevereto:CHEVERETO_DB_PASS",
-        "service": "chevereto",
-        "target_kind": "environment",
-        "target_key": "CHEVERETO_DB_PASS",
-        "yaml_path": "services.chevereto.environment.CHEVERETO_DB_PASS",
-        "line": 9,
-        "column": 32
+        "column": 26
       },
       {
         "input_id": "service:chevereto:CHEVERETO_DB_PORT",
@@ -283,7 +327,7 @@
         "target_key": "CHEVERETO_DB_PORT",
         "yaml_path": "services.chevereto.environment.CHEVERETO_DB_PORT",
         "line": 10,
-        "column": 32
+        "column": 26
       },
       {
         "input_id": "service:chevereto:CHEVERETO_DB_USER",
@@ -292,16 +336,7 @@
         "target_key": "CHEVERETO_DB_USER",
         "yaml_path": "services.chevereto.environment.CHEVERETO_DB_USER",
         "line": 11,
-        "column": 32
-      },
-      {
-        "input_id": "service:mariadb:MARIADB_ROOT_PASSWORD",
-        "service": "mariadb",
-        "target_kind": "environment",
-        "target_key": "MARIADB_ROOT_PASSWORD",
-        "yaml_path": "services.mariadb.environment.MARIADB_ROOT_PASSWORD",
-        "line": 25,
-        "column": 36
+        "column": 26
       },
       {
         "input_id": "service:mariadb:MYSQL_DATABASE",
@@ -309,17 +344,8 @@
         "target_kind": "environment",
         "target_key": "MYSQL_DATABASE",
         "yaml_path": "services.mariadb.environment.MYSQL_DATABASE",
-        "line": 26,
-        "column": 29
-      },
-      {
-        "input_id": "service:mariadb:MYSQL_PASSWORD",
-        "service": "mariadb",
-        "target_kind": "environment",
-        "target_key": "MYSQL_PASSWORD",
-        "yaml_path": "services.mariadb.environment.MYSQL_PASSWORD",
-        "line": 27,
-        "column": 29
+        "line": 24,
+        "column": 23
       },
       {
         "input_id": "service:mariadb:MYSQL_USER",
@@ -327,11 +353,29 @@
         "target_kind": "environment",
         "target_key": "MYSQL_USER",
         "yaml_path": "services.mariadb.environment.MYSQL_USER",
-        "line": 28,
-        "column": 25
+        "line": 26,
+        "column": 19
       }
     ],
     "mappings": [
+      {
+        "id": "bind:chevereto:/var/www/html/images",
+        "kind": "bind",
+        "service": "chevereto",
+        "source": "./chevereto",
+        "target": "/var/www/html/images",
+        "editable": true,
+        "yaml_path": "services.chevereto.volumes[0]"
+      },
+      {
+        "id": "bind:mariadb:/var/lib/mysql",
+        "kind": "bind",
+        "service": "mariadb",
+        "source": "./chevereto_mariadb",
+        "target": "/var/lib/mysql",
+        "editable": true,
+        "yaml_path": "services.mariadb.volumes[0]"
+      },
       {
         "id": "port:chevereto:80/tcp",
         "kind": "port",
@@ -341,24 +385,6 @@
         "protocol": "tcp",
         "editable": true,
         "yaml_path": "services.chevereto.ports[0]"
-      },
-      {
-        "id": "volume:chevereto:/var/www/html/images",
-        "kind": "volume",
-        "service": "chevereto",
-        "source": "chevereto",
-        "target": "/var/www/html/images",
-        "editable": false,
-        "yaml_path": "services.chevereto.volumes[0]"
-      },
-      {
-        "id": "volume:mariadb:/var/lib/mysql",
-        "kind": "volume",
-        "service": "mariadb",
-        "source": "chevereto_mariadb",
-        "target": "/var/lib/mysql",
-        "editable": false,
-        "yaml_path": "services.mariadb.volumes[0]"
       }
     ],
     "fixed_values": [],
@@ -366,11 +392,33 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:6db59b170cc295e252c759b30fb90ee0dddbd0bb7d28291adbd551a1ec2f3b36",
-  "manifest_digest": "sha256:25b9de5163001f82852cf76c1ee8fb30b7ac9896203b1ef54ed8857070283ece",
+  "source_digest": "sha256:260c78e41ef1c82934e5f905d6719e2160e7d337fba67375a689254993e6dc34",
+  "manifest_digest": "sha256:76b1cfe8b675ef9837144f7047f72520f54c1aa8c771bf2203044a3a30e3d13b",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
+    {
+      "inputId": "bind:chevereto:/var/www/html/images",
+      "name": "./chevereto",
+      "label": "./chevereto",
+      "description": "",
+      "type": "path",
+      "default": "./chevereto",
+      "category": "basic",
+      "serviceName": "chevereto",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:mariadb:/var/lib/mysql",
+      "name": "./chevereto_mariadb",
+      "label": "./chevereto_mariadb",
+      "description": "",
+      "type": "path",
+      "default": "./chevereto_mariadb",
+      "category": "basic",
+      "serviceName": "mariadb",
+      "paramType": "path"
+    },
     {
       "inputId": "port:chevereto:80/tcp",
       "name": "8999",
@@ -383,13 +431,37 @@
       "paramType": "port"
     },
     {
+      "inputId": "project:DB_PASSWORD",
+      "name": "DB_PASSWORD",
+      "label": "应用数据库密码",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:DB_ROOT_PASSWORD",
+      "name": "DB_ROOT_PASSWORD",
+      "label": "数据库管理员密码",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
       "inputId": "service:chevereto:CHEVERETO_ASSET_STORAGE_BUCKET",
       "name": "CHEVERETO_ASSET_STORAGE_BUCKET",
       "label": "CHEVERETO_ASSET_STORAGE_BUCKET",
       "description": "",
       "type": "string",
       "default": "/var/www/html/images/_assets",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "chevereto",
       "paramType": "env"
     },
@@ -400,7 +472,7 @@
       "description": "",
       "type": "string",
       "default": "local",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "chevereto",
       "paramType": "env"
     },
@@ -411,7 +483,7 @@
       "description": "",
       "type": "string",
       "default": "/images/_assets",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "chevereto",
       "paramType": "env"
     },
@@ -422,7 +494,7 @@
       "description": "",
       "type": "string",
       "default": "mariadb",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "chevereto",
       "paramType": "env"
     },
@@ -433,18 +505,7 @@
       "description": "",
       "type": "string",
       "default": "chevereto",
-      "category": "basic",
-      "serviceName": "chevereto",
-      "paramType": "env"
-    },
-    {
-      "inputId": "service:chevereto:CHEVERETO_DB_PASS",
-      "name": "CHEVERETO_DB_PASS",
-      "label": "CHEVERETO_DB_PASS",
-      "description": "",
-      "type": "string",
-      "default": "chevereto",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "chevereto",
       "paramType": "env"
     },
@@ -455,7 +516,7 @@
       "description": "",
       "type": "string",
       "default": "3306",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "chevereto",
       "paramType": "env"
     },
@@ -466,19 +527,8 @@
       "description": "",
       "type": "string",
       "default": "chevereto",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "chevereto",
-      "paramType": "env"
-    },
-    {
-      "inputId": "service:mariadb:MARIADB_ROOT_PASSWORD",
-      "name": "MARIADB_ROOT_PASSWORD",
-      "label": "MARIADB_ROOT_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "chevereto",
-      "category": "basic",
-      "serviceName": "mariadb",
       "paramType": "env"
     },
     {
@@ -488,18 +538,7 @@
       "description": "",
       "type": "string",
       "default": "chevereto",
-      "category": "basic",
-      "serviceName": "mariadb",
-      "paramType": "env"
-    },
-    {
-      "inputId": "service:mariadb:MYSQL_PASSWORD",
-      "name": "MYSQL_PASSWORD",
-      "label": "MYSQL_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "chevereto",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "mariadb",
       "paramType": "env"
     },
@@ -510,7 +549,7 @@
       "description": "",
       "type": "string",
       "default": "chevereto",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "mariadb",
       "paramType": "env"
     }
