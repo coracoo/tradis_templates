@@ -12,7 +12,7 @@
   "website": "https://github.com/chevereto/chevereto",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n  chevereto:\n    environment:\n      CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/images/_assets\n      CHEVERETO_ASSET_STORAGE_TYPE: local\n      CHEVERETO_ASSET_STORAGE_URL: /images/_assets\n      CHEVERETO_DB_HOST: mariadb\n      CHEVERETO_DB_NAME: chevereto\n      CHEVERETO_DB_PASS: ${DB_PASSWORD:?请填写应用数据库密码}\n      CHEVERETO_DB_PORT: 3306\n      CHEVERETO_DB_USER: chevereto\n    expose:\n    - 80\n    image: ghcr.io/chevereto/chevereto:4.4\n    init: true\n    ports:\n    - 8999:80\n    restart: unless-stopped\n    volumes:\n    - ./chevereto:/var/www/html/images\n  mariadb:\n    environment:\n      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?请填写数据库管理员密码}\n      MYSQL_DATABASE: chevereto\n      MYSQL_PASSWORD: ${DB_PASSWORD:?请填写应用数据库密码}\n      MYSQL_USER: chevereto\n    expose:\n    - 3306\n    image: mariadb\n    init: true\n    restart: unless-stopped\n    volumes:\n    - ./chevereto_mariadb:/var/lib/mysql\n",
+  "compose": "services:\n  chevereto:\n    environment:\n      CHEVERETO_ASSET_STORAGE_BUCKET: /var/www/html/images/_assets\n      CHEVERETO_ASSET_STORAGE_TYPE: local\n      CHEVERETO_ASSET_STORAGE_URL: /images/_assets\n      CHEVERETO_DB_HOST: mariadb\n      CHEVERETO_DB_NAME: chevereto\n      CHEVERETO_DB_PASS: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n      CHEVERETO_DB_PORT: 3306\n      CHEVERETO_DB_USER: chevereto\n    expose:\n    - 80\n    image: ghcr.io/chevereto/chevereto:4.4\n    init: true\n    ports:\n    - 8999:80\n    restart: unless-stopped\n    volumes:\n    - ./chevereto:/var/www/html/images\n  mariadb:\n    environment:\n      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?MARIADB_ROOT_PASSWORD is required}\n      MYSQL_DATABASE: chevereto\n      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n      MYSQL_USER: chevereto\n    expose:\n    - 3306\n    image: mariadb\n    init: true\n    restart: unless-stopped\n    volumes:\n    - ./chevereto_mariadb:/var/lib/mysql\n",
   "input_metadata": {
     "bind:chevereto:/var/www/html/images": {
       "group": "basic"
@@ -23,15 +23,11 @@
     "port:chevereto:80/tcp": {
       "group": "basic"
     },
-    "project:DB_PASSWORD": {
-      "label": "应用数据库密码",
-      "group": "basic",
-      "sensitive": true
+    "project:MARIADB_ROOT_PASSWORD": {
+      "group": "basic"
     },
-    "project:DB_ROOT_PASSWORD": {
-      "label": "数据库管理员密码",
-      "group": "basic",
-      "sensitive": true
+    "project:MYSQL_PASSWORD": {
+      "group": "basic"
     },
     "service:chevereto:CHEVERETO_ASSET_STORAGE_BUCKET": {
       "group": "advanced"
@@ -64,8 +60,8 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:260c78e41ef1c82934e5f905d6719e2160e7d337fba67375a689254993e6dc34",
-    "manifest_digest": "sha256:76b1cfe8b675ef9837144f7047f72520f54c1aa8c771bf2203044a3a30e3d13b",
+    "source_digest": "sha256:7285383435adff8ab91e8c292352dd465256197e456573798a8e546745e0e033",
+    "manifest_digest": "sha256:60f918c025414de1e82d74371f7db4b891827b46ede97212fbc4b11b5443c14b",
     "services": [
       "chevereto",
       "mariadb"
@@ -108,31 +104,27 @@
         }
       },
       {
-        "id": "project:DB_PASSWORD",
-        "key": "DB_PASSWORD",
+        "id": "project:MARIADB_ROOT_PASSWORD",
+        "key": "MARIADB_ROOT_PASSWORD",
         "kind": "env",
         "scope": "project",
         "file": ".env",
         "required": true,
         "sensitive": true,
         "presentation": {
-          "label": "应用数据库密码",
-          "group": "basic",
-          "sensitive": true
+          "group": "basic"
         }
       },
       {
-        "id": "project:DB_ROOT_PASSWORD",
-        "key": "DB_ROOT_PASSWORD",
+        "id": "project:MYSQL_PASSWORD",
+        "key": "MYSQL_PASSWORD",
         "kind": "env",
         "scope": "project",
         "file": ".env",
         "required": true,
         "sensitive": true,
         "presentation": {
-          "label": "数据库管理员密码",
-          "group": "basic",
-          "sensitive": true
+          "group": "basic"
         }
       },
       {
@@ -246,34 +238,34 @@
     ],
     "bindings": [
       {
-        "input_id": "project:DB_PASSWORD",
+        "input_id": "project:MARIADB_ROOT_PASSWORD",
+        "service": "mariadb",
+        "target_kind": "interpolation",
+        "target_key": "MARIADB_ROOT_PASSWORD",
+        "expression": "${MARIADB_ROOT_PASSWORD:?MARIADB_ROOT_PASSWORD is required}",
+        "yaml_path": "services.mariadb.environment.MARIADB_ROOT_PASSWORD",
+        "line": 23,
+        "column": 30
+      },
+      {
+        "input_id": "project:MYSQL_PASSWORD",
         "service": "chevereto",
         "target_kind": "interpolation",
         "target_key": "CHEVERETO_DB_PASS",
-        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "expression": "${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}",
         "yaml_path": "services.chevereto.environment.CHEVERETO_DB_PASS",
         "line": 9,
         "column": 26
       },
       {
-        "input_id": "project:DB_PASSWORD",
+        "input_id": "project:MYSQL_PASSWORD",
         "service": "mariadb",
         "target_kind": "interpolation",
         "target_key": "MYSQL_PASSWORD",
-        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "expression": "${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}",
         "yaml_path": "services.mariadb.environment.MYSQL_PASSWORD",
         "line": 25,
         "column": 23
-      },
-      {
-        "input_id": "project:DB_ROOT_PASSWORD",
-        "service": "mariadb",
-        "target_kind": "interpolation",
-        "target_key": "MARIADB_ROOT_PASSWORD",
-        "expression": "${DB_ROOT_PASSWORD:?请填写数据库管理员密码}",
-        "yaml_path": "services.mariadb.environment.MARIADB_ROOT_PASSWORD",
-        "line": 23,
-        "column": 30
       },
       {
         "input_id": "service:chevereto:CHEVERETO_ASSET_STORAGE_BUCKET",
@@ -392,8 +384,8 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:260c78e41ef1c82934e5f905d6719e2160e7d337fba67375a689254993e6dc34",
-  "manifest_digest": "sha256:76b1cfe8b675ef9837144f7047f72520f54c1aa8c771bf2203044a3a30e3d13b",
+  "source_digest": "sha256:7285383435adff8ab91e8c292352dd465256197e456573798a8e546745e0e033",
+  "manifest_digest": "sha256:60f918c025414de1e82d74371f7db4b891827b46ede97212fbc4b11b5443c14b",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
@@ -431,9 +423,9 @@
       "paramType": "port"
     },
     {
-      "inputId": "project:DB_PASSWORD",
-      "name": "DB_PASSWORD",
-      "label": "应用数据库密码",
+      "inputId": "project:MARIADB_ROOT_PASSWORD",
+      "name": "MARIADB_ROOT_PASSWORD",
+      "label": "MARIADB_ROOT_PASSWORD",
       "description": "",
       "type": "password",
       "default": "",
@@ -443,9 +435,9 @@
       "envFile": ".env"
     },
     {
-      "inputId": "project:DB_ROOT_PASSWORD",
-      "name": "DB_ROOT_PASSWORD",
-      "label": "数据库管理员密码",
+      "inputId": "project:MYSQL_PASSWORD",
+      "name": "MYSQL_PASSWORD",
+      "label": "MYSQL_PASSWORD",
       "description": "",
       "type": "password",
       "default": "",

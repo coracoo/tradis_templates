@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 09:29:36，更新项目10个",
+  "note": "2026-11-22 09:35:52，更新项目1个",
   "templates_note": "累计项目79个",
-  "generated_at": "2026-11-22T09:29:36+08:00",
+  "generated_at": "2026-11-22T09:35:52+08:00",
   "templates": [
     {
       "id": 1,
@@ -839,7 +839,7 @@
       "version": "",
       "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/chevereto.svg",
       "website": "https://github.com/chevereto/chevereto",
-      "content_hash": "sha256:f8526c7a377fa1e1a2b36d708fd556702bdc094ccab5ea70a701ac825410e227",
+      "content_hash": "sha256:96ff6734eee5605df77ee543b898503993e3e5c7b004661eecb48d481ab8995c",
       "file": "templates/chevereto.json"
     },
     {
