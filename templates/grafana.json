@@ -5,7 +5,7 @@
   "category": "platform",
   "description": "Grafana 是适用于各种数据库的开源分析与监控解决方案。",
   "version": "latest",
-  "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Grafana_logo.png?20170804201233",
+  "logo": "/assets/app-icons/grafana.svg",
   "website": "https://hub.docker.com/r/grafana/grafana",
   "tutorial": "【包含服务】\n  · grafana — grafana/grafana:latest\n\n【目录映射】宿主机路径 → 容器内路径\n  /portainer/Files/AppData/Config/grafana → /var/lib/grafana\n\n【端口映射】宿主机:容器\n  3023 → 3000/tcp（grafana）\n\n【访问地址】\n  http://\u003c主机IP\u003e:3023（grafana）\n\n【提示】\n  部署前请确认上述目录在宿主机上已有读写权限；端口与目录映射均可在部署向导中按需调整。",
   "dotenv": "",
