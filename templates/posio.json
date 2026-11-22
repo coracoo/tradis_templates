@@ -6,10 +6,10 @@
   "sort_order": 72,
   "name": "posio",
   "category": "工具",
-  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "description": "Posio 是多人地理竞猜游戏，玩家在地图上猜测城市的位置并比较得分。",
   "version": "",
-  "logo": "",
-  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "logo": "https://raw.githubusercontent.com/abrenaut/posio/00262568749fa841994f4c7d6d9a8c75115955d7/game/static/game/images/marker-icon-blue.png",
+  "website": "https://github.com/abrenaut/posio",
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n    posio:\n        environment:\n            - POSIO_SETTINGS=/app/posio/config.py\n            - FLASK_APP=/app/posio/game_master.py\n        expose:\n            - 5000/tcp\n        image: l4rm4nd/posio:latest\n        ports:\n            - 5000:5000/tcp\n        restart: unless-stopped\n",
@@ -18,17 +18,17 @@
       "group": "basic"
     },
     "service:posio:FLASK_APP": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:posio:POSIO_SETTINGS": {
-      "group": "basic"
+      "group": "advanced"
     }
   },
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
     "source_digest": "sha256:a3e6697384715baa2ead51930181d9cd2da7dbe0a0b1a55ffe7805df496051b8",
-    "manifest_digest": "sha256:07123839e66a74ae03c3dce3ab9f772aad19a7903b493b99e3bb9f54c57ccd6a",
+    "manifest_digest": "sha256:7632da6205eca0e2bfc969743dc95b23a70341698d69c88a1033fd115cb4f079",
     "services": [
       "posio"
     ],
@@ -54,7 +54,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -66,7 +66,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       }
     ],
@@ -108,7 +108,7 @@
     "complete": true
   },
   "source_digest": "sha256:a3e6697384715baa2ead51930181d9cd2da7dbe0a0b1a55ffe7805df496051b8",
-  "manifest_digest": "sha256:07123839e66a74ae03c3dce3ab9f772aad19a7903b493b99e3bb9f54c57ccd6a",
+  "manifest_digest": "sha256:7632da6205eca0e2bfc969743dc95b23a70341698d69c88a1033fd115cb4f079",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
@@ -130,7 +130,7 @@
       "description": "",
       "type": "string",
       "default": "/app/posio/game_master.py",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "posio",
       "paramType": "env"
     },
@@ -141,7 +141,7 @@
       "description": "",
       "type": "string",
       "default": "/app/posio/config.py",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "posio",
       "paramType": "env"
     }

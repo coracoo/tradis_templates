@@ -6,10 +6,10 @@
   "sort_order": 71,
   "name": "pairdrop",
   "category": "工具",
-  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "description": "PairDrop 可在浏览器中发现同网设备，互传文件和文本，适合电脑与手机之间临时分享。",
   "version": "",
-  "logo": "",
-  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@2053b70b283ffed5f2cc1424d1e17d9c554a846d/svg/pairdrop.svg",
+  "website": "https://github.com/schlagmichdoch/PairDrop",
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n    pairdrop:\n        environment:\n            - PUID=1000\n            - PGID=1000\n            - TZ=Europe/Berlin\n            - RATE_LIMIT=false\n            - WS_FALLBACK=false\n        expose:\n            - 3000\n        hostname: pairdrop\n        image: linuxserver/pairdrop:latest\n        ports:\n            - 3215:3000\n        restart: unless-stopped\n",
@@ -18,26 +18,26 @@
       "group": "basic"
     },
     "service:pairdrop:PGID": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:pairdrop:PUID": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:pairdrop:RATE_LIMIT": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:pairdrop:TZ": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:pairdrop:WS_FALLBACK": {
-      "group": "basic"
+      "group": "advanced"
     }
   },
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
     "source_digest": "sha256:2a8a6d2e73743b7c51a4aaeb6d363f8b639b74098eea56b686ccbbfc82e2ddc1",
-    "manifest_digest": "sha256:b509135f3486ca2af306219b63958b4f282f923236fff52d1726c7e478d97765",
+    "manifest_digest": "sha256:6718508cf108a491bcecd48681daab530e3fa7214058f3f80094bfbaca2ed1b6",
     "services": [
       "pairdrop"
     ],
@@ -63,7 +63,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -75,7 +75,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -87,7 +87,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -99,7 +99,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -111,7 +111,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       }
     ],
@@ -180,7 +180,7 @@
     "complete": true
   },
   "source_digest": "sha256:2a8a6d2e73743b7c51a4aaeb6d363f8b639b74098eea56b686ccbbfc82e2ddc1",
-  "manifest_digest": "sha256:b509135f3486ca2af306219b63958b4f282f923236fff52d1726c7e478d97765",
+  "manifest_digest": "sha256:6718508cf108a491bcecd48681daab530e3fa7214058f3f80094bfbaca2ed1b6",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
@@ -202,7 +202,7 @@
       "description": "",
       "type": "string",
       "default": "1000",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "pairdrop",
       "paramType": "env"
     },
@@ -213,7 +213,7 @@
       "description": "",
       "type": "string",
       "default": "1000",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "pairdrop",
       "paramType": "env"
     },
@@ -224,7 +224,7 @@
       "description": "",
       "type": "string",
       "default": "false",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "pairdrop",
       "paramType": "env"
     },
@@ -235,7 +235,7 @@
       "description": "",
       "type": "string",
       "default": "Europe/Berlin",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "pairdrop",
       "paramType": "env"
     },
@@ -246,7 +246,7 @@
       "description": "",
       "type": "string",
       "default": "false",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "pairdrop",
       "paramType": "env"
     }

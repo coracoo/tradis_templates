@@ -6,14 +6,23 @@
   "sort_order": 78,
   "name": "qwenpaw",
   "category": "🤖 AI",
-  "description": "Release",
+  "description": "QwenPaw 是可自托管的个人 AI 助理，支持连接模型与聊天渠道并扩展任务能力。",
   "version": "",
-  "logo": "",
-  "website": "https://github.com/agentscope-ai/QwenPaw",
+  "logo": "https://raw.githubusercontent.com/agentscope-ai/qwenpaw/b02e17b8cf3fdde484f33c6981321280a0417232/console/src-tauri/icons/icon.png",
+  "website": "https://github.com/agentscope-ai/qwenpaw",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n    qwenpaw:\n        image: agentscope/qwenpaw:latest\n        init: true\n        ports:\n            - 127.0.0.1:8088:8088\n        restart: always\n        volumes:\n            - source: qwenpaw-data\n              target: /app/working\n              type: volume\n            - source: qwenpaw-secrets\n              target: /app/working.secret\n              type: volume\n            - source: qwenpaw-backups\n              target: /app/working.backups\n              type: volume\nvolumes:\n    qwenpaw-backups: {}\n    qwenpaw-data: {}\n    qwenpaw-secrets: {}\n",
+  "compose": "services:\n  qwenpaw:\n    image: agentscope/qwenpaw:latest\n    init: true\n    ports:\n    - 127.0.0.1:8088:8088\n    restart: always\n    volumes:\n    - ./qwenpaw-data:/app/working\n    - ./qwenpaw-secrets:/app/working.secret\n    - ./qwenpaw-backups:/app/working.backups\n",
   "input_metadata": {
+    "bind:qwenpaw:/app/working": {
+      "group": "basic"
+    },
+    "bind:qwenpaw:/app/working.backups": {
+      "group": "basic"
+    },
+    "bind:qwenpaw:/app/working.secret": {
+      "group": "basic"
+    },
     "port:qwenpaw:8088/tcp": {
       "group": "basic"
     }
@@ -21,12 +30,48 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:4c0af56298bf8c447c001c7cf8f8b4f7e4e4260c37e7f5d58a982255d5d24f7f",
-    "manifest_digest": "sha256:e2bb8748eecc8afe60aa6995faee2804040b91710d70d551656cbd60897007b0",
+    "source_digest": "sha256:306e6816845e34557bdefd5495affdd88025ad1639f406b08fc06dc32f300f57",
+    "manifest_digest": "sha256:924fefcb7e410a3f17e04693cb7c09847b13432a737b3f9782d3729741754b23",
     "services": [
       "qwenpaw"
     ],
     "inputs": [
+      {
+        "id": "bind:qwenpaw:/app/working",
+        "key": "./qwenpaw-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./qwenpaw-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:qwenpaw:/app/working.backups",
+        "key": "./qwenpaw-backups",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./qwenpaw-backups",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:qwenpaw:/app/working.secret",
+        "key": "./qwenpaw-secrets",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./qwenpaw-secrets",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
       {
         "id": "port:qwenpaw:8088/tcp",
         "key": "8088",
@@ -43,6 +88,35 @@
     "bindings": [],
     "mappings": [
       {
+        "id": "bind:qwenpaw:/app/working",
+        "kind": "bind",
+        "service": "qwenpaw",
+        "source": "./qwenpaw-data",
+        "target": "/app/working",
+        "editable": true,
+        "yaml_path": "services.qwenpaw.volumes[0]"
+      },
+      {
+        "id": "bind:qwenpaw:/app/working.backups",
+        "kind": "bind",
+        "service": "qwenpaw",
+        "source": "./qwenpaw-backups",
+        "target": "/app/working.backups",
+        "editable": true,
+        "yaml_path": "services.qwenpaw.volumes[2]",
+        "sequence_index": 2
+      },
+      {
+        "id": "bind:qwenpaw:/app/working.secret",
+        "kind": "bind",
+        "service": "qwenpaw",
+        "source": "./qwenpaw-secrets",
+        "target": "/app/working.secret",
+        "editable": true,
+        "yaml_path": "services.qwenpaw.volumes[1]",
+        "sequence_index": 1
+      },
+      {
         "id": "port:qwenpaw:8088/tcp",
         "kind": "port",
         "service": "qwenpaw",
@@ -51,35 +125,6 @@
         "protocol": "tcp",
         "editable": true,
         "yaml_path": "services.qwenpaw.ports[0]"
-      },
-      {
-        "id": "volume:qwenpaw:/app/working",
-        "kind": "volume",
-        "service": "qwenpaw",
-        "source": "qwenpaw-data",
-        "target": "/app/working",
-        "editable": false,
-        "yaml_path": "services.qwenpaw.volumes[0]"
-      },
-      {
-        "id": "volume:qwenpaw:/app/working.backups",
-        "kind": "volume",
-        "service": "qwenpaw",
-        "source": "qwenpaw-backups",
-        "target": "/app/working.backups",
-        "editable": false,
-        "yaml_path": "services.qwenpaw.volumes[2]",
-        "sequence_index": 2
-      },
-      {
-        "id": "volume:qwenpaw:/app/working.secret",
-        "kind": "volume",
-        "service": "qwenpaw",
-        "source": "qwenpaw-secrets",
-        "target": "/app/working.secret",
-        "editable": false,
-        "yaml_path": "services.qwenpaw.volumes[1]",
-        "sequence_index": 1
       }
     ],
     "fixed_values": [],
@@ -87,11 +132,44 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:4c0af56298bf8c447c001c7cf8f8b4f7e4e4260c37e7f5d58a982255d5d24f7f",
-  "manifest_digest": "sha256:e2bb8748eecc8afe60aa6995faee2804040b91710d70d551656cbd60897007b0",
+  "source_digest": "sha256:306e6816845e34557bdefd5495affdd88025ad1639f406b08fc06dc32f300f57",
+  "manifest_digest": "sha256:924fefcb7e410a3f17e04693cb7c09847b13432a737b3f9782d3729741754b23",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
+    {
+      "inputId": "bind:qwenpaw:/app/working",
+      "name": "./qwenpaw-data",
+      "label": "./qwenpaw-data",
+      "description": "",
+      "type": "path",
+      "default": "./qwenpaw-data",
+      "category": "basic",
+      "serviceName": "qwenpaw",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:qwenpaw:/app/working.backups",
+      "name": "./qwenpaw-backups",
+      "label": "./qwenpaw-backups",
+      "description": "",
+      "type": "path",
+      "default": "./qwenpaw-backups",
+      "category": "basic",
+      "serviceName": "qwenpaw",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:qwenpaw:/app/working.secret",
+      "name": "./qwenpaw-secrets",
+      "label": "./qwenpaw-secrets",
+      "description": "",
+      "type": "path",
+      "default": "./qwenpaw-secrets",
+      "category": "basic",
+      "serviceName": "qwenpaw",
+      "paramType": "path"
+    },
     {
       "inputId": "port:qwenpaw:8088/tcp",
       "name": "8088",

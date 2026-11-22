@@ -6,10 +6,10 @@
   "sort_order": 69,
   "name": "flaresolverr",
   "category": "工具",
-  "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+  "description": "FlareSolverr 为需要浏览器挑战验证的网页请求提供代理接口，通常与订阅和索引工具配合使用。",
   "version": "",
-  "logo": "",
-  "website": "https://github.com/Haxxnet/Compose-Examples",
+  "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/flaresolverr.svg",
+  "website": "https://github.com/FlareSolverr/FlareSolverr",
   "tutorial": "",
   "dotenv": "",
   "compose": "services:\n    flaresolverr:\n        environment:\n            - LOG_LEVEL=info\n            - LOG_HTML=false\n            - CAPTCHA_SOLVER=none\n            - TZ=Europe/Berlin\n        expose:\n            - 8191\n        image: ghcr.io/flaresolverr/flaresolverr:latest\n        ports:\n            - 8191:8191/tcp\n        restart: unless-stopped\n",
@@ -18,23 +18,23 @@
       "group": "basic"
     },
     "service:flaresolverr:CAPTCHA_SOLVER": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:flaresolverr:LOG_HTML": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:flaresolverr:LOG_LEVEL": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:flaresolverr:TZ": {
-      "group": "basic"
+      "group": "advanced"
     }
   },
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
     "source_digest": "sha256:4c19409871ae30ed4a3bfa80685700520b4efa87481948cd91f38992a64516f1",
-    "manifest_digest": "sha256:e3e106cc4adb3a84423e246ff39b137e9f0b5ae0a662b1355bb228a34631b905",
+    "manifest_digest": "sha256:37c2d9dac068ac98f3c23cb0da0535e328c2e636a6c095f531f3372950d171ca",
     "services": [
       "flaresolverr"
     ],
@@ -60,7 +60,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -72,7 +72,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -84,7 +84,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -96,7 +96,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       }
     ],
@@ -156,7 +156,7 @@
     "complete": true
   },
   "source_digest": "sha256:4c19409871ae30ed4a3bfa80685700520b4efa87481948cd91f38992a64516f1",
-  "manifest_digest": "sha256:e3e106cc4adb3a84423e246ff39b137e9f0b5ae0a662b1355bb228a34631b905",
+  "manifest_digest": "sha256:37c2d9dac068ac98f3c23cb0da0535e328c2e636a6c095f531f3372950d171ca",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
@@ -178,7 +178,7 @@
       "description": "",
       "type": "string",
       "default": "none",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "flaresolverr",
       "paramType": "env"
     },
@@ -189,7 +189,7 @@
       "description": "",
       "type": "string",
       "default": "false",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "flaresolverr",
       "paramType": "env"
     },
@@ -200,7 +200,7 @@
       "description": "",
       "type": "string",
       "default": "info",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "flaresolverr",
       "paramType": "env"
     },
@@ -211,7 +211,7 @@
       "description": "",
       "type": "string",
       "default": "Europe/Berlin",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "flaresolverr",
       "paramType": "env"
     }

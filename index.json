@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 09:29:28，更新项目1个",
+  "note": "2026-11-22 09:29:36，更新项目10个",
   "templates_note": "累计项目79个",
-  "generated_at": "2026-11-22T09:29:28+08:00",
+  "generated_at": "2026-11-22T09:29:36+08:00",
   "templates": [
     {
       "id": 1,
@@ -850,11 +850,11 @@
       "sort_order": 69,
       "name": "flaresolverr",
       "category": "工具",
-      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "description": "FlareSolverr 为需要浏览器挑战验证的网页请求提供代理接口，通常与订阅和索引工具配合使用。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/Haxxnet/Compose-Examples",
-      "content_hash": "sha256:56276862225149a2b80339eaf55a2b8076eabcd905e35da9e662ffa81ece7386",
+      "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/flaresolverr.svg",
+      "website": "https://github.com/FlareSolverr/FlareSolverr",
+      "content_hash": "sha256:87cfcfbcbe3e5cf65b436b2bd03cba00c1f3baf022a5133b53e7bf5a13a14393",
       "file": "templates/flaresolverr.json"
     },
     {
@@ -865,10 +865,10 @@
       "sort_order": 70,
       "name": "monkeytype",
       "category": "工具",
-      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "description": "Monkeytype 是打字练习应用，可进行速度与准确率测试。这个模板提供独立的网页前端。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/monkeytype.svg",
+      "website": "https://github.com/monkeytypegame/monkeytype",
       "content_hash": "sha256:64a454259e61ac5742f04ea8f6de055d6f01236f3aa0d05758d296d08aef682d",
       "file": "templates/monkeytype.json"
     },
@@ -880,11 +880,11 @@
       "sort_order": 71,
       "name": "pairdrop",
       "category": "工具",
-      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "description": "PairDrop 可在浏览器中发现同网设备，互传文件和文本，适合电脑与手机之间临时分享。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/Haxxnet/Compose-Examples",
-      "content_hash": "sha256:22c53ba58b00cce9344b0a8a27aebbfe2a3d2fd4eaf4632a94e4e134a888de15",
+      "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@2053b70b283ffed5f2cc1424d1e17d9c554a846d/svg/pairdrop.svg",
+      "website": "https://github.com/schlagmichdoch/PairDrop",
+      "content_hash": "sha256:19e63d1b983edf103c81b9688f3ed541c27aae67106c4fa1a21686a29508ccf1",
       "file": "templates/pairdrop.json"
     },
     {
@@ -895,11 +895,11 @@
       "sort_order": 72,
       "name": "posio",
       "category": "工具",
-      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "description": "Posio 是多人地理竞猜游戏，玩家在地图上猜测城市的位置并比较得分。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/Haxxnet/Compose-Examples",
-      "content_hash": "sha256:e86b7e0160f81679894a0fa6b532de051762bcc2d8f802f8dc1661bf41d107af",
+      "logo": "https://raw.githubusercontent.com/abrenaut/posio/00262568749fa841994f4c7d6d9a8c75115955d7/game/static/game/images/marker-icon-blue.png",
+      "website": "https://github.com/abrenaut/posio",
+      "content_hash": "sha256:1b8748678ad7e05e4dc3e3a5205ea96d6484759dc748ba1b470bb52eebef2059",
       "file": "templates/posio.json"
     },
     {
@@ -910,10 +910,10 @@
       "sort_order": 73,
       "name": "transfer-zip",
       "category": "工具",
-      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
+      "description": "Transfer.zip 提供浏览器文件传输。网页与信令服务建立连接后，文件通过 WebRTC 直接在设备之间传输。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/Haxxnet/Compose-Examples",
+      "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@2053b70b283ffed5f2cc1424d1e17d9c554a846d/svg/transfer-zip.svg",
+      "website": "https://github.com/transferzip/transfer.zip-web",
       "content_hash": "sha256:0131905995ee3e38d3b53380cb79174cdf27c9511c95ae9f73f18951cfd9ab71",
       "file": "templates/transfer-zip.json"
     },
@@ -925,11 +925,11 @@
       "sort_order": 74,
       "name": "changedetection-io",
       "category": "工具",
-      "description": "A collection of sample docker compose files for self-hosted applications.",
+      "description": "changedetection.io 定时检查网页内容变化，适合跟踪商品、公告和站点更新。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/carteakey/server-compose",
-      "content_hash": "sha256:2d6342b7cc17edb5cc13d3d82507160206b817b9519bd29f40dd696f41fe37c9",
+      "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/changedetection.svg",
+      "website": "https://github.com/dgtlmoon/changedetection.io",
+      "content_hash": "sha256:b672fe2624a2982dadb782350d1785c5b57fdd65c44d49820fdb61af0e24d249",
       "file": "templates/changedetection-io.json"
     },
     {
@@ -940,11 +940,11 @@
       "sort_order": 75,
       "name": "nextcloud-redis-mariadb",
       "category": "工具",
-      "description": "Awesome Docker Compose samples",
+      "description": "Nextcloud 提供文件同步、分享和协作。这个部署组合使用 MariaDB 存储数据，并通过 Redis 提供缓存。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/docker/awesome-compose",
-      "content_hash": "sha256:413acb13635ce95f747f1869db2adfd276d17849d213a73353cf26a7e014a67c",
+      "logo": "/assets/app-icons/nextcloud.svg",
+      "website": "https://github.com/nextcloud/server",
+      "content_hash": "sha256:9eb1d3fb505224fa60673e45a9032170c0db5b9be2dd8e59fb7499a0d7d33380",
       "file": "templates/nextcloud-redis-mariadb.json"
     },
     {
@@ -955,11 +955,11 @@
       "sort_order": 76,
       "name": "wordpress-mysql",
       "category": "工具",
-      "description": "Awesome Docker Compose samples",
+      "description": "WordPress 用于搭建博客和网站。模板包含 MariaDB，网站文件和数据库分别保存在项目目录中。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/docker/awesome-compose",
-      "content_hash": "sha256:71b1f18e8e7c90bd003e6a47a73cd03655d1eb2b13b78aeefb94714a9eb08251",
+      "logo": "/assets/app-icons/wordpress.svg",
+      "website": "https://wordpress.org/",
+      "content_hash": "sha256:61085a616c12e5be64f9744cb95b6e2dfa261c07e3275f94510df76ce98e8111",
       "file": "templates/wordpress-mysql.json"
     },
     {
@@ -985,11 +985,11 @@
       "sort_order": 78,
       "name": "qwenpaw",
       "category": "🤖 AI",
-      "description": "Release",
+      "description": "QwenPaw 是可自托管的个人 AI 助理，支持连接模型与聊天渠道并扩展任务能力。",
       "version": "",
-      "logo": "",
-      "website": "https://github.com/agentscope-ai/QwenPaw",
-      "content_hash": "sha256:ab2778f3a69d276a5914966823b94b809306b381ae39ac21e7fee2748661d65b",
+      "logo": "https://raw.githubusercontent.com/agentscope-ai/qwenpaw/b02e17b8cf3fdde484f33c6981321280a0417232/console/src-tauri/icons/icon.png",
+      "website": "https://github.com/agentscope-ai/qwenpaw",
+      "content_hash": "sha256:c99e29ed3021e84427dfbfd4b19a4028176041d9b550a671af7acdfd9c4e42b8",
       "file": "templates/qwenpaw.json"
     },
     {
@@ -1000,11 +1000,11 @@
       "sort_order": 79,
       "name": "zeroclaw",
       "category": "🤖 AI",
-      "description": "Release",
+      "description": "ZeroClaw 是轻量级自托管 AI 助理，可配置模型供应商、工具和网关。",
       "version": "",
-      "logo": "",
+      "logo": "https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/10b8af3b048754ca8a31c8136555de77cce953f3/apps/tauri/icons/128x128.png",
       "website": "https://github.com/zeroclaw-labs/zeroclaw",
-      "content_hash": "sha256:f2c98709081badc110a6044aa4bcafe3414a723a37584895b43338153eaa98ad",
+      "content_hash": "sha256:92b0bc08fc1888a431f442a3af3fab2ae55a0cd2c2e35999652286ee961dc3f4",
       "file": "templates/zeroclaw.json"
     }
   ]

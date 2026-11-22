@@ -6,56 +6,87 @@
   "sort_order": 75,
   "name": "nextcloud-redis-mariadb",
   "category": "工具",
-  "description": "Awesome Docker Compose samples",
+  "description": "Nextcloud 提供文件同步、分享和协作。这个部署组合使用 MariaDB 存储数据，并通过 Redis 提供缓存。",
   "version": "",
-  "logo": "",
-  "website": "https://github.com/docker/awesome-compose",
+  "logo": "/assets/app-icons/nextcloud.svg",
+  "website": "https://github.com/nextcloud/server",
   "tutorial": "",
   "dotenv": "",
-  "compose": "networks:\n    dbnet: null\n    redisnet: null\nservices:\n    db:\n        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW\n        environment:\n            - MYSQL_DATABASE=nextcloud\n            - MYSQL_USER=nextcloud\n            - MYSQL_ROOT_PASSWORD=nextcloud\n            - MYSQL_PASSWORD=nextcloud\n        expose:\n            - 3306\n        image: mariadb:10.5\n        networks:\n            - dbnet\n        restart: always\n        volumes:\n            - source: db_data\n              target: /var/lib/mysql\n              type: volume\n    nc:\n        environment:\n            - REDIS_HOST=redis\n            - MYSQL_HOST=db\n            - MYSQL_DATABASE=nextcloud\n            - MYSQL_USER=nextcloud\n            - MYSQL_PASSWORD=nextcloud\n        image: nextcloud:apache\n        networks:\n            - redisnet\n            - dbnet\n        ports:\n            - 80:80\n        restart: always\n        volumes:\n            - source: nc_data\n              target: /var/www/html\n              type: volume\n    redis:\n        expose:\n            - 6379\n        image: redis:alpine\n        networks:\n            - redisnet\n        restart: always\nvolumes:\n    db_data: null\n    nc_data: null\n",
+  "compose": "networks:\n  dbnet: null\n  redisnet: null\nservices:\n  db:\n    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW\n    environment:\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?请填写数据库管理员密码}\n      MYSQL_PASSWORD: ${DB_PASSWORD:?请填写应用数据库密码}\n    expose:\n    - 3306\n    image: mariadb:10.5\n    networks:\n    - dbnet\n    restart: always\n    volumes:\n    - ./db_data:/var/lib/mysql\n  nc:\n    environment:\n      REDIS_HOST: redis\n      MYSQL_HOST: db\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_PASSWORD: ${DB_PASSWORD:?请填写应用数据库密码}\n    image: nextcloud:apache\n    networks:\n    - redisnet\n    - dbnet\n    ports:\n    - 80:80\n    restart: always\n    volumes:\n    - ./nc_data:/var/www/html\n  redis:\n    expose:\n    - 6379\n    image: redis:alpine\n    networks:\n    - redisnet\n    restart: always\n",
   "input_metadata": {
+    "bind:db:/var/lib/mysql": {
+      "group": "basic"
+    },
+    "bind:nc:/var/www/html": {
+      "group": "basic"
+    },
     "port:nc:80/tcp": {
       "group": "basic"
     },
+    "project:DB_PASSWORD": {
+      "label": "应用数据库密码",
+      "group": "basic",
+      "sensitive": true
+    },
+    "project:DB_ROOT_PASSWORD": {
+      "label": "数据库管理员密码",
+      "group": "basic",
+      "sensitive": true
+    },
     "service:db:MYSQL_DATABASE": {
-      "group": "basic"
-    },
-    "service:db:MYSQL_PASSWORD": {
-      "group": "basic"
-    },
-    "service:db:MYSQL_ROOT_PASSWORD": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:db:MYSQL_USER": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:nc:MYSQL_DATABASE": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:nc:MYSQL_HOST": {
-      "group": "basic"
-    },
-    "service:nc:MYSQL_PASSWORD": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:nc:MYSQL_USER": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:nc:REDIS_HOST": {
-      "group": "basic"
+      "group": "advanced"
     }
   },
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:4debe9f94eca7cadf65311b9f7d02766f39fddd37a2e6ede3e83879abf581faa",
-    "manifest_digest": "sha256:d6faacf2c09ac434d8d53a56a85d3727ab534ef7ccebb581267c36a36c20ecd4",
+    "source_digest": "sha256:2d913e0e107d6613ebd6df90a47b7651329f95864396fc19331c3e51214b0f51",
+    "manifest_digest": "sha256:f36029890b495c16ef5e0881971b0dc9b58a96ec52fda9ac44d6136760789973",
     "services": [
       "db",
       "nc",
       "redis"
     ],
     "inputs": [
+      {
+        "id": "bind:db:/var/lib/mysql",
+        "key": "./db_data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./db_data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
+      {
+        "id": "bind:nc:/var/www/html",
+        "key": "./nc_data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./nc_data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
       {
         "id": "port:nc:80/tcp",
         "key": "80",
@@ -69,6 +100,34 @@
         }
       },
       {
+        "id": "project:DB_PASSWORD",
+        "key": "DB_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "应用数据库密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
+        "id": "project:DB_ROOT_PASSWORD",
+        "key": "DB_ROOT_PASSWORD",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "数据库管理员密码",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
         "id": "service:db:MYSQL_DATABASE",
         "key": "MYSQL_DATABASE",
         "kind": "env",
@@ -77,31 +136,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
-        }
-      },
-      {
-        "id": "service:db:MYSQL_PASSWORD",
-        "key": "MYSQL_PASSWORD",
-        "kind": "env",
-        "scope": "service",
-        "default_value": "nextcloud",
-        "required": false,
-        "sensitive": true,
-        "presentation": {
-          "group": "basic"
-        }
-      },
-      {
-        "id": "service:db:MYSQL_ROOT_PASSWORD",
-        "key": "MYSQL_ROOT_PASSWORD",
-        "kind": "env",
-        "scope": "service",
-        "default_value": "nextcloud",
-        "required": false,
-        "sensitive": true,
-        "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -113,7 +148,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -125,7 +160,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -137,19 +172,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
-        }
-      },
-      {
-        "id": "service:nc:MYSQL_PASSWORD",
-        "key": "MYSQL_PASSWORD",
-        "kind": "env",
-        "scope": "service",
-        "default_value": "nextcloud",
-        "required": false,
-        "sensitive": true,
-        "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -161,7 +184,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -173,94 +196,115 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       }
     ],
     "bindings": [
       {
+        "input_id": "project:DB_PASSWORD",
+        "service": "db",
+        "target_kind": "interpolation",
+        "target_key": "MYSQL_PASSWORD",
+        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "yaml_path": "services.db.environment.MYSQL_PASSWORD",
+        "line": 11,
+        "column": 23
+      },
+      {
+        "input_id": "project:DB_PASSWORD",
+        "service": "nc",
+        "target_kind": "interpolation",
+        "target_key": "MYSQL_PASSWORD",
+        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "yaml_path": "services.nc.environment.MYSQL_PASSWORD",
+        "line": 26,
+        "column": 23
+      },
+      {
+        "input_id": "project:DB_ROOT_PASSWORD",
+        "service": "db",
+        "target_kind": "interpolation",
+        "target_key": "MYSQL_ROOT_PASSWORD",
+        "expression": "${DB_ROOT_PASSWORD:?请填写数据库管理员密码}",
+        "yaml_path": "services.db.environment.MYSQL_ROOT_PASSWORD",
+        "line": 10,
+        "column": 28
+      },
+      {
         "input_id": "service:db:MYSQL_DATABASE",
         "service": "db",
         "target_kind": "environment",
         "target_key": "MYSQL_DATABASE",
-        "yaml_path": "services.db.environment[0]",
+        "yaml_path": "services.db.environment.MYSQL_DATABASE",
         "line": 8,
-        "column": 15
-      },
-      {
-        "input_id": "service:db:MYSQL_PASSWORD",
-        "service": "db",
-        "target_kind": "environment",
-        "target_key": "MYSQL_PASSWORD",
-        "yaml_path": "services.db.environment[3]",
-        "line": 11,
-        "column": 15
-      },
-      {
-        "input_id": "service:db:MYSQL_ROOT_PASSWORD",
-        "service": "db",
-        "target_kind": "environment",
-        "target_key": "MYSQL_ROOT_PASSWORD",
-        "yaml_path": "services.db.environment[2]",
-        "line": 10,
-        "column": 15
+        "column": 23
       },
       {
         "input_id": "service:db:MYSQL_USER",
         "service": "db",
         "target_kind": "environment",
         "target_key": "MYSQL_USER",
-        "yaml_path": "services.db.environment[1]",
+        "yaml_path": "services.db.environment.MYSQL_USER",
         "line": 9,
-        "column": 15
+        "column": 19
       },
       {
         "input_id": "service:nc:MYSQL_DATABASE",
         "service": "nc",
         "target_kind": "environment",
         "target_key": "MYSQL_DATABASE",
-        "yaml_path": "services.nc.environment[2]",
-        "line": 26,
-        "column": 15
+        "yaml_path": "services.nc.environment.MYSQL_DATABASE",
+        "line": 24,
+        "column": 23
       },
       {
         "input_id": "service:nc:MYSQL_HOST",
         "service": "nc",
         "target_kind": "environment",
         "target_key": "MYSQL_HOST",
-        "yaml_path": "services.nc.environment[1]",
-        "line": 25,
-        "column": 15
-      },
-      {
-        "input_id": "service:nc:MYSQL_PASSWORD",
-        "service": "nc",
-        "target_kind": "environment",
-        "target_key": "MYSQL_PASSWORD",
-        "yaml_path": "services.nc.environment[4]",
-        "line": 28,
-        "column": 15
+        "yaml_path": "services.nc.environment.MYSQL_HOST",
+        "line": 23,
+        "column": 19
       },
       {
         "input_id": "service:nc:MYSQL_USER",
         "service": "nc",
         "target_kind": "environment",
         "target_key": "MYSQL_USER",
-        "yaml_path": "services.nc.environment[3]",
-        "line": 27,
-        "column": 15
+        "yaml_path": "services.nc.environment.MYSQL_USER",
+        "line": 25,
+        "column": 19
       },
       {
         "input_id": "service:nc:REDIS_HOST",
         "service": "nc",
         "target_kind": "environment",
         "target_key": "REDIS_HOST",
-        "yaml_path": "services.nc.environment[0]",
-        "line": 24,
-        "column": 15
+        "yaml_path": "services.nc.environment.REDIS_HOST",
+        "line": 22,
+        "column": 19
       }
     ],
     "mappings": [
+      {
+        "id": "bind:db:/var/lib/mysql",
+        "kind": "bind",
+        "service": "db",
+        "source": "./db_data",
+        "target": "/var/lib/mysql",
+        "editable": true,
+        "yaml_path": "services.db.volumes[0]"
+      },
+      {
+        "id": "bind:nc:/var/www/html",
+        "kind": "bind",
+        "service": "nc",
+        "source": "./nc_data",
+        "target": "/var/www/html",
+        "editable": true,
+        "yaml_path": "services.nc.volumes[0]"
+      },
       {
         "id": "port:nc:80/tcp",
         "kind": "port",
@@ -270,24 +314,6 @@
         "protocol": "tcp",
         "editable": true,
         "yaml_path": "services.nc.ports[0]"
-      },
-      {
-        "id": "volume:db:/var/lib/mysql",
-        "kind": "volume",
-        "service": "db",
-        "source": "db_data",
-        "target": "/var/lib/mysql",
-        "editable": false,
-        "yaml_path": "services.db.volumes[0]"
-      },
-      {
-        "id": "volume:nc:/var/www/html",
-        "kind": "volume",
-        "service": "nc",
-        "source": "nc_data",
-        "target": "/var/www/html",
-        "editable": false,
-        "yaml_path": "services.nc.volumes[0]"
       }
     ],
     "fixed_values": [],
@@ -295,11 +321,33 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:4debe9f94eca7cadf65311b9f7d02766f39fddd37a2e6ede3e83879abf581faa",
-  "manifest_digest": "sha256:d6faacf2c09ac434d8d53a56a85d3727ab534ef7ccebb581267c36a36c20ecd4",
+  "source_digest": "sha256:2d913e0e107d6613ebd6df90a47b7651329f95864396fc19331c3e51214b0f51",
+  "manifest_digest": "sha256:f36029890b495c16ef5e0881971b0dc9b58a96ec52fda9ac44d6136760789973",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
+    {
+      "inputId": "bind:db:/var/lib/mysql",
+      "name": "./db_data",
+      "label": "./db_data",
+      "description": "",
+      "type": "path",
+      "default": "./db_data",
+      "category": "basic",
+      "serviceName": "db",
+      "paramType": "path"
+    },
+    {
+      "inputId": "bind:nc:/var/www/html",
+      "name": "./nc_data",
+      "label": "./nc_data",
+      "description": "",
+      "type": "path",
+      "default": "./nc_data",
+      "category": "basic",
+      "serviceName": "nc",
+      "paramType": "path"
+    },
     {
       "inputId": "port:nc:80/tcp",
       "name": "80",
@@ -312,35 +360,37 @@
       "paramType": "port"
     },
     {
+      "inputId": "project:DB_PASSWORD",
+      "name": "DB_PASSWORD",
+      "label": "应用数据库密码",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
+      "inputId": "project:DB_ROOT_PASSWORD",
+      "name": "DB_ROOT_PASSWORD",
+      "label": "数据库管理员密码",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
       "inputId": "service:db:MYSQL_DATABASE",
       "name": "MYSQL_DATABASE",
       "label": "MYSQL_DATABASE",
       "description": "",
       "type": "string",
       "default": "nextcloud",
-      "category": "basic",
-      "serviceName": "db",
-      "paramType": "env"
-    },
-    {
-      "inputId": "service:db:MYSQL_PASSWORD",
-      "name": "MYSQL_PASSWORD",
-      "label": "MYSQL_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "nextcloud",
-      "category": "basic",
-      "serviceName": "db",
-      "paramType": "env"
-    },
-    {
-      "inputId": "service:db:MYSQL_ROOT_PASSWORD",
-      "name": "MYSQL_ROOT_PASSWORD",
-      "label": "MYSQL_ROOT_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "nextcloud",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "db",
       "paramType": "env"
     },
@@ -351,7 +401,7 @@
       "description": "",
       "type": "string",
       "default": "nextcloud",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "db",
       "paramType": "env"
     },
@@ -362,7 +412,7 @@
       "description": "",
       "type": "string",
       "default": "nextcloud",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "nc",
       "paramType": "env"
     },
@@ -373,18 +423,7 @@
       "description": "",
       "type": "string",
       "default": "db",
-      "category": "basic",
-      "serviceName": "nc",
-      "paramType": "env"
-    },
-    {
-      "inputId": "service:nc:MYSQL_PASSWORD",
-      "name": "MYSQL_PASSWORD",
-      "label": "MYSQL_PASSWORD",
-      "description": "",
-      "type": "password",
-      "default": "nextcloud",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "nc",
       "paramType": "env"
     },
@@ -395,7 +434,7 @@
       "description": "",
       "type": "string",
       "default": "nextcloud",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "nc",
       "paramType": "env"
     },
@@ -406,7 +445,7 @@
       "description": "",
       "type": "string",
       "default": "redis",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "nc",
       "paramType": "env"
     }

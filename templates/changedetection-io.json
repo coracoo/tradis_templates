@@ -6,14 +6,17 @@
   "sort_order": 74,
   "name": "changedetection-io",
   "category": "工具",
-  "description": "A collection of sample docker compose files for self-hosted applications.",
+  "description": "changedetection.io 定时检查网页内容变化，适合跟踪商品、公告和站点更新。",
   "version": "",
-  "logo": "",
-  "website": "https://github.com/carteakey/server-compose",
+  "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/changedetection.svg",
+  "website": "https://github.com/dgtlmoon/changedetection.io",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n    changedetection:\n        hostname: changedetection\n        image: ghcr.io/dgtlmoon/changedetection.io\n        ports:\n            - 127.0.0.1:5000:5000\n        restart: unless-stopped\n        volumes:\n            - source: changedetection-data\n              target: /datastore\n              type: volume\nvolumes:\n    changedetection-data: null\n",
+  "compose": "services:\n  changedetection:\n    hostname: changedetection\n    image: ghcr.io/dgtlmoon/changedetection.io\n    ports:\n    - 127.0.0.1:5000:5000\n    restart: unless-stopped\n    volumes:\n    - ./changedetection-data:/datastore\n",
   "input_metadata": {
+    "bind:changedetection:/datastore": {
+      "group": "basic"
+    },
     "port:changedetection:5000/tcp": {
       "group": "basic"
     }
@@ -21,12 +24,24 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:4a4bbb68308f3917a31a10c5ae9fefe026602c2a911af16e68b118c7fb0e4efd",
-    "manifest_digest": "sha256:9b6b8de6b03f85c4026c214e6112748de04db86697e63abbc93d058cbd474568",
+    "source_digest": "sha256:b4212a17a57c5da3ac368844f49e32d001fe2fcd86608937bb193f1cd4a26507",
+    "manifest_digest": "sha256:6c3f9ab8fda090f98dc09c51be80c04d849423767f67f2cdb7b7cc90f92ec09e",
     "services": [
       "changedetection"
     ],
     "inputs": [
+      {
+        "id": "bind:changedetection:/datastore",
+        "key": "./changedetection-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./changedetection-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
       {
         "id": "port:changedetection:5000/tcp",
         "key": "5000",
@@ -43,6 +58,15 @@
     "bindings": [],
     "mappings": [
       {
+        "id": "bind:changedetection:/datastore",
+        "kind": "bind",
+        "service": "changedetection",
+        "source": "./changedetection-data",
+        "target": "/datastore",
+        "editable": true,
+        "yaml_path": "services.changedetection.volumes[0]"
+      },
+      {
         "id": "port:changedetection:5000/tcp",
         "kind": "port",
         "service": "changedetection",
@@ -51,15 +75,6 @@
         "protocol": "tcp",
         "editable": true,
         "yaml_path": "services.changedetection.ports[0]"
-      },
-      {
-        "id": "volume:changedetection:/datastore",
-        "kind": "volume",
-        "service": "changedetection",
-        "source": "changedetection-data",
-        "target": "/datastore",
-        "editable": false,
-        "yaml_path": "services.changedetection.volumes[0]"
       }
     ],
     "fixed_values": [],
@@ -67,11 +82,22 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:4a4bbb68308f3917a31a10c5ae9fefe026602c2a911af16e68b118c7fb0e4efd",
-  "manifest_digest": "sha256:9b6b8de6b03f85c4026c214e6112748de04db86697e63abbc93d058cbd474568",
+  "source_digest": "sha256:b4212a17a57c5da3ac368844f49e32d001fe2fcd86608937bb193f1cd4a26507",
+  "manifest_digest": "sha256:6c3f9ab8fda090f98dc09c51be80c04d849423767f67f2cdb7b7cc90f92ec09e",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
+    {
+      "inputId": "bind:changedetection:/datastore",
+      "name": "./changedetection-data",
+      "label": "./changedetection-data",
+      "description": "",
+      "type": "path",
+      "default": "./changedetection-data",
+      "category": "basic",
+      "serviceName": "changedetection",
+      "paramType": "path"
+    },
     {
       "inputId": "port:changedetection:5000/tcp",
       "name": "5000",

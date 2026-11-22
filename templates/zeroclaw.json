@@ -6,39 +6,56 @@
   "sort_order": 79,
   "name": "zeroclaw",
   "category": "🤖 AI",
-  "description": "Release",
+  "description": "ZeroClaw 是轻量级自托管 AI 助理，可配置模型供应商、工具和网关。",
   "version": "",
-  "logo": "",
+  "logo": "https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/10b8af3b048754ca8a31c8136555de77cce953f3/apps/tauri/icons/128x128.png",
   "website": "https://github.com/zeroclaw-labs/zeroclaw",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n    zeroclaw:\n        deploy:\n            resources:\n                limits:\n                    cpus: \"2\"\n                    memory: 512M\n                reservations:\n                    cpus: \"0.5\"\n                    memory: 32M\n        environment:\n            - ZEROCLAW_providers__models__openrouter__default__api_key=\n            - ZEROCLAW_gateway__host=0.0.0.0\n            - ZEROCLAW_gateway__allow_public_bind=true\n            - ZEROCLAW_gateway__port=42617\n        healthcheck:\n            interval: 60s\n            retries: 3\n            start_period: 10s\n            test:\n                - CMD\n                - zeroclaw\n                - status\n                - --format=exit-code\n            timeout: 10s\n        image: ghcr.io/zeroclaw-labs/zeroclaw:latest\n        ports:\n            - 127.0.0.1:42617:42617\n        restart: unless-stopped\n        volumes:\n            - source: zeroclaw-data\n              target: /zeroclaw-data\n              type: volume\nvolumes:\n    zeroclaw-data: null\n",
+  "compose": "services:\n  zeroclaw:\n    deploy:\n      resources:\n        limits:\n          cpus: '2'\n          memory: 512M\n        reservations:\n          cpus: '0.5'\n          memory: 32M\n    environment:\n      ZEROCLAW_providers__models__openrouter__default__api_key: ${OPENROUTER_API_KEY:?请填写OpenRouter\n        API Key}\n      ZEROCLAW_gateway__host: 0.0.0.0\n      ZEROCLAW_gateway__allow_public_bind: 'true'\n      ZEROCLAW_gateway__port: '42617'\n    healthcheck:\n      interval: 60s\n      retries: 3\n      start_period: 10s\n      test:\n      - CMD\n      - zeroclaw\n      - status\n      - --format=exit-code\n      timeout: 10s\n    image: ghcr.io/zeroclaw-labs/zeroclaw:latest\n    ports:\n    - 127.0.0.1:42617:42617\n    restart: unless-stopped\n    volumes:\n    - ./zeroclaw-data:/zeroclaw-data\n",
   "input_metadata": {
+    "bind:zeroclaw:/zeroclaw-data": {
+      "group": "basic"
+    },
     "port:zeroclaw:42617/tcp": {
       "group": "basic"
     },
+    "project:OPENROUTER_API_KEY": {
+      "label": "OpenRouter API Key",
+      "group": "basic",
+      "sensitive": true
+    },
     "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:zeroclaw:ZEROCLAW_gateway__host": {
-      "group": "basic"
+      "group": "advanced"
     },
     "service:zeroclaw:ZEROCLAW_gateway__port": {
-      "group": "basic"
-    },
-    "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key": {
-      "group": "basic"
+      "group": "advanced"
     }
   },
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:2aba8051b1038bc15062c749f8701365d7b7b61608369314e65d3770344a787c",
-    "manifest_digest": "sha256:562f48883078f9378ebcfaca0f7acefb6bc40022aa561a2f8085444392fdb412",
+    "source_digest": "sha256:cf42985053cb117ecd3052b5bede846a7716bbeeeb259c81ec0b62c2989bfaeb",
+    "manifest_digest": "sha256:497f3100c22051ab919b786bda03aaa5c16f822b180b0fcf92a369df4353c404",
     "services": [
       "zeroclaw"
     ],
     "inputs": [
+      {
+        "id": "bind:zeroclaw:/zeroclaw-data",
+        "key": "./zeroclaw-data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./zeroclaw-data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "group": "basic"
+        }
+      },
       {
         "id": "port:zeroclaw:42617/tcp",
         "key": "42617",
@@ -52,6 +69,20 @@
         }
       },
       {
+        "id": "project:OPENROUTER_API_KEY",
+        "key": "OPENROUTER_API_KEY",
+        "kind": "env",
+        "scope": "project",
+        "file": ".env",
+        "required": true,
+        "sensitive": true,
+        "presentation": {
+          "label": "OpenRouter API Key",
+          "group": "basic",
+          "sensitive": true
+        }
+      },
+      {
         "id": "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind",
         "key": "ZEROCLAW_gateway__allow_public_bind",
         "kind": "env",
@@ -60,7 +91,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -72,7 +103,7 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       },
       {
@@ -84,60 +115,59 @@
         "required": false,
         "sensitive": false,
         "presentation": {
-          "group": "basic"
-        }
-      },
-      {
-        "id": "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key",
-        "key": "ZEROCLAW_providers__models__openrouter__default__api_key",
-        "kind": "env",
-        "scope": "service",
-        "required": false,
-        "sensitive": true,
-        "presentation": {
-          "group": "basic"
+          "group": "advanced"
         }
       }
     ],
     "bindings": [
       {
+        "input_id": "project:OPENROUTER_API_KEY",
+        "service": "zeroclaw",
+        "target_kind": "interpolation",
+        "target_key": "ZEROCLAW_providers__models__openrouter__default__api_key",
+        "expression": "${OPENROUTER_API_KEY:?请填写OpenRouter API Key}",
+        "yaml_path": "services.zeroclaw.environment.ZEROCLAW_providers__models__openrouter__default__api_key",
+        "line": 12,
+        "column": 65
+      },
+      {
         "input_id": "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind",
         "service": "zeroclaw",
         "target_kind": "environment",
         "target_key": "ZEROCLAW_gateway__allow_public_bind",
-        "yaml_path": "services.zeroclaw.environment[2]",
-        "line": 14,
-        "column": 15
+        "yaml_path": "services.zeroclaw.environment.ZEROCLAW_gateway__allow_public_bind",
+        "line": 15,
+        "column": 44
       },
       {
         "input_id": "service:zeroclaw:ZEROCLAW_gateway__host",
         "service": "zeroclaw",
         "target_kind": "environment",
         "target_key": "ZEROCLAW_gateway__host",
-        "yaml_path": "services.zeroclaw.environment[1]",
-        "line": 13,
-        "column": 15
+        "yaml_path": "services.zeroclaw.environment.ZEROCLAW_gateway__host",
+        "line": 14,
+        "column": 31
       },
       {
         "input_id": "service:zeroclaw:ZEROCLAW_gateway__port",
         "service": "zeroclaw",
         "target_kind": "environment",
         "target_key": "ZEROCLAW_gateway__port",
-        "yaml_path": "services.zeroclaw.environment[3]",
-        "line": 15,
-        "column": 15
-      },
-      {
-        "input_id": "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key",
-        "service": "zeroclaw",
-        "target_kind": "environment",
-        "target_key": "ZEROCLAW_providers__models__openrouter__default__api_key",
-        "yaml_path": "services.zeroclaw.environment[0]",
-        "line": 12,
-        "column": 15
+        "yaml_path": "services.zeroclaw.environment.ZEROCLAW_gateway__port",
+        "line": 16,
+        "column": 31
       }
     ],
     "mappings": [
+      {
+        "id": "bind:zeroclaw:/zeroclaw-data",
+        "kind": "bind",
+        "service": "zeroclaw",
+        "source": "./zeroclaw-data",
+        "target": "/zeroclaw-data",
+        "editable": true,
+        "yaml_path": "services.zeroclaw.volumes[0]"
+      },
       {
         "id": "port:zeroclaw:42617/tcp",
         "kind": "port",
@@ -147,15 +177,6 @@
         "protocol": "tcp",
         "editable": true,
         "yaml_path": "services.zeroclaw.ports[0]"
-      },
-      {
-        "id": "volume:zeroclaw:/zeroclaw-data",
-        "kind": "volume",
-        "service": "zeroclaw",
-        "source": "zeroclaw-data",
-        "target": "/zeroclaw-data",
-        "editable": false,
-        "yaml_path": "services.zeroclaw.volumes[0]"
       }
     ],
     "fixed_values": [],
@@ -163,11 +184,22 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:2aba8051b1038bc15062c749f8701365d7b7b61608369314e65d3770344a787c",
-  "manifest_digest": "sha256:562f48883078f9378ebcfaca0f7acefb6bc40022aa561a2f8085444392fdb412",
+  "source_digest": "sha256:cf42985053cb117ecd3052b5bede846a7716bbeeeb259c81ec0b62c2989bfaeb",
+  "manifest_digest": "sha256:497f3100c22051ab919b786bda03aaa5c16f822b180b0fcf92a369df4353c404",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
+    {
+      "inputId": "bind:zeroclaw:/zeroclaw-data",
+      "name": "./zeroclaw-data",
+      "label": "./zeroclaw-data",
+      "description": "",
+      "type": "path",
+      "default": "./zeroclaw-data",
+      "category": "basic",
+      "serviceName": "zeroclaw",
+      "paramType": "path"
+    },
     {
       "inputId": "port:zeroclaw:42617/tcp",
       "name": "42617",
@@ -180,13 +212,25 @@
       "paramType": "port"
     },
     {
+      "inputId": "project:OPENROUTER_API_KEY",
+      "name": "OPENROUTER_API_KEY",
+      "label": "OpenRouter API Key",
+      "description": "",
+      "type": "password",
+      "default": "",
+      "category": "basic",
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
+    },
+    {
       "inputId": "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind",
       "name": "ZEROCLAW_gateway__allow_public_bind",
       "label": "ZEROCLAW_gateway__allow_public_bind",
       "description": "",
       "type": "string",
       "default": "true",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "zeroclaw",
       "paramType": "env"
     },
@@ -197,7 +241,7 @@
       "description": "",
       "type": "string",
       "default": "0.0.0.0",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "zeroclaw",
       "paramType": "env"
     },
@@ -208,18 +252,7 @@
       "description": "",
       "type": "string",
       "default": "42617",
-      "category": "basic",
-      "serviceName": "zeroclaw",
-      "paramType": "env"
-    },
-    {
-      "inputId": "service:zeroclaw:ZEROCLAW_providers__models__openrouter__default__api_key",
-      "name": "ZEROCLAW_providers__models__openrouter__default__api_key",
-      "label": "ZEROCLAW_providers__models__openrouter__default__api_key",
-      "description": "",
-      "type": "password",
-      "default": "",
-      "category": "basic",
+      "category": "advanced",
       "serviceName": "zeroclaw",
       "paramType": "env"
     }
