@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 09:06:50，更新项目2个",
+  "note": "2026-11-22 09:09:44，更新项目1个",
   "templates_note": "累计项目86个",
-  "generated_at": "2026-11-22T09:06:50+08:00",
+  "generated_at": "2026-11-22T09:09:44+08:00",
   "templates": [
     {
       "id": 1,
@@ -1045,11 +1045,11 @@
       "sort_order": 82,
       "name": "mariadb",
       "category": "Stack Architecture",
-      "description": "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager.",
+      "description": "MariaDB 是兼容 MySQL 的开源关系型数据库，适合网站、服务和自建应用存储结构化数据。",
       "version": "",
-      "logo": "",
+      "logo": "/assets/app-icons/mariadb.svg",
       "website": "https://github.com/louislam/dockge",
-      "content_hash": "sha256:706d77803b09e8f21ba330d35ebd967da3caf27c09542dfe6597ac70d49aab1e",
+      "content_hash": "sha256:27bc31b8c0ed590d4d91f376952cb813aa73b26a90c6a7f74b51a80a524a014e",
       "file": "templates/mariadb.json"
     },
     {

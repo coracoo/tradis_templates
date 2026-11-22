@@ -6,30 +6,50 @@
   "sort_order": 82,
   "name": "mariadb",
   "category": "Stack Architecture",
-  "description": "A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager.",
+  "description": "MariaDB 是兼容 MySQL 的开源关系型数据库，适合网站、服务和自建应用存储结构化数据。",
   "version": "",
-  "logo": "",
+  "logo": "/assets/app-icons/mariadb.svg",
   "website": "https://github.com/louislam/dockge",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n    mariadb:\n        environment:\n            - MARIADB_ROOT_PASSWORD=123456\n        image: mariadb:latest\n        ports:\n            - 3306:3306\n        restart: unless-stopped\n",
+  "compose": "services:\n  mariadb:\n    image: mariadb:latest\n    environment:\n      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?请填写数据库管理员密码}\n    ports:\n      - \"3306:3306\"\n    volumes:\n      - ./data:/var/lib/mysql\n    restart: unless-stopped\n",
   "input_metadata": {
-    "port:mariadb:3306/tcp": {
+    "bind:mariadb:/var/lib/mysql": {
+      "label": "数据库数据目录",
       "group": "basic"
     },
-    "service:mariadb:MARIADB_ROOT_PASSWORD": {
+    "port:mariadb:3306/tcp": {
+      "label": "数据库端口",
+      "group": "basic"
+    },
+    "project:MARIADB_ROOT_PASSWORD": {
+      "label": "数据库管理员密码",
+      "description": "初始化 MariaDB 时设置的 root 密码。",
       "group": "basic"
     }
   },
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:66aeb49ae21251791b18a6881aef22108cf026a35a71577d8e1fc461f030972f",
-    "manifest_digest": "sha256:b055ea869fd5d7a6e02bf866ba9724a23932107dfa8bce8b231b0c90bd7af5d8",
+    "source_digest": "sha256:ea85d1e591fa9303ecd6c60e40484e86ded5e74ff36b295afa035008cb91ee93",
+    "manifest_digest": "sha256:223c5b0292565cac53a3b9d2bdd499186e8790fa1c5c9f707ab494c87d4cc5b7",
     "services": [
       "mariadb"
     ],
     "inputs": [
+      {
+        "id": "bind:mariadb:/var/lib/mysql",
+        "key": "./data",
+        "kind": "bind",
+        "scope": "service",
+        "default_value": "./data",
+        "required": false,
+        "sensitive": false,
+        "presentation": {
+          "label": "数据库数据目录",
+          "group": "basic"
+        }
+      },
       {
         "id": "port:mariadb:3306/tcp",
         "key": "3306",
@@ -39,34 +59,47 @@
         "required": false,
         "sensitive": false,
         "presentation": {
+          "label": "数据库端口",
           "group": "basic"
         }
       },
       {
-        "id": "service:mariadb:MARIADB_ROOT_PASSWORD",
+        "id": "project:MARIADB_ROOT_PASSWORD",
         "key": "MARIADB_ROOT_PASSWORD",
         "kind": "env",
-        "scope": "service",
-        "default_value": "123456",
-        "required": false,
+        "scope": "project",
+        "file": ".env",
+        "required": true,
         "sensitive": true,
         "presentation": {
+          "label": "数据库管理员密码",
+          "description": "初始化 MariaDB 时设置的 root 密码。",
           "group": "basic"
         }
       }
     ],
     "bindings": [
       {
-        "input_id": "service:mariadb:MARIADB_ROOT_PASSWORD",
+        "input_id": "project:MARIADB_ROOT_PASSWORD",
         "service": "mariadb",
-        "target_kind": "environment",
+        "target_kind": "interpolation",
         "target_key": "MARIADB_ROOT_PASSWORD",
-        "yaml_path": "services.mariadb.environment[0]",
-        "line": 4,
-        "column": 15
+        "expression": "${MARIADB_ROOT_PASSWORD:?请填写数据库管理员密码}",
+        "yaml_path": "services.mariadb.environment.MARIADB_ROOT_PASSWORD",
+        "line": 5,
+        "column": 30
       }
     ],
     "mappings": [
+      {
+        "id": "bind:mariadb:/var/lib/mysql",
+        "kind": "bind",
+        "service": "mariadb",
+        "source": "./data",
+        "target": "/var/lib/mysql",
+        "editable": true,
+        "yaml_path": "services.mariadb.volumes[0]"
+      },
       {
         "id": "port:mariadb:3306/tcp",
         "kind": "port",
@@ -83,15 +116,26 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:66aeb49ae21251791b18a6881aef22108cf026a35a71577d8e1fc461f030972f",
-  "manifest_digest": "sha256:b055ea869fd5d7a6e02bf866ba9724a23932107dfa8bce8b231b0c90bd7af5d8",
+  "source_digest": "sha256:ea85d1e591fa9303ecd6c60e40484e86ded5e74ff36b295afa035008cb91ee93",
+  "manifest_digest": "sha256:223c5b0292565cac53a3b9d2bdd499186e8790fa1c5c9f707ab494c87d4cc5b7",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
     {
+      "inputId": "bind:mariadb:/var/lib/mysql",
+      "name": "./data",
+      "label": "数据库数据目录",
+      "description": "",
+      "type": "path",
+      "default": "./data",
+      "category": "basic",
+      "serviceName": "mariadb",
+      "paramType": "path"
+    },
+    {
       "inputId": "port:mariadb:3306/tcp",
       "name": "3306",
-      "label": "3306",
+      "label": "数据库端口",
       "description": "",
       "type": "port",
       "default": "3306",
@@ -100,15 +144,16 @@
       "paramType": "port"
     },
     {
-      "inputId": "service:mariadb:MARIADB_ROOT_PASSWORD",
+      "inputId": "project:MARIADB_ROOT_PASSWORD",
       "name": "MARIADB_ROOT_PASSWORD",
-      "label": "MARIADB_ROOT_PASSWORD",
-      "description": "",
+      "label": "数据库管理员密码",
+      "description": "初始化 MariaDB 时设置的 root 密码。",
       "type": "password",
-      "default": "123456",
+      "default": "",
       "category": "basic",
-      "serviceName": "mariadb",
-      "paramType": "env"
+      "serviceName": "Global",
+      "paramType": "env",
+      "envFile": ".env"
     }
   ],
   "enabled": true
