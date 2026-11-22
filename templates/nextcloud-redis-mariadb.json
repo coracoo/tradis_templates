@@ -12,7 +12,7 @@
   "website": "https://github.com/nextcloud/server",
   "tutorial": "",
   "dotenv": "",
-  "compose": "networks:\n  dbnet: null\n  redisnet: null\nservices:\n  db:\n    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW\n    environment:\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?请填写数据库管理员密码}\n      MYSQL_PASSWORD: ${DB_PASSWORD:?请填写应用数据库密码}\n    expose:\n    - 3306\n    image: mariadb:10.5\n    networks:\n    - dbnet\n    restart: always\n    volumes:\n    - ./db_data:/var/lib/mysql\n  nc:\n    environment:\n      REDIS_HOST: redis\n      MYSQL_HOST: db\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_PASSWORD: ${DB_PASSWORD:?请填写应用数据库密码}\n    image: nextcloud:apache\n    networks:\n    - redisnet\n    - dbnet\n    ports:\n    - 80:80\n    restart: always\n    volumes:\n    - ./nc_data:/var/www/html\n  redis:\n    expose:\n    - 6379\n    image: redis:alpine\n    networks:\n    - redisnet\n    restart: always\n",
+  "compose": "networks:\n  dbnet: null\n  redisnet: null\nservices:\n  db:\n    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW\n    environment:\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is required}\n      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n    expose:\n    - 3306\n    image: mariadb:10.5\n    networks:\n    - dbnet\n    restart: always\n    volumes:\n    - ./db_data:/var/lib/mysql\n  nc:\n    environment:\n      REDIS_HOST: redis\n      MYSQL_HOST: db\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n    image: nextcloud:apache\n    networks:\n    - redisnet\n    - dbnet\n    ports:\n    - 80:80\n    restart: always\n    volumes:\n    - ./nc_data:/var/www/html\n  redis:\n    expose:\n    - 6379\n    image: redis:alpine\n    networks:\n    - redisnet\n    restart: always\n",
   "input_metadata": {
     "bind:db:/var/lib/mysql": {
       "group": "basic"
@@ -23,15 +23,11 @@
     "port:nc:80/tcp": {
       "group": "basic"
     },
-    "project:DB_PASSWORD": {
-      "label": "应用数据库密码",
-      "group": "basic",
-      "sensitive": true
+    "project:MYSQL_PASSWORD": {
+      "group": "basic"
     },
-    "project:DB_ROOT_PASSWORD": {
-      "label": "数据库管理员密码",
-      "group": "basic",
-      "sensitive": true
+    "project:MYSQL_ROOT_PASSWORD": {
+      "group": "basic"
     },
     "service:db:MYSQL_DATABASE": {
       "group": "advanced"
@@ -55,8 +51,8 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:2d913e0e107d6613ebd6df90a47b7651329f95864396fc19331c3e51214b0f51",
-    "manifest_digest": "sha256:f36029890b495c16ef5e0881971b0dc9b58a96ec52fda9ac44d6136760789973",
+    "source_digest": "sha256:5fa4e290fba10ca5f12670902b79a24c619c440dcb8e156dbe28ff05f7eb2abb",
+    "manifest_digest": "sha256:010aae8294cc318f17f50e548b876ca01884b24ba12917319f9f2f3ec5bad60f",
     "services": [
       "db",
       "nc",
@@ -100,31 +96,27 @@
         }
       },
       {
-        "id": "project:DB_PASSWORD",
-        "key": "DB_PASSWORD",
+        "id": "project:MYSQL_PASSWORD",
+        "key": "MYSQL_PASSWORD",
         "kind": "env",
         "scope": "project",
         "file": ".env",
         "required": true,
         "sensitive": true,
         "presentation": {
-          "label": "应用数据库密码",
-          "group": "basic",
-          "sensitive": true
+          "group": "basic"
         }
       },
       {
-        "id": "project:DB_ROOT_PASSWORD",
-        "key": "DB_ROOT_PASSWORD",
+        "id": "project:MYSQL_ROOT_PASSWORD",
+        "key": "MYSQL_ROOT_PASSWORD",
         "kind": "env",
         "scope": "project",
         "file": ".env",
         "required": true,
         "sensitive": true,
         "presentation": {
-          "label": "数据库管理员密码",
-          "group": "basic",
-          "sensitive": true
+          "group": "basic"
         }
       },
       {
@@ -202,31 +194,31 @@
     ],
     "bindings": [
       {
-        "input_id": "project:DB_PASSWORD",
+        "input_id": "project:MYSQL_PASSWORD",
         "service": "db",
         "target_kind": "interpolation",
         "target_key": "MYSQL_PASSWORD",
-        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "expression": "${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}",
         "yaml_path": "services.db.environment.MYSQL_PASSWORD",
         "line": 11,
         "column": 23
       },
       {
-        "input_id": "project:DB_PASSWORD",
+        "input_id": "project:MYSQL_PASSWORD",
         "service": "nc",
         "target_kind": "interpolation",
         "target_key": "MYSQL_PASSWORD",
-        "expression": "${DB_PASSWORD:?请填写应用数据库密码}",
+        "expression": "${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}",
         "yaml_path": "services.nc.environment.MYSQL_PASSWORD",
         "line": 26,
         "column": 23
       },
       {
-        "input_id": "project:DB_ROOT_PASSWORD",
+        "input_id": "project:MYSQL_ROOT_PASSWORD",
         "service": "db",
         "target_kind": "interpolation",
         "target_key": "MYSQL_ROOT_PASSWORD",
-        "expression": "${DB_ROOT_PASSWORD:?请填写数据库管理员密码}",
+        "expression": "${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is required}",
         "yaml_path": "services.db.environment.MYSQL_ROOT_PASSWORD",
         "line": 10,
         "column": 28
@@ -321,8 +313,8 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:2d913e0e107d6613ebd6df90a47b7651329f95864396fc19331c3e51214b0f51",
-  "manifest_digest": "sha256:f36029890b495c16ef5e0881971b0dc9b58a96ec52fda9ac44d6136760789973",
+  "source_digest": "sha256:5fa4e290fba10ca5f12670902b79a24c619c440dcb8e156dbe28ff05f7eb2abb",
+  "manifest_digest": "sha256:010aae8294cc318f17f50e548b876ca01884b24ba12917319f9f2f3ec5bad60f",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
@@ -360,9 +352,9 @@
       "paramType": "port"
     },
     {
-      "inputId": "project:DB_PASSWORD",
-      "name": "DB_PASSWORD",
-      "label": "应用数据库密码",
+      "inputId": "project:MYSQL_PASSWORD",
+      "name": "MYSQL_PASSWORD",
+      "label": "MYSQL_PASSWORD",
       "description": "",
       "type": "password",
       "default": "",
@@ -372,9 +364,9 @@
       "envFile": ".env"
     },
     {
-      "inputId": "project:DB_ROOT_PASSWORD",
-      "name": "DB_ROOT_PASSWORD",
-      "label": "数据库管理员密码",
+      "inputId": "project:MYSQL_ROOT_PASSWORD",
+      "name": "MYSQL_ROOT_PASSWORD",
+      "label": "MYSQL_ROOT_PASSWORD",
       "description": "",
       "type": "password",
       "default": "",

@@ -12,7 +12,7 @@
   "website": "https://github.com/zeroclaw-labs/zeroclaw",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n  zeroclaw:\n    deploy:\n      resources:\n        limits:\n          cpus: '2'\n          memory: 512M\n        reservations:\n          cpus: '0.5'\n          memory: 32M\n    environment:\n      ZEROCLAW_providers__models__openrouter__default__api_key: ${OPENROUTER_API_KEY:?请填写OpenRouter\n        API Key}\n      ZEROCLAW_gateway__host: 0.0.0.0\n      ZEROCLAW_gateway__allow_public_bind: 'true'\n      ZEROCLAW_gateway__port: '42617'\n    healthcheck:\n      interval: 60s\n      retries: 3\n      start_period: 10s\n      test:\n      - CMD\n      - zeroclaw\n      - status\n      - --format=exit-code\n      timeout: 10s\n    image: ghcr.io/zeroclaw-labs/zeroclaw:latest\n    ports:\n    - 127.0.0.1:42617:42617\n    restart: unless-stopped\n    volumes:\n    - ./zeroclaw-data:/zeroclaw-data\n",
+  "compose": "services:\n  zeroclaw:\n    deploy:\n      resources:\n        limits:\n          cpus: '2'\n          memory: 512M\n        reservations:\n          cpus: '0.5'\n          memory: 32M\n    environment:\n      ZEROCLAW_providers__models__openrouter__default__api_key: ${OPENROUTER_API_KEY:?OPENROUTER_API_KEY is required}\n      ZEROCLAW_gateway__host: 0.0.0.0\n      ZEROCLAW_gateway__allow_public_bind: 'true'\n      ZEROCLAW_gateway__port: '42617'\n    healthcheck:\n      interval: 60s\n      retries: 3\n      start_period: 10s\n      test:\n      - CMD\n      - zeroclaw\n      - status\n      - --format=exit-code\n      timeout: 10s\n    image: ghcr.io/zeroclaw-labs/zeroclaw:latest\n    ports:\n    - 127.0.0.1:42617:42617\n    restart: unless-stopped\n    volumes:\n    - ./zeroclaw-data:/zeroclaw-data\n",
   "input_metadata": {
     "bind:zeroclaw:/zeroclaw-data": {
       "group": "basic"
@@ -21,9 +21,7 @@
       "group": "basic"
     },
     "project:OPENROUTER_API_KEY": {
-      "label": "OpenRouter API Key",
-      "group": "basic",
-      "sensitive": true
+      "group": "basic"
     },
     "service:zeroclaw:ZEROCLAW_gateway__allow_public_bind": {
       "group": "advanced"
@@ -38,8 +36,8 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:cf42985053cb117ecd3052b5bede846a7716bbeeeb259c81ec0b62c2989bfaeb",
-    "manifest_digest": "sha256:497f3100c22051ab919b786bda03aaa5c16f822b180b0fcf92a369df4353c404",
+    "source_digest": "sha256:98140e818ba45f5628b95418e9064d6ff12324b76e8cdf2fb2a765acccb045d3",
+    "manifest_digest": "sha256:6d49bacbcf6cc21eb914fa3028f71eb5d2b0f21af1bd7fa9f996a5d615e7280f",
     "services": [
       "zeroclaw"
     ],
@@ -77,9 +75,7 @@
         "required": true,
         "sensitive": true,
         "presentation": {
-          "label": "OpenRouter API Key",
-          "group": "basic",
-          "sensitive": true
+          "group": "basic"
         }
       },
       {
@@ -125,7 +121,7 @@
         "service": "zeroclaw",
         "target_kind": "interpolation",
         "target_key": "ZEROCLAW_providers__models__openrouter__default__api_key",
-        "expression": "${OPENROUTER_API_KEY:?请填写OpenRouter API Key}",
+        "expression": "${OPENROUTER_API_KEY:?OPENROUTER_API_KEY is required}",
         "yaml_path": "services.zeroclaw.environment.ZEROCLAW_providers__models__openrouter__default__api_key",
         "line": 12,
         "column": 65
@@ -136,7 +132,7 @@
         "target_kind": "environment",
         "target_key": "ZEROCLAW_gateway__allow_public_bind",
         "yaml_path": "services.zeroclaw.environment.ZEROCLAW_gateway__allow_public_bind",
-        "line": 15,
+        "line": 14,
         "column": 44
       },
       {
@@ -145,7 +141,7 @@
         "target_kind": "environment",
         "target_key": "ZEROCLAW_gateway__host",
         "yaml_path": "services.zeroclaw.environment.ZEROCLAW_gateway__host",
-        "line": 14,
+        "line": 13,
         "column": 31
       },
       {
@@ -154,7 +150,7 @@
         "target_kind": "environment",
         "target_key": "ZEROCLAW_gateway__port",
         "yaml_path": "services.zeroclaw.environment.ZEROCLAW_gateway__port",
-        "line": 16,
+        "line": 15,
         "column": 31
       }
     ],
@@ -184,8 +180,8 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:cf42985053cb117ecd3052b5bede846a7716bbeeeb259c81ec0b62c2989bfaeb",
-  "manifest_digest": "sha256:497f3100c22051ab919b786bda03aaa5c16f822b180b0fcf92a369df4353c404",
+  "source_digest": "sha256:98140e818ba45f5628b95418e9064d6ff12324b76e8cdf2fb2a765acccb045d3",
+  "manifest_digest": "sha256:6d49bacbcf6cc21eb914fa3028f71eb5d2b0f21af1bd7fa9f996a5d615e7280f",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
@@ -214,7 +210,7 @@
     {
       "inputId": "project:OPENROUTER_API_KEY",
       "name": "OPENROUTER_API_KEY",
-      "label": "OpenRouter API Key",
+      "label": "OPENROUTER_API_KEY",
       "description": "",
       "type": "password",
       "default": "",

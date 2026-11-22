@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 09:35:52，更新项目1个",
+  "note": "2026-11-22 09:36:00，更新项目4个",
   "templates_note": "累计项目79个",
-  "generated_at": "2026-11-22T09:35:52+08:00",
+  "generated_at": "2026-11-22T09:36:00+08:00",
   "templates": [
     {
       "id": 1,
@@ -944,7 +944,7 @@
       "version": "",
       "logo": "/assets/app-icons/nextcloud.svg",
       "website": "https://github.com/nextcloud/server",
-      "content_hash": "sha256:9eb1d3fb505224fa60673e45a9032170c0db5b9be2dd8e59fb7499a0d7d33380",
+      "content_hash": "sha256:c07023a7c3665f758367fa724e7978ad180748e9c9119025e81e033016dcdea9",
       "file": "templates/nextcloud-redis-mariadb.json"
     },
     {
@@ -959,7 +959,7 @@
       "version": "",
       "logo": "/assets/app-icons/wordpress.svg",
       "website": "https://wordpress.org/",
-      "content_hash": "sha256:61085a616c12e5be64f9744cb95b6e2dfa261c07e3275f94510df76ce98e8111",
+      "content_hash": "sha256:89582d2edae8350ed8b3c3527d5b9ebdfa6124dc4f8786032f6a96de17b6dfa9",
       "file": "templates/wordpress-mysql.json"
     },
     {
@@ -974,7 +974,7 @@
       "version": "",
       "logo": "/assets/app-icons/mariadb.svg",
       "website": "https://github.com/louislam/dockge",
-      "content_hash": "sha256:27bc31b8c0ed590d4d91f376952cb813aa73b26a90c6a7f74b51a80a524a014e",
+      "content_hash": "sha256:bfca3d6955209da4b265414fb86a3f3571ed152cc83be9937456f685ac384d97",
       "file": "templates/mariadb.json"
     },
     {
@@ -1004,7 +1004,7 @@
       "version": "",
       "logo": "https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/10b8af3b048754ca8a31c8136555de77cce953f3/apps/tauri/icons/128x128.png",
       "website": "https://github.com/zeroclaw-labs/zeroclaw",
-      "content_hash": "sha256:92b0bc08fc1888a431f442a3af3fab2ae55a0cd2c2e35999652286ee961dc3f4",
+      "content_hash": "sha256:03bd66a3da8b8d0fd547dc4d1567416c8f44a671bb0346babfb18823086d3642",
       "file": "templates/zeroclaw.json"
     }
   ]
