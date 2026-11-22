@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 09:09:44，更新项目1个",
-  "templates_note": "累计项目86个",
-  "generated_at": "2026-11-22T09:09:44+08:00",
+  "note": "2026-11-22 09:27:09，更新项目18个",
+  "templates_note": "累计项目85个",
+  "generated_at": "2026-11-22T09:27:09+08:00",
   "templates": [
     {
       "id": 1,
@@ -846,23 +846,8 @@
       "architectures": [
         "amd64"
       ],
-      "id": 253,
-      "sort_order": 69,
-      "name": "cs2-dedicated-server",
-      "category": "工具",
-      "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
-      "version": "",
-      "logo": "",
-      "website": "https://github.com/Haxxnet/Compose-Examples",
-      "content_hash": "sha256:9994fa9ca11f1a67b6111b9cdf3027c6e887db8b44f7ce52510f822ad94c1b52",
-      "file": "templates/cs2-dedicated-server.json"
-    },
-    {
-      "architectures": [
-        "amd64"
-      ],
       "id": 254,
-      "sort_order": 70,
+      "sort_order": 69,
       "name": "flaresolverr",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -877,7 +862,7 @@
         "amd64"
       ],
       "id": 255,
-      "sort_order": 71,
+      "sort_order": 70,
       "name": "monkeytype",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -892,7 +877,7 @@
         "amd64"
       ],
       "id": 256,
-      "sort_order": 72,
+      "sort_order": 71,
       "name": "network-multitool",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -907,7 +892,7 @@
         "amd64"
       ],
       "id": 257,
-      "sort_order": 73,
+      "sort_order": 72,
       "name": "pairdrop",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -922,7 +907,7 @@
         "amd64"
       ],
       "id": 258,
-      "sort_order": 74,
+      "sort_order": 73,
       "name": "posio",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -937,7 +922,7 @@
         "amd64"
       ],
       "id": 259,
-      "sort_order": 75,
+      "sort_order": 74,
       "name": "requestbin",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -952,7 +937,7 @@
         "amd64"
       ],
       "id": 260,
-      "sort_order": 76,
+      "sort_order": 75,
       "name": "transfer-zip",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -967,7 +952,7 @@
         "amd64"
       ],
       "id": 261,
-      "sort_order": 77,
+      "sort_order": 76,
       "name": "webhook-site",
       "category": "工具",
       "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",
@@ -982,7 +967,7 @@
         "amd64"
       ],
       "id": 262,
-      "sort_order": 78,
+      "sort_order": 77,
       "name": "changedetection-io",
       "category": "工具",
       "description": "A collection of sample docker compose files for self-hosted applications.",
@@ -997,7 +982,7 @@
         "amd64"
       ],
       "id": 263,
-      "sort_order": 79,
+      "sort_order": 78,
       "name": "nextcloud-redis-mariadb",
       "category": "工具",
       "description": "Awesome Docker Compose samples",
@@ -1012,7 +997,7 @@
         "amd64"
       ],
       "id": 264,
-      "sort_order": 80,
+      "sort_order": 79,
       "name": "wordpress-mysql",
       "category": "工具",
       "description": "Awesome Docker Compose samples",
@@ -1027,7 +1012,7 @@
         "amd64"
       ],
       "id": 265,
-      "sort_order": 81,
+      "sort_order": 80,
       "name": "local-environment",
       "category": "Proxy",
       "description": "~~ - A reverse proxy that provides authentication with Google, Azure, OpenID Connect and many more identity providers.",
@@ -1042,7 +1027,7 @@
         "amd64"
       ],
       "id": 267,
-      "sort_order": 82,
+      "sort_order": 81,
       "name": "mariadb",
       "category": "Stack Architecture",
       "description": "MariaDB 是兼容 MySQL 的开源关系型数据库，适合网站、服务和自建应用存储结构化数据。",
@@ -1057,7 +1042,7 @@
         "amd64"
       ],
       "id": 268,
-      "sort_order": 83,
+      "sort_order": 82,
       "name": "local-npm",
       "category": "Stack Architecture",
       "description": "Multi-platform open source analytics and interactive visualization web application.",
@@ -1072,7 +1057,7 @@
         "amd64"
       ],
       "id": 269,
-      "sort_order": 84,
+      "sort_order": 83,
       "name": "manual-test-radius-tls",
       "category": "Stack Architecture",
       "description": "Lightweight and fancy self-hosted monitoring tool.",
@@ -1087,7 +1072,7 @@
         "amd64"
       ],
       "id": 270,
-      "sort_order": 85,
+      "sort_order": 84,
       "name": "qwenpaw",
       "category": "🤖 AI",
       "description": "Release",
@@ -1102,7 +1087,7 @@
         "amd64"
       ],
       "id": 271,
-      "sort_order": 86,
+      "sort_order": 85,
       "name": "zeroclaw",
       "category": "🤖 AI",
       "description": "Release",

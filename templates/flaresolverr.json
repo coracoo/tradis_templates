@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 254,
-  "sort_order": 70,
+  "sort_order": 69,
   "name": "flaresolverr",
   "category": "工具",
   "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",

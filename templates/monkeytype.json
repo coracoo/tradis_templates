@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 255,
-  "sort_order": 71,
+  "sort_order": 70,
   "name": "monkeytype",
   "category": "工具",
   "description": "Various Docker Compose examples of selfhosted FOSS and proprietary projects.",

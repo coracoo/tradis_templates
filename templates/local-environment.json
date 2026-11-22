@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 265,
-  "sort_order": 81,
+  "sort_order": 80,
   "name": "local-environment",
   "category": "Proxy",
   "description": "~~ - A reverse proxy that provides authentication with Google, Azure, OpenID Connect and many more identity providers.",

@@ -3,7 +3,7 @@
     "amd64"
   ],
   "id": 269,
-  "sort_order": 84,
+  "sort_order": 83,
   "name": "manual-test-radius-tls",
   "category": "Stack Architecture",
   "description": "Lightweight and fancy self-hosted monitoring tool.",
