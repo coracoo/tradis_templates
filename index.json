@@ -1,7 +1,7 @@
 {
-  "note": "2026-11-22 10:00:12，更新项目1个",
+  "note": "2026-11-22 10:00:21，更新项目5个",
   "templates_note": "累计项目79个",
-  "generated_at": "2026-11-22T10:00:12+08:00",
+  "generated_at": "2026-11-22T10:00:21+08:00",
   "templates": [
     {
       "id": 1,
@@ -929,7 +929,7 @@
       "version": "",
       "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@57e939e504eda0ea764098015da93aa666ad6f31/svg/changedetection.svg",
       "website": "https://github.com/dgtlmoon/changedetection.io",
-      "content_hash": "sha256:b672fe2624a2982dadb782350d1785c5b57fdd65c44d49820fdb61af0e24d249",
+      "content_hash": "sha256:a76749e5c7e1658493a2fb2cd1e26b68d4f8dae181170de4f2279a74a1716e98",
       "file": "templates/changedetection-io.json"
     },
     {
@@ -944,7 +944,7 @@
       "version": "",
       "logo": "/assets/app-icons/nextcloud.svg",
       "website": "https://github.com/nextcloud/server",
-      "content_hash": "sha256:c07023a7c3665f758367fa724e7978ad180748e9c9119025e81e033016dcdea9",
+      "content_hash": "sha256:d52cb06071722a154bd5091a58da5cf8cc76cba4ffc5f7c7ce70d11ad7a4f7df",
       "file": "templates/nextcloud-redis-mariadb.json"
     },
     {
@@ -959,7 +959,7 @@
       "version": "",
       "logo": "/assets/app-icons/wordpress.svg",
       "website": "https://wordpress.org/",
-      "content_hash": "sha256:89582d2edae8350ed8b3c3527d5b9ebdfa6124dc4f8786032f6a96de17b6dfa9",
+      "content_hash": "sha256:aa05fa1f019931433b6d61f1e159774f3b85d97ded767421793ecc634d4f27ff",
       "file": "templates/wordpress-mysql.json"
     },
     {
@@ -989,7 +989,7 @@
       "version": "",
       "logo": "https://raw.githubusercontent.com/agentscope-ai/qwenpaw/b02e17b8cf3fdde484f33c6981321280a0417232/console/src-tauri/icons/icon.png",
       "website": "https://github.com/agentscope-ai/qwenpaw",
-      "content_hash": "sha256:c99e29ed3021e84427dfbfd4b19a4028176041d9b550a671af7acdfd9c4e42b8",
+      "content_hash": "sha256:6a4bf301a62514905861d7fea3a48accb44fa70478bf2912fbfdf6268bb5f511",
       "file": "templates/qwenpaw.json"
     },
     {
@@ -1004,7 +1004,7 @@
       "version": "",
       "logo": "https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/10b8af3b048754ca8a31c8136555de77cce953f3/apps/tauri/icons/128x128.png",
       "website": "https://github.com/zeroclaw-labs/zeroclaw",
-      "content_hash": "sha256:03bd66a3da8b8d0fd547dc4d1567416c8f44a671bb0346babfb18823086d3642",
+      "content_hash": "sha256:10f6f292d022b8909b9a3c391517f156a4f8b5a98cd286c78133e70b05bfccb7",
       "file": "templates/zeroclaw.json"
     }
   ]

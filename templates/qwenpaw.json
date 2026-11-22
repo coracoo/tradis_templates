@@ -12,7 +12,7 @@
   "website": "https://github.com/agentscope-ai/qwenpaw",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n  qwenpaw:\n    image: agentscope/qwenpaw:latest\n    init: true\n    ports:\n    - 127.0.0.1:8088:8088\n    restart: always\n    volumes:\n    - ./qwenpaw-data:/app/working\n    - ./qwenpaw-secrets:/app/working.secret\n    - ./qwenpaw-backups:/app/working.backups\n",
+  "compose": "services:\n  qwenpaw:\n    image: agentscope/qwenpaw:latest\n    init: true\n    ports:\n      - 8088:8088\n    restart: always\n    volumes:\n      - ./qwenpaw-data:/app/working\n      - ./qwenpaw-secrets:/app/working.secret\n      - ./qwenpaw-backups:/app/working.backups\n",
   "input_metadata": {
     "bind:qwenpaw:/app/working": {
       "group": "basic"
@@ -30,8 +30,8 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:306e6816845e34557bdefd5495affdd88025ad1639f406b08fc06dc32f300f57",
-    "manifest_digest": "sha256:924fefcb7e410a3f17e04693cb7c09847b13432a737b3f9782d3729741754b23",
+    "source_digest": "sha256:91f1615f21cc0952d8676d27401b85425da7b5efe0d337bee6d0552dcd2b28dc",
+    "manifest_digest": "sha256:3d9d61bcc0beae99e9bdd773cfecbce8a8bf403138bbdc58dcb6a4af0f9d6479",
     "services": [
       "qwenpaw"
     ],
@@ -132,8 +132,8 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:306e6816845e34557bdefd5495affdd88025ad1639f406b08fc06dc32f300f57",
-  "manifest_digest": "sha256:924fefcb7e410a3f17e04693cb7c09847b13432a737b3f9782d3729741754b23",
+  "source_digest": "sha256:91f1615f21cc0952d8676d27401b85425da7b5efe0d337bee6d0552dcd2b28dc",
+  "manifest_digest": "sha256:3d9d61bcc0beae99e9bdd773cfecbce8a8bf403138bbdc58dcb6a4af0f9d6479",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [

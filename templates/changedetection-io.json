@@ -12,7 +12,7 @@
   "website": "https://github.com/dgtlmoon/changedetection.io",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n  changedetection:\n    hostname: changedetection\n    image: ghcr.io/dgtlmoon/changedetection.io\n    ports:\n    - 127.0.0.1:5000:5000\n    restart: unless-stopped\n    volumes:\n    - ./changedetection-data:/datastore\n",
+  "compose": "services:\n  changedetection:\n    hostname: changedetection\n    image: ghcr.io/dgtlmoon/changedetection.io\n    ports:\n      - 5000:5000\n    restart: unless-stopped\n    volumes:\n      - ./changedetection-data:/datastore\n",
   "input_metadata": {
     "bind:changedetection:/datastore": {
       "group": "basic"
@@ -24,8 +24,8 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:b4212a17a57c5da3ac368844f49e32d001fe2fcd86608937bb193f1cd4a26507",
-    "manifest_digest": "sha256:6c3f9ab8fda090f98dc09c51be80c04d849423767f67f2cdb7b7cc90f92ec09e",
+    "source_digest": "sha256:1116c3ccc8bc99d50834467b406cc5298d058a5379980903338a8114bafa5730",
+    "manifest_digest": "sha256:c10a2f0f41e54b930bd6f1767e8d1ffd5859c5e8aa527c68bac3990fd2f9651d",
     "services": [
       "changedetection"
     ],
@@ -82,8 +82,8 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:b4212a17a57c5da3ac368844f49e32d001fe2fcd86608937bb193f1cd4a26507",
-  "manifest_digest": "sha256:6c3f9ab8fda090f98dc09c51be80c04d849423767f67f2cdb7b7cc90f92ec09e",
+  "source_digest": "sha256:1116c3ccc8bc99d50834467b406cc5298d058a5379980903338a8114bafa5730",
+  "manifest_digest": "sha256:c10a2f0f41e54b930bd6f1767e8d1ffd5859c5e8aa527c68bac3990fd2f9651d",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [

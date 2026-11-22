@@ -12,7 +12,7 @@
   "website": "https://github.com/zeroclaw-labs/zeroclaw",
   "tutorial": "",
   "dotenv": "",
-  "compose": "services:\n  zeroclaw:\n    deploy:\n      resources:\n        limits:\n          cpus: '2'\n          memory: 512M\n        reservations:\n          cpus: '0.5'\n          memory: 32M\n    environment:\n      ZEROCLAW_providers__models__openrouter__default__api_key: ${OPENROUTER_API_KEY:?OPENROUTER_API_KEY is required}\n      ZEROCLAW_gateway__host: 0.0.0.0\n      ZEROCLAW_gateway__allow_public_bind: 'true'\n      ZEROCLAW_gateway__port: '42617'\n    healthcheck:\n      interval: 60s\n      retries: 3\n      start_period: 10s\n      test:\n      - CMD\n      - zeroclaw\n      - status\n      - --format=exit-code\n      timeout: 10s\n    image: ghcr.io/zeroclaw-labs/zeroclaw:latest\n    ports:\n    - 127.0.0.1:42617:42617\n    restart: unless-stopped\n    volumes:\n    - ./zeroclaw-data:/zeroclaw-data\n",
+  "compose": "services:\n  zeroclaw:\n    deploy:\n      resources:\n        limits:\n          cpus: '2'\n          memory: 512M\n        reservations:\n          cpus: '0.5'\n          memory: 32M\n    environment:\n      ZEROCLAW_providers__models__openrouter__default__api_key: ${OPENROUTER_API_KEY:?OPENROUTER_API_KEY is required}\n      ZEROCLAW_gateway__host: 0.0.0.0\n      ZEROCLAW_gateway__allow_public_bind: 'true'\n      ZEROCLAW_gateway__port: '42617'\n    healthcheck:\n      interval: 60s\n      retries: 3\n      start_period: 10s\n      test:\n        - CMD\n        - zeroclaw\n        - status\n        - --format=exit-code\n      timeout: 10s\n    image: ghcr.io/zeroclaw-labs/zeroclaw:latest\n    ports:\n      - 42617:42617\n    restart: unless-stopped\n    volumes:\n      - ./zeroclaw-data:/zeroclaw-data\n",
   "input_metadata": {
     "bind:zeroclaw:/zeroclaw-data": {
       "group": "basic"
@@ -36,8 +36,8 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:98140e818ba45f5628b95418e9064d6ff12324b76e8cdf2fb2a765acccb045d3",
-    "manifest_digest": "sha256:6d49bacbcf6cc21eb914fa3028f71eb5d2b0f21af1bd7fa9f996a5d615e7280f",
+    "source_digest": "sha256:b6a64a70706c8555c02dd19de31c2236a1c4385a985cc6dbbe43f0692984eb58",
+    "manifest_digest": "sha256:3f8f120d7afa2b1caf73202503150e409718e87a591ccd106c313899708429b4",
     "services": [
       "zeroclaw"
     ],
@@ -180,8 +180,8 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:98140e818ba45f5628b95418e9064d6ff12324b76e8cdf2fb2a765acccb045d3",
-  "manifest_digest": "sha256:6d49bacbcf6cc21eb914fa3028f71eb5d2b0f21af1bd7fa9f996a5d615e7280f",
+  "source_digest": "sha256:b6a64a70706c8555c02dd19de31c2236a1c4385a985cc6dbbe43f0692984eb58",
+  "manifest_digest": "sha256:3f8f120d7afa2b1caf73202503150e409718e87a591ccd106c313899708429b4",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [

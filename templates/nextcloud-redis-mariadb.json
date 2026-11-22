@@ -12,7 +12,7 @@
   "website": "https://github.com/nextcloud/server",
   "tutorial": "",
   "dotenv": "",
-  "compose": "networks:\n  dbnet: null\n  redisnet: null\nservices:\n  db:\n    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW\n    environment:\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is required}\n      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n    expose:\n    - 3306\n    image: mariadb:10.5\n    networks:\n    - dbnet\n    restart: always\n    volumes:\n    - ./db_data:/var/lib/mysql\n  nc:\n    environment:\n      REDIS_HOST: redis\n      MYSQL_HOST: db\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n    image: nextcloud:apache\n    networks:\n    - redisnet\n    - dbnet\n    ports:\n    - 80:80\n    restart: always\n    volumes:\n    - ./nc_data:/var/www/html\n  redis:\n    expose:\n    - 6379\n    image: redis:alpine\n    networks:\n    - redisnet\n    restart: always\n",
+  "compose": "networks:\n  dbnet: null\n  redisnet: null\nservices:\n  db:\n    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW\n    environment:\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD is required}\n      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n    expose:\n      - 3306\n    image: mariadb:10.5\n    networks:\n      - dbnet\n    restart: always\n    volumes:\n      - ./db_data:/var/lib/mysql\n  nc:\n    environment:\n      REDIS_HOST: redis\n      MYSQL_HOST: db\n      MYSQL_DATABASE: nextcloud\n      MYSQL_USER: nextcloud\n      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}\n    image: nextcloud:apache\n    networks:\n      - redisnet\n      - dbnet\n    ports:\n      - 80:80\n    restart: always\n    volumes:\n      - ./nc_data:/var/www/html\n  redis:\n    expose:\n      - 6379\n    image: redis:alpine\n    networks:\n      - redisnet\n    restart: always\n",
   "input_metadata": {
     "bind:db:/var/lib/mysql": {
       "group": "basic"
@@ -51,8 +51,8 @@
   "manifest": {
     "manifest_version": 1,
     "compiler_version": "1.0.2",
-    "source_digest": "sha256:5fa4e290fba10ca5f12670902b79a24c619c440dcb8e156dbe28ff05f7eb2abb",
-    "manifest_digest": "sha256:010aae8294cc318f17f50e548b876ca01884b24ba12917319f9f2f3ec5bad60f",
+    "source_digest": "sha256:2e5b9f4aa1cd63e1ee636f1e1ad584e4238d0578f2aba5f7fb743190d7a9a392",
+    "manifest_digest": "sha256:8a4b27bb5be5b48bcda2e3547460883da69914b6358d2b243d24233c555d818c",
     "services": [
       "db",
       "nc",
@@ -313,8 +313,8 @@
     "diagnostics": [],
     "complete": true
   },
-  "source_digest": "sha256:5fa4e290fba10ca5f12670902b79a24c619c440dcb8e156dbe28ff05f7eb2abb",
-  "manifest_digest": "sha256:010aae8294cc318f17f50e548b876ca01884b24ba12917319f9f2f3ec5bad60f",
+  "source_digest": "sha256:2e5b9f4aa1cd63e1ee636f1e1ad584e4238d0578f2aba5f7fb743190d7a9a392",
+  "manifest_digest": "sha256:8a4b27bb5be5b48bcda2e3547460883da69914b6358d2b243d24233c555d818c",
   "compiler_version": "1.0.2",
   "screenshots": [],
   "schema": [
